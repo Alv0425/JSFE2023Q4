@@ -16,39 +16,43 @@
       <div class="header__logo"><a href="./"></a></div>
       <nav class="header__nav">
         <ul class="header__navlinks">
-          <li class="header__navlink">Favorite coffee</li>
-          <li class="header__navlink">About</li>
-          <li class="header__navlink">Mobile app</li>
-          <li class="header__navlink">Contact us</li>
+          <li class="header__navlink"><a href="#favourites">Favorite coffee</a></li>
+          <li class="header__navlink"><a href="#about">About</a></li>
+          <li class="header__navlink"><a href="#mobile-app">Mobile app</a></li>
+          <li class="header__navlink"><a href="#contacts">Contact us</a></li>
         </ul>
-        <div class="header__button">
+        <a href="../menu/" class="header__button">
           <button class="header__button-menu">Menu<span></span></button>
-        </div>
+        </a>
       </nav>
     </div>
   </header>
   <main class="main">
-    <div class="wrapper">
+    <div class="wrapper main-wrapper">
       <section class="main__section main__section-enjoy">
-        <h1 class="main__title title">
-          <span class="title-oblique">Enjoy</span> premium coffee at our charming cafe
-        </h1>
-        <p class="main__paragraph main__paragraph-enjoy">
-          With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.
-        </p>
-        <div class="main__button-container">
-          <button class="pill-button menu-button">Menu<span class="menu-button__icon"></span></button>
+        <div class="main__section-column">
+          <h1 class="main__title title-light">
+            <span class="title-oblique">Enjoy</span> premium coffee at our charming cafe
+          </h1>
+          <p class="main__paragraph main__paragraph-enjoy">
+            With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.
+          </p>
+          <div class="main__button-container">
+            <a href="../menu/">
+              <button class="pill-button menu-button"><span class="menu-button__text">Menu</span><span class="menu-button__icon"></span></button>
+            </a>
+          </div>
         </div>
       </section>
-      <section class="main__section main__section-favourites">
+      <section id="favourites" class="main__section main__section-favourites">
         <h2>Choose your <span class="title-oblique">favorite</span> coffee</h2>
         <div class="slider">
         </div>
       </section>
-      <section class="main__section main__section-about">
+      <section id="about" class="main__section main__section-about">
         <h2>Resource is <span class="title-oblique">the perfect and cozy place</span> where you can enjoy a variety of hot beverages, relax, catch up with friends, or get some work done.</h2>
       </section>
-      <section class="main__section section-app">
+      <section id="mobile-app" class="main__section section-app">
         <div class="section-app__info">
           <h2><span class="title-oblique">Download</span> our apps to start ordering</h2>
           <p>Download the Resource app today and experience the comfort of ordering your favorite coffee from wherever you are</p>
@@ -66,7 +70,7 @@
   </main>
   <footer class="footer">
     <div class="wrapper footer__container">
-      <section class="footer__section">
+      <section id="contacts" class="footer__section">
         <h2>Sip, Savor, Smile. <span class="title-oblique">It&#39;s coffee time!</span></h2>
         <div class="footer__social-buttons">
           <button class="circle-button"></button>

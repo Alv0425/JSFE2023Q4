@@ -62,6 +62,14 @@ button {
   background-color: transparent;
   font-family: inherit;
 }
+button:hover {
+  cursor: pointer;
+}
+button:disabled {
+  pointer-events: none;
+  appearance: none;
+  color: inherit;
+}
 
 button::-moz-focus-inner,
 [type=button]::-moz-focus-inner,
@@ -90,7 +98,13 @@ fieldset {
 .wrapper {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 40px;
+  padding: 0px 40px;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
 body {
@@ -102,6 +116,7 @@ h1 {
   font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
   letter-spacing: 0px;
+  line-height: 106%;
 }
 
 h2 {
@@ -116,9 +131,37 @@ h2 {
   color: #B0907A;
 }
 
+.main__paragraph {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: -0.1px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+}
+
+.pill-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 64px;
+  border-radius: 100px;
+}
+
+.header {
+  padding-top: 20px;
+}
+
 .header__wrapper {
   display: flex;
   justify-content: space-between;
+  color: #403F3D;
 }
 
 .header__logo {
@@ -138,6 +181,34 @@ h2 {
   flex-grow: 2;
   height: 59px;
   align-items: center;
+}
+
+.header__button {
+  display: block;
+  position: relative;
+  height: 28px;
+}
+.header__button:hover {
+  cursor: pointer;
+}
+.header__button::after {
+  content: "";
+  position: absolute;
+  bottom: 1.5px;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: 0.5s;
+  height: 2px;
+  background-color: #403F3D;
+}
+.header__button-active::after, .header__button:hover::after {
+  transform: scaleX(100%);
+  opacity: 1;
+}
+.header__button-active {
+  pointer-events: none;
 }
 
 .header__button-menu {
@@ -161,13 +232,86 @@ h2 {
   list-style: none;
 }
 
+.header__navlink {
+  position: relative;
+  user-select: none;
+  height: 24px;
+}
+.header__navlink:hover {
+  cursor: pointer;
+}
+.header__navlink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: 0.5s;
+  height: 2px;
+  background-color: #403F3D;
+}
+.header__navlink:hover::after {
+  transform: scaleX(100%);
+  opacity: 1;
+}
+
 .header__button-menu {
   display: flex;
-  gap: 8px;
+  gap: 8.5px;
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
+}
+
+.main__section-enjoy {
+  padding: 100px;
+  margin-top: 20px;
+  color: #E1D4C9;
+  border-radius: 40px;
+  background-image: url(../assets/enjoy/img-hero.jpg);
+  background-size: cover;
+  background-position: 50% 25%;
+}
+
+.main__section-column {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 530px;
+}
+
+.menu-button {
+  background-color: #E1D4C9;
+  gap: 8px;
+}
+.menu-button:hover {
+  cursor: pointer;
+}
+.menu-button:hover .menu-button__text {
+  transform: translateX(0px);
+}
+.menu-button:hover .menu-button__icon {
+  opacity: 1;
+}
+
+.menu-button__icon {
+  width: 20px;
+  height: 20px;
+  background-image: url(../assets/icons/coffee-cup.svg);
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.menu-button__text {
+  font-size: 16px;
+  font-family: Inter;
+  font-weight: 600;
+  color: #403F3D;
+  transform: translateX(14px);
+  transition: 0.5s;
 }
 
 /*# sourceMappingURL=home.css.map */
