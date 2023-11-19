@@ -1,3 +1,173 @@
 /* Some comment */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #E1D4C9;
+  text-decoration-skip: objects;
+  text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  color: #0C0C0E;
+  background: #B0907A;
+}
+
+ul,
+ol {
+  padding: 0;
+  margin: 0;
+}
+
+div,
+img,
+p,
+h1,
+h2,
+h3 {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  display: block;
+  border: none;
+}
+
+button,
+input {
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+button {
+  text-align: left;
+  text-transform: none;
+  appearance: none;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: none;
+}
+
+form {
+  padding: 0;
+  margin: 0;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 72px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-weight: 600;
+  letter-spacing: 0px;
+}
+
+h2 {
+  font-size: 60px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-weight: 600;
+  letter-spacing: 0px;
+}
+
+.title-oblique {
+  font-variation-settings: "slnt" -10;
+  color: #B0907A;
+}
+
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__logo {
+  width: 100px;
+  height: 60px;
+  background-image: url(../assets/header/logo.svg);
+  background-size: contain;
+}
+.header__logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.header__nav {
+  display: flex;
+  flex-grow: 2;
+  height: 59px;
+  align-items: center;
+}
+
+.header__button-menu {
+  display: flex;
+  align-items: center;
+}
+
+.header__button-menu span {
+  display: block;
+  width: 20px;
+  height: 24px;
+  background-image: url(../assets/icons/coffee-cup.svg);
+  background-repeat: no-repeat;
+}
+
+.header__navlinks {
+  display: flex;
+  justify-content: center;
+  gap: 42px;
+  flex-grow: 2;
+  list-style: none;
+}
+
+.header__button-menu {
+  display: flex;
+  gap: 8px;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
 
 /*# sourceMappingURL=menu.css.map */
