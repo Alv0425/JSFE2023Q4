@@ -105,3 +105,5 @@ dist
 
 # coffee-house
 coffee-house/scss
+coffee-house/package-lock.json
+coffee-house/package.json
