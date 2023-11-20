@@ -47,6 +47,53 @@
       <section id="favourites" class="main__section main__section-favourites">
         <h2>Choose your <span class="title-oblique">favorite</span> coffee</h2>
         <div class="slider">
+          <div class="slider__body">
+            <div class="slider__items-container">
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-3.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-1.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-2.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+            </div>
+          </div>
+          <div class="slider__button-left">
+            <button class="circle-button">
+              <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="slider__button-right">
+            <button class="circle-button">
+              <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12H18.5M18.5 12L12.5 6M18.5 12L12.5 18" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="slider__pagination">
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress slider__pagination-progress-selected"></div>
+            </div>
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress"></div>
+            </div>
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress"></div>
+            </div>
+          </div>
         </div>
       </section>
       <section id="about" class="main__section main__section-about">
@@ -58,6 +105,7 @@
           <p>Download the Resource app today and experience the comfort of ordering your favorite coffee from wherever you are</p>
           <div class="main__section-app-buttons">
             <button class="pill-button pill-button-app">
+              <object data="./assets/icons/apple.svg" type="image/svg+xml" width="36" height="36"></object>
             </button>
             <button class="pill-button pill-button-app">
             </button>
@@ -68,8 +116,8 @@
       </section>
     </div>
   </main>
-  <footer class="footer">
-    <div class="wrapper footer__container">
+  <footer class="footer wrapper">
+    <div class="footer__container">
       <section id="contacts" class="footer__section">
         <h2>Sip, Savor, Smile. <span class="title-oblique">It&#39;s coffee time!</span></h2>
         <div class="footer__social-buttons">
