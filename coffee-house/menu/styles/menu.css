@@ -447,6 +447,7 @@ a {
   background-color: #665F55;
   color: #E1D4C9;
   border-color: transparent;
+  pointer-events: none;
 }
 #coffee:checked ~ .menu__pagination label[for=coffee] .menu__tag-circle,
 #tea:checked ~ .menu__pagination label[for=tea] .menu__tag-circle,

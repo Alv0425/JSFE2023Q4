@@ -138,6 +138,7 @@
   background-color: $color-background-container;
   color: $color-text-light;
   border-color: transparent;
+  pointer-events: none;
   .menu__tag-circle{
     background-color: $color-background-body;
   }
