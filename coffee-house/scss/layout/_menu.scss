@@ -1,10 +1,15 @@
 .main__section-menu{
-  h2{
+  h1{
     max-width: 800px;
     margin: 0 auto;
     margin-top:20px;
     margin-bottom: 40px;
     text-align: center;
+    font-size: 60px;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-weight: 600;
+    letter-spacing: 0px;
+    line-height: 123%;
   } 
 }
 
@@ -138,6 +143,7 @@
   background-color: $color-background-container;
   color: $color-text-light;
   border-color: transparent;
+  pointer-events: none;
   .menu__tag-circle{
     background-color: $color-background-body;
   }
