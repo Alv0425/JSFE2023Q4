@@ -305,6 +305,87 @@ object svg.apple {
   font-weight: 600;
 }
 
+.main__section-menu h2 {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.menu__pagination {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.menu__content {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.menu-card {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 310px;
+  min-height: 506px;
+  border-radius: 40px;
+  border: 1px #C1B6AD solid;
+}
+@media (pointer: fine) and (hover: hover) {
+  .menu-card:hover {
+    cursor: pointer;
+  }
+  .menu-card:hover .menu-card__image img {
+    transform: scale(1);
+  }
+}
+
+.menu-card__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 40px;
+}
+.menu-card__image img {
+  width: 310px;
+  display: block;
+  transform: scale(1.1);
+  transition: 0.7s;
+}
+
+.menu-card__price,
+.menu-card__title {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+}
+
+.menu-card__price {
+  margin-top: auto;
+}
+
+.menu-card__price,
+.menu-card__title,
+.menu-card__description {
+  max-width: 270px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
 .footer__container {
   display: flex;
   align-items: center;
