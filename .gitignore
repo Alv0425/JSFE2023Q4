@@ -102,8 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# coffee-house
-coffee-house/scss
-coffee-house/package-lock.json
-coffee-house/package.json

@@ -1,0 +1,47 @@
+.main__section-enjoy{
+  padding: 100px;
+  margin-top: 20px;
+  color: $color-text-light;
+  border-radius: 40px;
+  background-image: url(../assets/enjoy/img-hero.jpg);
+  background-size: cover;
+  background-position: 50% 51%;
+}
+
+.main__section-column{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 530px;
+}
+
+.menu-button{
+  background-color: $color-background-body;
+  gap: 8px;
+  &:hover {
+    cursor: pointer;
+    .menu-button__text{
+      transform: translateX(0px);
+    }
+    .menu-button__icon{
+      opacity: 1;
+    }
+  }
+}
+
+.menu-button__icon{
+  width:20px;
+  height:20px;
+  background-image: url(../assets/icons/coffee-cup.svg);
+  opacity:0;
+  transition: 0.5s;
+}
+
+.menu-button__text{
+  font-size: 16px;
+  font-family: Inter;
+  font-weight: 600;
+  color: $color-text-dark;
+  transform: translateX(14px);
+  transition: 0.5s;
+}
