@@ -703,6 +703,7 @@ a {
   position: relative;
   display: flex;
   align-items: center;
+  transition: 0.5s;
 }
 .footer__section ul li a::after {
   content: "";
@@ -715,9 +716,14 @@ a {
   background-color: #E1D4C9;
   transition: 0.5s;
 }
-.footer__section ul li a:hover::after {
-  transform: scaleX(1);
-  opacity: 1;
+.footer__section ul li a:active {
+  opacity: 0.7;
+}
+@media (pointer: fine) and (hover: hover) {
+  .footer__section ul li a:hover::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 .clock-icon,
@@ -778,10 +784,17 @@ a {
   opacity: 0;
   transition: 0.5s;
 }
-.footer__social-buttons .circle-button:hover {
-  border-color: #E1D4C9;
+@media (pointer: fine) and (hover: hover) {
+  .footer__social-buttons .circle-button:hover {
+    border-color: #E1D4C9;
+  }
 }
-.footer__social-buttons .circle-button:hover::after {
+@media (pointer: fine) and (hover: hover) {
+  .footer__social-buttons .circle-button:hover::after {
+    opacity: 1;
+  }
+}
+.footer__social-buttons .circle-button:active::after {
   opacity: 1;
 }
 

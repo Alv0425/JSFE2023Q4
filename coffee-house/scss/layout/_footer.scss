@@ -36,6 +36,7 @@
         position: relative;
         display: flex;
         align-items: center;
+        transition: 0.5s;
         &::after{
           content: "";
           position: absolute;
@@ -47,9 +48,14 @@
           background-color: $color-text-light;
           transition: 0.5s;
         }
+        &:active{
+          opacity: 0.7;
+        }
         &:hover::after{
-          transform: scaleX(1);
-          opacity: 1;
+          @media (pointer:fine) and (hover:hover){
+            transform: scaleX(1);
+            opacity: 1;
+          }
         }
       }
     }
@@ -114,9 +120,16 @@
       transition: 0.5s;
     }
     &:hover{
-      border-color: $color-background-body;
+      @media (pointer:fine) and (hover:hover) {
+        border-color: $color-background-body;
+      }
     }
     &:hover::after{
+      @media (pointer:fine) and (hover:hover) {
+        opacity: 1;
+      }
+    }
+    &:active::after{
       opacity: 1;
     }
   }
