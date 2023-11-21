@@ -1,0 +1,126 @@
+.header{
+  padding-top:20px;
+}
+
+.header__wrapper{
+  display: flex;
+  justify-content: space-between;
+  color: $color-text-dark;
+}
+
+.header__logo{
+  width: 100px;
+  height: 60px;
+  background-image: url(../assets/header/logo.svg);
+  background-size: contain;
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.header__nav{
+  display: flex;
+  flex-grow: 2;
+  height: 59px;
+  align-items: center;
+}
+
+.header__button{
+  display: block;
+  position: relative;
+  height: 28px;
+  &:hover{
+    cursor: pointer;
+  }
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 1.5px;
+    left:0;
+    width: 100%;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: 0.5s;
+    height: 2px;
+    background-color: $color-text-dark;
+  }
+  &-active::after{
+    transform: scaleX(100%);
+    opacity: 1;
+  }
+  &:hover::after{
+    @media (pointer:fine) and (hover:hover){
+      transform: scaleX(100%);
+      opacity: 1;
+    }
+  }
+  &-active{
+    pointer-events: none;
+  }
+  &:active{
+    opacity: 0.7;
+  }
+}
+
+.header__button-menu{
+  display: flex;
+  align-items: center;
+}
+
+.header__button-menu span{
+  display: block;
+  width: 20px;
+  height: 24px;
+  background-image: url(../assets/icons/coffee-cup.svg);
+  background-repeat: no-repeat;
+}
+
+.header__navlinks{
+  display: flex;
+  justify-content: center;
+  gap: 42px;
+  flex-grow: 2;
+  list-style: none;
+}
+
+.header__navlink{
+  position: relative;
+  user-select: none;
+  height: 24px;
+  &:hover{
+    cursor: pointer;
+  }
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: 0.5s;
+    height: 2px;
+    background-color: $color-text-dark;
+  }
+  &:hover::after{
+    @media (pointer:fine) and (hover:hover) {
+      transform: scaleX(100%);
+      opacity: 1;
+    }
+  }
+  &:active{
+    opacity: 0.7;
+  }
+}
+
+.header__button-menu{
+  display: flex;
+  gap: 8.5px;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
+

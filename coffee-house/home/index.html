@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./styles/home.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10,600;-9,600;-8,600;-7,600;-6,600;0,100;0,200;0,300;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee House: Home</title>
+</head>
+<body>
+  <header class="header">
+    <div class="wrapper header__wrapper">
+      <div class="header__logo"><a href="./"></a></div>
+      <nav class="header__nav">
+        <ul class="header__navlinks">
+          <li class="header__navlink"><a href="#favourites">Favorite coffee</a></li>
+          <li class="header__navlink"><a href="#about">About</a></li>
+          <li class="header__navlink"><a href="#mobile-app">Mobile app</a></li>
+          <li class="header__navlink"><a href="#contacts">Contact us</a></li>
+        </ul>
+        <a href="../menu/" class="header__button">
+          <button class="header__button-menu">Menu<span></span></button>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    <div class="wrapper main-wrapper">
+      <section class="main__section main__section-enjoy">
+        <div class="main__section-column">
+          <h1 class="main__title title-light">
+            <span class="title-oblique">Enjoy</span> premium coffee at our charming cafe
+          </h1>
+          <p class="main__paragraph main__paragraph-enjoy">
+            With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.
+          </p>
+          <div class="main__button-container">
+            <a href="../menu/">
+              <button class="pill-button menu-button"><span class="menu-button__text">Menu</span><span class="menu-button__icon"></span></button>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section id="favourites" class="main__section main__section-favourites">
+        <h2>Choose your <span class="title-oblique">favorite</span> coffee</h2>
+        <div class="slider">
+          <div class="slider__body">
+            <div class="slider__items-container">
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-3.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-1.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+              <div class="slider-item">
+                <img class="slider-item__image" src="./assets/favourites/coffee-slider-2.png" alt="Smores Frappuccino">
+                <h3 class="slider-item__title">S&apos;mores Frappuccino</h3>
+                <p class="slider-item__description">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk</p>
+                <p class="slider-item__price">&#36;5.50</p>
+              </div>
+            </div>
+          </div>
+          <div class="slider__button-left">
+            <button class="circle-button">
+              <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="slider__button-right">
+            <button class="circle-button">
+              <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 12H18.5M18.5 12L12.5 6M18.5 12L12.5 18" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="slider__pagination">
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress slider__pagination-progress-selected"></div>
+            </div>
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress"></div>
+            </div>
+            <div class="slider__pagination-bar">
+              <div class="slider__pagination-progress"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="about" class="main__section main__section-about">
+        <h2>Resource is <span class="title-oblique">the perfect and cozy place</span> where you can enjoy a variety of hot beverages, relax, catch up with friends, or get some work done.</h2>
+        <div class="images-grid">
+          <div class="images-grid__column">
+            <div class="images-grid__container"><img src="./assets/about/about-1.jpg" alt=""></div>
+            <div class="images-grid__container images-grid__container-small"><img src="./assets/about/about-2.jpg" alt=""></div>
+          </div>
+          <div class="images-grid__column">
+            <div class="images-grid__container images-grid__container-small"><img src="./assets/about/about-3.jpg" alt=""></div>
+            <div class="images-grid__container"><img src="./assets/about/about-4.jpg" alt=""></div>
+          </div>
+        </div>
+      </section>
+      <section id="mobile-app" class="main__section section-app">
+        <div class="section-app__info">
+          <h2><span class="title-oblique">Download</span> our apps to start ordering</h2>
+          <p>Download the Resource app today and experience the comfort of ordering your favorite coffee from wherever you are</p>
+          <div class="section-app__buttons">
+            <button class="pill-button pill-button-app">
+              <span class="pill-button-app__icon pill-button-app__icon-apple"></span>
+              <span class="pill-button-app__label">
+                <span class="pill-button-app__text">Available on the</span>
+                <span class="pill-button-app__title">App Store</span>
+              </span>
+            </button>
+            <button class="pill-button pill-button-app">
+              <span class="pill-button-app__icon pill-button-app__icon-google"></span>
+              <span class="pill-button-app__label">
+                <span class="pill-button-app__text">Available on</span>
+                <span class="pill-button-app__title">Google Play</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="section-app__image">
+          <img src="./assets/mobile-app/mobile-screens.png" alt="">
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer wrapper">
+    <div class="footer__container">
+      <section id="contacts" class="footer__section">
+        <h2>Sip, Savor, Smile. <span class="title-oblique">It&#8217;s coffee time!</span></h2>
+        <div class="footer__social-buttons">
+          <button class="circle-button circle-button-twitter"></button>
+          <button class="circle-button circle-button-instagram"></button>
+          <button class="circle-button circle-button-facebook"></button>
+        </div>
+      </section>
+      <section class="footer__section">
+        <h3>
+          Contact us
+        </h3>
+        <ul class="contacts">
+          <li><a href="https://maps.app.goo.gl/1TNBMJ4DaqB7S3mx6" target="_blank"><span class="location-icon"></span>8558 Green Rd.,&#8201;&#8201;LA</a></li>
+          <li><a href="tel:1(603)555-0123"><span class="phone-icon"></span>+1 (603) 555-0123</a></li>
+          <li><span class="clock-icon"></span>Mon-Sat: 9:00 AM – 23:00 PM</li>
+        </ul>
+      </section>
+    </div>
+  </footer>
+</body>
+</html>

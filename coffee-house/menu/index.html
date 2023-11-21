@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/menu.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10,600;-9,600;-8,600;-7,600;-6,600;0,100;0,200;0,300;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <title>Document</title>
+</head>
+<body>
+  <header class="header">
+    <div class="wrapper header__wrapper">
+      <div class="header__logo"><a href="../home"></a></div>
+      <nav class="header__nav">
+        <ul class="header__navlinks">
+          <li class="header__navlink"><a href="../home/#favourites">Favorite coffee</a></li>
+          <li class="header__navlink"><a href="../home/#about">About</a></li>
+          <li class="header__navlink"><a href="../home/#mobile-app">Mobile app</a></li>
+          <li class="header__navlink"><a href="#contacts">Contact us</a></li>
+        </ul>
+        <a href="#" class="header__button header__button-active">
+          <button class="header__button-menu" disabled>Menu<span></span></button>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    <div class="wrapper main-wrapper">
+      <section class="main__section main__section-menu">
+        <h2>Behind each of our cups hides an <span class="title-oblique">amazing surprise</span></h2>
+        <div class="menu">
+          <input id="coffee" class="menu__input" type="radio" name="category" checked>
+          <input id="tea" class="menu__input" type="radio" name="category">
+          <input id="dessert" class="menu__input" type="radio" name="category">
+          <div class="menu__pagination">
+            <label for="coffee" class="menu__tag"><span class="menu__tag-circle"></span>Coffee</label>
+            <label for="tea" class="menu__tag"><span class="menu__tag-circle"></span>Tea</label>
+            <label for="dessert" class="menu__tag"><span class="menu__tag-circle"></span>Dessert</label>
+          </div>
+          <div class="menu__content">
+            <div class="menu-card">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-1.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Irish coffee</h3>
+              <p class="menu-card__description">Fragrant black coffee with Jameson Irish whiskey and whipped milk</p>
+              <p class="menu-card__price">&#36;7.00</p>
+            </div>
+            <div class="menu-card">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-2.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Kahlua coffee</h3>
+              <p class="menu-card__description">Classic coffee with milk and Kahlua liqueur under a cap of frothed milk</p>
+              <p class="menu-card__price">&#36;7.00</p>
+            </div>
+            <div class="menu-card">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-3.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Honey raf</h3>
+              <p class="menu-card__description">Espresso with frothed milk, cream and aromatic honey</p>
+              <p class="menu-card__price">&#36;5.50</p>
+            </div>
+            <div class="menu-card menu-card-hidden">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-4.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Ice cappuccino</h3>
+              <p class="menu-card__description">Cappuccino with soft thick foam in summer version with ice</p>
+              <p class="menu-card__price">&#36;5.00</p>
+            </div>
+            <div class="menu-card menu-card-hidden">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-5.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Espresso</h3>
+              <p class="menu-card__description">Classic black coffee</p>
+              <p class="menu-card__price">&#36;4.50</p>
+            </div>
+            <div class="menu-card menu-card-hidden">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-6.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Latte</h3>
+              <p class="menu-card__description">Espresso coffee with the addition of steamed milk and dense milk foam</p>
+              <p class="menu-card__price">&#36;5.50</p>
+            </div>
+            <div class="menu-card menu-card-hidden">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-7.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Latte macchiato</h3>
+              <p class="menu-card__description">Espresso with frothed milk and chocolate</p>
+              <p class="menu-card__price">&#36;5.50</p>
+            </div>
+            <div class="menu-card menu-card-hidden">
+              <div class="menu-card__image">
+                <img src="./assets/menu/coffee-8.jpg" alt="irish coffee">
+              </div>
+              <h3 class="menu-card__title">Coffee with cognac</h3>
+              <p class="menu-card__description">Fragrant black coffee with cognac and whipped cream</p>
+              <p class="menu-card__price">&#36;6.50</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer wrapper">
+    <div class="footer__container">
+      <section id="contacts" class="footer__section">
+        <h2>Sip, Savor, Smile. <span class="title-oblique">It&#8217;s coffee time!</span></h2>
+        <div class="footer__social-buttons">
+          <button class="circle-button circle-button-twitter"></button>
+          <button class="circle-button circle-button-instagram"></button>
+          <button class="circle-button circle-button-facebook"></button>
+        </div>
+      </section>
+      <section class="footer__section">
+        <h3>
+          Contact us
+        </h3>
+        <ul class="contacts">
+          <li><a href="https://maps.app.goo.gl/1TNBMJ4DaqB7S3mx6" target="_blank"><span class="location-icon"></span>8558 Green Rd.,&#8201;&#8201;LA</a></li>
+          <li><a href="tel:1(603)555-0123"><span class="phone-icon"></span>+1 (603) 555-0123</a></li>
+          <li><span class="clock-icon"></span>Mon-Sat: 9:00 AM – 23:00 PM</li>
+        </ul>
+      </section>
+    </div>
+  </footer>
+</body>
+</html>
