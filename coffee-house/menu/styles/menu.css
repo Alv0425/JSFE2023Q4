@@ -310,12 +310,17 @@ a {
   align-items: center;
 }
 
-.main__section-menu h2 {
+.main__section-menu h1 {
   max-width: 800px;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 40px;
   text-align: center;
+  font-size: 60px;
+  font-feature-settings: "clig" off, "liga" off;
+  font-weight: 600;
+  letter-spacing: 0px;
+  line-height: 123%;
 }
 
 .menu {
