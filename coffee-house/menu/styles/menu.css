@@ -175,8 +175,14 @@ a {
   border-radius: 50%;
 }
 
-object svg.apple {
-  fill: #403F3D;
+.menu-tag {
+  padding: 8px 16px 8px 8px;
+  border: 1px #665F55 solid;
+  background-color: transparent;
+  border-radius: 100px;
+}
+.menu-tag:checked {
+  background-color: #665F55;
 }
 
 .header {
@@ -317,6 +323,7 @@ object svg.apple {
   display: flex;
   flex-direction: column;
   gap: 40px;
+  padding-bottom: 99px;
 }
 
 .menu__pagination {
@@ -335,7 +342,6 @@ object svg.apple {
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   max-width: 310px;
   min-height: 506px;
   border-radius: 40px;
@@ -374,8 +380,24 @@ object svg.apple {
   line-height: 125%;
 }
 
+.menu-card__title {
+  margin-top: 20px;
+}
+
+.menu-card__description {
+  margin-top: 12px;
+}
+
 .menu-card__price {
   margin-top: auto;
+}
+
+.menu-card__description {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: -0.1px;
 }
 
 .menu-card__price,
@@ -384,6 +406,64 @@ object svg.apple {
   max-width: 270px;
   margin-right: 20px;
   margin-left: 20px;
+}
+
+.menu__input {
+  display: none;
+}
+
+.menu__tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 8px;
+  border: 1px #C1B6AD solid;
+  background-color: transparent;
+  border-radius: 100px;
+  color: #403F3D;
+  transition: 0.5s;
+}
+.menu__tag-circle {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #C1B6AD;
+  transition: 0.5s;
+}
+.menu__tag:hover {
+  background-color: #665F55;
+  color: #E1D4C9;
+  border-color: transparent;
+  cursor: pointer;
+}
+.menu__tag:hover .menu__tag-circle {
+  background-color: #E1D4C9;
+}
+
+#coffee:checked ~ .menu__pagination label[for=coffee],
+#tea:checked ~ .menu__pagination label[for=tea],
+#dessert:checked ~ .menu__pagination label[for=dessert] {
+  background-color: #665F55;
+  color: #E1D4C9;
+  border-color: transparent;
+}
+#coffee:checked ~ .menu__pagination label[for=coffee] .menu__tag-circle,
+#tea:checked ~ .menu__pagination label[for=tea] .menu__tag-circle,
+#dessert:checked ~ .menu__pagination label[for=dessert] .menu__tag-circle {
+  background-color: #E1D4C9;
+}
+
+label[for=coffee] .menu__tag-circle {
+  background-image: url(../assets/icons/coffee.svg);
+}
+
+label[for=tea] .menu__tag-circle {
+  background-image: url(../assets/icons/tea.svg);
+}
+
+label[for=dessert] .menu__tag-circle {
+  background-image: url(../assets/icons/dessert.svg);
 }
 
 .footer__container {

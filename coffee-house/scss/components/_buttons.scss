@@ -25,6 +25,12 @@
   }
 }
 
-object svg.apple{
-  fill: #403F3D;
+.menu-tag{
+  padding: 8px 16px 8px 8px;
+  border: 1px $color-border-dark solid;
+  background-color: transparent;
+  border-radius: 100px;
+  &:checked{
+    background-color: $color-background-container;
+  }
 }

@@ -175,8 +175,14 @@ a {
   border-radius: 50%;
 }
 
-object svg.apple {
-  fill: #403F3D;
+.menu-tag {
+  padding: 8px 16px 8px 8px;
+  border: 1px #665F55 solid;
+  background-color: transparent;
+  border-radius: 100px;
+}
+.menu-tag:checked {
+  background-color: #665F55;
 }
 
 .slider {
