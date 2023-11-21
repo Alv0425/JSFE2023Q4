@@ -61,6 +61,7 @@ button {
   appearance: none;
   background-color: transparent;
   font-family: inherit;
+  color: inherit;
 }
 button:hover {
   cursor: pointer;
@@ -415,12 +416,21 @@ object svg.apple {
   height: 2px;
   background-color: #403F3D;
 }
-.header__button-active::after, .header__button:hover::after {
+.header__button-active::after {
   transform: scaleX(100%);
   opacity: 1;
 }
+@media (pointer: fine) and (hover: hover) {
+  .header__button:hover::after {
+    transform: scaleX(100%);
+    opacity: 1;
+  }
+}
 .header__button-active {
   pointer-events: none;
+}
+.header__button:active {
+  opacity: 0.7;
 }
 
 .header__button-menu {
@@ -464,9 +474,14 @@ object svg.apple {
   height: 2px;
   background-color: #403F3D;
 }
-.header__navlink:hover::after {
-  transform: scaleX(100%);
-  opacity: 1;
+@media (pointer: fine) and (hover: hover) {
+  .header__navlink:hover::after {
+    transform: scaleX(100%);
+    opacity: 1;
+  }
+}
+.header__navlink:active {
+  opacity: 0.7;
 }
 
 .header__button-menu {
