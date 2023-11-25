@@ -3,6 +3,7 @@
   width:100%;
   display:flex;
   gap:40px;
+  flex-wrap: wrap;
   margin-top:40px;
  }
 
@@ -12,6 +13,9 @@
   display:flex;
   flex-direction:column;
   gap:40px;
+  @media (width < 1024px) {
+    width: 100%;
+  }
 }
 
 .images-grid__container{
@@ -21,6 +25,9 @@
   aspect-ratio: 66 / 59;
   &-small{
     aspect-ratio: 66 / 43;
+    @media (width < 1024px) {
+      display: none;
+    }
   }
   img {
     transform: scale(1.1);
@@ -28,8 +35,10 @@
     width: 100%;
   }
   &:hover{
-    img{
-      transform: scale(1);
+    @media (pointer:fine) and (hover:hover) {
+      img{
+        transform: scale(1);
+      }
     }
   }
 }

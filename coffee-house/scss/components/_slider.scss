@@ -71,23 +71,15 @@
       width: 100%;
     }
   }
-    
-  .slider__frame{
-    display: flex;
-    flex-grow: 2;
-    width: calc(100vw - 40 * 4px - 120px);
-    justify-content: center;
-    overflow: hidden;
-  }
-  
+
   .slider__items-container{
     display: flex;
     justify-content: space-between;
-    width: 300%;
   }
   
   .slider-item{
     width:calc(100vw - 160px - 120px);
+    min-width: 600px;
     @extend %flex-center;
     flex-direction: column;
   }
