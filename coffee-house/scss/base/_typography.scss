@@ -1,21 +1,17 @@
 body {
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  @extend %set-font;
   color: $color-text-dark;
 }
 
 h1{
   font-size: 72px;
-  font-feature-settings: 'clig' off, 'liga' off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 106%
 }
 
 h2{
   font-size: 60px;
-  font-feature-settings: 'clig' off, 'liga' off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 123%;
 }
 
@@ -36,4 +32,9 @@ a{
   text-decoration: none;
   color: inherit;
   font-family: inherit;
+}
+
+::selection {
+  color: #0C0C0E;
+  background: $color-text-accent;
 }

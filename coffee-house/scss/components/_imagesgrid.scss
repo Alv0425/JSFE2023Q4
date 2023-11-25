@@ -1,7 +1,9 @@
+/* Images grid */
 .images-grid{
   width:100%;
   display:flex;
   gap:40px;
+  flex-wrap: wrap;
   margin-top:40px;
  }
 
@@ -11,25 +13,32 @@
   display:flex;
   flex-direction:column;
   gap:40px;
+  @media (width < 1024px) {
+    width: 100%;
+  }
 }
 
 .images-grid__container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend %flex-center;
   overflow: hidden;
   border-radius: 20px;
   aspect-ratio: 66 / 59;
   &-small{
     aspect-ratio: 66 / 43;
+    @media (width < 1024px) {
+      display: none;
+    }
   }
   img {
-    transform: scale(1);
+    transform: scale(1.1);
     transition: 0.5s;
+    width: 100%;
   }
   &:hover{
-    img{
-      transform: scale(0.91);
+    @media (pointer:fine) and (hover:hover) {
+      img{
+        transform: scale(1);
+      }
     }
   }
 }
