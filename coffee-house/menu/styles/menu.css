@@ -1,4 +1,16 @@
-/* Some comment */
+.circle-button, body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-feature-settings: "clig" off, "liga" off;
+  font-style: normal;
+}
+
+.menu-card__image, .circle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Reset styles */
 *,
 *::before,
 *::after {
@@ -13,16 +25,10 @@ html {
 body {
   margin: 0;
   background-color: #E1D4C9;
-  text-decoration-skip: objects;
   text-size-adjust: 100%;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  color: #0C0C0E;
-  background: #B0907A;
 }
 
 ul,
@@ -109,23 +115,18 @@ fieldset {
 }
 
 body {
-  font-family: Inter, Arial, Helvetica, sans-serif;
   color: #403F3D;
 }
 
 h1 {
   font-size: 72px;
-  font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 106%;
 }
 
 h2 {
   font-size: 60px;
-  font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 123%;
 }
 
@@ -148,6 +149,11 @@ a {
   font-family: inherit;
 }
 
+::selection {
+  color: #0C0C0E;
+  background: #B0907A;
+}
+
 .pill-button {
   display: flex;
   align-items: center;
@@ -159,9 +165,6 @@ a {
 
 .circle-button {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -175,16 +178,7 @@ a {
   border-radius: 50%;
 }
 
-.menu-tag {
-  padding: 8px 16px 8px 8px;
-  border: 1px #665F55 solid;
-  background-color: transparent;
-  border-radius: 100px;
-}
-.menu-tag:checked {
-  background-color: #665F55;
-}
-
+/* Header */
 .header {
   padding-top: 20px;
 }
@@ -269,9 +263,9 @@ a {
 }
 
 .header__navlink {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   user-select: none;
   height: 24px;
 }
@@ -302,12 +296,10 @@ a {
 
 .header__button-menu {
   display: flex;
-  gap: 8.5px;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
   align-items: center;
+  gap: 8.5px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .main__section-menu h1 {
@@ -317,9 +309,7 @@ a {
   margin-bottom: 40px;
   text-align: center;
   font-size: 60px;
-  font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 123%;
 }
 
@@ -361,9 +351,6 @@ a {
 }
 
 .menu-card__image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   width: 100%;
   aspect-ratio: 1/1;
@@ -488,7 +475,6 @@ label[for=dessert] .menu__tag-circle {
   flex-direction: column;
   gap: 40px;
   color: #E1D4C9;
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   font-size: 16px;

@@ -1,3 +1,4 @@
+/* Images grid */
 .images-grid{
   width:100%;
   display:flex;
@@ -14,9 +15,7 @@
 }
 
 .images-grid__container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend %flex-center;
   overflow: hidden;
   border-radius: 20px;
   aspect-ratio: 66 / 59;
@@ -24,12 +23,13 @@
     aspect-ratio: 66 / 43;
   }
   img {
-    transform: scale(1);
+    transform: scale(1.1);
     transition: 0.5s;
+    width: 100%;
   }
   &:hover{
     img{
-      transform: scale(0.91);
+      transform: scale(1);
     }
   }
 }

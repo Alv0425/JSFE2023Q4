@@ -1,3 +1,4 @@
+/* Header */
 .header{
   padding-top:20px;
 }
@@ -82,9 +83,9 @@
 }
 
 .header__navlink{
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   user-select: none;
   height: 24px;
   &:hover{
@@ -115,11 +116,9 @@
 
 .header__button-menu{
   display: flex;
-  gap: 8.5px;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
   align-items: center;
+  gap: 8.5px;
+  font-size: 16px;
+  font-weight: 600;
 }
 

@@ -1,4 +1,17 @@
-/* Some comment */
+.circle-button, body {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-feature-settings: "clig" off, "liga" off;
+  font-style: normal;
+}
+
+.images-grid__container, .slider-item, .slider__button-right,
+.slider__button-left, .circle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Reset styles */
 *,
 *::before,
 *::after {
@@ -13,16 +26,10 @@ html {
 body {
   margin: 0;
   background-color: #E1D4C9;
-  text-decoration-skip: objects;
   text-size-adjust: 100%;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  color: #0C0C0E;
-  background: #B0907A;
 }
 
 ul,
@@ -109,23 +116,18 @@ fieldset {
 }
 
 body {
-  font-family: Inter, Arial, Helvetica, sans-serif;
   color: #403F3D;
 }
 
 h1 {
   font-size: 72px;
-  font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 106%;
 }
 
 h2 {
   font-size: 60px;
-  font-feature-settings: "clig" off, "liga" off;
   font-weight: 600;
-  letter-spacing: 0px;
   line-height: 123%;
 }
 
@@ -148,6 +150,11 @@ a {
   font-family: inherit;
 }
 
+::selection {
+  color: #0C0C0E;
+  background: #B0907A;
+}
+
 .pill-button {
   display: flex;
   align-items: center;
@@ -159,9 +166,6 @@ a {
 
 .circle-button {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -175,16 +179,7 @@ a {
   border-radius: 50%;
 }
 
-.menu-tag {
-  padding: 8px 16px 8px 8px;
-  border: 1px #665F55 solid;
-  background-color: transparent;
-  border-radius: 100px;
-}
-.menu-tag:checked {
-  background-color: #665F55;
-}
-
+/* Slider */
 .slider {
   display: grid;
   grid-template-columns: 70px auto 70px;
@@ -202,59 +197,38 @@ a {
 
 .slider__button-left {
   grid-area: 1/1/2/2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
+
+.slider__button-right {
+  grid-area: 1/3/2/4;
+}
+
+.slider__button-right .circle-button,
 .slider__button-left .circle-button {
   border: 1px #665F55 solid;
   transition: 0.5s;
 }
+.slider__button-right .circle-button svg,
 .slider__button-left .circle-button svg {
   stroke: #665F55;
   transition: 0.5s;
 }
 @media (pointer: fine) and (hover: hover) {
+  .slider__button-right .circle-button:hover,
   .slider__button-left .circle-button:hover {
     background-color: #665F55;
   }
+  .slider__button-right .circle-button:hover svg,
   .slider__button-left .circle-button:hover svg {
     stroke: #C1B6AD;
   }
 }
+.slider__button-right .circle-button:active,
 .slider__button-left .circle-button:active {
   background-color: #665F55;
 }
+.slider__button-right .circle-button:active svg,
 .slider__button-left .circle-button:active svg {
-  stroke: #C1B6AD;
-}
-
-.slider__button-right {
-  grid-area: 1/3/2/4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.slider__button-right .circle-button {
-  border: 1px #665F55 solid;
-  transition: 0.5s;
-}
-.slider__button-right .circle-button svg {
-  stroke: #665F55;
-  transition: 0.5s;
-}
-@media (pointer: fine) and (hover: hover) {
-  .slider__button-right .circle-button:hover {
-    background-color: #665F55;
-  }
-  .slider__button-right .circle-button:hover svg {
-    stroke: #C1B6AD;
-  }
-}
-.slider__button-right .circle-button:active {
-  background-color: #665F55;
-}
-.slider__button-right .circle-button:active svg {
   stroke: #C1B6AD;
 }
 
@@ -298,10 +272,7 @@ a {
 
 .slider-item {
   width: calc(100vw - 160px - 120px);
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .slider-item__image {
@@ -311,7 +282,7 @@ a {
 
 .slider-item__title {
   max-width: 480px;
-  margin-top: 22px;
+  margin-top: 21.5px;
   font-size: 24px;
   font-style: normal;
   text-align: center;
@@ -321,12 +292,12 @@ a {
 
 .slider-item__description {
   max-width: 480px;
-  margin-top: 16px;
+  margin-top: 15px;
   font-size: 16px;
-  font-style: normal;
   text-align: center;
   font-weight: 400;
   line-height: 150%;
+  letter-spacing: -0.1px;
 }
 
 .slider-item__price {
@@ -339,6 +310,7 @@ a {
   line-height: 125%;
 }
 
+/* Images grid */
 .images-grid {
   width: 100%;
   display: flex;
@@ -355,9 +327,6 @@ a {
 }
 
 .images-grid__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   border-radius: 20px;
   aspect-ratio: 66/59;
@@ -366,13 +335,15 @@ a {
   aspect-ratio: 66/43;
 }
 .images-grid__container img {
-  transform: scale(1);
+  transform: scale(1.1);
   transition: 0.5s;
+  width: 100%;
 }
 .images-grid__container:hover img {
-  transform: scale(0.91);
+  transform: scale(1);
 }
 
+/* Header */
 .header {
   padding-top: 20px;
 }
@@ -457,9 +428,9 @@ a {
 }
 
 .header__navlink {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   user-select: none;
   height: 24px;
 }
@@ -490,12 +461,10 @@ a {
 
 .header__button-menu {
   display: flex;
-  gap: 8.5px;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
   align-items: center;
+  gap: 8.5px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .main__section-enjoy {
@@ -539,13 +508,13 @@ a {
 
 .menu-button__text {
   font-size: 16px;
-  font-family: Inter;
   font-weight: 600;
   color: #403F3D;
   transform: translateX(14px);
   transition: 0.5s;
 }
 
+/* Favourites section */
 .main__section-favourites {
   display: flex;
   flex-direction: column;
@@ -553,6 +522,10 @@ a {
 }
 .main__section-favourites h2 {
   text-align: center;
+}
+
+.main__section-about h2 {
+  line-height: 124%;
 }
 
 .section-app {
@@ -648,14 +621,12 @@ a {
 
 .pill-button-app__text {
   font-size: 10px;
-  font-style: normal;
   font-weight: 600;
   line-height: 140%;
 }
 
 .pill-button-app__title {
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
 }
@@ -677,7 +648,6 @@ a {
   flex-direction: column;
   gap: 40px;
   color: #E1D4C9;
-  font-style: normal;
   font-weight: 600;
   line-height: 150%;
   font-size: 16px;

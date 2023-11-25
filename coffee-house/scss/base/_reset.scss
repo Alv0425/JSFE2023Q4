@@ -1,12 +1,13 @@
+/* Reset styles */
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
 
-// *{
-//   border: 1px red solid;
-// }
+//  *{
+//   border: 0.1px red solid;
+//  }
 
 html {
   box-sizing: border-box;
@@ -16,16 +17,10 @@ html {
 body {
   margin: 0;
   background-color: $color-background-body;
-  text-decoration-skip: objects;
   text-size-adjust: 100%;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-}
-
-::selection {
-  color: #0C0C0E;
-  background: $color-text-accent;
 }
 
 ul,
