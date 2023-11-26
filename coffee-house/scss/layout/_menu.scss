@@ -7,7 +7,7 @@
     text-align: center;
     font-size: 60px;
     font-weight: 600;
-    line-height: 123%;
+    line-height: 124%;
   } 
 }
 
@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   gap:39px;
-  padding-bottom: 99px;
+  padding-bottom: 100.5px;
 }
 
 .menu__pagination{
@@ -26,16 +26,14 @@
 
 .menu__content{
   display: grid;
-  grid-template-columns: repeat(4,auto);
-  grid-gap:39.5px;
-  // display: flex;
-  // justify-content: center;
-  // gap:40px;
-  // flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit,minmax(309px,1fr));
+  grid-column-gap: 39.5px;
+  grid-row-gap: 38px;
 }
 
 .menu-card{
-  padding-bottom: 20px;
+  padding-bottom: 18px;
+  margin:0 auto;
   display: flex;
   flex-direction: column;
   max-width: 310px;
@@ -58,7 +56,6 @@
   @extend %flex-center;
   overflow: hidden;
   width:100%;
-  height: 309px;
   border-radius: 40px;
   img{
     width: 100%;
@@ -77,7 +74,7 @@
 }
 
 .menu-card__title{
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .menu-card__description{
@@ -93,15 +90,14 @@
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
-  letter-spacing: -0.1px;
 }
 
 .menu-card__price,
 .menu-card__title,
 .menu-card__description{
   max-width: 270px;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-right: 19px;
+  margin-left: 19px;
 }
 
 .menu__input{
@@ -127,6 +123,17 @@
     transition: 0.5s;
   }
   &:hover{
+    @media (pointer:fine) and (hover:hover) {
+      background-color: $color-background-container;
+      color: $color-text-light;
+      border-color: transparent;
+      cursor: pointer;
+      .menu__tag-circle{
+        background-color: $color-background-body;
+      }
+    }
+  }
+  &:active{
     background-color: $color-background-container;
     color: $color-text-light;
     border-color: transparent;
@@ -137,9 +144,20 @@
   }
 }
 
-#coffee:checked ~ .menu__pagination label[for="coffee"],
-#tea:checked ~ .menu__pagination label[for="tea"],
-#dessert:checked ~ .menu__pagination label[for="dessert"]{
+// #coffee:checked ~ .menu__pagination label[for="coffee"],
+// #tea:checked ~ .menu__pagination label[for="tea"],
+// #dessert:checked ~ .menu__pagination label[for="dessert"]{
+//   background-color: $color-background-container;
+//   color: $color-text-light;
+//   border-color: transparent;
+//   pointer-events: none;
+//   .menu__tag-circle{
+//     background-color: $color-background-body;
+//   }
+// }
+
+
+.menu__pagination label[for="coffee"]{
   background-color: $color-background-container;
   color: $color-text-light;
   border-color: transparent;
