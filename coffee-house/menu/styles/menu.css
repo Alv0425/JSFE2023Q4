@@ -208,6 +208,25 @@ a {
   align-items: center;
   padding-bottom: 5px;
 }
+@media (width <= 768px) {
+  .header__nav {
+    position: fixed;
+    z-index: 3;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #E1D4C9;
+    align-items: center;
+    gap: 100px;
+    width: 100%;
+    height: 100vh;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: 1s;
+  }
+}
 
 .header__button {
   display: block;
@@ -261,6 +280,14 @@ a {
   flex-grow: 2;
   list-style: none;
 }
+@media (width <= 768px) {
+  .header__navlinks {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0;
+    gap: 60px;
+  }
+}
 
 .header__navlink {
   position: relative;
@@ -302,6 +329,10 @@ a {
   font-weight: 600;
 }
 
+.header__burger-button {
+  display: none;
+}
+
 .main__section-menu h1 {
   max-width: 800px;
   margin: 0 auto;
@@ -316,7 +347,7 @@ a {
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 39px;
   padding-bottom: 99px;
 }
 
@@ -327,9 +358,9 @@ a {
 }
 
 .menu__content {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 39.5px;
 }
 
 .menu-card {
@@ -337,7 +368,7 @@ a {
   display: flex;
   flex-direction: column;
   max-width: 310px;
-  min-height: 506px;
+  min-height: 507px;
   border-radius: 40px;
   border: 1px #C1B6AD solid;
 }
@@ -353,11 +384,11 @@ a {
 .menu-card__image {
   overflow: hidden;
   width: 100%;
-  aspect-ratio: 1/1;
+  height: 309px;
   border-radius: 40px;
 }
 .menu-card__image img {
-  width: 310px;
+  width: 100%;
   display: block;
   transform: scale(1.1);
   transition: 0.7s;
@@ -458,6 +489,10 @@ label[for=dessert] .menu__tag-circle {
   background-image: url(../assets/icons/dessert.svg);
 }
 
+.footer {
+  margin-bottom: 40px;
+}
+
 .footer__container {
   display: flex;
   align-items: center;
@@ -466,6 +501,12 @@ label[for=dessert] .menu__tag-circle {
   margin-bottom: 40px;
   background-color: #665F55;
   border-radius: 40px;
+}
+@media (width < 1024px) {
+  .footer__container {
+    padding: 100px 60px;
+    flex-wrap: wrap;
+  }
 }
 
 .footer__section {

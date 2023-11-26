@@ -4,6 +4,9 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  @media (width < 1024px) {
+    gap: 100px;
+  }
 }
 
 .section-app__info{
@@ -23,6 +26,11 @@
 }
 
 .section-app__image{
+  @media (width < 1024px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
   img{
     max-width: 630px;
   }

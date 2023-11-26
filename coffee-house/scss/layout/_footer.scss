@@ -1,3 +1,7 @@
+.footer{
+  margin-bottom: 40px;
+}
+
 .footer__container{
   display: flex;
   align-items: center;
@@ -6,6 +10,10 @@
   margin-bottom: 40px;
   background-color: $color-background-container;
   border-radius: 40px;
+  @media (width < 1024px) {
+    padding: 100px 60px;
+    flex-wrap: wrap;
+  }
 }
 
 .footer__section{
