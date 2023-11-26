@@ -13,21 +13,22 @@
   display:flex;
   flex-direction:column;
   gap:40px;
-  @media (width < 1024px) {
-    width: 100%;
-  }
+  // @media (width < 1200px) {
+  //   width: 100%;
+  // }
 }
 
 .images-grid__container{
   @extend %flex-center;
   overflow: hidden;
   border-radius: 20px;
-  aspect-ratio: 66 / 59;
+  width: 100%;
+  height: 590px;
   &-small{
-    aspect-ratio: 66 / 43;
-    @media (width < 1024px) {
-      display: none;
-    }
+    height: 430px;
+    // @media (width < 1200px) {
+    //   display: none;
+    // }
   }
   img {
     transform: scale(1.1);

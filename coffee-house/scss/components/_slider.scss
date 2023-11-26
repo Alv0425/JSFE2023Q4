@@ -79,7 +79,8 @@
   
   .slider-item{
     width:calc(100vw - 160px - 120px);
-    min-width: 600px;
+    // 600px?
+    min-width: 1440px;
     @extend %flex-center;
     flex-direction: column;
   }
@@ -106,7 +107,6 @@
     text-align: center;
     font-weight: 400;
     line-height: 150%;
-    letter-spacing: -0.1px;
   }
 
   .slider-item__price{
