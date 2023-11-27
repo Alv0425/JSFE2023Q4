@@ -94,7 +94,7 @@
 .header__navlinks{
   display: flex;
   justify-content: center;
-  gap: 42px;
+  gap: 41px;
   flex-grow: 2;
   list-style: none;
   // @media (width <= 768px){
@@ -111,6 +111,7 @@
   align-items: center;
   user-select: none;
   height: 24px;
+  font-weight: 600;
   &:hover{
     cursor: pointer;
   }

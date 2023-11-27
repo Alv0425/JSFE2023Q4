@@ -119,21 +119,21 @@ fieldset {
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  src: url("../assets/fonts/inter-regular.woff2") format("woff2"), url("../assets/fonts/inter-regular.ttf") format("truetype"), url("../assets/fonts/inter-regular.otf") format("opentype");
+  src: url(../assets/fonts/inter-regular.woff2) format("woff2"), url(../assets/fonts/inter-regular.ttf) format("truetype"), url(../assets/fonts/inter-regular.otf) format("opentype");
 }
 @font-face {
   font-display: swap;
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
-  src: url("../assets/fonts/inter-semibold.woff2") format("woff2"), url("../assets/fonts/inter-semibold.ttf") format("truetype"), url("../assets/fonts/inter-semibold.otf") format("opentype");
+  src: url(../assets/fonts/inter-semibold.woff2) format("woff2"), url(../assets/fonts/inter-semibold.ttf) format("truetype"), url(../assets/fonts/inter-semibold.otf) format("opentype");
 }
 @font-face {
   font-display: swap;
   font-family: "Inter";
   font-style: italic;
   font-weight: 600;
-  src: url("../assets/fonts/inter-semibolditalic.woff2") format("woff2"), url("../assets/fonts/inter-semibolditalic.ttf") format("truetype"), url("../assets/fonts/inter-semibolditalic.otf") format("opentype");
+  src: url(../assets/fonts/inter-semibolditalic.woff2) format("woff2"), url(../assets/fonts/inter-semibolditalic.ttf) format("truetype"), url(../assets/fonts/inter-semibolditalic.otf) format("opentype");
 }
 body {
   color: #403F3D;
@@ -277,7 +277,7 @@ a {
 .header__navlinks {
   display: flex;
   justify-content: center;
-  gap: 42px;
+  gap: 41px;
   flex-grow: 2;
   list-style: none;
 }
@@ -288,6 +288,7 @@ a {
   align-items: center;
   user-select: none;
   height: 24px;
+  font-weight: 600;
 }
 .header__navlink:hover {
   cursor: pointer;
