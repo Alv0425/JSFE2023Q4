@@ -380,7 +380,7 @@ a {
   flex-wrap: wrap;
   margin-top: 40px;
 }
-@media (width < 1200px) {
+@media (width < 1024px) {
   .images-grid {
     margin-top: 42px;
   }
@@ -398,7 +398,7 @@ a {
   flex-direction: column;
   gap: 40px;
 }
-@media (width < 1200px) {
+@media (width < 1024px) {
   .images-grid__column {
     width: 100%;
   }
@@ -415,7 +415,7 @@ a {
 .images-grid__container-small {
   height: 430px;
 }
-@media (width < 1200px) {
+@media (width < 1024px) {
   .images-grid__container-small {
     display: none;
   }
@@ -425,9 +425,14 @@ a {
   transition: 0.5s;
   width: 100%;
 }
-@media (width < 1200px) {
+@media (width < 1360px) {
   .images-grid__container img {
     width: 726px;
+    transform: scale(1.05);
+  }
+}
+@media (width < 1024px) {
+  .images-grid__container img {
     transform: scale(1);
   }
 }

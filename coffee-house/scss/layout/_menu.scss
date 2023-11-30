@@ -71,9 +71,10 @@
 
 .menu__content{
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(309px,1fr));
+  grid-template-columns: repeat(auto-fit,310px);
   grid-column-gap: 39.5px;
   grid-row-gap: 38px;
+  justify-content: center;
   @media (width <= 768px) {
     grid-template-columns: repeat(2, minmax(310px,1fr));
     grid-column-gap: 40px;
