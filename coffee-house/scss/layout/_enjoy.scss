@@ -6,9 +6,12 @@
   background-image: url(../assets/enjoy/img-hero.webp);
   background-size: cover;
   background-position: 50% 51%;
-  // @media (width < 1024px) {
-  //   padding: 100px 60px;
-  // }
+  @media (width < 1024px) {
+    padding: 100px 60px;
+  }
+  @media (width < 500px) {
+    padding: 60px 16px;
+  }
 }
 
 .main__section-column{
@@ -38,9 +41,9 @@
   background-image: url(../assets/icons/coffee-cup.svg);
   opacity:0;
   transition: 0.5s;
-  // @media (width < 1024px) {
-  //   opacity:1;
-  // }
+  @media (width <= 768px) {
+    opacity:1;
+  }
 }
 
 .menu-button__text{
@@ -49,7 +52,7 @@
   color: $color-text-dark;
   transform: translateX(14px);
   transition: 0.5s;
-  // @media (width < 1024px) {
-  //   transform: translateX(0px);
-  // }
+  @media (width <= 768px) {
+    transform: translateX(0px);
+  }
 }
