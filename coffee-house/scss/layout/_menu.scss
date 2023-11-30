@@ -8,27 +8,85 @@
     font-size: 60px;
     font-weight: 600;
     line-height: 124%;
+    @media (width<=648px) {
+      font-size:32px;
+      line-height: 125%;
+    }
   } 
 }
 
 .menu{
   display: flex;
   flex-direction: column;
-  gap:39px;
+  gap:41px;
   padding-bottom: 100.5px;
+  @media (width<=768px) {
+    gap:40px;
+  }
 }
 
 .menu__pagination{
   display:flex;
   justify-content: center;
   gap:16px;
+  @media (width<=648px) {
+    gap:8px;
+  }
+}
+
+.menu__refresh{
+  display: none;
+  @media (width <= 768px) {
+    position: relative;
+    display: block;
+    margin: auto;
+    border: 1px $color-border-dark solid;
+    background-image: url(../assets/icons/refresh.svg);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    &::after{
+      background-color: $color-background-container;
+      background-image: url(../assets/icons/refresh-hover.svg);;
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 50% 50%;
+      opacity: 0;
+      transition: 0.5s;
+    }
+    &:hover{
+      @media (pointer:fine) and (hover:hover) {
+        border-color: $color-background-container;
+      }
+    }
+    &:hover::after{
+      @media (pointer:fine) and (hover:hover) {
+        opacity: 1;
+      }
+    }
+    &:active::after{
+      opacity: 1;
+    }
+  }
 }
 
 .menu__content{
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(309px,1fr));
+  grid-template-columns: repeat(auto-fit,310px);
   grid-column-gap: 39.5px;
   grid-row-gap: 38px;
+  justify-content: center;
+  @media (width <= 768px) {
+    grid-template-columns: repeat(2, minmax(310px,1fr));
+    grid-column-gap: 40px;
+    grid-row-gap: 39px;
+    margin: 0 auto;
+  }
+  @media (width <= 740px) {
+    grid-template-columns: repeat(1, minmax(310px,1fr));
+  }
+  @media (width < 500px) {
+    grid-row-gap: 39px;
+  }
 }
 
 .menu-card{
@@ -40,6 +98,11 @@
   min-height: 507px;
   border-radius: 40px;
   border: 1px $color-border-light solid;
+  &-hidden{
+    @media (width <=768px) {
+      display: none;
+    }
+  }
   &:hover{
     @media (pointer:fine) and (hover:hover){
       cursor: pointer;
@@ -108,7 +171,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px 8px 8px;
+  padding: 7px 16px 7px 8px;
   border: 1px $color-border-light solid;
   background-color: transparent;
   border-radius: 100px;

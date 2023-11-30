@@ -99,6 +99,9 @@ fieldset {
   // width: 1440px;
   margin: 0 auto;
   padding: 0px 40px;
+  @media (width <= 648px) {
+    padding: 0px 16px;
+  }
 }
 
 .main-wrapper{
