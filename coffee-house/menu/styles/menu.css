@@ -107,6 +107,11 @@ fieldset {
   margin: 0 auto;
   padding: 0px 40px;
 }
+@media (width <= 648px) {
+  .wrapper {
+    padding: 0px 16px;
+  }
+}
 
 .main-wrapper {
   display: flex;
@@ -144,11 +149,23 @@ h1 {
   font-weight: 600;
   line-height: 106%;
 }
+@media (width <= 648px) {
+  h1 {
+    font-size: 42px;
+    line-height: 115%;
+  }
+}
 
 h2 {
   font-size: 60px;
   font-weight: 600;
   line-height: 123%;
+}
+@media (width <= 648px) {
+  h2 {
+    font-size: 32px;
+    line-height: 125%;
+  }
 }
 
 .title-oblique {

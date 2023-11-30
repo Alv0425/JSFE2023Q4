@@ -108,6 +108,11 @@ fieldset {
   margin: 0 auto;
   padding: 0px 40px;
 }
+@media (width <= 648px) {
+  .wrapper {
+    padding: 0px 16px;
+  }
+}
 
 .main-wrapper {
   display: flex;
@@ -145,11 +150,23 @@ h1 {
   font-weight: 600;
   line-height: 106%;
 }
+@media (width <= 648px) {
+  h1 {
+    font-size: 42px;
+    line-height: 115%;
+  }
+}
 
 h2 {
   font-size: 60px;
   font-weight: 600;
   line-height: 123%;
+}
+@media (width <= 648px) {
+  h2 {
+    font-size: 32px;
+    line-height: 125%;
+  }
 }
 
 .title-oblique {
@@ -208,6 +225,11 @@ a {
   grid-template-rows: auto 5px;
   grid-column-gap: 0px;
   grid-row-gap: 40px;
+}
+@media (width <= 1024px) {
+  .slider {
+    grid-template-columns: 60px auto 60px;
+  }
 }
 
 .slider__body {
@@ -331,6 +353,11 @@ a {
   flex-wrap: wrap;
   margin-top: 40px;
 }
+@media (width < 1200px) {
+  .images-grid {
+    margin-top: 42px;
+  }
+}
 
 .images-grid__column {
   width: calc(50% - 20px);
@@ -350,6 +377,8 @@ a {
   border-radius: 20px;
   width: 100%;
   height: 590px;
+  max-width: 726px;
+  margin: 0 auto;
 }
 .images-grid__container-small {
   height: 430px;
@@ -363,6 +392,12 @@ a {
   transform: scale(1.1);
   transition: 0.5s;
   width: 100%;
+}
+@media (width < 1200px) {
+  .images-grid__container img {
+    width: 726px;
+    transform: scale(1);
+  }
 }
 @media (pointer: fine) and (hover: hover) {
   .images-grid__container:hover img {
@@ -589,6 +624,11 @@ a {
   background-size: cover;
   background-position: 50% 51%;
 }
+@media (width < 1024px) {
+  .main__section-enjoy {
+    padding: 100px 60px;
+  }
+}
 
 .main__section-column {
   display: flex;
@@ -618,6 +658,11 @@ a {
   opacity: 0;
   transition: 0.5s;
 }
+@media (width <= 768px) {
+  .menu-button__icon {
+    opacity: 1;
+  }
+}
 
 .menu-button__text {
   font-size: 16px;
@@ -625,6 +670,11 @@ a {
   color: #403F3D;
   transform: translateX(14px);
   transition: 0.5s;
+}
+@media (width <= 768px) {
+  .menu-button__text {
+    transform: translateX(0px);
+  }
 }
 
 /* Favourites section */
@@ -651,6 +701,7 @@ a {
 @media (width < 1024px) {
   .section-app {
     gap: 100px;
+    margin-top: -1px;
   }
 }
 
@@ -660,6 +711,12 @@ a {
   flex-direction: column;
   gap: 40px;
   max-width: 630px;
+}
+@media (width <= 1024px) {
+  .section-app__info {
+    max-width: 800px;
+    width: 100%;
+  }
 }
 .section-app__info p {
   font-size: 16px;
@@ -678,11 +735,13 @@ a {
 }
 .section-app__image img {
   max-width: 630px;
+  width: 100%;
 }
 
 .section-app__buttons {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .pill-button-app {
