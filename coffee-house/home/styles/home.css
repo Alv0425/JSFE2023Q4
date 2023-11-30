@@ -409,7 +409,7 @@ a {
   border-radius: 20px;
   width: 100%;
   height: 590px;
-  max-width: 726px;
+  max-width: 690px;
   margin: 0 auto;
 }
 .images-grid__container-small {
@@ -439,6 +439,16 @@ a {
 @media (pointer: fine) and (hover: hover) {
   .images-grid__container:hover img {
     transform: scale(1);
+  }
+}
+@media (pointer: fine) and (hover: hover) and (width < 1024px) {
+  .images-grid__container:hover img {
+    transform: scale(0.95);
+  }
+}
+@media (pointer: fine) and (hover: hover) and (width < 648px) {
+  .images-grid__container:hover img {
+    transform: scale(0.9);
   }
 }
 
