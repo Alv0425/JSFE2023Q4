@@ -4,7 +4,7 @@
   font-style: normal;
 }
 
-.images-grid__container, .slider-item, .slider__button-right,
+.images-grid__container, .slider-item__wrapper, .slider-item, .slider__button-right,
 .slider__button-left, .circle-button {
   display: flex;
   justify-content: center;
@@ -231,6 +231,11 @@ a {
     grid-template-columns: 60px auto 60px;
   }
 }
+@media (width <= 648px) {
+  .slider {
+    grid-template-columns: 0px auto 0px;
+  }
+}
 
 .slider__body {
   grid-area: 1/2/2/3;
@@ -275,6 +280,12 @@ a {
 .slider__button-left .circle-button:active svg {
   stroke: #C1B6AD;
 }
+@media (width <= 648px) {
+  .slider__button-right,
+  .slider__button-left {
+    display: none;
+  }
+}
 
 .slider__pagination {
   grid-area: 2/2/3/3;
@@ -309,11 +320,27 @@ a {
   width: calc(100vw - 160px - 120px);
   min-width: 1440px;
   flex-direction: column;
+  align-items: center;
 }
 
 .slider-item__image {
   display: block;
   max-width: 480px;
+}
+@media (width <= 648px) {
+  .slider-item__image {
+    width: 100%;
+  }
+}
+
+.slider-item__wrapper {
+  flex-direction: column;
+}
+@media (width <= 648px) {
+  .slider-item__wrapper {
+    max-width: 480px;
+    width: calc(100vw - 32px);
+  }
 }
 
 .slider-item__title {
@@ -356,6 +383,11 @@ a {
 @media (width < 1200px) {
   .images-grid {
     margin-top: 42px;
+  }
+}
+@media (width < 648px) {
+  .images-grid {
+    margin-top: 40px;
   }
 }
 
@@ -629,6 +661,11 @@ a {
     padding: 100px 60px;
   }
 }
+@media (width < 500px) {
+  .main__section-enjoy {
+    padding: 60px 16px;
+  }
+}
 
 .main__section-column {
   display: flex;
@@ -704,6 +741,11 @@ a {
     margin-top: -1px;
   }
 }
+@media (width < 648px) {
+  .section-app {
+    gap: 40px;
+  }
+}
 
 .section-app__info {
   padding-top: 2px;
@@ -716,6 +758,11 @@ a {
   .section-app__info {
     max-width: 800px;
     width: 100%;
+  }
+}
+@media (width <= 648px) {
+  .section-app__info {
+    gap: 39px;
   }
 }
 .section-app__info p {
@@ -750,7 +797,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 8px;
+  gap: 7px;
   color: #403F3D;
   transition: 0.5s;
 }
@@ -800,6 +847,7 @@ a {
 .pill-button-app__label {
   display: flex;
   flex-direction: column;
+  gap: 1px;
 }
 
 .pill-button-app__text {
@@ -831,6 +879,12 @@ a {
   .footer__container {
     padding: 100px 60px 105px;
     flex-wrap: wrap;
+  }
+}
+@media (width < 500px) {
+  .footer__container {
+    padding: 60px 16px 63px;
+    gap: 38px;
   }
 }
 

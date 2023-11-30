@@ -14,6 +14,10 @@
     padding: 100px 60px 105px;
     flex-wrap: wrap;
   }
+  @media (width < 500px) {
+    padding: 60px 16px 63px;
+    gap:38px;
+  }
 }
 
 .footer__section{

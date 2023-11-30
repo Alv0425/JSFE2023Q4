@@ -437,18 +437,34 @@ a {
   font-weight: 600;
   line-height: 124%;
 }
+@media (width <= 648px) {
+  .main__section-menu h1 {
+    font-size: 32px;
+    line-height: 125%;
+  }
+}
 
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 39px;
+  gap: 41px;
   padding-bottom: 100.5px;
+}
+@media (width <= 768px) {
+  .menu {
+    gap: 40px;
+  }
 }
 
 .menu__pagination {
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+@media (width <= 648px) {
+  .menu__pagination {
+    gap: 8px;
+  }
 }
 
 .menu__refresh {
@@ -500,13 +516,18 @@ a {
   .menu__content {
     grid-template-columns: repeat(2, minmax(310px, 1fr));
     grid-column-gap: 40px;
-    grid-row-gap: 38px;
+    grid-row-gap: 39px;
     margin: 0 auto;
   }
 }
 @media (width <= 740px) {
   .menu__content {
     grid-template-columns: repeat(1, minmax(310px, 1fr));
+  }
+}
+@media (width < 500px) {
+  .menu__content {
+    grid-row-gap: 39px;
   }
 }
 
@@ -589,7 +610,7 @@ a {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px 8px 8px;
+  padding: 7px 16px 7px 8px;
   border: 1px #C1B6AD solid;
   background-color: transparent;
   border-radius: 100px;
@@ -664,6 +685,12 @@ label[for=dessert] .menu__tag-circle {
   .footer__container {
     padding: 100px 60px 105px;
     flex-wrap: wrap;
+  }
+}
+@media (width < 500px) {
+  .footer__container {
+    padding: 60px 16px 63px;
+    gap: 38px;
   }
 }
 

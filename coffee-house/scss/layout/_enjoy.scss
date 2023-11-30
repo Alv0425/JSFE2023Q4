@@ -9,6 +9,9 @@
   @media (width < 1024px) {
     padding: 100px 60px;
   }
+  @media (width < 500px) {
+    padding: 60px 16px;
+  }
 }
 
 .main__section-column{
