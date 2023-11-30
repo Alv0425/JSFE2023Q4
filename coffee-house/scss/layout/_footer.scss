@@ -10,7 +10,7 @@
   margin-bottom: 40px;
   background-color: $color-background-container;
   border-radius: 40px;
-  @media (width < 1024px) {
+  @media (width < 1200px) {
     padding: 100px 60px;
     flex-wrap: wrap;
   }
