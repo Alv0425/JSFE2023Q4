@@ -3,10 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   @media (width < 1024px) {
     gap: 100px;
     margin-top: -1px;
+    flex-wrap: wrap;
   }
   @media (width < 648px) {
     gap: 40px;
