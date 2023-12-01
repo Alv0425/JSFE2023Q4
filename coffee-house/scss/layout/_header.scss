@@ -27,6 +27,7 @@
   height: 59px;
   align-items: center;
   padding-bottom: 5px;
+  font-size: 16px;
   @media (width <= 768px) {
     position: fixed;
     z-index: 3;
@@ -43,6 +44,8 @@
     transform: translateX(100%);
     opacity: 0;
     transition: 1s;
+    font-size: 32px;
+    line-height: 125%
   }
 }
 
@@ -50,6 +53,9 @@
   display: block;
   position: relative;
   height: 28px;
+  @media (width <= 768px) {
+    height: auto;
+  }
   &:hover{
     @media (hover:hover) and (pointer:fine){
       cursor: pointer;
@@ -91,6 +97,11 @@
   height: 24px;
   background-image: url(../assets/icons/coffee-cup.svg);
   background-repeat: no-repeat;
+  @media (width <= 768px) {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+  }
 }
 
 .header__navlinks{
@@ -104,6 +115,7 @@
     align-items: center;
     flex-grow: 0;
     gap:60px;
+    margin-top: 80px;
   }
 }
 
@@ -114,6 +126,9 @@
   user-select: none;
   height: 24px;
   font-weight: 600;
+  @media (width <= 768px) {
+    height: auto;
+  }
   &:hover{
     @media (hover:hover) and (pointer:fine) {
       cursor: pointer;
@@ -146,8 +161,11 @@
   display: flex;
   align-items: center;
   gap: 8.5px;
-  font-size: 16px;
+  font-size: inherit;
   font-weight: 600;
+  @media (width <= 768px) {
+    gap:16px;
+  }
 }
 
 .header__burger-button{
