@@ -61,7 +61,9 @@ button{
   font-family: inherit;
   color: inherit;
   &:hover{
-    cursor: pointer;
+    @media (hover:hover) and (pointer:fine) {
+      cursor: pointer;
+    }  
   }
   &:disabled{
     pointer-events: none;

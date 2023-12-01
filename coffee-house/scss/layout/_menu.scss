@@ -8,10 +8,17 @@
     font-size: 60px;
     font-weight: 600;
     line-height: 124%;
-    @media (width<=648px) {
+    @media (width < 768px) {
+      font-size: clamp(32px, -38.64px + 12.844vw, 60px);
+    }
+    @media (width<=550px) {
       font-size:32px;
       line-height: 125%;
     }
+    // @media (width<=648px) {
+    //   font-size:32px;
+    //   line-height: 125%;
+    // }
   } 
 }
 

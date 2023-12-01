@@ -69,8 +69,10 @@ button {
   font-family: inherit;
   color: inherit;
 }
-button:hover {
-  cursor: pointer;
+@media (hover: hover) and (pointer: fine) {
+  button:hover {
+    cursor: pointer;
+  }
 }
 button:disabled {
   pointer-events: none;
@@ -149,7 +151,12 @@ h1 {
   font-weight: 600;
   line-height: 106%;
 }
-@media (width <= 648px) {
+@media (width < 768px) {
+  h1 {
+    font-size: clamp(42px, 13.6px + 7.6vw, 72px);
+  }
+}
+@media (width <= 550px) {
   h1 {
     font-size: 42px;
     line-height: 115%;
@@ -161,7 +168,12 @@ h2 {
   font-weight: 600;
   line-height: 123%;
 }
-@media (width <= 648px) {
+@media (width < 768px) {
+  h2 {
+    font-size: clamp(32px, -38.64px + 12.844vw, 60px);
+  }
+}
+@media (width <= 550px) {
   h2 {
     font-size: 32px;
     line-height: 125%;
@@ -272,8 +284,10 @@ a {
   position: relative;
   height: 28px;
 }
-.header__button:hover {
-  cursor: pointer;
+@media (hover: hover) and (pointer: fine) {
+  .header__button:hover {
+    cursor: pointer;
+  }
 }
 .header__button::after {
   content: "";
@@ -336,8 +350,10 @@ a {
   height: 24px;
   font-weight: 600;
 }
-.header__navlink:hover {
-  cursor: pointer;
+@media (hover: hover) and (pointer: fine) {
+  .header__navlink:hover {
+    cursor: pointer;
+  }
 }
 .header__navlink::after {
   content: "";
@@ -437,7 +453,12 @@ a {
   font-weight: 600;
   line-height: 124%;
 }
-@media (width <= 648px) {
+@media (width < 768px) {
+  .main__section-menu h1 {
+    font-size: clamp(32px, -38.64px + 12.844vw, 60px);
+  }
+}
+@media (width <= 550px) {
   .main__section-menu h1 {
     font-size: 32px;
     line-height: 125%;
