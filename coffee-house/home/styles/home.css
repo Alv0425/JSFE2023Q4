@@ -766,7 +766,7 @@ a {
   opacity: 0;
   transition: 0.5s;
 }
-@media (hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 768px) {
   .menu-button__icon {
     opacity: 1;
   }
@@ -779,7 +779,7 @@ a {
   transform: translateX(14px);
   transition: 0.5s;
 }
-@media (hover: none) {
+@media (hover: none) and (pointer: coarse) and (width <= 768px) {
   .menu-button__text {
     transform: translateX(0px);
   }
