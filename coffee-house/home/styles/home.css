@@ -435,12 +435,6 @@ a {
 }
 @media (width <= 768px) {
   .images-grid__container-small {
-    aspect-ratio: auto;
-    height: 430px;
-  }
-}
-@media (width <= 768px) {
-  .images-grid__container-small {
     display: none;
   }
 }
@@ -458,6 +452,7 @@ a {
   .images-grid__container img {
     transform: scale(1);
     width: 726px;
+    min-width: 726px;
   }
 }
 @media (pointer: fine) and (hover: hover) {
@@ -766,7 +761,7 @@ a {
   opacity: 0;
   transition: 0.5s;
 }
-@media (hover: none) {
+@media (hover: none) and (pointer: coarse) {
   .menu-button__icon {
     opacity: 1;
   }
@@ -779,7 +774,7 @@ a {
   transform: translateX(14px);
   transition: 0.5s;
 }
-@media (hover: none) {
+@media (hover: none) and (pointer: coarse) {
   .menu-button__text {
     transform: translateX(0px);
   }
