@@ -43,7 +43,7 @@
   background-image: url(../assets/icons/coffee-cup.svg);
   opacity:0;
   transition: 0.5s;
-  @media (hover: none) and (pointer:coarse) and (width <= 768px) {
+  @media (hover: none) and (pointer: coarse){
     opacity:1;
   }
 }
@@ -54,7 +54,7 @@
   color: $color-text-dark;
   transform: translateX(14px);
   transition: 0.5s;
-  @media (hover: none) and (pointer:coarse) and (width <= 768px) {
+  @media (hover: none) and (pointer: coarse){
     transform: translateX(0px);
   }
 }
