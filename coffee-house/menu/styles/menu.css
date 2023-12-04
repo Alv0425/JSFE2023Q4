@@ -423,22 +423,6 @@ a {
     border: 1px #665F55 solid;
     transition: 0.5s;
   }
-}
-@media (width <= 768px) and (pointer: fine) and (hover: hover) {
-  .header__burger-button:hover {
-    background-color: #665F55;
-  }
-  .header__burger-button:hover span span {
-    background-color: #E1D4C9;
-  }
-}
-@media (width <= 768px) {
-  .header__burger-button:active {
-    background-color: #665F55;
-  }
-  .header__burger-button:active span span {
-    background-color: #E1D4C9;
-  }
   .header__burger-button-container {
     display: flex;
     flex-direction: column;
@@ -664,6 +648,7 @@ a {
   border-radius: 100px;
   color: #403F3D;
   transition: 0.5s;
+  font-weight: 600;
 }
 .menu__tag-circle {
   display: block;
@@ -683,15 +668,6 @@ a {
   .menu__tag:hover .menu__tag-circle {
     background-color: #E1D4C9;
   }
-}
-.menu__tag:active {
-  background-color: #665F55;
-  color: #E1D4C9;
-  border-color: transparent;
-  cursor: pointer;
-}
-.menu__tag:active .menu__tag-circle {
-  background-color: #E1D4C9;
 }
 
 .menu__pagination label[for=coffee] {
@@ -786,9 +762,6 @@ label[for=dessert] .menu__tag-circle {
   background-color: #E1D4C9;
   transition: 0.5s;
 }
-.footer__section ul li a:active {
-  opacity: 0.7;
-}
 @media (pointer: fine) and (hover: hover) {
   .footer__section ul li a:hover::after {
     transform: scaleX(1);
@@ -863,9 +836,6 @@ label[for=dessert] .menu__tag-circle {
   .footer__social-buttons .circle-button:hover::after {
     opacity: 1;
   }
-}
-.footer__social-buttons .circle-button:active::after {
-  opacity: 1;
 }
 
 /*# sourceMappingURL=menu.css.map */
