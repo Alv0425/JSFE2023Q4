@@ -177,24 +177,24 @@
     align-self: center;
     border: 1px $color-border-dark solid;
     transition: 0.5s;
-    &:hover{
-      @media (pointer:fine) and (hover:hover){
-        background-color: $color-background-container;
-        span{
-          span{
-            background-color: $color-text-light;
-          }
-        }
-      }
-    }
-    &:active{
-      background-color: $color-background-container;
-      span{
-        span{
-          background-color: $color-text-light;
-        }
-      }
-    }
+    // &:hover{
+    //   @media (pointer:fine) and (hover:hover){
+    //     background-color: $color-background-container;
+    //     span{
+    //       span{
+    //         background-color: $color-text-light;
+    //       }
+    //     }
+    //   }
+    // }
+    // &:active{
+    //   background-color: $color-background-container;
+    //   span{
+    //     span{
+    //       background-color: $color-text-light;
+    //     }
+    //   }
+    // }
     &-container{
       display: flex;
       flex-direction: column;

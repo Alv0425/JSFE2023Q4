@@ -184,6 +184,7 @@
   border-radius: 100px;
   color: $color-text-dark;
   transition: 0.5s;
+  font-weight: 600;
   &-circle{
     display: block;
     width: 30px;
@@ -203,15 +204,15 @@
       }
     }
   }
-  &:active{
-    background-color: $color-background-container;
-    color: $color-text-light;
-    border-color: transparent;
-    cursor: pointer;
-    .menu__tag-circle{
-      background-color: $color-background-body;
-    }
-  }
+  // &:active{
+  //   background-color: $color-background-container;
+  //   color: $color-text-light;
+  //   border-color: transparent;
+  //   cursor: pointer;
+  //   .menu__tag-circle{
+  //     background-color: $color-background-body;
+  //   }
+  // }
 }
 
 // #coffee:checked ~ .menu__pagination label[for="coffee"],
