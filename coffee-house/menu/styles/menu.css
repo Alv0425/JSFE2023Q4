@@ -531,11 +531,6 @@ a {
     opacity: 1;
   }
 }
-@media (width <= 768px) {
-  .menu__refresh:active::after {
-    opacity: 1;
-  }
-}
 
 .menu__content {
   display: grid;
