@@ -59,9 +59,9 @@
           background-color: $color-text-light;
           transition: 0.5s;
         }
-        &:active{
-          opacity: 0.7;
-        }
+        // &:active{
+        //   opacity: 0.7;
+        // }
         &:hover::after{
           @media (pointer:fine) and (hover:hover){
             transform: scaleX(1);
@@ -140,8 +140,8 @@
         opacity: 1;
       }
     }
-    &:active::after{
-      opacity: 1;
-    }
+    // &:active::after{
+    //   opacity: 1;
+    // }
   }
 }
