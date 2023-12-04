@@ -42,10 +42,16 @@
   height:20px;
   background-image: url(../assets/icons/coffee-cup.svg);
   opacity:0;
-  transition: 0.5s;
-  @media (hover: none) and (pointer: coarse){
+  @media (width <= 768px) {
     opacity:1;
   }
+  transition: 0.5s;
+  @media (hover: hover) and (pointer: fine){
+    opacity:0;
+  }
+  // @media (hover: none), (pointer: coarse){
+  //   opacity:1;
+  // }
 }
 
 .menu-button__text{
@@ -53,8 +59,11 @@
   font-weight: 600;
   color: $color-text-dark;
   transform: translateX(14px);
+  @media (width <= 768px) {
+    transform: translateX(0);
+  }
   transition: 0.5s;
-  @media (hover: none) and (pointer: coarse){
-    transform: translateX(0px);
+  @media (hover: hover) and (pointer: fine){
+    transform: translateX(14px);
   }
 }
