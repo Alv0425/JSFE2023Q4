@@ -45,12 +45,12 @@
           }
         }
       }
-      &:active{
-        background-color: $color-background-container;
-        svg{
-          stroke : $color-border-light;
-        }
-      }
+      // &:active{
+      //   background-color: $color-background-container;
+      //   svg{
+      //     stroke : $color-border-light;
+      //   }
+      // }
     }
     @media (width<=648px){
       display: none;
