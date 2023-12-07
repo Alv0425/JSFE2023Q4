@@ -284,14 +284,6 @@ a {
     stroke: #C1B6AD;
   }
 }
-.slider__button-right .circle-button:active,
-.slider__button-left .circle-button:active {
-  background-color: #665F55;
-}
-.slider__button-right .circle-button:active svg,
-.slider__button-left .circle-button:active svg {
-  stroke: #C1B6AD;
-}
 @media (width <= 648px) {
   .slider__button-right,
   .slider__button-left {
