@@ -52,17 +52,10 @@
       </section>
       <section id="favourites" class="main__section main__section-favourites">
         <h2>Choose your <span class="title-oblique">favorite</span> coffee</h2>
-        <div class="slider">
+        <div class="slider slide-1">
+          <div class="slider__item"></div>
           <div class="slider__body">
             <div class="slider__items-container">
-              <div class="slider-item">
-                <div class="slider-item__wrapper">
-                  <img class="slider-item__image" src="./home/assets/favourites/coffee-slider-3.png" alt="Ice coffee">
-                  <h3 class="slider-item__title">Ice coffee</h3>
-                  <p class="slider-item__description">A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.</p>
-                  <p class="slider-item__price">&#36;4.50</p>
-                </div>
-              </div>
               <div class="slider-item">
                 <div class="slider-item__wrapper">
                   <img class="slider-item__image" src="./home/assets/favourites/coffee-slider-1.png" alt="Smores Frappuccino">
@@ -79,17 +72,25 @@
                   <p class="slider-item__price">&#36;5.00</p>
                 </div>
               </div>
+              <div class="slider-item">
+                <div class="slider-item__wrapper">
+                  <img class="slider-item__image" src="./home/assets/favourites/coffee-slider-3.png" alt="Ice coffee">
+                  <h3 class="slider-item__title">Ice coffee</h3>
+                  <p class="slider-item__description">A popular summer drink that tones and invigorates. Prepared from coffee, milk and ice.</p>
+                  <p class="slider-item__price">&#36;4.50</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="slider__button-left">
-            <button class="circle-button">
+            <button id='button-left' class="circle-button">
               <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18.5 12H6M6 12L12 6M6 12L12 18" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
           <div class="slider__button-right">
-            <button class="circle-button">
+            <button id="button-right" class="circle-button">
               <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 12H18.5M18.5 12L12.5 6M18.5 12L12.5 18" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -167,6 +168,7 @@
     </div>
   </footer>
   <script src="./home/js/burger.js" type="module"></script>
+  <script src="./home/js/slider.js" type="module"></script>
   <script src="./home/js/home.js" type="module"></script>
 </body>
 </html>
