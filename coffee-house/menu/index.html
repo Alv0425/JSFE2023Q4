@@ -14,17 +14,17 @@
 <body>
   <header class="header">
     <div class="wrapper header__wrapper">
-      <div class="header__logo"><a href="../home"></a></div>
+      <div class="header__logo"><a href="../"></a></div>
       <nav class="header__nav">
         <ul class="header__navlinks">
-          <li class="header__navlink"><a href="./../home/#favourites">Favorite coffee</a></li>
-          <li class="header__navlink"><a href="./../home/#about">About</a></li>
-          <li class="header__navlink"><a href="./../home/#mobile-app">Mobile app</a></li>
+          <li class="header__navlink"><a href="../#favourites">Favorite coffee</a></li>
+          <li class="header__navlink"><a href="../#about">About</a></li>
+          <li class="header__navlink"><a href="../#mobile-app">Mobile app</a></li>
           <li class="header__navlink"><a href="#contacts">Contact us</a></li>
         </ul>
-        <a href="../menu/" class="header__button header__button-menu header__button-active">Menu<span></span></a>
+        <p class="header__button header__button-menu header__button-active">Menu<span></span></p>
       </nav>
-      <button class="header__burger-button circle-button">
+      <button id="burger-button" class="header__burger-button circle-button">
         <span class="header__burger-button-container">
           <span class="header__burger-button-bar-top"></span>
           <span class="header__burger-button-bar-bottom"></span>
@@ -140,5 +140,7 @@
       </section>
     </div>
   </footer>
+  <script src="./js/burger.js" type="module"></script>
+  <script src="./js/menu.js" type="module"></script>
 </body>
 </html>
