@@ -111,3 +111,59 @@ fieldset {
   flex-direction: column;
   gap: 100px;
 }
+
+.body-locked{
+  position: fixed;
+  overflow-y: scroll;
+}
+
+img {
+  pointer-events: none;
+}
+
+
+
+@keyframes fade-out {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@keyframes fade-in{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+.overlay{
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  padding: 40px;
+  @extend %flex-center;
+  background-color: $color-background-backdrop;
+  animation: fade-in 0.5s ease;
+}
+
+.fade-out{
+  animation: fade-out 0.5s ease;
+  opacity:0;
+}
+
+.fade-in{
+  animation: fade-in 0.5s ease;
+  opacity:1;
+}
+
+.wrapper{
+  animation: fade-in 0.3s ease;
+}
+
