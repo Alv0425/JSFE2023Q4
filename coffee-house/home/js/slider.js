@@ -31,11 +31,13 @@ export function initSlider() {
       slider.classList.add(`slide-${currentStatus}`);
       sliderBars.forEach(bar => {
           bar.className = 'slider__pagination-progress';
+          bar.style.width = 0;
       });   
-      setTimeout(() => {
-          sliderBars[previousStatus - 1].style.width = 0;
-      }, 5);
       setTimeout(()=>{
+          sliderBars.forEach(bar => {
+            bar.className = 'slider__pagination-progress';
+            bar.style.width = 0;
+          });  
           clearInterval(timer);
           fillState = 0;
           let curBar = sliderBars[currentStatus - 1];  
@@ -49,10 +51,10 @@ export function initSlider() {
           currentBar = modBar;
           timer = setInterval(() => {
             if (window.getComputedStyle(modBar, null).getPropertyValue("animation-play-state") == "running") {
-                fillState += 10;
+                fillState += 2;
                 currentBar.style.width = `${fillState}%`
             }
-          }, 500);
+          }, 100);
           curBar.replaceWith(modBar);
       },10);
   }
@@ -74,8 +76,9 @@ export function initSlider() {
     imagesLine.style.removeProperty('transform');
     currentBar.classList.remove('paused');
     touchend = event.changedTouches[0].screenX;
+    touchesType();
     setTimeout(()=>{
-      touchesType();
+      
     },150);
   }, false); 
   

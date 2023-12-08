@@ -147,6 +147,14 @@ img {
     opacity: 1;
   }
 }
+@keyframes static-an {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .overlay {
   position: fixed;
   top: 0;
@@ -378,9 +386,10 @@ a {
   background-color: #665F55;
   width: 0%;
   transition: 0.2s;
+  transition-timing-function: linear;
 }
 .slider__pagination-progress-selected {
-  animation: 5s linear load;
+  animation: 5s linear static-an;
   width: 100%;
   transition: 0.2s;
 }

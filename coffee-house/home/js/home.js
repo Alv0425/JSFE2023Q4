@@ -3,5 +3,5 @@ import { initSlider } from "./slider.js";
 
 window.onload = () => {
  initBurger();
- initSlider();s
+ initSlider();
 }
