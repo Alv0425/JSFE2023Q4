@@ -111,3 +111,12 @@ fieldset {
   flex-direction: column;
   gap: 100px;
 }
+
+.body-locked{
+  position: fixed;
+  overflow-y: scroll;
+}
+
+img {
+  pointer-events: none;
+}

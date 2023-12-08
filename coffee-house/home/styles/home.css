@@ -122,6 +122,15 @@ fieldset {
   gap: 100px;
 }
 
+.body-locked {
+  position: fixed;
+  overflow-y: scroll;
+}
+
+img {
+  pointer-events: none;
+}
+
 @font-face {
   font-display: swap;
   font-family: "Inter";
@@ -367,6 +376,7 @@ a {
 .slider-item__image {
   display: block;
   max-width: 480px;
+  pointer-events: none;
 }
 @media (width <= 648px) {
   .slider-item__image {
@@ -568,6 +578,8 @@ a {
     gap: 100px;
     width: 100%;
     height: 100vh;
+    padding-bottom: 120px;
+    overflow-y: scroll;
     transform: translateX(100%);
     opacity: 0;
     transition: 1s;
