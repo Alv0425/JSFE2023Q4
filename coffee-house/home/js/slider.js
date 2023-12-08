@@ -32,7 +32,6 @@ export function initSlider() {
       sliderBars.forEach(bar => {
           bar.className = 'slider__pagination-progress';
       });   
-      // sliderBars[previousStatus - 1].style.width = `${fillState}%`;
       setTimeout(() => {
           sliderBars[previousStatus - 1].style.width = 0;
       }, 5);
