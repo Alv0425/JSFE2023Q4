@@ -141,6 +141,15 @@ img {
   }
 }
 
+@keyframes static-an{
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
 .overlay{
   position: fixed;
   top:0;

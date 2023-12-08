@@ -30,7 +30,6 @@ export class Product {
     card.append(cardImageContainer, cardTitle, cardDescription, cardPrice);
     card.onclick = () => {
       this.openModal();
-      console.log('click');
     }
     return card;
   }
@@ -38,7 +37,9 @@ export class Product {
     let body = document.querySelector('body');
     let modalOverlay = this.createNode('div','overlay');
     let modal = this.createNode('div','menu-modal');
-    
+    let scrollY = window.scrollY;
+    body.classList.add('body-locked');
+    body.style.top = `-${scrollY}px`;
     let modalColumns = ['',''].map(el => this.createNode('div', 'menu-modal__container'));
     let modalImageContainer = this.createNode('div','menu-modal__image');
     let modalImage = this.createNode('img');
@@ -60,7 +61,6 @@ export class Product {
       let input = this.createNode('INPUT','menu-modal__input');
       input.setAttribute('type', 'radio');
       input.setAttribute('id', el);
-      console.log(this.sizes[el]['add-price']*1);
       input.value = this.sizes[el]['add-price']*1;
       input.name = 'size';
       return input;
@@ -123,26 +123,32 @@ export class Product {
     modalOverlay.append(modal);
     body.append(modalOverlay);
     modalClose.onclick = () => {
-      modalOverlay.classList.add('fade-out');
-      setTimeout(() => {modalOverlay.remove()},500);
+      closeModal();
     }
 
     [...addInputs,...sizeInputs].forEach(input => {
-      console.log(input.value * 1)
       input.oninput = () => {
         let totalPriceAddition = 0;
         [...addInputs,...sizeInputs].forEach((input)=>{
-          console.log(input.value*1)
           totalPriceAddition += input.checked ?input.value*1 : 0;
         },0);
         let totalPrice = (this.price * 1 + totalPriceAddition);
         modalPricePrice.innerHTML = `&#36;${parseFloat(totalPrice).toFixed(2)}`;
       }
     })
-    modalOverlay.onclick = (e) => {
-      if (!modal.contains(e.target)&&!modalClose.contains(e.target)) {
+    function closeModal(){
+      body.style.removeProperty("top");
+        body.classList.remove('body-locked')
+        window.scrollTo({
+          top: scrollY,
+          behavior: "instant"
+        });
         modalOverlay.classList.add('fade-out');
         setTimeout(() => {modalOverlay.remove()},500);
+    }
+    modalOverlay.onclick = (e) => {
+      if (!modal.contains(e.target)&&!modalClose.contains(e.target)) {
+        closeModal();
       }
     }
     modalForm.onsubmit = (e) => {
