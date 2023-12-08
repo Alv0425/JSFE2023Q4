@@ -79,21 +79,36 @@
 .menu__content{
   display: grid;
   grid-template-columns: repeat(auto-fit,310px);
+  grid-auto-rows: 509px;
   grid-column-gap: 39.5px;
   grid-row-gap: 38px;
+  min-height: 1052px;
   justify-content: center;
   @media (width <= 768px) {
     grid-template-columns: repeat(2, minmax(310px,1fr));
     grid-column-gap: 40px;
     grid-row-gap: 39px;
     margin: 0 auto;
+    .menu-card:nth-child(n + 5){
+      display: none;
+    }
   }
   @media (width <= 740px) {
     grid-template-columns: repeat(1, minmax(310px,1fr));
   }
   @media (width < 500px) {
     grid-row-gap: 39px;
+  } 
+}
+
+.menu__content-extended{
+  .menu-card:nth-child(n + 5){
+    display: flex;
   }
+}
+
+.menu__content-extended ~ .menu__refresh{
+  display: none;
 }
 
 .menu-card{
@@ -215,20 +230,9 @@
   // }
 }
 
-// #coffee:checked ~ .menu__pagination label[for="coffee"],
-// #tea:checked ~ .menu__pagination label[for="tea"],
-// #dessert:checked ~ .menu__pagination label[for="dessert"]{
-//   background-color: $color-background-container;
-//   color: $color-text-light;
-//   border-color: transparent;
-//   pointer-events: none;
-//   .menu__tag-circle{
-//     background-color: $color-background-body;
-//   }
-// }
-
-
-.menu__pagination label[for="coffee"]{
+#coffee:checked ~ .menu__pagination label[for="coffee"],
+#tea:checked ~ .menu__pagination label[for="tea"],
+#dessert:checked ~ .menu__pagination label[for="dessert"]{
   background-color: $color-background-container;
   color: $color-text-light;
   border-color: transparent;
@@ -237,6 +241,17 @@
     background-color: $color-background-body;
   }
 }
+
+
+// .menu__pagination label[for="coffee"]{
+//   background-color: $color-background-container;
+//   color: $color-text-light;
+//   border-color: transparent;
+//   pointer-events: none;
+//   .menu__tag-circle{
+//     background-color: $color-background-body;
+//   }
+// }
 
 label[for="coffee"]{
   .menu__tag-circle{

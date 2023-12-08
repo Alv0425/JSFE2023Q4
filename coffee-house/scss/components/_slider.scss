@@ -135,6 +135,7 @@
   .slider-item__image{
     display: block;
     max-width: 480px;
+    pointer-events: none;
     @media (width<=648px){
       width: 100%;
     }
