@@ -160,6 +160,9 @@ img {
   @extend %flex-center;
   background-color: $color-background-backdrop;
   animation: fade-in 0.5s ease;
+  @media (width <= 760px) {
+    padding:19px;
+  }
 }
 
 .fade-out{

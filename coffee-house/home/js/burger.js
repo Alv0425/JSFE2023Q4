@@ -51,6 +51,7 @@ export function initBurger() {
           event.preventDefault();
           handleCloseMenu();
           if (menuButton.contains(event.target)) {
+            body.classList.remove("fade-in");
             body.classList.add("fade-out");
           }
           function waitAnimation() {

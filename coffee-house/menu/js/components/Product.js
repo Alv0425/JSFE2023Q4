@@ -14,9 +14,24 @@ export class Product {
     return newNode;
   }
   createCard(){
+    function addLoader(container, img) {
+      const loader = document.createElement('div');
+      loader.className = 'loader';
+      const loaderContainer = document.createElement('div');
+      loaderContainer.className = 'loader__container';
+      const loaderCeter = document.createElement('div');
+      loaderCeter.className ='loader__center';
+      loaderContainer.append(loaderCeter);
+      loader.append(loaderContainer);
+      container.append(loader);
+      img.onload = () => {
+        loader.classList.add('fade-out');
+      };
+    }
     let card = this.createNode('div','menu-card', 'fade-in');
     let cardImageContainer = this.createNode('div', 'menu-card__image');
     let cardImage = this.createNode('img');
+
     let cardTitle = this.createNode('h3','menu-card__title');
     let cardDescription = this.createNode('p','menu-card__description');
     let cardPrice = this.createNode('p', 'menu-card__price');
@@ -27,6 +42,7 @@ export class Product {
     cardDescription.textContent = this.description;
     cardPrice.innerHTML = '&#36;' + this.price;
     cardImageContainer.append(cardImage);
+    addLoader(cardImageContainer, cardImage) 
     card.append(cardImageContainer, cardTitle, cardDescription, cardPrice);
     card.onclick = () => {
       this.openModal();
@@ -40,6 +56,8 @@ export class Product {
     let scrollY = window.scrollY;
     body.classList.add('body-locked');
     body.style.top = `-${scrollY}px`;
+    body.style.right = '0px';
+    body.style.left = '0px';
     let modalColumns = ['',''].map(el => this.createNode('div', 'menu-modal__container'));
     let modalImageContainer = this.createNode('div','menu-modal__image');
     let modalImage = this.createNode('img');
@@ -125,19 +143,10 @@ export class Product {
     modalClose.onclick = () => {
       closeModal();
     }
-
-    [...addInputs,...sizeInputs].forEach(input => {
-      input.oninput = () => {
-        let totalPriceAddition = 0;
-        [...addInputs,...sizeInputs].forEach((input)=>{
-          totalPriceAddition += input.checked ?input.value*1 : 0;
-        },0);
-        let totalPrice = (this.price * 1 + totalPriceAddition);
-        modalPricePrice.innerHTML = `&#36;${parseFloat(totalPrice).toFixed(2)}`;
-      }
-    })
     function closeModal(){
       body.style.removeProperty("top");
+      body.style.removeProperty("left");
+      body.style.removeProperty("right");
         body.classList.remove('body-locked')
         window.scrollTo({
           top: scrollY,
@@ -151,8 +160,13 @@ export class Product {
         closeModal();
       }
     }
-    modalForm.onsubmit = (e) => {
-      e.preventDefault();
+    modalForm.onchange = () => {
+      let totalPriceAddition = 0;
+        [...addInputs,...sizeInputs].forEach((input)=>{
+          totalPriceAddition += input.checked ?input.value*1 : 0;
+        },0);
+        let totalPrice = (this.price * 1 + totalPriceAddition);
+        modalPricePrice.innerHTML = `&#36;${parseFloat(totalPrice).toFixed(2)}`;
     }
   }
 }
