@@ -14,9 +14,24 @@ export class Product {
     return newNode;
   }
   createCard(){
+    function addLoader(container, img) {
+      const loader = document.createElement('div');
+      loader.className = 'loader';
+      const loaderContainer = document.createElement('div');
+      loaderContainer.className = 'loader__container';
+      const loaderCeter = document.createElement('div');
+      loaderCeter.className ='loader__center';
+      loaderContainer.append(loaderCeter);
+      loader.append(loaderContainer);
+      container.append(loader);
+      img.onload = () => {
+        loader.classList.add('fade-out');
+      };
+    }
     let card = this.createNode('div','menu-card', 'fade-in');
     let cardImageContainer = this.createNode('div', 'menu-card__image');
     let cardImage = this.createNode('img');
+
     let cardTitle = this.createNode('h3','menu-card__title');
     let cardDescription = this.createNode('p','menu-card__description');
     let cardPrice = this.createNode('p', 'menu-card__price');
@@ -27,6 +42,7 @@ export class Product {
     cardDescription.textContent = this.description;
     cardPrice.innerHTML = '&#36;' + this.price;
     cardImageContainer.append(cardImage);
+    addLoader(cardImageContainer, cardImage) 
     card.append(cardImageContainer, cardTitle, cardDescription, cardPrice);
     card.onclick = () => {
       this.openModal();

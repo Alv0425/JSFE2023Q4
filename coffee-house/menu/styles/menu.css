@@ -4,7 +4,7 @@
   font-style: normal;
 }
 
-.menu-card__image, .menu-modal__circle, .circle-button, .overlay {
+.loader__container, .loader, .menu-card__image, .menu-modal__circle, .circle-button, .overlay {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,6 +163,11 @@ img {
   padding: 40px;
   background-color: rgba(64, 63, 61, 0.8);
   animation: fade-in 0.5s ease;
+}
+@media (width <= 760px) {
+  .overlay {
+    padding: 19px;
+  }
 }
 
 .fade-out {
@@ -392,18 +397,25 @@ a {
 }
 
 .menu-modal__option {
-  padding: 8px 16px 8px 8px;
+  padding: 7px 16px 7px 8px;
   display: flex;
   align-items: center;
   gap: 8px;
   border: 1px #C1B6AD solid;
   border-radius: 100px;
+  transition: 0.3s;
 }
 .menu-modal__option span {
   font-family: Inter;
   font-size: 16px;
   font-weight: 600;
   line-height: 150%;
+  transition: 0.3s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .menu-modal__option:hover {
+    cursor: pointer;
+  }
 }
 
 .menu-modal__circle {
@@ -442,6 +454,10 @@ a {
   line-height: 140%;
 }
 
+.menu-modal__footnote {
+  margin-top: 0;
+}
+
 .menu-modal__icon {
   width: 16px;
   height: 16px;
@@ -457,6 +473,14 @@ a {
   font-size: 16px;
   font-weight: 600;
   line-height: 150%;
+  transition: 0.5s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .menu-modal__button:hover {
+    background-color: #665F55;
+    color: #E1D4C9;
+    cursor: pointer;
+  }
 }
 
 /* Header */
@@ -776,6 +800,7 @@ a {
 }
 
 .menu__content {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, 310px);
   grid-auto-rows: 509px;
@@ -839,6 +864,7 @@ a {
 }
 
 .menu-card__image {
+  position: relative;
   overflow: hidden;
   width: 100%;
   border-radius: 40px;
@@ -848,6 +874,7 @@ a {
   display: block;
   transform: scale(1.1);
   transition: 0.7s;
+  animation: fade-in 0.3s ease;
 }
 
 .menu-card__price,
@@ -945,6 +972,36 @@ label[for=tea] .menu__tag-circle {
 
 label[for=dessert] .menu__tag-circle {
   background-image: url(../assets/icons/dessert.svg);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #E1D4C9;
+}
+
+.loader__container {
+  width: 100px;
+  height: 100px;
+  background-image: url(../assets/icons/heart-loader.svg);
+  background-size: contain;
+}
+
+.loader__center {
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/icons/cup-loader.svg);
+  animation: rotate 3s linear infinite;
+  background-size: contain;
 }
 
 .footer {
