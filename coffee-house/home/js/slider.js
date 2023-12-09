@@ -29,10 +29,10 @@ export function initSlider() {
   function setSliderState(){
       const sliderBars = document.querySelectorAll('.slider__pagination-progress');
       slider.classList.add(`slide-${currentStatus}`);
-      sliderBars.forEach(bar => {
-          bar.className = 'slider__pagination-progress';
-          bar.style.width = 0;
-      });   
+      // sliderBars.forEach(bar => {
+      //     bar.className = 'slider__pagination-progress';
+      //     bar.style.width = 0;
+      // });   
       setTimeout(()=>{
           sliderBars.forEach(bar => {
             bar.className = 'slider__pagination-progress';
@@ -43,18 +43,30 @@ export function initSlider() {
           let curBar = sliderBars[currentStatus - 1];  
           let modBar = curBar.cloneNode(true);
           modBar.classList.add('slider__pagination-progress-selected');
-          modBar.addEventListener('animationend', () => {nextSlide(); console.log('animation');},{
+          modBar.addEventListener('animationend', () => { nextSlide(); },{
               passive: true,
               capture: false,
               once: true
           });    
           currentBar = modBar;
-          timer = setInterval(() => {
-            if (window.getComputedStyle(modBar, null).getPropertyValue("animation-play-state") == "running") {
-                fillState += 2;
-                currentBar.style.width = `${fillState}%`
+          modBar.addEventListener('animationstart', () => { 
+            let animDuration = window.getComputedStyle(modBar, null).getPropertyValue("animation-duration");
+            let interval = 100;
+            if (animDuration.endsWith('ms')) {
+              animDuration = animDuration.replace('ms','');
+              animDuration = animDuration * 1;
+            } else if (animDuration.endsWith('s')) {
+              animDuration = animDuration.replace('s','');
+              animDuration = animDuration * 1000;
             }
-          }, 100);
+            interval = Math.round(animDuration * 2 / 100);
+            timer = setInterval(() => {
+              if (window.getComputedStyle(modBar, null).getPropertyValue("animation-play-state") == "running") {
+                  fillState += 2;
+                  currentBar.style.width = `${fillState}%`
+              }
+            }, interval);
+           }); 
           curBar.replaceWith(modBar);
       },10);
   }
@@ -77,9 +89,6 @@ export function initSlider() {
     currentBar.classList.remove('paused');
     touchend = event.changedTouches[0].screenX;
     touchesType();
-    setTimeout(()=>{
-      
-    },150);
   }, false); 
   
   function touchesType() {

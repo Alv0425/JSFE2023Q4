@@ -921,17 +921,17 @@ a {
   }
 }
 
-#coffee:checked ~ .menu__pagination label[for=coffee],
-#tea:checked ~ .menu__pagination label[for=tea],
-#dessert:checked ~ .menu__pagination label[for=dessert] {
+#coffee:checked ~ label[for=coffee],
+#tea:checked ~ label[for=tea],
+#dessert:checked ~ label[for=dessert] {
   background-color: #665F55;
   color: #E1D4C9;
   border-color: transparent;
   pointer-events: none;
 }
-#coffee:checked ~ .menu__pagination label[for=coffee] .menu__tag-circle,
-#tea:checked ~ .menu__pagination label[for=tea] .menu__tag-circle,
-#dessert:checked ~ .menu__pagination label[for=dessert] .menu__tag-circle {
+#coffee:checked ~ label[for=coffee] .menu__tag-circle,
+#tea:checked ~ label[for=tea] .menu__tag-circle,
+#dessert:checked ~ label[for=dessert] .menu__tag-circle {
   background-color: #E1D4C9;
 }
 

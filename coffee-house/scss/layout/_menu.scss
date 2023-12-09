@@ -230,9 +230,9 @@
   // }
 }
 
-#coffee:checked ~ .menu__pagination label[for="coffee"],
-#tea:checked ~ .menu__pagination label[for="tea"],
-#dessert:checked ~ .menu__pagination label[for="dessert"]{
+#coffee:checked ~ label[for="coffee"],
+#tea:checked ~ label[for="tea"],
+#dessert:checked ~ label[for="dessert"]{
   background-color: $color-background-container;
   color: $color-text-light;
   border-color: transparent;

@@ -37,16 +37,16 @@
       <section class="main__section main__section-menu">
         <h1>Behind each of our cups hides an <span class="title-oblique">amazing surprise</span></h1>
         <div class="menu">
-          <input id="coffee" value="coffee" class="menu__input" type="radio" name="category" checked>
-          <input id="tea" value='tea' class="menu__input" type="radio" name="category">
-          <input id="dessert" value="dessert" class="menu__input" type="radio" name="category">
-          <div class="menu__pagination">
+          <form class="menu__pagination">
+            <input id="coffee" value="coffee" class="menu__input" type="radio" name="category" checked>
+            <input id="tea" value='tea' class="menu__input" type="radio" name="category">
+            <input id="dessert" value="dessert" class="menu__input" type="radio" name="category">
             <label for="coffee" class="menu__tag"><span class="menu__tag-circle"></span>Coffee</label>
             <label for="tea" class="menu__tag"><span class="menu__tag-circle"></span>Tea</label>
             <label for="dessert" class="menu__tag"><span class="menu__tag-circle"></span>Dessert</label>
-          </div>
+          </form>
           <div class="menu__content">
-            <div class="menu-card">
+            <!-- <div class="menu-card">
               <div class="menu-card__image">
                 <img src="./assets/menu/coffee-1.webp" alt="irish coffee">
               </div>
@@ -109,10 +109,9 @@
               <h3 class="menu-card__title">Coffee with cognac</h3>
               <p class="menu-card__description">Fragrant black coffee with cognac and whipped cream</p>
               <p class="menu-card__price">&#36;6.50</p>
-            </div>
+            </div> -->
           </div>
           <button class="menu__refresh circle-button">
-            
           </button>
         </div>
       </section>

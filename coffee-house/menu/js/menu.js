@@ -19,12 +19,14 @@ window.onload = () => {
       menuContent.classList.add('menu__content-extended');
       refreshButton.remove();
     }
-    const [coffeeTag, teaTag, menuTag] = [document.getElementById('coffee'),document.getElementById('tea'), document.getElementById('dessert')];
-    [coffeeTag, teaTag, menuTag].forEach(tag => {tag.oninput = (e) => {
-        if (e.target.checked === true) {
-            renderCardsOfType(e.target.value);
-        }
-    }})
+    menuPagination.onchange = (e) => {console.log(e.target.value);
+      renderCardsOfType(e.target.value);} 
+    // const [coffeeTag, teaTag, menuTag] = [document.getElementById('coffee'),document.getElementById('tea'), document.getElementById('dessert')];
+    // [coffeeTag, teaTag, menuTag].forEach(tag => {tag.oninput = (e) => {
+    //     if (e.target.checked === true) {
+    //         renderCardsOfType(e.target.value);
+    //     }
+    // }})
     const productsCategory = (type) => products.filter(prod => prod.category === type).map((item, index) => {
         return new Product(item.name, item.description, item.price, `./assets/menu/${item.category}-${index + 1}.webp`, item.additives, item.sizes);
     });

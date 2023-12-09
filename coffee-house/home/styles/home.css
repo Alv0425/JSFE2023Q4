@@ -389,7 +389,7 @@ a {
   transition-timing-function: linear;
 }
 .slider__pagination-progress-selected {
-  animation: 5s linear static-an;
+  animation: 7s linear static-an;
   width: 100%;
   transition: 0.2s;
 }

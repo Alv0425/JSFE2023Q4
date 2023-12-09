@@ -40,6 +40,8 @@ export class Product {
     let scrollY = window.scrollY;
     body.classList.add('body-locked');
     body.style.top = `-${scrollY}px`;
+    body.style.right = '0px';
+    body.style.left = '0px';
     let modalColumns = ['',''].map(el => this.createNode('div', 'menu-modal__container'));
     let modalImageContainer = this.createNode('div','menu-modal__image');
     let modalImage = this.createNode('img');
@@ -125,19 +127,10 @@ export class Product {
     modalClose.onclick = () => {
       closeModal();
     }
-
-    [...addInputs,...sizeInputs].forEach(input => {
-      input.oninput = () => {
-        let totalPriceAddition = 0;
-        [...addInputs,...sizeInputs].forEach((input)=>{
-          totalPriceAddition += input.checked ?input.value*1 : 0;
-        },0);
-        let totalPrice = (this.price * 1 + totalPriceAddition);
-        modalPricePrice.innerHTML = `&#36;${parseFloat(totalPrice).toFixed(2)}`;
-      }
-    })
     function closeModal(){
       body.style.removeProperty("top");
+      body.style.removeProperty("left");
+      body.style.removeProperty("right");
         body.classList.remove('body-locked')
         window.scrollTo({
           top: scrollY,
@@ -151,8 +144,13 @@ export class Product {
         closeModal();
       }
     }
-    modalForm.onsubmit = (e) => {
-      e.preventDefault();
+    modalForm.onchange = () => {
+      let totalPriceAddition = 0;
+        [...addInputs,...sizeInputs].forEach((input)=>{
+          totalPriceAddition += input.checked ?input.value*1 : 0;
+        },0);
+        let totalPrice = (this.price * 1 + totalPriceAddition);
+        modalPricePrice.innerHTML = `&#36;${parseFloat(totalPrice).toFixed(2)}`;
     }
   }
 }
