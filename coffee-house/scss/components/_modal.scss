@@ -100,17 +100,30 @@
 }
 
 .menu-modal__option{
-  padding: 8px 16px 8px 8px;
+  padding: 7px 16px 7px 8px;
   display: flex;
   align-items: center;
   gap:8px;
   border: 1px $color-border-light solid;
   border-radius: 100px;
+  transition: 0.3s;
   span{
     font-family: Inter;
     font-size: 16px;
     font-weight: 600;
     line-height: 150%;
+    transition: 0.3s;
+  }
+  &:hover{
+    @media (hover:hover) and (pointer:fine) {
+      cursor: pointer;
+      // background-color: $color-background-container;
+      // color: $color-text-light;
+      // .menu-modal__circle{
+      //   background-color: $color-background-body;
+      //   color: $color-text-dark;
+      // }
+    }
   }
 }
 
@@ -151,6 +164,10 @@
   line-height: 140%;
 }
 
+.menu-modal__footnote{
+  margin-top:0;
+}
+
 .menu-modal__icon{
   width: 16px;
   height: 16px;
@@ -166,4 +183,13 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 150%;
+  transition: 0.5s;
+  &:hover{
+    @media (hover:hover) and (pointer:fine) {
+      background-color: $color-background-container;
+      color: $color-text-light;
+      cursor: pointer;
+    }
+  }
 }
+
