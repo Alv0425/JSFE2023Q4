@@ -60,6 +60,10 @@
       //     stroke : $color-border-light;
       //   }
       // }
+      &:disabled{
+        pointer-events: none;
+        opacity: 0.8;
+      }
     }
     @media (width<=648px){
       display: none;

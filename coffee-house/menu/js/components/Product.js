@@ -31,7 +31,6 @@ export class Product {
     let card = this.createNode('div','menu-card', 'fade-in');
     let cardImageContainer = this.createNode('div', 'menu-card__image');
     let cardImage = this.createNode('img');
-
     let cardTitle = this.createNode('h3','menu-card__title');
     let cardDescription = this.createNode('p','menu-card__description');
     let cardPrice = this.createNode('p', 'menu-card__price');
@@ -70,7 +69,6 @@ export class Product {
     let modalDescription = this.createNode('div','menu-modal__description');
     modalDescription.textContent = this.description;
     modalText.append(modalTitle, modalDescription);
-    
     let modalSize = this.createNode('div','menu-modal__size');
     let modalSizeLabel = this.createNode('p',"menu-modal__field-label");
     modalSizeLabel.textContent = 'Size';
@@ -129,8 +127,7 @@ export class Product {
     modalPriceContainer.append(modalPriceLabel,modalPricePrice);
     let modalInfo = this.createNode('div','menu-modal__info');
     modalInfo.innerHTML = `<div class="menu-modal__icon"></div>
-    <p class="menu-modal__footnote">The cost is not final. Download our mobile app to see the final price and place your order. Earn loyalty points and enjoy your favorite coffee with up to 20% discount.</p>`
-    
+    <p class="menu-modal__footnote">The cost is not final. Download our mobile app to see the final price and place your order. Earn loyalty points and enjoy your favorite coffee with up to 20% discount.</p>`;
     let modalClose =  this.createNode('div','menu-modal__button', 'pill-button');
     modalClose.textContent = 'Close';
     modalColumns[0].append(modalImageContainer);

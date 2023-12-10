@@ -80,10 +80,10 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit,310px);
-  grid-auto-rows: 509px;
+  grid-auto-rows: 507px;
   grid-column-gap: 39.5px;
   grid-row-gap: 38px;
-  min-height: 1052px;
+  min-height: 507px;
   justify-content: center;
   @media (width <= 768px) {
     grid-template-columns: repeat(2, minmax(310px,1fr));
@@ -122,7 +122,7 @@
   border-radius: 40px;
   border: 1px $color-border-light solid;
   &-hidden{
-    @media (width <=768px) {
+    @media (width <= 768px) {
       display: none;
     }
   }
@@ -143,6 +143,7 @@
   @extend %flex-center;
   overflow: hidden;
   width:100%;
+  aspect-ratio: 1 / 1;
   border-radius: 40px;
   
   img{
