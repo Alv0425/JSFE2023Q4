@@ -8,21 +8,32 @@ export function initSlider() {
   const sliderButtonLeft = document.getElementById('button-left');
   const sliderButtonRight = document.getElementById('button-right');
   const imagesLine = document.querySelector('.slider__items-container');
-  
+  let isClicked = false;
+
   function nextSlide() {
+    if (!isClicked){
       previousStatus = currentStatus;
       let nextSlide = currentStatus < 3 ? currentStatus + 1 : 1;
       currentStatus = nextSlide;
       slider.classList.remove(`slide-${previousStatus}`);
       setSliderState();
+      isClicked = true;
+      sliderButtonRight.disabled = true;
+      setTimeout(() => { isClicked = false; sliderButtonRight.disabled = false; }, 400);
+    }
   }
   function prevSlide() {
+    if (!isClicked){
       previousStatus = currentStatus;
       currentStatus = currentStatus > 1 ? currentStatus - 1 : 3;
       slider.classList.remove(`slide-${previousStatus}`);
       setSliderState();
+      isClicked = true;
+      sliderButtonLeft.disabled = true;
+      setTimeout(() => { isClicked = false; sliderButtonLeft.disabled = false; }, 400);
+    }  
   }
-  
+
   sliderButtonLeft.onclick = () => { prevSlide(); }
   sliderButtonRight.onclick = () => { nextSlide(); }
   
@@ -70,6 +81,8 @@ export function initSlider() {
           curBar.replaceWith(modBar);
       },10);
   }
+
+  //Handle touches events
   let touchstart = 0;
   let touchend = 0;
   
@@ -96,6 +109,7 @@ export function initSlider() {
     if (touchend - touchstart > 70) { prevSlide(); }
   }
 
+  //Init slider
   setSliderState();
 }
 

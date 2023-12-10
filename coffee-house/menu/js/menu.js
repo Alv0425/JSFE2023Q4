@@ -31,15 +31,11 @@ window.onload = () => {
     
     refreshButton.onclick = () => {
       menuContent.classList.add('menu__content-extended');
-      refreshButton.remove();
     }
-    menuPagination.onchange = (e) => {renderCardsOfType(e.target.value);} 
-    // const [coffeeTag, teaTag, menuTag] = [document.getElementById('coffee'),document.getElementById('tea'), document.getElementById('dessert')];
-    // [coffeeTag, teaTag, menuTag].forEach(tag => {tag.oninput = (e) => {
-    //     if (e.target.checked === true) {
-    //         renderCardsOfType(e.target.value);
-    //     }
-    // }})
+    window.onresize = () => {
+      menuContent.classList.remove('menu__content-extended');
+    }
+    menuPagination.onchange = (e) => { renderCardsOfType(e.target.value); } 
     const productsCategory = (type) => products.filter(prod => prod.category === type).map((item, index) => {
         return new Product(item.name, item.description, item.price, `./assets/menu/${item.category}-${index + 1}.webp`, item.additives, item.sizes);
     });
@@ -62,12 +58,9 @@ window.onload = () => {
         menu.append(refreshButton); 
       }
       menuContent.append(...cards);
-      
      });
-    
     }   
     renderCardsOfType("coffee");
-
   });
 }
 

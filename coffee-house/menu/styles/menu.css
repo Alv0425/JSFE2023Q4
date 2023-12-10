@@ -124,6 +124,8 @@ fieldset {
 .body-locked {
   position: fixed;
   overflow-y: scroll;
+  left: 0;
+  right: 0;
 }
 
 img {
@@ -397,7 +399,7 @@ a {
 }
 
 .menu-modal__option {
-  padding: 7px 16px 7px 8px;
+  padding: 7px 15.5px 7px 7px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -529,7 +531,6 @@ a {
     width: 100%;
     height: 100vh;
     padding-bottom: 120px;
-    overflow-y: scroll;
     transform: translateX(100%);
     opacity: 0;
     transition: 1s;
@@ -694,7 +695,7 @@ a {
   }
   .header__burger-button-container span {
     width: 16px;
-    height: 1px;
+    height: 1.5px;
     background-color: #403F3D;
     transform-origin: center;
     transition: 0.5s;
@@ -711,11 +712,11 @@ a {
     gap: 0px;
   }
   .header__burger-button-active .header__burger-button-container span:nth-child(1) {
-    transform: rotate(45deg) translateY(50%);
+    transform: rotate(45deg) translateY(50%) translateX(0.5px);
     transform-origin: center center;
   }
   .header__burger-button-active .header__burger-button-container span:nth-child(2) {
-    transform: rotate(-45deg) translateY(-50%);
+    transform: rotate(-45deg) translateY(-50%) translateX(0.5px);
     transform-origin: center center;
   }
 }
@@ -803,10 +804,10 @@ a {
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, 310px);
-  grid-auto-rows: 509px;
+  grid-auto-rows: 507px;
   grid-column-gap: 39.5px;
   grid-row-gap: 38px;
-  min-height: 1052px;
+  min-height: 507px;
   justify-content: center;
 }
 @media (width <= 768px) {
@@ -867,6 +868,7 @@ a {
   position: relative;
   overflow: hidden;
   width: 100%;
+  aspect-ratio: 1/1;
   border-radius: 40px;
 }
 .menu-card__image img {
