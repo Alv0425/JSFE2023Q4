@@ -50,9 +50,13 @@ export function initBurger() {
       link.addEventListener("click", (event) => {
           event.preventDefault();
           handleCloseMenu();
+          if (event.target.textContent !== "Contact us" && !menuButton.contains(event.target)) {
+            body.classList.remove('fade-in');
+            body.classList.add('fade-out');
+          }
           function waitAnimation() {
-            if (!menuButton.contains(event.target)) {
-              window.location = link.href; 
+            if (!menuButton.contains(event.target)) {              
+              window.location = event.target.href; 
             }
           }
           setTimeout(waitAnimation, 300);
