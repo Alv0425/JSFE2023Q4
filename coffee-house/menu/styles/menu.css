@@ -417,6 +417,12 @@ a {
 @media (hover: hover) and (pointer: fine) {
   .menu-modal__option:hover {
     cursor: pointer;
+    background-color: #665F55;
+    color: #E1D4C9;
+  }
+  .menu-modal__option:hover .menu-modal__circle {
+    background-color: #E1D4C9;
+    color: #403F3D;
   }
 }
 
@@ -792,6 +798,7 @@ a {
 @media (width <= 768px) and (pointer: fine) and (hover: hover) {
   .menu__refresh:hover {
     border-color: #665F55;
+    cursor: pointer;
   }
 }
 @media (width <= 768px) and (pointer: fine) and (hover: hover) {

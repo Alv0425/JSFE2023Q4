@@ -3,7 +3,7 @@ import { Product } from "./components/Product.js"
 
 window.onload = () => {
   initBurger();
-
+  let windowWidth = window.innerWidth;
   const menu = document.querySelector('.menu');
   const menuContent = document.querySelector('.menu__content');
   const refreshButton = document.createElement('div');
@@ -19,7 +19,6 @@ window.onload = () => {
   loaderContainer.append(loaderCeter);
   menuContent.append(loader);
   
-
   let products;
   async function getProducts() {
     const result = await fetch('./js/products.json');
@@ -33,7 +32,9 @@ window.onload = () => {
       menuContent.classList.add('menu__content-extended');
     }
     window.onresize = () => {
-      menuContent.classList.remove('menu__content-extended');
+      if (window.innerWidth !== windowWidth) {
+        menuContent.classList.remove('menu__content-extended');
+      }
     }
     menuPagination.onchange = (e) => { renderCardsOfType(e.target.value); } 
     const productsCategory = (type) => products.filter(prod => prod.category === type).map((item, index) => {

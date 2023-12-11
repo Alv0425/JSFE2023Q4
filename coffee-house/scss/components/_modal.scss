@@ -117,12 +117,12 @@
   &:hover{
     @media (hover:hover) and (pointer:fine) {
       cursor: pointer;
-      // background-color: $color-background-container;
-      // color: $color-text-light;
-      // .menu-modal__circle{
-      //   background-color: $color-background-body;
-      //   color: $color-text-dark;
-      // }
+      background-color: $color-background-container;
+      color: $color-text-light;
+      .menu-modal__circle{
+        background-color: $color-background-body;
+        color: $color-text-dark;
+      }
     }
   }
 }
