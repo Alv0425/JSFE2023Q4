@@ -10,6 +10,12 @@ export function initSlider() {
   const imagesLine = document.querySelector('.slider__items-container');
   let isClicked = false;
 
+  const resetDelay = (sliderButton) => {
+    isClicked = true;
+    sliderButton.disabled = true;
+    setTimeout(() => { isClicked = false; sliderButton.disabled = false; }, 400);
+  }
+
   function nextSlide() {
     if (!isClicked){
       previousStatus = currentStatus;
@@ -17,9 +23,7 @@ export function initSlider() {
       currentStatus = nextSlide;
       slider.classList.remove(`slide-${previousStatus}`);
       setSliderState();
-      isClicked = true;
-      sliderButtonRight.disabled = true;
-      setTimeout(() => { isClicked = false; sliderButtonRight.disabled = false; }, 400);
+      resetDelay(sliderButtonRight);
     }
   }
   function prevSlide() {
@@ -28,9 +32,7 @@ export function initSlider() {
       currentStatus = currentStatus > 1 ? currentStatus - 1 : 3;
       slider.classList.remove(`slide-${previousStatus}`);
       setSliderState();
-      isClicked = true;
-      sliderButtonLeft.disabled = true;
-      setTimeout(() => { isClicked = false; sliderButtonLeft.disabled = false; }, 400);
+      resetDelay(sliderButtonLeft);
     }  
   }
 
@@ -40,10 +42,6 @@ export function initSlider() {
   function setSliderState(){
       const sliderBars = document.querySelectorAll('.slider__pagination-progress');
       slider.classList.add(`slide-${currentStatus}`);
-      // sliderBars.forEach(bar => {
-      //     bar.className = 'slider__pagination-progress';
-      //     bar.style.width = 0;
-      // });   
       setTimeout(()=>{
           sliderBars.forEach(bar => {
             bar.className = 'slider__pagination-progress';
@@ -54,22 +52,13 @@ export function initSlider() {
           let curBar = sliderBars[currentStatus - 1];  
           let modBar = curBar.cloneNode(true);
           modBar.classList.add('slider__pagination-progress-selected');
-          modBar.addEventListener('animationend', () => { nextSlide(); },{
-              passive: true,
-              capture: false,
-              once: true
-          });    
+          modBar.addEventListener('animationend', () => { nextSlide(); },{ passive: true, capture: false, once: true });    
           currentBar = modBar;
           modBar.addEventListener('animationstart', () => { 
             let animDuration = window.getComputedStyle(modBar, null).getPropertyValue("animation-duration");
             let interval = 100;
-            if (animDuration.endsWith('ms')) {
-              animDuration = animDuration.replace('ms','');
-              animDuration = animDuration * 1;
-            } else if (animDuration.endsWith('s')) {
-              animDuration = animDuration.replace('s','');
-              animDuration = animDuration * 1000;
-            }
+            if (animDuration.endsWith('ms')) { animDuration = animDuration.replace('ms','') * 1; }
+            else if (animDuration.endsWith('s')) { animDuration = animDuration.replace('s','') * 1000; }
             interval = Math.round(animDuration * 2 / 100);
             timer = setInterval(() => {
               if (window.getComputedStyle(modBar, null).getPropertyValue("animation-play-state") == "running") {
@@ -109,7 +98,6 @@ export function initSlider() {
     if (touchend - touchstart > 70) { prevSlide(); }
   }
 
-  //Init slider
   setSliderState();
 }
 

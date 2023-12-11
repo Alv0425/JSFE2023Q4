@@ -50,16 +50,18 @@ export function initBurger() {
       link.addEventListener("click", (event) => {
           event.preventDefault();
           handleCloseMenu();
-          if (event.target.textContent !== "Contact us" && !menuButton.contains(event.target)) {
-            body.classList.remove('fade-in');
-            body.classList.add('fade-out');
-          }
+          setTimeout(()=>{
+            if (event.target.textContent !== "Contact us" && !menuButton.contains(event.target)) {
+              body.classList.remove('fade-in');
+              body.classList.add('fade-out');
+            }
+          },300);
           function waitAnimation() {
             if (!menuButton.contains(event.target)) {              
               window.location = event.target.href; 
             }
           }
-          setTimeout(waitAnimation, 300);
+          setTimeout(waitAnimation, 700);
       });
   });
 }
