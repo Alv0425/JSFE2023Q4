@@ -50,14 +50,16 @@ export function initBurger() {
       link.addEventListener("click", (event) => {
           event.preventDefault();
           handleCloseMenu();
-          if (menuButton.contains(event.target)) {
-            body.classList.remove("fade-in");
-            body.classList.add("fade-out");
-          }
+          setTimeout(()=>{
+            if (menuButton.contains(event.target)) {
+              body.classList.remove("fade-in");
+              body.classList.add("fade-out");
+            }
+          },300);
           function waitAnimation() {
             window.location = link.href;  
           }
-          setTimeout(waitAnimation, 300);
+          setTimeout(waitAnimation, 600);
       });
   });
 }

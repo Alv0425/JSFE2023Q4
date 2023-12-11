@@ -63,6 +63,7 @@
     &:hover{
       @media (pointer:fine) and (hover:hover) {
         border-color: $color-background-container;
+        cursor: pointer;
       }
     }
     &:hover::after{
