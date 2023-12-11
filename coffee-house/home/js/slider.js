@@ -98,6 +98,20 @@ export function initSlider() {
     if (touchend - touchstart > 70) { prevSlide(); }
   }
 
+  let mousedownstart = 0;
+  let mousedownend = 0;
+  slider.addEventListener('mousedown', (event) => {
+    mousedownstart = event.clientX;
+  });
+
+  slider.addEventListener('mouseup', (event) => {
+    mousedownend = event.clientX;
+    if (mousedownstart - mousedownend > 70) { nextSlide(); }  
+    if (mousedownend - mousedownstart > 70) { prevSlide(); }
+  });
+
+  document.querySelector('.slider__item').ondragstart = () => false;
+
   setSliderState();
 }
 
