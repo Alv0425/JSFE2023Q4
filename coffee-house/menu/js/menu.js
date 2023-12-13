@@ -3,6 +3,7 @@ import { Product } from "./components/Product.js"
 
 window.onload = () => {
   initBurger();
+  
   let windowWidth = window.innerWidth;
   const menu = document.querySelector('.menu');
   const menuContent = document.querySelector('.menu__content');
@@ -34,6 +35,11 @@ window.onload = () => {
     window.onresize = () => {
       if (window.innerWidth !== windowWidth) {
         menuContent.classList.remove('menu__content-extended');
+      }
+      if (window.innerWidth > 768) {
+        document.querySelector(".header__nav").classList.remove("header__nav-open");
+        document.getElementById('burger-button').classList.remove("header__burger-button-active");
+        document.querySelector('body').classList.remove('body-locked')
       }
     }
     menuPagination.onchange = (e) => { renderCardsOfType(e.target.value); } 

@@ -7,7 +7,6 @@ export function initBurger() {
   const body = document.querySelector('body');
   const navLinks = document.querySelectorAll('.header__navlink a');
   const menuButton = document.querySelector('.header__button-menu');
-  let navigationBarStatus = 0;
 
   function bodyLock() {
     body.classList.add("body-locked");
@@ -17,11 +16,10 @@ export function initBurger() {
     body.classList.remove("body-locked");
   }
 
-  const handleCloseMenu = () => {
+  function handleCloseMenu() {
     navigationBar.classList.remove("header__nav-open");
     navButton.classList.remove("header__burger-button-active");
     bodyUnlock();
-    navigationBarStatus = 0;
   }
 
   // const handleClickOutsideMunu = (event) => {
@@ -33,11 +31,10 @@ export function initBurger() {
   // }
 
   navButton.addEventListener('click', () => {
-      if (navigationBarStatus == 0){  
+      if (!navigationBar.classList.contains('header__nav-open')){  
           navigationBar.classList.add("header__nav-open");
           navButton.classList.add("header__burger-button-active");
           bodyLock();
-          navigationBarStatus = 1;
       } else {
         handleCloseMenu();
       }
