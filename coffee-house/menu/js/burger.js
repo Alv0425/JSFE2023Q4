@@ -24,13 +24,13 @@ export function initBurger() {
     navigationBarStatus = 0;
   }
 
-  const handleClickOutsideMunu = (event) => {
-    if (navigationBarStatus == 1){
-      if (!navigationBar.contains(event.target) && !navButton.contains(event.target)) {
-          handleCloseMenu();
-      }
-    }
-  }
+  // const handleClickOutsideMunu = (event) => {
+  //   if (navigationBarStatus == 1){
+  //     if (!navigationBar.contains(event.target) && !navButton.contains(event.target)) {
+  //         handleCloseMenu();
+  //     }
+  //   }
+  // }
 
   navButton.addEventListener('click', () => {
       if (navigationBarStatus == 0){  
@@ -43,8 +43,8 @@ export function initBurger() {
       }
   });
 
-  document.addEventListener('touchend', handleClickOutsideMunu);
-  document.addEventListener('click', handleClickOutsideMunu);
+  // document.addEventListener('touchend', handleClickOutsideMunu);
+  // document.addEventListener('click', handleClickOutsideMunu);
 
   [...navLinks, menuButton].forEach((link) => {
       link.addEventListener("click", (event) => {
