@@ -17,7 +17,14 @@ export function initBurger() {
     body.classList.remove("body-locked");
   }
 
-  const handleCloseMenu = () => {
+  window.onresize = () => {
+    if (window.innerWidth > 768){
+      handleCloseMenu();
+      console.log('sd')
+    }
+  }
+  
+  function handleCloseMenu() {
     navigationBar.classList.remove("header__nav-open");
     navButton.classList.remove("header__burger-button-active");
     bodyUnlock();
