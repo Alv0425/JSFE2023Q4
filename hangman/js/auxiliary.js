@@ -6,12 +6,16 @@ export function createNode(type, classlist, attrlist, content) {
   if (classlist) {
     node.classList.add(...classlist);
   }
-  if (attrlist && attrlist.keys) {
-    for (let key in attrlist) {
-      node.setAttribute(key, attrlist[key]);
+  if (attrlist) {
+    if (Object.keys(attrlist)) {
+      for (let key in attrlist) {
+        console.log(key);
+        node.setAttribute(key, attrlist[key]);
+      }
     }
   }
   if (content) {
+    console.log(content)
     node.append(...content);
   }
   return node;

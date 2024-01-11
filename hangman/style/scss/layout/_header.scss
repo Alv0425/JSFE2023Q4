@@ -1,0 +1,40 @@
+.header {
+  background-color: $color-body-dark;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.header__logo {
+  flex-grow: 1;
+  color: $color-text-light;
+  margin: 0px;
+  font-size: 40px;
+  line-height: 70px;
+  letter-spacing: 2px;
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: 900;
+}
+
+.header__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-family: Inconsolata;
+  color: $color-text-light;
+  border-radius: 50%;
+  border: 2px $color-text-light solid;
+  transition: 1s;
+  &:hover {
+    color: $color-text-highlight;
+    border-color: $color-text-highlight;
+  }
+}
+
