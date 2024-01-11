@@ -1,0 +1,174 @@
+[
+  {
+    "word": "Event",
+    "hint": "A user action or system occurrence that triggers a response in a web application. It can include clicking a button, submitting a form, or receiving a message from a server."
+  },
+  {
+    "word": "Accessibility",
+    "hint": "Feature that reffers to the design of websites and applications to be usable by people with disabilities."
+  },
+  {
+    "word": "Dependency",
+    "hint": "A piece of software that is required for another software application to function properly."
+  },
+  {
+    "word": "Navbar",
+    "hint": "A user interface element commonly found at the top of web pages, containing links or buttons for navigating between different sections or pages of a website or application. "
+  },
+  {
+    "word": "Keyframe",
+    "hint": "A CSS feature for creating complex animations by specifying appearance and behavior of elements at different points along a timeline."
+  },
+  {
+    "word": "Form",
+    "hint": "An HTML element used to collect user input and submit it to a server for processing."
+  },
+  {
+    "word": "Backend",
+    "hint": "The part of a web application that is responsible for server-side operations."
+  },
+  {
+    "word": "Sourcemap",
+    "hint": "The file which create a mapping between your source(original) code and your generated code."
+  },
+  {
+    "word": "Deployment",
+    "hint": "The process of collecting all code, databases, assets and other parts of your project and launching them to an appropriate hosting environment to be accessed by the intended users."
+  },
+  {
+    "word": "Agile",
+    "hint": "Commonly used web development approach that focuses on flexibility and adaptability, helping teams quickly respond to changes in strategy and requirements."
+  },
+  {
+    "word": "Validator",
+    "hint": "A program that checks for syntax errors in code."
+  },
+  {
+    "word": "Favicon",
+    "hint": "A tiny icon included along with a website, which is displayed in places like the browser's address bar, page tabs and bookmarks menu."
+  },
+  {
+    "word": "Class",
+    "hint": "Template definition of an object's properties and methods, the blueprint from which other more specific instances of the object are drawn."
+  },
+  {
+    "word": "Canvas",
+    "hint": "The HTML element is part of HTML5 and allows for dynamic, scriptable images."
+  },
+  {
+    "word": "Callback",
+    "hint": "A function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action."
+  },
+  {
+    "word": "Constructor",
+    "hint": "A function, the main purpose of which is to implement reusable object creation code."
+  },
+  {
+    "word": "Decorator",
+    "hint": "A special function that takes another function and alters its behavior."
+  },
+  {
+    "word": "Debugging",
+    "hint": "The process of finding and fixing errors within a script."
+  },
+  {
+    "word": "Closure",
+    "hint": "A feature that allows inner functions to access the outer scope of a function."
+  },
+  {
+    "word": "Metadata",
+    "hint": "A data that describes data."
+  },
+  {
+    "word": "Operand",
+    "hint": "The part of an representing the data manipulated by the operator."
+  },
+  {
+    "word": "Bubbling",
+    "hint": "Propagation of the event from a child element to its parent element"
+  },
+  {
+    "word": "Hoisting",
+    "hint": "The process whereby the interpreter appears to move the declaration of functions, variables, classes, or imports to the top of their scope, prior to execution of the code."
+  },
+  {
+    "word": "Capturing",
+    "hint": "Propagation of the event from a parent element to its child element"
+  },
+  {
+    "word": "Element",
+    "hint": "A base class for DOM which offers navigation through elements and search methods like getElementsById, querySelector."
+  },
+  {
+    "word": "Document",
+    "hint": "A base class which represents any web page loaded in the browser and serves as an entry point into the web page's content, which is the DOM tree."
+  },
+  {
+    "word": "Linter",
+    "hint": "A tool which is used to flag programming errors, bugs, stylistic errors and suspicious constructs."
+  },
+  {
+    "word": "Formatter",
+    "hint": "Automated tool that helps to format source code automatically."
+  },
+  {
+    "word": "Symbol",
+    "hint": "Data type that represents unique, unforgeable identifiers."
+  },
+  {
+    "word": "Identifier",
+    "hint": "A sequence of characters in the code that identifies a variable, function, or property."
+  },
+  {
+    "word": "Flexbox",
+    "hint": "A layout model for displaying items in a single dimension — as a row or as a column."
+  },
+  {
+    "word": "Boolean",
+    "hint": "A logical data type that can have only the values true or false."
+  },
+  {
+    "word": "Algorithm",
+    "hint": "A self-contained series of instructions to perform a function."
+  },
+  {
+    "word": "Polyfill",
+    "hint": "A piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it."
+  },
+  {
+    "word": "Transpiler",
+    "hint": "A special piece of software that translates source code to another source code."
+  },
+  {
+    "word": "Javascript",
+    "hint": "A programming language used most often for dynamic client-side scripts on webpages."
+  },
+  {
+    "word": "Primitive",
+    "hint": "Data that is not an object and has no methods or properties in JavaScript."
+  },
+  {
+    "word": "Promise",
+    "hint": "An object that's returned by a function that has not yet completed its work."
+  },
+  {
+    "word": "Recursion",
+    "hint": "The act of a function calling itself, recursion is used to solve problems that contain smaller sub-problems."
+  },
+  {
+    "word": "Parameter",
+    "hint": "A named variable passed into a function."
+  },
+  {
+    "word": "Minification",
+    "hint": "The process of removing unnecessary or redundant data without affecting how a resource is processed by the browser."
+  },
+  {
+    "word": "Preprocessor",
+    "hint": "Program that processes its input data to produce output that is used as input in another program."
+  },
+  {
+    "word": "Operator",
+    "hint": "Reserved syntax consisting of punctuation or alphanumeric characters that carries out built-in functionality."
+  }
+]
