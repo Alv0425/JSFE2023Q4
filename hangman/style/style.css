@@ -163,6 +163,7 @@ fieldset {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
 .hangman__playboard {
@@ -172,9 +173,22 @@ fieldset {
   gap: 10px;
 }
 
+.hangman__riddle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
 .hangman__keyboard {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+  gap: 2px;
+  max-width: 360px;
 }
 
 .hangman__label {
@@ -187,7 +201,8 @@ fieldset {
 }
 
 .hangman__hint {
-  font-size: 20px;
+  font-size: 18px;
+  max-width: 300px;
 }
 
 .hangman__gallows {
@@ -210,6 +225,35 @@ fieldset {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
   animation: dash 0.7s linear forwards;
+}
+
+.key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  border: 2px #f4f5f5 solid;
+  color: #f4f5f5;
+}
+
+.letter {
+  position: relative;
+  width: 20px;
+  border-bottom: 2px solid #f4f5f5;
+}
+.letter path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.letter_active {
+  width: 20px;
+  border-bottom: 1px solid transparent;
+}
+.letter_active path {
+  animation: dash 5s linear forwards;
 }
 
 @keyframes dash {

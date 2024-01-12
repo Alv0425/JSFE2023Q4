@@ -15,7 +15,7 @@ export function createNode(type, classlist, attrlist, content) {
     }
   }
   if (content) {
-    console.log(content)
+    console.log(content);
     node.append(...content);
   }
   return node;
