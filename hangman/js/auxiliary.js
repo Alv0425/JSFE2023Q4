@@ -9,13 +9,11 @@ export function createNode(type, classlist, attrlist, content) {
   if (attrlist) {
     if (Object.keys(attrlist)) {
       for (let key in attrlist) {
-        console.log(key);
         node.setAttribute(key, attrlist[key]);
       }
     }
   }
   if (content) {
-    console.log(content);
     node.append(...content);
   }
   return node;
