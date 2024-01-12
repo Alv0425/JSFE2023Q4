@@ -168,9 +168,7 @@ export class Game {
               document.body.append(newWin.overlay);
             }, 700);
             let word = this.createNode("p", "modal__text");
-            word.innerText = `You guessed the word ${this.wordLetters.join(
-              "",
-            )}!`;
+            word.innerText = `You guessed the word ${this.wordLetters.join("")}!`;
             newWin.button.before(
               "Congratulations!",
               word,
