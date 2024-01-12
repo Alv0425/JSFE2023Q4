@@ -6,9 +6,9 @@ export class Modal {
     this.modal = null;
     this.button = null;
     this.isOpened = false;
+    this.closeModalEvt;
   }
   createModal() {
-    if (document.querySelector(".overlay")) return;
     this.overlay = createNode('div', ["overlay"]);
     this.modal = createNode('div', ["modal", `modal_${this.type}`]);
     const modalHeader = createNode('div', ["modal__header"]);
@@ -21,7 +21,7 @@ export class Modal {
     const modalText = createNode('p', ["modal__text"]);
     this.modal.append(modalHeader, modalBody);
     this.overlay.append(this.modal);
-    this.button = createNode('p', ["modal__button"]);
+    this.button = createNode('button', ["modal__button"]);
     modalClose.onclick = () => this.closeModal();
     this.overlay.addEventListener('click', (e) => {
       if (!this.modal.contains(e.target)) {
@@ -30,12 +30,15 @@ export class Modal {
     });
     this.overlay.append(this.modal);
     switch(this.type) {
-      case 'error':
+      case 'error': {
         modalTitle.innerText = "Error: incorrect symbol"
-        modalText.innerText = "It seems you typing incorrect symbol. The word consist of letters from english alphabet, A-Z. Please, make sure you are using EN keyboard.";
+        modalText.innerText = "It seems you are typing incorrect symbol. The word consist of letters from english alphabet, A-Z. Please, make sure you are using EN keyboard.";
+        const shortcuts = createNode('p', ["modal__text"]);
+        shortcuts.innerText = 'To change the input language of the keyboard press the CTRL key and the SHIFT key at the same time (CTRL + SHIFT) on Windows devices. For Mac devices press CTRL + SPACE or CMD + SPACE';
         this.button.innerText = "OK";
-        modalBody.append(modalText, this.button);
+        modalBody.append(modalText, shortcuts, this.button);
         break;
+      }  
       case 'win':
         modalTitle.innerText = "Correct!";
         this.button.innerText = "PLAY AGAIN";
@@ -64,6 +67,13 @@ export class Modal {
     return this.overlay;
   }
   closeModal() {
+    this.closeModalEvt = new Event("modalclosed");
+    document.body.dispatchEvent(this.closeModalEvt);
+    const closeWin = new Event("modalclosedwin");
+    if (this.type == 'win' || this.type == 'lose') {
+      document.body.dispatchEvent(closeWin);
+      console.log('kkkkk')
+    }
     this.overlay.classList.add('fade-out');
     this.overlay.remove();
   }

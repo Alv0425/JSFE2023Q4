@@ -20,6 +20,7 @@ export class Game {
     this.checkedLetters = [];
     this.scoreLabel = null;
     this.numberOfGuesses = 0;
+    this.isModalOpened = false;
   }
   generateSequence(words) {
     this.size = words.length;
@@ -40,12 +41,20 @@ export class Game {
     ]);
     const headerLogo = this.createNode("h1", ["header__logo"], {}, "HANGMAN");
     const headerInfo = this.createNode("button", ["header__info"], {}, "i");
-    const infoModal = new Modal('info');
-    infoModal.createModal()
-    headerInfo.onclick = () => {
-      body.append(infoModal.overlay);
+    if (!this.isModalOpened) {
+     
+      const infoModal = new Modal('info');
+      infoModal.createModal()
+      headerInfo.onclick = () => {
+        this.isModalOpened = true;
+        body.append(infoModal.overlay);
+      }
+      infoModal.button.onclick = () => {
+        infoModal.closeModal();
+        this.isModalOpened = false;
+      };
     }
-    infoModal.button.onclick = () => infoModal.closeModal();
+    
     headerContainer.append(headerLogo, headerInfo);
     header.append(headerContainer);
     const main = this.createNode("main", ["main", "wrapper"]);
@@ -97,10 +106,21 @@ export class Game {
     this.keyboard.append(...keys);
     this.keyboard = keys;
     this.renderNewGame();
+    document.body.addEventListener('modalclosed', () => {
+      this.isModalOpened = false;
+      console.log('closed');
+      console.log(this.isModalOpened)
+    });
+    document.body.addEventListener('modalclosedwin', () => {
+      console.log('win')
+      this.human.erase();
+      this.renderNewGame();
+    });
   }
 
   renderNewGame() {
     this.numberOfGuesses = 0;
+    clearNode(this.wordContainer);
     this.checkedLetters = [];
     this.scoreLabel.innerText = `Incorrect guesses: ${this.numberOfGuesses} / 6`
     this.keyboard.forEach((key) => {
@@ -138,13 +158,25 @@ export class Game {
           if (letter === this.wordLetters[i]) {
             isIncorrectGuess.push(false);
             this.checkedLetters.push(letter);
-            this.filling[i] === letter;
+            this.filling[i] = letter;
+            console.log(this.filling)
             this.letters[i].classList.add("letter_active");
             this.keyboard[alph.indexOf(letter)].classList.add("key_correct");
             this.keyboard[alph.indexOf(letter)].disabled = true;
           }
         }
-        console.log(isIncorrectGuess);
+        if (this.filling.every((e) => e)) {
+          if (!this.isModalOpened) {
+            this.isModalOpened = true;
+            const newWin = new Modal('win');
+            newWin.createModal();
+            document.body.append(newWin.overlay);
+            let word = this.createNode('p',"modal__text");
+            word.innerText = `You guessed the word ${this.wordLetters.join('')}!`;
+            newWin.button.before("Congratulations!", word, `Number of incorrect guesses: ${this.numberOfGuesses}`);
+            newWin.button.onclick = () => newWin.closeModal();
+          }
+        }
         if (isIncorrectGuess.every((el) => el)) {
           if (this.numberOfGuesses < 6) {
             this.numberOfGuesses += 1;
@@ -156,9 +188,16 @@ export class Game {
             this.keyboard[alph.indexOf(letter)].disabled = true;
             this.checkedLetters.push(letter);
             if (this.numberOfGuesses === 6) {
-              this.human.erase();
-              clearNode(this.wordContainer);
-              this.renderNewGame();
+              if (!this.isModalOpened) {
+                const newLose = new Modal('lose');
+                newLose.createModal();
+                document.body.append(newLose.overlay);
+                let text = this.createNode('p',"modal__text", {}, "Sorry, you ran out of tries.");
+                let word = this.createNode('p',"modal__text");
+                word.innerText = `The word was ${this.wordLetters.join('')}`;
+                newLose.button.before(text, word);
+                newLose.button.onclick = () => newLose.closeModal();
+              }
             }
           }
         }
@@ -169,20 +208,27 @@ export class Game {
       newkey.innerText = letter;
       newkey.classList.add("key");
       newkey.onclick = () => {
-        console.log(letter, this.wordLetters, this.filling);
         handleKeyEvt(letter);
       };
       keys.push(newkey);
     });
     window.addEventListener("keydown", (event) => {
-      let letter = event.key.toUpperCase();
-      console.log(letter);
-      if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
-        handleKeyEvt(letter);
-      } else {
-        console.log(
-          "The word consist of english letters only (A-Z). Please, set the input language of the keyboard to EN and try again.",
-        );
+      if (!this.isModalOpened) {
+        let letter = event.key.toUpperCase();
+        if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
+          handleKeyEvt(letter);
+        } else if (/[А-Я]{1}/.test(letter)) {
+          let alert = new Modal('error');
+          alert.createModal();
+          alert.button.onclick = () => {
+            alert.closeModal();
+          };
+          this.isModalOpened = true;
+          document.body.append(alert.overlay);
+          console.log(
+            "The word consist of english letters only (A-Z). Please, set the input language of the keyboard to EN and try again.",
+          );
+        }
       }
     });
     return keys;

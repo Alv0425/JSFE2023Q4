@@ -459,4 +459,21 @@ fieldset {
   padding: 20px;
 }
 
+.modal__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  width: fit-content;
+  min-width: 80px;
+  border: 2px #f4f5f5 solid;
+  color: #f4f5f5;
+  border-radius: 20px;
+  transition: 0.5s;
+}
+.modal__button:hover {
+  color: #ffed00;
+  border-color: #ffed00;
+}
+
 /*# sourceMappingURL=style.css.map */

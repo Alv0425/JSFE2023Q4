@@ -63,3 +63,20 @@
   gap:10px;
   padding: 20px;
 }
+
+.modal__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  width: fit-content;
+  min-width: 80px;
+  border: 2px $color-text-light solid;
+  color: $color-text-light;
+  border-radius: 20px;
+  transition: 0.5s;
+  &:hover {
+    color: $color-text-highlight;
+    border-color: $color-text-highlight;
+  }
+}
