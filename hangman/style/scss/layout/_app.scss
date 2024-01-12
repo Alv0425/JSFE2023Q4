@@ -1,0 +1,132 @@
+
+.hangman{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hangman__playboard{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hangman__riddle{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  text-align: center;
+}
+
+.hangman__keyboard{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap:2px;
+  max-width: 360px;
+}
+
+.hangman__label{
+  font-size: 16px;
+}
+
+.hangman__word{
+  display: flex;
+  gap: 4px;
+}
+
+.hangman__hint{
+  font-size: 18px;
+  max-width: 300px;
+}
+
+.hangman__gallows{
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-image: url(../assets/gallows.svg);
+  background-size: contain;
+  @media (width <= 768px) {
+    width: 250px;
+    height: 250px;
+  }
+  @media (width <= 648px) {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.human {
+  width: 100%;
+  height: 100%;
+}
+
+.human__part {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.human__part_visible {
+  animation: dash 5s linear forwards;
+}
+
+.human__eraser {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 0.7s linear forwards;
+}
+
+.key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  border: 2px $color-text-light solid;
+  color: $color-text-light; 
+  transition: 0.5s;
+}
+
+.key_correct:disabled{
+  border-color: $color-text-correct;
+  color: $color-text-correct;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.key_wrong:disabled {
+  border-color: $color-text-error;
+  color: $color-text-error;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.letter {
+  position: relative;
+  width:20px;
+  border-bottom: 2px solid $color-text-light;
+  path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+}
+
+.letter_active {
+  width:20px;
+  border-bottom: 1px solid transparent;
+  path {
+    animation: dash 5s linear forwards;
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

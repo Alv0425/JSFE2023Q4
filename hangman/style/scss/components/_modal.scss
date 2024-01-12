@@ -1,0 +1,143 @@
+.overlay {
+  position: fixed;
+  z-index: 10;
+  width:100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background-color: rgba(0,0,0,0.5);
+  animation: fade-in 0.3s ease;
+}
+
+.modal {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  background-color: $color-container-dark;
+  &_result{
+    width: 100%;
+    max-width: 300px;
+    .modal__body {
+      align-items: center;
+      padding-bottom: 20px;
+    }
+  }
+  &_error{
+    max-width: 400px;
+  }
+  &_info{
+    height: 100vh;
+    max-height: 420px;
+    .modal__body{
+      overflow: auto;
+    }
+  }
+}
+
+.modal__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width:100%;
+  border-bottom: 2px $color-body-dark solid;
+}
+
+.modal__title {
+  padding: 10px;
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: 900;
+  flex-grow: 1;
+}
+
+.modal__close {
+  position: absolute;
+  right:0;
+  top:0;
+  width: 50px;
+  aspect-ratio: 1 / 1;
+  span{
+    position: absolute;
+    top:50%;
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 2px;
+    background-color: $color-text-light;
+    border-radius: 1px;
+    transition: 0.5s;
+  }
+  span:nth-child(1){
+    transform: rotate(45deg);
+  }
+  span:nth-child(2) {
+    transform: rotate(-45deg);
+  }
+  &:hover span {
+    @media (pointer: fine) and (hover: hover) {
+      background-color: $color-text-highlight;
+    }
+  }
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+  padding: 20px;
+}
+
+.modal__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  width: fit-content;
+  min-width: 80px;
+  border: 2px $color-text-light solid;
+  color: $color-text-light;
+  border-radius: 20px;
+  transition: 0.5s;
+  &:hover {
+    @media (pointer: fine) and (hover: hover) {
+      color: $color-text-highlight;
+      border-color: $color-text-highlight;
+    }
+  }
+}
+
+.modal__link {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.5s;
+  &:hover{
+    @media (pointer: fine) and (hover: hover) {
+      color:$color-text-highlight;
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }  
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }  
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-out{
+  pointer-events: none;
+  animation: fade-out 0.3s ease forwards;
+}
