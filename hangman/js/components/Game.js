@@ -194,6 +194,7 @@ export class Game {
                 const newLose = new Modal("lose");
                 newLose.createModal();
                 setTimeout(() => {
+                  this.isModalOpened = true;
                   document.body.append(newLose.overlay);
                 }, 700);
                 let text = this.createNode(
