@@ -16,6 +16,7 @@ export class Game {
     this.currentWord = null;
     this.letters = null;
     this.human = null;
+    this.checkedLetters = [];
     this.numberOfGuesses = 0;
   }
   generateSequence(words) {
@@ -61,7 +62,7 @@ export class Game {
     const gameContainer = this.createNode("div", ["hangman"]);
     const playBoard = this.createNode("div", ["hangman__playboard"]);
     const riddle = this.createNode("div", ["hangman__riddle"]);
-    const keyboard = this.createNode("div", ["hangman__keyboard"]);
+    this.keyboard = this.createNode("div", ["hangman__keyboard"]);
     const scoreLabel = this.createNode(
       "p",
       ["hangman__label"],
@@ -71,19 +72,26 @@ export class Game {
     this.wordContainer = this.createNode("div", ["hangman__word"]);
     this.hint = this.createNode("p", ["hangman__hint"], {}, "Some text");
     this.gallows = this.createNode("div", ["hangman__gallows"]);    
-    gameContainer.append(playBoard, keyboard);
+    gameContainer.append(playBoard, this.keyboard);
     playBoard.append(this.gallows, riddle);
     riddle.append(scoreLabel, this.wordContainer, this.hint);
     main.append(gameContainer);
     const keys = this.renderKeyboard();
     console.log(keys)
-    keyboard.append(...keys);
+    this.keyboard.append(...keys);
     this.keyboard = keys;
     this.renderNewGame();
   }
 
   renderNewGame() {
     this.numberOfGuesses = 0;
+    this.checkedLetters = [];
+    this.keyboard.forEach((key) => {
+      key.classList.remove("key_correct");
+      key.classList.remove("key_wrong");
+      key.disabled = false;
+    });
+    console.log(this.keyboard[0])
     this.human = new Human;
     const humanBody = this.human.render();
     let newWord = '';
@@ -100,40 +108,59 @@ export class Game {
   }
 
   renderKeyboard() {
+    const alph = Object.keys(this.alphabet.letters);
     const keys = [];
+    const handleKeyEvt = (letter) => {
+      if (this.checkedLetters.includes(letter)) {
+        console.log(letter, "already opened");
+      } else {
+        let isIncorrectGuess = [true];
+        for (let i = 0; i < this.wordLetters.length; i++) {
+          if (letter === this.wordLetters[i]) {
+            isIncorrectGuess.push(false);
+            this.checkedLetters.push(letter);
+            this.filling[i] === letter;
+            this.letters[i].classList.add("letter_active");
+            this.keyboard[alph.indexOf(letter)].classList.add("key_correct");
+            this.keyboard[alph.indexOf(letter)].disabled = true;
+          }
+        }
+        console.log(isIncorrectGuess)
+        if (isIncorrectGuess.every((el) => el)){
+          if (this.numberOfGuesses < 6) {
+            this.numberOfGuesses += 1;
+            this.human.parts[this.numberOfGuesses - 1].classList.add("human__part_visible");
+            this.keyboard[alph.indexOf(letter)].classList.add("key_wrong");
+            this.keyboard[alph.indexOf(letter)].disabled = true;
+            this.checkedLetters.push(letter);
+            if (this.numberOfGuesses === 6) {
+              this.human.erase();
+              clearNode(this.wordContainer);
+              this.renderNewGame();
+            }
+          }
+        }
+      }
+    }
     Object.keys(this.alphabet.letters).forEach((letter) => {
       const newkey = document.createElement('button');
       newkey.innerText = letter;
       newkey.classList.add('key');
       newkey.onclick = () => {
         console.log(letter, this.wordLetters, this.filling);
-        if (this.filling.includes(letter)) {
-          console.log(letter, "already opened");
-        } else {
-          let isIncorrectGuess = [true];
-          for (let i = 0; i < this.wordLetters.length; i++) {
-            if (letter === this.wordLetters[i]) {
-              isIncorrectGuess.push(false);
-              this.filling[i] === letter;
-              this.letters[i].classList.add("letter_active");
-            }
-          }
-          console.log(isIncorrectGuess)
-          if (isIncorrectGuess.every((el) => el)){
-            if (this.numberOfGuesses < 6) {
-              this.numberOfGuesses += 1;
-              this.human.parts[this.numberOfGuesses - 1].classList.add("human__part_visible");
-              if (this.numberOfGuesses === 6) {
-                this.human.erase();
-                clearNode(this.wordContainer);
-                this.renderNewGame();
-              }
-            }
-          }
-        }
+        handleKeyEvt(letter);
       }
       keys.push(newkey);
     });
+    window.addEventListener('keydown', (event) => {
+      let letter = event.key.toUpperCase();
+      console.log(letter)
+      if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
+        handleKeyEvt(letter);
+      } else {
+        console.log('The word consist of english letters only (A-Z). Please, set the input language of the keyboard to EN and try again.');
+      }
+    })
     return keys;
   }
 

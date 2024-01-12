@@ -197,7 +197,7 @@ fieldset {
 
 .hangman__word {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .hangman__hint {
@@ -236,6 +236,21 @@ fieldset {
   border-radius: 10px;
   border: 2px #f4f5f5 solid;
   color: #f4f5f5;
+  transition: 0.5s;
+}
+
+.key_correct:disabled {
+  border-color: rgb(136, 255, 231);
+  color: rgb(136, 255, 231);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.key_wrong:disabled {
+  border-color: rgb(255, 182, 165);
+  color: rgb(255, 182, 165);
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .letter {
