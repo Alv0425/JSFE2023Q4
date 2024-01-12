@@ -393,5 +393,70 @@ fieldset {
     filter: grayscale(0);
   }
 }
+.overlay {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: #271033;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px #191627 solid;
+}
+
+.modal__title {
+  padding: 10px;
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: 900;
+  flex-grow: 1;
+}
+
+.modal__close {
+  position: relative;
+  width: 50px;
+  aspect-ratio: 1/1;
+}
+.modal__close span {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 2px;
+  background-color: #f4f5f5;
+  border-radius: 1px;
+  transition: 0.5s;
+}
+.modal__close span:nth-child(1) {
+  transform: rotate(45deg);
+}
+.modal__close span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+.modal__close:hover span {
+  background-color: #ffed00;
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
 
 /*# sourceMappingURL=style.css.map */

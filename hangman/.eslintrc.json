@@ -9,6 +9,9 @@
     "parserOptions": {
         "sourceType": "module"
     }
+    // "rules": {
+    //     "no-case-declarations": "off"
+    // }
     // "plugins": [
     //     "prettier"
     // ],

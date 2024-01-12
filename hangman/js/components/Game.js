@@ -1,5 +1,6 @@
 import { Human } from "./Human.js";
 import { Alphabet } from "./Alphabet.js";
+import { Modal } from "./Modal.js";
 import { clearNode } from "../auxiliary.js";
 export class Game {
   constructor() {
@@ -39,6 +40,12 @@ export class Game {
     ]);
     const headerLogo = this.createNode("h1", ["header__logo"], {}, "HANGMAN");
     const headerInfo = this.createNode("button", ["header__info"], {}, "i");
+    const infoModal = new Modal('info');
+    infoModal.createModal()
+    headerInfo.onclick = () => {
+      body.append(infoModal.overlay);
+    }
+    infoModal.button.onclick = () => infoModal.closeModal();
     headerContainer.append(headerLogo, headerInfo);
     header.append(headerContainer);
     const main = this.createNode("main", ["main", "wrapper"]);
