@@ -17,6 +17,7 @@ export class Game {
     this.letters = null;
     this.human = null;
     this.checkedLetters = [];
+    this.scoreLabel = null;
     this.numberOfGuesses = 0;
   }
   generateSequence(words) {
@@ -71,7 +72,7 @@ export class Game {
     const playBoard = this.createNode("div", ["hangman__playboard"]);
     const riddle = this.createNode("div", ["hangman__riddle"]);
     this.keyboard = this.createNode("div", ["hangman__keyboard"]);
-    const scoreLabel = this.createNode(
+    this.scoreLabel = this.createNode(
       "p",
       ["hangman__label"],
       {},
@@ -82,7 +83,7 @@ export class Game {
     this.gallows = this.createNode("div", ["hangman__gallows"]);
     gameContainer.append(playBoard, this.keyboard);
     playBoard.append(this.gallows, riddle);
-    riddle.append(scoreLabel, this.wordContainer, this.hint);
+    riddle.append(this.scoreLabel, this.wordContainer, this.hint);
     main.append(gameContainer);
     const keys = this.renderKeyboard();
     console.log(keys);
@@ -94,6 +95,7 @@ export class Game {
   renderNewGame() {
     this.numberOfGuesses = 0;
     this.checkedLetters = [];
+    this.scoreLabel.innerText = `Incorrect guesses: ${this.numberOfGuesses} / 6`
     this.keyboard.forEach((key) => {
       key.classList.remove("key_correct");
       key.classList.remove("key_wrong");
@@ -139,6 +141,7 @@ export class Game {
         if (isIncorrectGuess.every((el) => el)) {
           if (this.numberOfGuesses < 6) {
             this.numberOfGuesses += 1;
+            this.scoreLabel.innerText = `Incorrect guesses: ${this.numberOfGuesses} / 6`
             this.human.parts[this.numberOfGuesses - 1].classList.add(
               "human__part_visible",
             );
