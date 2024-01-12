@@ -9,7 +9,7 @@ async function getWords() {
 }
 
 getWords().then(() => {
-  const newGame = new Game;
+  const newGame = new Game();
   newGame.generateSequence(words);
   newGame.renderGameBoard();
 });

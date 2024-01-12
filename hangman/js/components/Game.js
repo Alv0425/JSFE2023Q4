@@ -1,6 +1,6 @@
 import { Human } from "./Human.js";
 import { Alphabet } from "./Alphabet.js";
-import { clearNode } from "../auxiliary.js"
+import { clearNode } from "../auxiliary.js";
 export class Game {
   constructor() {
     this.sequence = [];
@@ -8,10 +8,10 @@ export class Game {
     this.size = 0;
     this.wordLetters = [];
     this.filling = [];
-    this.alphabet = new Alphabet;
+    this.alphabet = new Alphabet();
     this.gallows = null;
     this.keyboard = null;
-    this.hint = '';
+    this.hint = "";
     this.wordContainer = null;
     this.currentWord = null;
     this.letters = null;
@@ -22,15 +22,20 @@ export class Game {
   generateSequence(words) {
     this.size = words.length;
     this.words = words;
-    this.sequence = Array.from({ length: this.size}, (_, i) => i).sort(() => Math.random() - 0.5);
-    console.log(this.sequence)
+    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(
+      () => Math.random() - 0.5,
+    );
+    console.log(this.sequence);
   }
   renderGameBoard() {
     const body = document.body;
     body.classList.add("body");
     let numberOfGuesses = 0;
     const header = this.createNode("header", ["header"]);
-    const headerContainer = this.createNode("div", ["header__container", "wrapper"]);
+    const headerContainer = this.createNode("div", [
+      "header__container",
+      "wrapper",
+    ]);
     const headerLogo = this.createNode("h1", ["header__logo"], {}, "HANGMAN");
     const headerInfo = this.createNode("button", ["header__info"], {}, "i");
     headerContainer.append(headerLogo, headerInfo);
@@ -39,11 +44,14 @@ export class Game {
     const footer = this.createNode("footer", ["footer"]);
     body.append(header, main, footer);
 
-    const footerContainer = this.createNode("div", ["footer__container", "wrapper"]);
+    const footerContainer = this.createNode("div", [
+      "footer__container",
+      "wrapper",
+    ]);
     const footerRSSLink = this.createNode("a", ["footer__rss-link"], {
       href: "https://rs.school/js/",
       target: "_blank",
-    }); 
+    });
     const footerDate = this.createNode(
       "p",
       ["footer__date"],
@@ -71,13 +79,13 @@ export class Game {
     );
     this.wordContainer = this.createNode("div", ["hangman__word"]);
     this.hint = this.createNode("p", ["hangman__hint"], {}, "Some text");
-    this.gallows = this.createNode("div", ["hangman__gallows"]);    
+    this.gallows = this.createNode("div", ["hangman__gallows"]);
     gameContainer.append(playBoard, this.keyboard);
     playBoard.append(this.gallows, riddle);
     riddle.append(scoreLabel, this.wordContainer, this.hint);
     main.append(gameContainer);
     const keys = this.renderKeyboard();
-    console.log(keys)
+    console.log(keys);
     this.keyboard.append(...keys);
     this.keyboard = keys;
     this.renderNewGame();
@@ -91,20 +99,22 @@ export class Game {
       key.classList.remove("key_wrong");
       key.disabled = false;
     });
-    console.log(this.keyboard[0])
-    this.human = new Human;
+    console.log(this.keyboard[0]);
+    this.human = new Human();
     const humanBody = this.human.render();
-    let newWord = '';
+    let newWord = "";
     if (!this.sequence.length) {
       this.generateSequence(this.words);
     }
     newWord = this.words[this.sequence.pop()];
-    this.wordLetters = newWord.word.split('').map((l) => l.toUpperCase());
+    this.wordLetters = newWord.word.split("").map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
-    this.letters = this.wordLetters.map((letter) => this.alphabet.render(letter));
+    this.letters = this.wordLetters.map((letter) =>
+      this.alphabet.render(letter),
+    );
     this.wordContainer.append(...this.letters);
     this.hint.innerText = newWord.hint;
-    this.filling = (new Array(this.wordLetters.length)).fill(false);
+    this.filling = new Array(this.wordLetters.length).fill(false);
   }
 
   renderKeyboard() {
@@ -125,11 +135,13 @@ export class Game {
             this.keyboard[alph.indexOf(letter)].disabled = true;
           }
         }
-        console.log(isIncorrectGuess)
-        if (isIncorrectGuess.every((el) => el)){
+        console.log(isIncorrectGuess);
+        if (isIncorrectGuess.every((el) => el)) {
           if (this.numberOfGuesses < 6) {
             this.numberOfGuesses += 1;
-            this.human.parts[this.numberOfGuesses - 1].classList.add("human__part_visible");
+            this.human.parts[this.numberOfGuesses - 1].classList.add(
+              "human__part_visible",
+            );
             this.keyboard[alph.indexOf(letter)].classList.add("key_wrong");
             this.keyboard[alph.indexOf(letter)].disabled = true;
             this.checkedLetters.push(letter);
@@ -141,26 +153,28 @@ export class Game {
           }
         }
       }
-    }
+    };
     Object.keys(this.alphabet.letters).forEach((letter) => {
-      const newkey = document.createElement('button');
+      const newkey = document.createElement("button");
       newkey.innerText = letter;
-      newkey.classList.add('key');
+      newkey.classList.add("key");
       newkey.onclick = () => {
         console.log(letter, this.wordLetters, this.filling);
         handleKeyEvt(letter);
-      }
+      };
       keys.push(newkey);
     });
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener("keydown", (event) => {
       let letter = event.key.toUpperCase();
-      console.log(letter)
+      console.log(letter);
       if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
         handleKeyEvt(letter);
       } else {
-        console.log('The word consist of english letters only (A-Z). Please, set the input language of the keyboard to EN and try again.');
+        console.log(
+          "The word consist of english letters only (A-Z). Please, set the input language of the keyboard to EN and try again.",
+        );
       }
-    })
+    });
     return keys;
   }
 
