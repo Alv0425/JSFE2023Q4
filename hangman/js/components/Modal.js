@@ -58,10 +58,10 @@ export class Modal {
         this.modal.classList.add('modal_info');
         modalTitle.innerText = "HANGMAN GAME";
         modalText.innerText = "The HANGMAN game is popular word-guessing game.";
-        const rules = createNode("p", "modal__text");
+        const rules = createNode("p", ["modal__text"]);
         rules.innerText =
           "RULES: Guess a letter in the word; if it's in the word, all the spots that match that letter fill in. For example, if the word was ABYSSAL, then, when no letters have been guessed, it would be _ _ _ _ _ _ _ . If the letter A is guessed, it becomes A _ _ _ _ A _ . If the player guesses wrong, a piece is added to the hangman person. When the entire human is built, the player loses.";
-        const note = createNode("p", "modal__text");
+        const note = createNode("p", ["modal__text"]);
         note.innerText =
           "NB: App works with physical keyboard. Please, make sure you are using EN keyboard. The word consist of letters A-Z of English alphabet only.";
         const linkMDN = createNode(
@@ -79,7 +79,7 @@ export class Modal {
           { target: "_blank", href: "https://javascript.info/" },
           "javascript.info",
         );
-        const sources = createNode("p", "modal__text");
+        const sources = createNode("p", ["modal__text"]);
         sources.append(
           "in the game you are encouraged to guess for words on the topic related to web development. You can find most of definitions in ",
           linkMDN,
@@ -102,7 +102,7 @@ export class Modal {
     this.overlay.classList.add("fade-out");
     setTimeout(() => {
       this.overlay.classList.remove("fade-out");
-    this.overlay.remove();
+      this.overlay.remove();
 
     } , 500);
   }

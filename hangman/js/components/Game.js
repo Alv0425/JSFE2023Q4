@@ -167,7 +167,7 @@ export class Game {
             setTimeout(() => {
               document.body.append(newWin.overlay);
             }, 700);
-            let word = this.createNode("p", "modal__text");
+            let word = this.createNode("p", ["modal__text"]);
             word.innerText = `You guessed the word ${this.wordLetters.join("")}!`;
             newWin.button.before(
               "Congratulations!",
@@ -197,11 +197,11 @@ export class Game {
                 }, 700);
                 let text = this.createNode(
                   "p",
-                  "modal__text",
+                  ["modal__text"],
                   {},
                   "Sorry, you ran out of tries.",
                 );
-                let word = this.createNode("p", "modal__text");
+                let word = this.createNode("p", ["modal__text"]);
                 word.innerText = `The word was ${this.wordLetters.join("")}`;
                 newLose.button.before(text, word);
                 newLose.button.onclick = () => newLose.closeModal();
