@@ -164,7 +164,9 @@ export class Game {
             this.isModalOpened = true;
             const newWin = new Modal("win");
             newWin.createModal();
-            document.body.append(newWin.overlay);
+            setTimeout(() => {
+              document.body.append(newWin.overlay);
+            }, 700);
             let word = this.createNode("p", "modal__text");
             word.innerText = `You guessed the word ${this.wordLetters.join(
               "",
@@ -191,7 +193,9 @@ export class Game {
               if (!this.isModalOpened) {
                 const newLose = new Modal("lose");
                 newLose.createModal();
-                document.body.append(newLose.overlay);
+                setTimeout(() => {
+                  document.body.append(newLose.overlay);
+                }, 700);
                 let text = this.createNode(
                   "p",
                   "modal__text",

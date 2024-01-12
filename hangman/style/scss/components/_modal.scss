@@ -8,16 +8,37 @@
   align-items: center;
   padding: 5px;
   background-color: rgba(0,0,0,0.5);
+  animation: fade-in 0.3s ease;
 }
 
 .modal {
   max-width: 500px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 20px;
   background-color: $color-container-dark;
+  &_result{
+    width: 100%;
+    max-width: 300px;
+    .modal__body {
+      align-items: center;
+      padding-bottom: 20px;
+    }
+  }
+  &_error{
+    max-width: 400px;
+  }
+  &_info{
+    height: 100vh;
+    max-height: 420px;
+    .modal__body{
+      overflow: auto;
+    }
+  }
 }
 
 .modal__header {
+  position: relative;
   display: flex;
   align-items: center;
   width:100%;
@@ -33,7 +54,9 @@
 }
 
 .modal__close {
-  position: relative;
+  position: absolute;
+  right:0;
+  top:0;
   width: 50px;
   aspect-ratio: 1 / 1;
   span{
@@ -60,7 +83,7 @@
 .modal__body {
   display: flex;
   flex-direction: column;
-  gap:10px;
+  gap:20px;
   padding: 20px;
 }
 
@@ -79,4 +102,36 @@
     color: $color-text-highlight;
     border-color: $color-text-highlight;
   }
+}
+
+.modal__link {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.5s;
+  &:hover{
+    color:$color-text-highlight;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }  
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }  
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-out{
+  pointer-events: none;
+  animation: fade-out 0.3s ease forwards;
 }

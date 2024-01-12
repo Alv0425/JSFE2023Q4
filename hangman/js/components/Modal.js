@@ -31,7 +31,8 @@ export class Modal {
     this.overlay.append(this.modal);
     switch (this.type) {
       case "error": {
-        modalTitle.innerText = "Error: incorrect symbol";
+        this.modal.classList.add('modal_error');
+        modalTitle.innerText = "Error!";
         modalText.innerText =
           "It seems you are typing incorrect symbol. The word consist of letters from english alphabet, A-Z. Please, make sure you are using EN keyboard.";
         const shortcuts = createNode("p", ["modal__text"]);
@@ -42,16 +43,19 @@ export class Modal {
         break;
       }
       case "win":
+        this.modal.classList.add('modal_result');
         modalTitle.innerText = "Correct!";
         this.button.innerText = "PLAY AGAIN";
         modalBody.append(this.button);
         break;
       case "lose":
+        this.modal.classList.add('modal_result');
         modalTitle.innerText = "You lose =(";
         this.button.innerText = "PLAY AGAIN";
         modalBody.append(this.button);
         break;
       case "info": {
+        this.modal.classList.add('modal_info');
         modalTitle.innerText = "HANGMAN GAME";
         modalText.innerText = "The HANGMAN game is popular word-guessing game.";
         const rules = createNode("p", "modal__text");
@@ -96,6 +100,10 @@ export class Modal {
       document.body.dispatchEvent(closeWin);
     }
     this.overlay.classList.add("fade-out");
+    setTimeout(() => {
+      this.overlay.classList.remove("fade-out");
     this.overlay.remove();
+
+    } , 500);
   }
 }
