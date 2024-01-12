@@ -76,7 +76,9 @@
     transform: rotate(-45deg);
   }
   &:hover span {
-    background-color: $color-text-highlight;
+    @media (pointer: fine) and (hover: hover) {
+      background-color: $color-text-highlight;
+    }
   }
 }
 
@@ -99,8 +101,10 @@
   border-radius: 20px;
   transition: 0.5s;
   &:hover {
-    color: $color-text-highlight;
-    border-color: $color-text-highlight;
+    @media (pointer: fine) and (hover: hover) {
+      color: $color-text-highlight;
+      border-color: $color-text-highlight;
+    }
   }
 }
 
@@ -109,7 +113,9 @@
   color: inherit;
   transition: 0.5s;
   &:hover{
-    color:$color-text-highlight;
+    @media (pointer: fine) and (hover: hover) {
+      color:$color-text-highlight;
+    }
   }
 }
 

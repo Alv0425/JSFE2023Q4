@@ -154,9 +154,11 @@ fieldset {
   border: 2px #f4f5f5 solid;
   transition: 1s;
 }
-.header__info:hover {
-  color: #ffed00;
-  border-color: #ffed00;
+@media (pointer: fine) and (hover: hover) {
+  .header__info:hover {
+    color: #ffed00;
+    border-color: #ffed00;
+  }
 }
 
 .hangman {
@@ -471,8 +473,10 @@ fieldset {
 .modal__close span:nth-child(2) {
   transform: rotate(-45deg);
 }
-.modal__close:hover span {
-  background-color: #ffed00;
+@media (pointer: fine) and (hover: hover) {
+  .modal__close:hover span {
+    background-color: #ffed00;
+  }
 }
 
 .modal__body {
@@ -494,9 +498,11 @@ fieldset {
   border-radius: 20px;
   transition: 0.5s;
 }
-.modal__button:hover {
-  color: #ffed00;
-  border-color: #ffed00;
+@media (pointer: fine) and (hover: hover) {
+  .modal__button:hover {
+    color: #ffed00;
+    border-color: #ffed00;
+  }
 }
 
 .modal__link {
@@ -504,8 +510,10 @@ fieldset {
   color: inherit;
   transition: 0.5s;
 }
-.modal__link:hover {
-  color: #ffed00;
+@media (pointer: fine) and (hover: hover) {
+  .modal__link:hover {
+    color: #ffed00;
+  }
 }
 
 @keyframes fade-in {

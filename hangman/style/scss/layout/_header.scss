@@ -33,8 +33,10 @@
   border: 2px $color-text-light solid;
   transition: 1s;
   &:hover {
-    color: $color-text-highlight;
-    border-color: $color-text-highlight;
+    @media (pointer: fine) and (hover: hover) {
+      color: $color-text-highlight;
+      border-color: $color-text-highlight;
+    }
   }
 }
 
