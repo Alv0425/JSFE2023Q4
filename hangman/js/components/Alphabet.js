@@ -47,9 +47,7 @@ export class Alphabet {
     path.setAttribute("d", d);
     path.setAttribute("stroke-linecap", "round");
     path.setAttribute("stroke-linejoin", "round");
-    path.setAttribute("stroke-width", "2");
+    path.setAttribute("stroke-width", "3");
     return path;
   }
-  
-
 }

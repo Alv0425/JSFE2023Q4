@@ -1,5 +1,6 @@
 import { Human } from "./Human.js";
 import { Alphabet } from "./Alphabet.js";
+import { clearNode } from "../auxiliary.js"
 export class Game {
   constructor() {
     this.sequence = [];
@@ -13,6 +14,8 @@ export class Game {
     this.hint = '';
     this.wordContainer = null;
     this.currentWord = null;
+    this.letters = null;
+    this.human = null;
     this.numberOfGuesses = 0;
   }
   generateSequence(words) {
@@ -80,8 +83,9 @@ export class Game {
   }
 
   renderNewGame() {
-    const human = new Human;
-    const humanBody = human.render();
+    this.numberOfGuesses = 0;
+    this.human = new Human;
+    const humanBody = this.human.render();
     let newWord = '';
     if (!this.sequence.length) {
       this.generateSequence(this.words);
@@ -89,10 +93,10 @@ export class Game {
     newWord = this.words[this.sequence.pop()];
     this.wordLetters = newWord.word.split('').map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
-    const letters = this.wordLetters.map((letter) => this.alphabet.render(letter));
-    this.wordContainer.append(...letters);
+    this.letters = this.wordLetters.map((letter) => this.alphabet.render(letter));
+    this.wordContainer.append(...this.letters);
     this.hint.innerText = newWord.hint;
-    
+    this.filling = (new Array(this.wordLetters.length)).fill(false);
   }
 
   renderKeyboard() {
@@ -102,7 +106,31 @@ export class Game {
       newkey.innerText = letter;
       newkey.classList.add('key');
       newkey.onclick = () => {
-        console.log(letter);
+        console.log(letter, this.wordLetters, this.filling);
+        if (this.filling.includes(letter)) {
+          console.log(letter, "already opened");
+        } else {
+          let isIncorrectGuess = [true];
+          for (let i = 0; i < this.wordLetters.length; i++) {
+            if (letter === this.wordLetters[i]) {
+              isIncorrectGuess.push(false);
+              this.filling[i] === letter;
+              this.letters[i].classList.add("letter_active");
+            }
+          }
+          console.log(isIncorrectGuess)
+          if (isIncorrectGuess.every((el) => el)){
+            if (this.numberOfGuesses < 6) {
+              this.numberOfGuesses += 1;
+              this.human.parts[this.numberOfGuesses - 1].classList.add("human__part_visible");
+              if (this.numberOfGuesses === 6) {
+                this.human.erase();
+                clearNode(this.wordContainer);
+                this.renderNewGame();
+              }
+            }
+          }
+        }
       }
       keys.push(newkey);
     });
