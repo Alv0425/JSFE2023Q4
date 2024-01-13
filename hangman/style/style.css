@@ -126,6 +126,7 @@ fieldset {
 .header__container {
   display: flex;
   align-items: center;
+  gap: 4px;
   width: 100%;
 }
 
@@ -139,6 +140,36 @@ fieldset {
   text-align: center;
   font-family: Montserrat;
   font-weight: 900;
+}
+@media (width <= 768px) {
+  .header__logo {
+    font-size: 32px;
+    line-height: 50px;
+  }
+}
+
+.header__toggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-size: 90%;
+  background-position: 70% 70%;
+  background-image: url(../assets/volume.svg);
+  filter: grayscale(2) brightness(5);
+  border-radius: 50%;
+  border: 2px #f4f5f5 solid;
+  transition: 1s;
+}
+@media (pointer: fine) and (hover: hover) {
+  .header__toggler:hover {
+    filter: grayscale(0) brightness(1);
+    border-color: #ffed00;
+  }
+}
+.header__toggler_active {
+  background-image: url(../assets/muted.svg);
 }
 
 .header__info {
@@ -257,6 +288,12 @@ fieldset {
   border: 2px #f4f5f5 solid;
   color: #f4f5f5;
   transition: 0.5s;
+}
+@media (pointer: fine) and (hover: hover) {
+  .key:hover {
+    border-color: #ffed00;
+    color: #ffed00;
+  }
 }
 
 .key_correct:disabled {
@@ -486,6 +523,10 @@ fieldset {
   padding: 20px;
 }
 
+.modal__body::-webkit-scrollbar {
+  width: 4px;
+}
+
 .modal__button {
   display: flex;
   align-items: center;
@@ -514,6 +555,11 @@ fieldset {
   .modal__link:hover {
     color: #ffed00;
   }
+}
+
+.modal__text {
+  text-align: center;
+  font-size: 16px;
 }
 
 @keyframes fade-in {

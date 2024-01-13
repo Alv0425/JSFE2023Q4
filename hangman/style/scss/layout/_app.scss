@@ -91,20 +91,26 @@
   border: 2px $color-text-light solid;
   color: $color-text-light; 
   transition: 0.5s;
+  &:hover {
+    @media (pointer: fine) and (hover: hover) {
+      border-color: $color-text-highlight;
+      color: $color-text-highlight; 
+    }
+  }
 }
 
 .key_correct:disabled{
   border-color: $color-text-correct;
   color: $color-text-correct;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .key_wrong:disabled {
   border-color: $color-text-error;
   color: $color-text-error;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .letter {
