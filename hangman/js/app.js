@@ -9,6 +9,9 @@ async function getWords() {
 }
 
 getWords().then(() => {
+  console.log(
+    `Пожалуйста, не забудьте переключить раскладку клавиатуры на EN!`,
+  );
   const newGame = new Game();
   newGame.generateSequence(words);
   newGame.renderGameBoard();
