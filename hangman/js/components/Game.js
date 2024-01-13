@@ -1,6 +1,7 @@
 import { Human } from "./Human.js";
 import { Alphabet } from "./Alphabet.js";
 import { Modal } from "./Modal.js";
+import { Sound } from "./Sound.js";
 import { clearNode } from "../auxiliary.js";
 export class Game {
   constructor() {
@@ -111,6 +112,9 @@ export class Game {
     });
     document.body.addEventListener("modalclosedwin", () => {
       this.human.erase();
+      let newSound = new Sound('erase');
+      newSound.createSound();
+      newSound.playSound();
       this.renderNewGame();
     });
   }
@@ -154,6 +158,9 @@ export class Game {
             isIncorrectGuess.push(false);
             this.checkedLetters.push(letter);
             this.filling[i] = letter;
+            let newSound = new Sound('letter');
+            newSound.createSound();
+            newSound.playSound();
             this.letters[i].classList.add("letter_active");
             this.keyboard[alph.indexOf(letter)].classList.add("key_correct");
             this.keyboard[alph.indexOf(letter)].disabled = true;
@@ -165,6 +172,9 @@ export class Game {
             const newWin = new Modal("win");
             newWin.createModal();
             setTimeout(() => {
+              let newSound = new Sound('win');
+              newSound.createSound();
+              newSound.playSound();
               document.body.append(newWin.overlay);
             }, 700);
             let word = this.createNode("p", ["modal__text"]);
@@ -184,15 +194,28 @@ export class Game {
             this.human.parts[this.numberOfGuesses - 1].classList.add(
               "human__part_visible",
             );
+            if (this.numberOfGuesses === 1) {
+              let newSound = new Sound('circle');
+              newSound.createSound();
+              newSound.playSound();
+            } else {
+              let newSound = new Sound('line');
+              newSound.createSound();
+              newSound.playSound();
+            }
             this.keyboard[alph.indexOf(letter)].classList.add("key_wrong");
             this.keyboard[alph.indexOf(letter)].disabled = true;
             this.checkedLetters.push(letter);
             if (this.numberOfGuesses === 6) {
               if (!this.isModalOpened) {
                 const newLose = new Modal("lose");
+                
                 newLose.createModal();
                 setTimeout(() => {
                   this.isModalOpened = true;
+                  let newSound = new Sound('lose');
+                  newSound.createSound();
+                  newSound.playSound();
                   document.body.append(newLose.overlay);
                 }, 700);
                 let text = this.createNode(
