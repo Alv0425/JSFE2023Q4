@@ -29,6 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
   background-size: 90%;
@@ -53,6 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
   font-size: 20px;
