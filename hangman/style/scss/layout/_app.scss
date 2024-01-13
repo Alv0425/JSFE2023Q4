@@ -91,6 +91,12 @@
   border: 2px $color-text-light solid;
   color: $color-text-light; 
   transition: 0.5s;
+  &:hover {
+    @media (pointer: fine) and (hover: hover) {
+      border-color: $color-text-highlight;
+      color: $color-text-highlight; 
+    }
+  }
 }
 
 .key_correct:disabled{

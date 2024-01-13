@@ -89,6 +89,10 @@
   padding: 20px;
 }
 
+.modal__body::-webkit-scrollbar {
+  width: 4px;
+}
+
 .modal__button {
   display: flex;
   align-items: center;
@@ -117,6 +121,11 @@
       color:$color-text-highlight;
     }
   }
+}
+
+.modal__text{
+  text-align: center;
+  font-size: 16px;
 }
 
 @keyframes fade-in {
