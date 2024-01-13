@@ -22,6 +22,7 @@ export class Game {
     this.scoreLabel = null;
     this.numberOfGuesses = 0;
     this.isModalOpened = false;
+    this.isMuted = false;
   }
   generateSequence(words) {
     this.size = words.length;
@@ -43,6 +44,13 @@ export class Game {
       "wrapper",
     ]);
     const headerLogo = this.createNode("h1", ["header__logo"], {}, "HANGMAN");
+    const mutedToggler = this.createNode("button", ["header__toggler"]);
+    mutedToggler.onclick = () => {
+      const toggleEvent = new Event('mutetoggle');
+      body.dispatchEvent(toggleEvent);
+      this.isMuted = !this.isMuted;
+      mutedToggler.classList.toggle("header__toggler_active");
+    }
     const headerInfo = this.createNode("button", ["header__info"], {}, "i");
     if (!this.isModalOpened) {
       const infoModal = new Modal("info");
@@ -57,7 +65,7 @@ export class Game {
       };
     }
 
-    headerContainer.append(headerLogo, headerInfo);
+    headerContainer.append(headerLogo, mutedToggler, headerInfo);
     header.append(headerContainer);
     const main = this.createNode("main", ["main", "wrapper"]);
     const footer = this.createNode("footer", ["footer"]);
@@ -112,7 +120,7 @@ export class Game {
     });
     document.body.addEventListener("modalclosedwin", () => {
       this.human.erase();
-      let newSound = new Sound('erase');
+      let newSound = new Sound('erase', this.isMuted);
       newSound.createSound();
       newSound.playSound();
       this.renderNewGame();
@@ -158,7 +166,7 @@ export class Game {
             isIncorrectGuess.push(false);
             this.checkedLetters.push(letter);
             this.filling[i] = letter;
-            let newSound = new Sound('letter');
+            let newSound = new Sound('letter', this.isMuted);
             newSound.createSound();
             newSound.playSound();
             this.letters[i].classList.add("letter_active");
@@ -172,7 +180,7 @@ export class Game {
             const newWin = new Modal("win");
             newWin.createModal();
             setTimeout(() => {
-              let newSound = new Sound('win');
+              let newSound = new Sound('win', this.isMuted);
               newSound.createSound();
               newSound.playSound();
               document.body.append(newWin.overlay);
@@ -195,11 +203,11 @@ export class Game {
               "human__part_visible",
             );
             if (this.numberOfGuesses === 1) {
-              let newSound = new Sound('circle');
+              let newSound = new Sound('circle', this.isMuted);
               newSound.createSound();
               newSound.playSound();
             } else {
-              let newSound = new Sound('line');
+              let newSound = new Sound('line', this.isMuted);
               newSound.createSound();
               newSound.playSound();
             }
@@ -209,11 +217,10 @@ export class Game {
             if (this.numberOfGuesses === 6) {
               if (!this.isModalOpened) {
                 const newLose = new Modal("lose");
-                
                 newLose.createModal();
                 setTimeout(() => {
                   this.isModalOpened = true;
-                  let newSound = new Sound('lose');
+                  let newSound = new Sound('lose', this.isMuted);
                   newSound.createSound();
                   newSound.playSound();
                   document.body.append(newLose.overlay);
