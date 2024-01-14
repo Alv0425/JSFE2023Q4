@@ -22,11 +22,6 @@ export class Modal {
     this.overlay.append(this.modal);
     this.button = createNode("button", ["modal__button"]);
     modalClose.onclick = () => this.closeModal();
-    // this.overlay.addEventListener("click", (e) => {
-    //   if (!this.modal.contains(e.target)) {
-    //     this.closeModal();
-    //   }
-    // });
     this.overlay.append(this.modal);
     switch (this.type) {
       case "error": {

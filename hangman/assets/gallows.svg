@@ -7,7 +7,7 @@ viewBox="0 0 300 300"
  <defs>
   <style type="text/css">
    <![CDATA[
-    .str0 {stroke:#FEFEFE;stroke-width:4.17;stroke-miterlimit:22.9256}
+    .str0 {stroke:#FEFEFE;stroke-width:4.17;stroke-miterlimit:22.9256;stroke-linecap:round}
     .fil0 {fill:none}
    ]]>
   </style>

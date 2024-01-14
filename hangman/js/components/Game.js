@@ -39,9 +39,6 @@ export class Game {
       return arr;
     }
     this.sequence = shuffle(Array.from({ length: this.size }, (_, i) => i));
-    // this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(
-    //   () => Math.random() - 0.5,
-    // );
   }
 
   renderGameBoard() {
@@ -176,7 +173,9 @@ export class Game {
                 );
                 let word = createNode("p", ["modal__text"]);
                 word.innerText = `The word was ${this.wordLetters.join("")}`;
-                newLose.button.before(text, word);
+                let hint = createNode("p", ["modal__text"]);
+                hint.innerText = this.hint.textContent;
+                newLose.button.before(text, word, hint);
                 newLose.button.onclick = () => newLose.closeModal();
               }
             }
