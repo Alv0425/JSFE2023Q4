@@ -29,16 +29,9 @@ export class Game {
   generateSequence(words) {
     this.size = words.length;
     this.words = words;
-    // const shuffle = (array) => {
-    //   const arr = [];
-    //   let i = 0;
-    //   while (array.length !== arr.length) {
-    //     arr[i] = (array[Math.floor(Math.random() * array.length)]);
-    //     i++;
-    //   }
-    //   return arr;
-    // }
-    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(() => Math.random() - 0.5);
+    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(
+      () => Math.random() - 0.5,
+    );
   }
 
   renderGameBoard() {
@@ -77,7 +70,10 @@ export class Game {
     const humanBody = this.human.render();
     if (!this.sequence.length) {
       this.generateSequence(this.words);
-      if (localStorage.hangmanprevnumber === this.sequence[this.sequence.length - 1]) {
+      if (
+        localStorage.hangmanprevnumber ===
+        this.sequence[this.sequence.length - 1]
+      ) {
         this.sequence.pop();
       }
     }
@@ -85,7 +81,9 @@ export class Game {
     this.currentWord = this.words[lastIndex];
     localStorage.hangmanprevnumber = lastIndex;
     console.log(`The secret word: ${this.currentWord.word.toUpperCase()}`);
-    this.wordLetters = this.currentWord.word.split("").map((l) => l.toUpperCase());
+    this.wordLetters = this.currentWord.word
+      .split("")
+      .map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
     this.letters = this.wordLetters.map((letter) =>
       this.alphabet.render(letter),
@@ -126,9 +124,7 @@ export class Game {
               document.body.append(newWin.overlay);
             }, 700);
             let word = createNode("p", ["modal__text"]);
-            word.innerText = `The word was ${this.wordLetters.join(
-              "",
-            )}!`;
+            word.innerText = `The word was ${this.wordLetters.join("")}!`;
             newWin.button.before(
               "Congratulations!",
               word,
@@ -199,7 +195,10 @@ export class Game {
         let letter = event.key.toUpperCase();
         if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
           handleKeyEvt(letter);
-        } else if ((/[^\d\s\-_&%#?`~!@^'"{}=+.]/.test(letter)) && letter.length === 1) {
+        } else if (
+          /[^\d\s\-_&%#?`~!@^'"{}=+.,\[;/\]\\]/.test(letter) &&
+          letter.length === 1
+        ) {
           let alert = new Modal("error");
           alert.createModal();
           alert.button.onclick = () => {
