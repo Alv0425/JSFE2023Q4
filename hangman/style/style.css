@@ -264,6 +264,8 @@ fieldset {
 .human {
   width: 100%;
   height: 100%;
+  transform-origin: 70% 20%;
+  animation: rocking 2s cubic-bezier(0.6, 0.23, 0.4, 0.78) infinite alternate;
 }
 
 .human__part {
@@ -272,13 +274,13 @@ fieldset {
 }
 
 .human__part_visible {
-  animation: dash 5s linear forwards;
+  animation: conturfill 5s linear forwards;
 }
 
 .human__eraser {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: dash 0.7s linear forwards;
+  animation: conturfill 0.7s linear forwards;
 }
 
 .key {
@@ -319,8 +321,8 @@ fieldset {
   border-bottom: 2px solid #f4f5f5;
 }
 .letter path {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
 }
 
 .letter_active {
@@ -328,12 +330,20 @@ fieldset {
   border-bottom: 1px solid transparent;
 }
 .letter_active path {
-  animation: dash 5s linear forwards;
+  animation: conturfill 1.5s linear forwards;
 }
 
-@keyframes dash {
+@keyframes conturfill {
   to {
     stroke-dashoffset: 0;
+  }
+}
+@keyframes rocking {
+  0% {
+    transform: rotate(1.5deg);
+  }
+  100% {
+    transform: rotate(-1.5deg);
   }
 }
 /* Footer */

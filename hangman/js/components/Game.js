@@ -29,16 +29,16 @@ export class Game {
   generateSequence(words) {
     this.size = words.length;
     this.words = words;
-    const shuffle = (array) => {
-      const arr = [];
-      let i = 0;
-      while (array.length !== arr.length) {
-        arr[i] = (array[Math.floor(Math.random() * array.length)]);
-        i++;
-      }
-      return arr;
-    }
-    this.sequence = shuffle(Array.from({ length: this.size }, (_, i) => i));
+    // const shuffle = (array) => {
+    //   const arr = [];
+    //   let i = 0;
+    //   while (array.length !== arr.length) {
+    //     arr[i] = (array[Math.floor(Math.random() * array.length)]);
+    //     i++;
+    //   }
+    //   return arr;
+    // }
+    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(() => Math.random() - 0.5);
   }
 
   renderGameBoard() {
