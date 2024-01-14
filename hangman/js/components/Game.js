@@ -192,12 +192,12 @@ export class Game {
       };
       keys.push(newkey);
     });
-    window.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       if (!this.isModalOpened) {
         let letter = event.key.toUpperCase();
         if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
           handleKeyEvt(letter);
-        } else if (/[А-Я]{1}/.test(letter)) {
+        } else if ((/[^\d\s\-_&%#?`~!@^'"{}=+.]/.test(letter)) && letter.length === 1) {
           let alert = new Modal("error");
           alert.createModal();
           alert.button.onclick = () => {
