@@ -26,7 +26,10 @@ export function clearNode(node) {
 }
 
 export function checkLocalstorage() {
-  let hasProperty = Object.prototype.hasOwnProperty.call(localStorage, "hangmanprevnumber");
+  let hasProperty = Object.prototype.hasOwnProperty.call(
+    localStorage,
+    "hangmanprevnumber",
+  );
   if (!hasProperty) {
     localStorage.hangmanprevnumber = -1;
   }

@@ -29,16 +29,9 @@ export class Game {
   generateSequence(words) {
     this.size = words.length;
     this.words = words;
-    const shuffle = (array) => {
-      const arr = [];
-      let i = 0;
-      while (array.length !== arr.length) {
-        arr[i] = (array[Math.floor(Math.random() * array.length)]);
-        i++;
-      }
-      return arr;
-    }
-    this.sequence = shuffle(Array.from({ length: this.size }, (_, i) => i));
+    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(
+      () => Math.random() - 0.5,
+    );
   }
 
   renderGameBoard() {
@@ -54,9 +47,11 @@ export class Game {
     });
     body.addEventListener("modalclosedwin", () => {
       this.human.erase();
-      let newSound = new Sound("erase", this.isMuted);
-      newSound.createSound();
-      newSound.playSound();
+      if (this.numberOfGuesses > 0) {
+        let newSound = new Sound("erase", this.isMuted);
+        newSound.createSound();
+        newSound.playSound();
+      }
       this.renderNewGame();
     });
   }
@@ -75,21 +70,26 @@ export class Game {
     const humanBody = this.human.render();
     if (!this.sequence.length) {
       this.generateSequence(this.words);
-      if (localStorage.hangmanprevnumber === this.sequence[this.sequence.length - 1]) {
+      if (
+        localStorage.hangmanprevnumber ===
+        this.sequence[this.sequence.length - 1]
+      ) {
         this.sequence.pop();
       }
     }
     let lastIndex = this.sequence.pop();
-    let newWord = this.words[lastIndex];
+    this.currentWord = this.words[lastIndex];
     localStorage.hangmanprevnumber = lastIndex;
-    console.log(`The secret word: ${newWord.word.toUpperCase()}`);
-    this.wordLetters = newWord.word.split("").map((l) => l.toUpperCase());
+    console.log(`The secret word: ${this.currentWord.word.toUpperCase()}`);
+    this.wordLetters = this.currentWord.word
+      .split("")
+      .map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
     this.letters = this.wordLetters.map((letter) =>
       this.alphabet.render(letter),
     );
     this.wordContainer.append(...this.letters);
-    this.hint.innerText = newWord.hint;
+    this.hint.innerText = this.currentWord.hint;
     this.filling = new Array(this.wordLetters.length).fill(false);
   }
 
@@ -124,9 +124,7 @@ export class Game {
               document.body.append(newWin.overlay);
             }, 700);
             let word = createNode("p", ["modal__text"]);
-            word.innerText = `The word was ${this.wordLetters.join(
-              "",
-            )}!`;
+            word.innerText = `The word was ${this.wordLetters.join("")}!`;
             newWin.button.before(
               "Congratulations!",
               word,
@@ -174,7 +172,7 @@ export class Game {
                 let word = createNode("p", ["modal__text"]);
                 word.innerText = `The word was ${this.wordLetters.join("")}`;
                 let hint = createNode("p", ["modal__text"]);
-                hint.innerText = this.hint.textContent;
+                hint.innerText = this.currentWord.hint;
                 newLose.button.before(text, word, hint);
                 newLose.button.onclick = () => newLose.closeModal();
               }
@@ -192,12 +190,15 @@ export class Game {
       };
       keys.push(newkey);
     });
-    window.addEventListener("keydown", (event) => {
+    document.addEventListener("keydown", (event) => {
       if (!this.isModalOpened) {
         let letter = event.key.toUpperCase();
         if (/[A-Z]{1}/.test(letter) && letter.length === 1) {
           handleKeyEvt(letter);
-        } else if (/[А-Я]{1}/.test(letter)) {
+        } else if (
+          /[^\d\s\-_&%#?`~!@^'"{}=+.,\[;/\]\\]/.test(letter) &&
+          letter.length === 1
+        ) {
           let alert = new Modal("error");
           alert.createModal();
           alert.button.onclick = () => {
