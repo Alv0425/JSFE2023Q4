@@ -54,9 +54,11 @@ export class Game {
     });
     body.addEventListener("modalclosedwin", () => {
       this.human.erase();
-      let newSound = new Sound("erase", this.isMuted);
-      newSound.createSound();
-      newSound.playSound();
+      if (this.numberOfGuesses > 0) {
+        let newSound = new Sound("erase", this.isMuted);
+        newSound.createSound();
+        newSound.playSound();
+      }
       this.renderNewGame();
     });
   }
