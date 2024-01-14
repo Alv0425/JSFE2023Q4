@@ -82,16 +82,16 @@ export class Game {
       }
     }
     let lastIndex = this.sequence.pop();
-    let newWord = this.words[lastIndex];
+    this.currentWord = this.words[lastIndex];
     localStorage.hangmanprevnumber = lastIndex;
-    console.log(`The secret word: ${newWord.word.toUpperCase()}`);
-    this.wordLetters = newWord.word.split("").map((l) => l.toUpperCase());
+    console.log(`The secret word: ${this.currentWord.word.toUpperCase()}`);
+    this.wordLetters = this.currentWord.word.split("").map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
     this.letters = this.wordLetters.map((letter) =>
       this.alphabet.render(letter),
     );
     this.wordContainer.append(...this.letters);
-    this.hint.innerText = newWord.hint;
+    this.hint.innerText = this.currentWord.hint;
     this.filling = new Array(this.wordLetters.length).fill(false);
   }
 
@@ -176,7 +176,7 @@ export class Game {
                 let word = createNode("p", ["modal__text"]);
                 word.innerText = `The word was ${this.wordLetters.join("")}`;
                 let hint = createNode("p", ["modal__text"]);
-                hint.innerText = this.hint.textContent;
+                hint.innerText = this.currentWord.hint;
                 newLose.button.before(text, word, hint);
                 newLose.button.onclick = () => newLose.closeModal();
               }
