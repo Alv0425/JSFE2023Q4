@@ -24,3 +24,10 @@ export function clearNode(node) {
     node.removeChild(node.firstChild);
   }
 }
+
+export function checkLocalstorage() {
+  let hasProperty = Object.prototype.hasOwnProperty.call(localStorage, "hangmanprevnumber");
+  if (!hasProperty) {
+    localStorage.hangmanprevnumber = -1;
+  }
+}
