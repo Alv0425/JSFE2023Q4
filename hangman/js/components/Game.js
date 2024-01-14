@@ -3,7 +3,7 @@ import { Alphabet } from "./Alphabet.js";
 import { Modal } from "./Modal.js";
 import { Sound } from "./Sound.js";
 import { Layout } from "./Layout.js";
-import { createNode, clearNode } from "../auxiliary.js";
+import { createNode, clearNode, checkLocalstorage } from "../auxiliary.js";
 export class Game {
   constructor() {
     this.sequence = [];
@@ -29,12 +29,20 @@ export class Game {
   generateSequence(words) {
     this.size = words.length;
     this.words = words;
-    this.sequence = Array.from({ length: this.size }, (_, i) => i).sort(
-      () => Math.random() - 0.5,
-    );
+    const shuffle = (array) => {
+      const arr = [];
+      let i = 0;
+      while (array.length !== arr.length) {
+        arr[i] = (array[Math.floor(Math.random() * array.length)]);
+        i++;
+      }
+      return arr;
+    }
+    this.sequence = shuffle(Array.from({ length: this.size }, (_, i) => i));
   }
 
   renderGameBoard() {
+    checkLocalstorage();
     const newLayout = new Layout(this);
     const body = document.body;
     body.classList.add("body");
@@ -67,8 +75,13 @@ export class Game {
     const humanBody = this.human.render();
     if (!this.sequence.length) {
       this.generateSequence(this.words);
+      if (localStorage.hangmanprevnumber === this.sequence[this.sequence.length - 1]) {
+        this.sequence.pop();
+      }
     }
-    let newWord = this.words[this.sequence.pop()];
+    let lastIndex = this.sequence.pop();
+    let newWord = this.words[lastIndex];
+    localStorage.hangmanprevnumber = lastIndex;
     console.log(`The secret word: ${newWord.word.toUpperCase()}`);
     this.wordLetters = newWord.word.split("").map((l) => l.toUpperCase());
     this.gallows.append(humanBody);
@@ -111,7 +124,7 @@ export class Game {
               document.body.append(newWin.overlay);
             }, 700);
             let word = createNode("p", ["modal__text"]);
-            word.innerText = `You guessed the word ${this.wordLetters.join(
+            word.innerText = `The word was ${this.wordLetters.join(
               "",
             )}!`;
             newWin.button.before(
@@ -160,7 +173,9 @@ export class Game {
                 );
                 let word = createNode("p", ["modal__text"]);
                 word.innerText = `The word was ${this.wordLetters.join("")}`;
-                newLose.button.before(text, word);
+                let hint = createNode("p", ["modal__text"]);
+                hint.innerText = this.hint.textContent;
+                newLose.button.before(text, word, hint);
                 newLose.button.onclick = () => newLose.closeModal();
               }
             }

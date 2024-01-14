@@ -22,11 +22,6 @@ export class Modal {
     this.overlay.append(this.modal);
     this.button = createNode("button", ["modal__button"]);
     modalClose.onclick = () => this.closeModal();
-    this.overlay.addEventListener("click", (e) => {
-      if (!this.modal.contains(e.target)) {
-        this.closeModal();
-      }
-    });
     this.overlay.append(this.modal);
     switch (this.type) {
       case "error": {
@@ -36,7 +31,7 @@ export class Modal {
           "It seems you are typing incorrect symbol. The word consists of letters of the English alphabet, A-Z. Please, make sure you are using EN keyboard.";
         const shortcuts = createNode("p", ["modal__text"]);
         shortcuts.innerText =
-          "To change the input language of the keyboard press the CTRL key and the SHIFT key at the same time (CTRL + SHIFT) on Windows devices. For Mac devices press CTRL + SPACE or CMD + SPACE.";
+          "To change the input language of the keyboard press the CTRL key and the SHIFT key at the same time (CTRL + SHIFT), or CTRL + ALT on Windows devices. For Mac devices press CTRL + SPACE or CMD + SPACE.";
         this.button.innerText = "OK";
         modalBody.append(modalText, shortcuts, this.button);
         break;
