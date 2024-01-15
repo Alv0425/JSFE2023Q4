@@ -21,7 +21,8 @@
   },
   {
     "word": "Form",
-    "hint": "An HTML element used to collect user input and submit it to a server for processing."
+    "hint": "An HTML element used to collect user input and submit it to a server for processing.",
+    "link": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form"
   },
   {
     "word": "Backend",
@@ -37,7 +38,8 @@
   },
   {
     "word": "Agile",
-    "hint": "Commonly used web development approach that focuses on flexibility and adaptability, helping teams quickly respond to changes in strategy and requirements."
+    "hint": "Commonly used web development approach that focuses on flexibility and adaptability, helping teams quickly respond to changes in strategy and requirements.",
+    "link": "https://martinfowler.com/articles/newMethodology.html"
   },
   {
     "word": "Validator",
@@ -49,11 +51,13 @@
   },
   {
     "word": "Class",
-    "hint": "Template definition of an object's properties and methods, the blueprint from which other more specific instances of the object are drawn."
+    "hint": "Template definition of an object's properties and methods, the blueprint from which other more specific instances of the object are drawn.",
+    "link": "https://javascript.info/class"
   },
   {
     "word": "Canvas",
-    "hint": "The HTML element is part of HTML5 and allows for dynamic, scriptable images."
+    "hint": "The HTML element which is part of HTML5 and allows for dynamic, scriptable images.",
+    "link": "https://www.freecodecamp.org/news/full-overview-of-the-html-canvas-6354216fba8d/"
   },
   {
     "word": "Callback",
@@ -170,5 +174,33 @@
   {
     "word": "Operator",
     "hint": "Reserved syntax consisting of punctuation or alphanumeric characters that carries out built-in functionality."
+  },
+  {
+    "word": "Destructuring",
+    "hint": "A special syntax that allows us to unpack arrays or objects into a bunch of variables."
+  },
+  {
+    "word": "Promisification",
+    "hint": "The transformation of a function that accepts a callback into a function that returns a promise."
+  },
+  {
+    "word": "instanceof",
+    "hint": "Which operator allows to check whether an object belongs to a certain class?"
+  },
+  {
+    "word": "Currying",
+    "hint": "A transformation of functions that translates a function from callable as f(a, b, c) into callable as f(a)(b)(c)."
+  },
+  {
+    "word": "Array",
+    "hint": "A built-in JS data structure, which allows to store ordered collections."
+  },
+  {
+    "word": "Husky",
+    "hint": "A popular JavaScript library that allows to manage git hooks."
+  },
+  {
+    "word": "Concatenation",
+    "hint": "The operation of joining character strings end-to-end."
   }
 ]

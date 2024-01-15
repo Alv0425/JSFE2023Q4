@@ -235,6 +235,11 @@ fieldset {
   display: flex;
   gap: 4px;
 }
+@media (width <= 380px) {
+  .hangman__word {
+    gap: 3px;
+  }
+}
 
 .hangman__hint {
   font-size: 18px;
@@ -280,7 +285,7 @@ fieldset {
 .human__eraser {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: conturfill 0.7s linear forwards;
+  animation: brush 0.7s linear forwards;
 }
 
 .key {
@@ -320,6 +325,11 @@ fieldset {
   width: 20px;
   border-bottom: 2px solid #f4f5f5;
 }
+@media (width <= 380px) {
+  .letter {
+    width: 18px;
+  }
+}
 .letter path {
   stroke-dasharray: 300;
   stroke-dashoffset: 300;
@@ -328,6 +338,11 @@ fieldset {
 .letter_active {
   width: 20px;
   border-bottom: 1px solid transparent;
+}
+@media (width <= 380px) {
+  .letter_active {
+    width: 18px;
+  }
 }
 .letter_active path {
   animation: conturfill 1.5s linear forwards;
@@ -344,6 +359,16 @@ fieldset {
   }
   100% {
     transform: rotate(-1.5deg);
+  }
+}
+@keyframes brush {
+  0% {
+    stroke-opacity: 0.93;
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-opacity: 1;
+    stroke-dashoffset: 0;
   }
 }
 /* Footer */
