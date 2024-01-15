@@ -10,6 +10,7 @@ getWords().then(() => {
     `Пожалуйста, не забудьте переключить раскладку клавиатуры на EN!`,
   );
   const newGame = new Game();
-  newGame.generateSequence(words);
+  newGame.generateRandomSequence(words);
   newGame.renderGameBoard();
+  newGame.renderNewGame();
 });

@@ -40,6 +40,9 @@
 .hangman__word{
   display: flex;
   gap: 4px;
+  @media (width <= 380px) {
+    gap: 3px;
+  }
 }
 
 .hangman__hint{
@@ -82,7 +85,7 @@
 .human__eraser {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: conturfill 0.7s linear forwards;
+  animation: brush 0.7s linear forwards;
 }
 
 .key {
@@ -121,6 +124,9 @@
   position: relative;
   width:20px;
   border-bottom: 2px solid $color-text-light;
+  @media (width <= 380px) {
+    width:18px;
+  }
   path {
     stroke-dasharray: 300;
     stroke-dashoffset: 300;
@@ -130,6 +136,9 @@
 .letter_active {
   width:20px;
   border-bottom: 1px solid transparent;
+  @media (width <= 380px) {
+    width:18px;
+  }
   path {
     animation: conturfill 1.5s linear forwards;
   }
@@ -147,5 +156,16 @@
   }
   100% {
     transform: rotate(-1.5deg);
+  }
+}
+
+@keyframes brush {
+  0% {
+    stroke-opacity:0.93;
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-opacity:1;
+    stroke-dashoffset: 0;
   }
 }

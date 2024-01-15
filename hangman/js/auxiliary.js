@@ -34,3 +34,16 @@ export function checkLocalstorage() {
     localStorage.hangmanprevnumber = -1;
   }
 }
+
+export function isLocalStorage() {
+  try {
+    const key = `check`;
+    window.localStorage.setItem(key, null);
+    window.localStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    console.log("localStorage is not availible in this browser. Please, enable it to more stable work of app.");
+    return false;
+  }
+}
+

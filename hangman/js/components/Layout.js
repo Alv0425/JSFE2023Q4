@@ -45,12 +45,7 @@ export class Layout {
       `Incorrect guesses: ${this.targetObject.numberOfGuesses} / 6`,
     );
     this.targetObject.wordContainer = createNode("div", ["hangman__word"]);
-    this.targetObject.hint = createNode(
-      "p",
-      ["hangman__hint"],
-      {},
-      "Some text",
-    );
+    this.targetObject.hint = createNode("p", ["hangman__hint"], {}, "");
     this.targetObject.gallows = createNode("div", ["hangman__gallows"]);
     gameContainer.append(playBoard, this.targetObject.keyboard);
     playBoard.append(this.targetObject.gallows, riddle);
@@ -63,7 +58,6 @@ export class Layout {
     const keys = this.targetObject.renderKeyboard();
     this.targetObject.keyboard.append(...keys);
     this.targetObject.keyboard = keys;
-    this.targetObject.renderNewGame();
     document.body.append(main);
   }
   renderFooter() {
