@@ -25,7 +25,6 @@ export class Layout {
       };
       infoModal.button.onclick = () => {
         infoModal.closeModal();
-        this.targetObject.isModalOpened = false;
       };
     }
     headerContainer.append(headerLogo, mutedToggler, headerInfo);
