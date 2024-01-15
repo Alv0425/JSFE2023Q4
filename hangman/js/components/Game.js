@@ -25,7 +25,7 @@ export class Game {
     this.isModalOpened = false;
     this.isMuted = false;
   }
-  // Random sequens of indexes
+  // Random sequence of indexes
   generateRandomSequence(words) {
     this.size = words.length;
     this.words = words;
@@ -43,9 +43,7 @@ export class Game {
   }
 
   renderGameBoard() {
-    if (isLocalStorage()) {
-      checkLocalstorage();
-    }
+    if (isLocalStorage()) checkLocalstorage();
     const newLayout = new Layout(this);
     const body = document.body;
     body.classList.add("body");
@@ -141,9 +139,7 @@ export class Game {
           }
         }
         // if all word letters are opened, generate win modal
-        if (this.filling.every((e) => e)) {
-          this.handleWin();
-        }
+        if (this.filling.every((e) => e)) this.handleWin();
         // if all checked letters are not equal pressed key,
         // draw new body part
         if (isIncorrectGuess.every((el) => el)) {
@@ -156,9 +152,7 @@ export class Game {
       const newkey = document.createElement("button");
       newkey.innerText = letter;
       newkey.classList.add("key");
-      newkey.onclick = () => {
-        handleKeyEvt(letter);
-      };
+      newkey.onclick = () => handleKeyEvt(letter);
       keys.push(newkey);
     });
 
@@ -198,9 +192,7 @@ export class Game {
       this.keyboard[alph.indexOf(letter)].disabled = true;
       this.checkedLetters.push(letter);
       // if number of incorrect tries is equal to 6, finish game with lose modal
-      if (this.numberOfGuesses === 6) {
-        this.handleLose();
-      }
+      if (this.numberOfGuesses === 6) this.handleLose();
     }
   }
 
