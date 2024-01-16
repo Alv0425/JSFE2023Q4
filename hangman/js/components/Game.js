@@ -24,6 +24,7 @@ export class Game {
     this.numberOfGuesses = 0;
     this.isModalOpened = false;
     this.isMuted = false;
+    this.prevIndex = -1;
   }
   // Random sequence of indexes
   generateRandomSequence(words) {
@@ -36,10 +37,7 @@ export class Game {
 
   // Get randon index
   getRandomIndex() {
-    if (isLocalStorage()) {
-      return this.sequence.pop();
-    }
-    return Math.floor(Math.random() * this.size);
+    return this.sequence.pop();
   }
 
   renderGameBoard() {
@@ -88,6 +86,10 @@ export class Game {
         ) {
           this.getRandomIndex();
         }
+      } else {
+        if (this.prevIndex === this.sequence[this.sequence.length - 1]) {
+          this.getRandomIndex();
+        }
       }
     }
     let lastIndex = this.getRandomIndex();
@@ -95,6 +97,7 @@ export class Game {
     if (isLocalStorage()) {
       localStorage.hangmanprevnumber = lastIndex;
     }
+    this.prevIndex = lastIndex;
     console.log(`The secret word: ${this.currentWord.word.toUpperCase()}`);
     this.wordLetters = this.currentWord.word
       .split("")
@@ -170,6 +173,7 @@ export class Game {
           alert.button.onclick = () => alert.closeModal();
           this.isModalOpened = true;
           document.body.append(alert.overlay);
+          alert.button.focus();
         }
       }
     });
@@ -204,6 +208,7 @@ export class Game {
       setTimeout(() => {
         this.playSound("win");
         document.body.append(newWin.overlay);
+        newWin.button.focus();
       }, 700);
       let word = createNode("p", ["modal__text"]);
       word.innerText = `The word was ${this.wordLetters.join("")}!`;
@@ -224,6 +229,7 @@ export class Game {
         this.isModalOpened = true;
         this.playSound("lose");
         document.body.append(newLose.overlay);
+        newLose.button.focus();
       }, 700);
       let text = createNode(
         "p",

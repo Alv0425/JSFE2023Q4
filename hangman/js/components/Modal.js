@@ -21,6 +21,7 @@ export class Modal {
     this.modal.append(modalHeader, modalBody);
     this.overlay.append(this.modal);
     this.button = createNode("button", ["modal__button"]);
+    this.button.focus();
     modalClose.onclick = () => this.closeModal();
     this.overlay.append(this.modal);
     switch (this.type) {
@@ -88,15 +89,15 @@ export class Modal {
   }
   closeModal() {
     this.closeModalEvt = new Event("modalclosed");
-    document.body.dispatchEvent(this.closeModalEvt);
     const closeWin = new Event("modalclosedwin");
-    if (this.type == "win" || this.type == "lose") {
-      document.body.dispatchEvent(closeWin);
-    }
     this.overlay.classList.add("fade-out");
     setTimeout(() => {
       this.overlay.classList.remove("fade-out");
       this.overlay.remove();
+      document.body.dispatchEvent(this.closeModalEvt);
+      if (this.type == "win" || this.type == "lose") {
+        document.body.dispatchEvent(closeWin);
+      }
     }, 500);
   }
 }
