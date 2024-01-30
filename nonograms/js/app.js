@@ -6,9 +6,7 @@ async function getNonograms() {
   return nonograms;
 }
 getNonograms().then(() => {
-  console.log(
-    `nonograms loaded`,
-  );
+  console.log(`nonograms loaded`);
   let game = new Game(nonograms);
   game.renderPlayboard();
 });

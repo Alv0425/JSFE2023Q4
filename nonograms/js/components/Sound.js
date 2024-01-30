@@ -1,3 +1,1 @@
-export class Sound {
-  
-}
+export class Sound {}

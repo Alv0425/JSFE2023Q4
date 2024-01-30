@@ -1,6 +1,5 @@
 export class Base {
-  constructor() {
-  }
+  constructor() {}
 
   createNode(type, classlist, attrlist, content) {
     let node;
@@ -22,7 +21,7 @@ export class Base {
     }
     return node;
   }
-  
+
   clearNode(node) {
     while (node.firstChild) {
       node.removeChild(node.firstChild);
