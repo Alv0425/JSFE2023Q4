@@ -27,7 +27,7 @@ html {
 
 .dark-mode {
   background-color: #343F5B;
-  color: #F0F0F0;
+  color: #B4BBF9;
 }
 
 ul,
@@ -160,6 +160,7 @@ fieldset {
 
 .app__header {
   padding: 0 10px;
+  padding-bottom: 10px;
   display: flex;
   gap: 40px;
   font-weight: 700;
@@ -246,6 +247,17 @@ fieldset {
   text-align: center;
 }
 
+.dark-mode .app__main {
+  background-color: #3C486B;
+}
+.dark-mode .app__score {
+  background-color: #3C486B;
+}
+.dark-mode .app__settings-sounds,
+.dark-mode .app__settings-darkmode {
+  border-color: #516284;
+}
+
 .footer {
   margin: 0 auto;
   padding: 20px 0;
@@ -301,25 +313,6 @@ fieldset {
   transition: 0.3s;
 }
 
-.dark-mode .button {
-  background-color: #676C99;
-}
-.dark-mode .toggler {
-  background-color: #686A79;
-}
-.dark-mode #darkmode:checked ~ .toggler[for=darkmode],
-.dark-mode #allsounds:checked ~ .toggler[for=allsounds],
-.dark-mode #winsound:checked ~ .toggler[for=winsound],
-.dark-mode #clicksound:checked ~ .toggler[for=clicksound] {
-  background-color: #B4BBF9;
-}
-.dark-mode #darkmode:checked ~ .toggler[for=darkmode] .toggler__circle,
-.dark-mode #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
-.dark-mode #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
-.dark-mode #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
-  transform: translateX(41px);
-}
-
 #darkmode:checked ~ .toggler[for=darkmode],
 #allsounds:checked ~ .toggler[for=allsounds],
 #winsound:checked ~ .toggler[for=winsound],
@@ -330,6 +323,28 @@ fieldset {
 #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
 #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
 #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
+  transform: translateX(41px);
+}
+
+.dark-mode .button {
+  background-color: #676C99;
+}
+.dark-mode .toggler {
+  background-color: #686A79;
+}
+.dark-mode .toggler__circle {
+  background-color: #B4BBF9;
+}
+.dark-mode #darkmode:checked ~ .toggler[for=darkmode],
+.dark-mode #allsounds:checked ~ .toggler[for=allsounds],
+.dark-mode #winsound:checked ~ .toggler[for=winsound],
+.dark-mode #clicksound:checked ~ .toggler[for=clicksound] {
+  background-color: #676C99;
+}
+.dark-mode #darkmode:checked ~ .toggler[for=darkmode] .toggler__circle,
+.dark-mode #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
+.dark-mode #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
+.dark-mode #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
   transform: translateX(41px);
 }
 
@@ -358,6 +373,10 @@ fieldset {
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 10px;
+}
+
+.dark-mode .nonogram {
+  background-color: #676C99;
 }
 
 .nonogram__container {
@@ -418,6 +437,10 @@ fieldset {
   display: grid;
   grid-auto-rows: 1fr;
   grid-auto-flow: row;
+}
+
+.clue {
+  color: #1B1B1E;
 }
 
 .row {

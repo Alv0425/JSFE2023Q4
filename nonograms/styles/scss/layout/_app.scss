@@ -19,6 +19,7 @@
 
 .app__header{
   padding:0 10px;
+  padding-bottom: 10px;
   display:flex;
   gap:40px;
   font-weight: 700;
@@ -101,4 +102,17 @@
 
 .app__score-title{
   text-align: center;
+}
+
+.dark-mode{
+  .app__main{
+    background-color: $color-container-darkmode;
+  }
+  .app__score{
+    background-color: $color-container-darkmode;
+  }
+  .app__settings-sounds,
+  .app__settings-darkmode{
+    border-color: #516284;
+  }
 }

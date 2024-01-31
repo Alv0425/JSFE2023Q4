@@ -4,6 +4,13 @@
   border-radius: 10px;
 }
 
+.dark-mode {
+  .nonogram{
+    background-color: $color-button-darkmode;
+  }
+ 
+}
+
 .nonogram__container{
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -63,6 +70,10 @@
   display: grid;
   grid-auto-rows: 1fr;
   grid-auto-flow: row;
+}
+
+.clue {
+  color: $color-cell-dark;
 }
 
 .row{

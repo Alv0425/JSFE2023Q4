@@ -31,6 +31,17 @@
   }
 }
 
+#darkmode:checked ~ .toggler[for="darkmode"],
+#allsounds:checked ~ .toggler[for="allsounds"],
+#winsound:checked ~ .toggler[for="winsound"],
+#clicksound:checked ~ .toggler[for="clicksound"] {
+  background-color: $color-background-light;
+  .toggler__circle {
+    transform: translateX(65px - 18px - 6px);
+  }
+}
+
+
 .dark-mode {
   .button {
     background-color: $color-button-darkmode;
@@ -39,23 +50,17 @@
     background-color: $color-toggler-darkmode;
   }
 
+  .toggler__circle{
+    background-color: $color-background-light;
+  }
+
   #darkmode:checked ~ .toggler[for="darkmode"],
   #allsounds:checked ~ .toggler[for="allsounds"],
   #winsound:checked ~ .toggler[for="winsound"],
   #clicksound:checked ~ .toggler[for="clicksound"] {
-    background-color: $color-background-light;
+    background-color: $color-button-darkmode;
     .toggler__circle {
       transform: translateX(65px - 18px - 6px);
     }
-  }
-}
-
-#darkmode:checked ~ .toggler[for="darkmode"],
-#allsounds:checked ~ .toggler[for="allsounds"],
-#winsound:checked ~ .toggler[for="winsound"],
-#clicksound:checked ~ .toggler[for="clicksound"] {
-  background-color: $color-background-light;
-  .toggler__circle {
-    transform: translateX(65px - 18px - 6px);
   }
 }
