@@ -29,8 +29,31 @@ export class Layout extends Base {
     const appContainer = this.createNode("section", ["app"]);
     const appMain = this.createNode("div", ["app__main"]);
     const appHeader = this.createNode("div", ["app__header"]);
+    this.timerCont = this.createNode('div', ['app__timer-cont'], {}, 'XX:XX');
+    this.gameNameCont = this.createNode('div', ['app__name-game-cont'], {}, 'Game name');
+    appHeader.append(this.gameNameCont, this.timerCont);
     const appBody = this.createNode("div", ["app__body"]);
     const appGameContainer = this.createNode("div", ["app__game-container"]);
+    const appPlayFieldContainer = this.createNode("div", ["nonogram"]);
+    const nonogramContainer = this.createNode('div', ['nonogram__container']);
+    this.cluesXCont = this.createNode('div', ['nonogram__clues-x-cont']);
+    this.cluesYCont = this.createNode('div', ['nonogram__clues-y-cont']);
+    this.nonogramFieldCont = this.createNode('div', ['nonogram__field-cont']);
+    nonogramContainer.append(this.cluesXCont, this.cluesYCont, this.nonogramFieldCont);
+    appPlayFieldContainer.append(nonogramContainer);
+    const appGameButtons = this.createNode('div', ['app__game-buttons']);
+    ["show solution", "reset game"].forEach((text) => {
+      const newButton = this.createNode(
+        "button",
+        ["button"],
+        { type: "button" },
+        text,
+      );
+      appGameButtons.append(newButton);
+      this.appButtons[text] = newButton;
+      },
+    );
+    appGameContainer.append(appPlayFieldContainer, appGameButtons);
     const appSidebar = this.createNode("div", ["app__sidebar"]);
     const navbuttons = this.createNode("div", ["app__nav-buttons"]);
     const settingsContainer = this.createNode("div", ["app__settings"]);
@@ -78,7 +101,7 @@ export class Layout extends Base {
       togglerContainer.append(input, label, text);
       settingsSounds.append(togglerContainer);
     });
-    const settingsDarkmode = this.createNode("div", ["app__settinds-darkmode"]);
+    const settingsDarkmode = this.createNode("div", ["app__settings-darkmode"]);
     const settingsDarkmodeTitle = this.createNode(
       "h3",
       ["app__settings-title"],

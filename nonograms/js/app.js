@@ -9,4 +9,5 @@ getNonograms().then(() => {
   console.log(`nonograms loaded`);
   let game = new Game(nonograms);
   game.renderPlayboard();
+  game.openGame(nonograms[0]);
 });

@@ -138,7 +138,6 @@ fieldset {
 }
 
 .main {
-  width: 100vw;
   display: flex;
 }
 @media (width <= 1100px) {
@@ -157,9 +156,74 @@ fieldset {
 .app__body {
   width: 700px;
   min-height: 500px;
+}
+
+.app__header {
+  padding: 0 10px;
+  display: flex;
+  gap: 40px;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
   padding: 10px;
   background-color: #F0F0F0;
   border-radius: 20px;
+}
+
+.app__body {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.app__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.app__settings-sounds,
+.app__settings-darkmode {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-top: #C5C6C8 1px solid;
+}
+
+.app__sound-toggler {
+  display: flex;
+  gap: 10px;
+}
+
+.app__settings-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.app__game-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.app__nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.app__game-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 .app__score {
@@ -230,8 +294,8 @@ fieldset {
 }
 .toggler .toggler__circle {
   display: block;
-  width: 19px;
-  height: 19px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background-color: #F0F0F0;
   transition: 0.3s;
@@ -253,7 +317,7 @@ fieldset {
 .dark-mode #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
 .dark-mode #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
 .dark-mode #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
-  transform: translateX(40px);
+  transform: translateX(41px);
 }
 
 #darkmode:checked ~ .toggler[for=darkmode],
@@ -266,7 +330,7 @@ fieldset {
 #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
 #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
 #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
-  transform: translateX(40px);
+  transform: translateX(41px);
 }
 
 @keyframes fade-in {
@@ -288,6 +352,129 @@ fieldset {
 .fade-out {
   pointer-events: none;
   animation: fade-out 0.3s ease forwards;
+}
+
+.nonogram {
+  background-color: #F0F0F0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.nonogram__container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 2fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  min-width: 350px;
+  aspect-ratio: 1/1;
+}
+
+.nonogram__clues-x-cont {
+  grid-area: 1/2/2/3;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+.nonogram__clues-x-cont .clues {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: end;
+  padding-bottom: 10px;
+  border-right: 1px solid #1B1B1E;
+}
+.nonogram__clues-x-cont .clues:nth-child(5n+5) {
+  border-right: 3px solid #1B1B1E;
+}
+.nonogram__clues-x-cont .clues:first-child {
+  border-left: 3px solid #1B1B1E;
+}
+
+.nonogram__clues-y-cont {
+  grid-area: 2/1/3/2;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: row;
+}
+.nonogram__clues-y-cont .clues {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: end;
+  padding-right: 10px;
+  border-bottom: 1px solid #1B1B1E;
+}
+.nonogram__clues-y-cont .clues:nth-child(5n+5) {
+  border-bottom: 3px solid #1B1B1E;
+}
+.nonogram__clues-y-cont .clues:first-child {
+  border-top: 3px solid #1B1B1E;
+}
+
+.nonogram__field-cont {
+  grid-area: 2/2/3/3;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: row;
+}
+
+.row {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  border-bottom: 1px #1B1B1E solid;
+}
+
+.row:nth-child(5) {
+  border-bottom: 3px #1B1B1E solid;
+}
+
+.cell {
+  display: block;
+  flex-grow: 1;
+  background-color: transparent;
+  outline: none;
+  border-right: 1px #1B1B1E solid;
+}
+
+.row:nth-child(5n+5) {
+  border-bottom: 3px #1B1B1E solid;
+}
+
+.row:first-child {
+  border-top: 3px #1B1B1E solid;
+}
+
+.cell:nth-child(5n+5) {
+  border-right: 3px #1B1B1E solid;
+}
+
+.cell:first-child {
+  border-left: 3px #1B1B1E solid;
+}
+
+.cell.black {
+  background-color: #1B1B1E;
+}
+
+.cell.cross {
+  position: relative;
+}
+.cell.cross::after, .cell.cross::before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #1B1B1E;
+  position: absolute;
+  top: 50%;
+}
+.cell.cross::after {
+  transform: rotate(45deg);
+}
+.cell.cross::before {
+  transform: rotate(-45deg);
 }
 
 /*# sourceMappingURL=style.css.map */

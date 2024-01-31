@@ -3,60 +3,59 @@
   justify-content: center;
   align-items: center;
   padding: 7px;
-  min-width:170px;
+  min-width: 170px;
   background-color: $color-background-light;
   border-radius: 100px;
   font-weight: 700;
 }
 
-.input{
+.input {
   display: none;
 }
 
-.toggler{
+.toggler {
   display: flex;
-  padding:3px;
+  padding: 3px;
   width: 65px;
   height: 24px;
   border-radius: 100px;
   background-color: $color-toggler-lightmode;
   cursor: pointer;
-  .toggler__circle{
+  .toggler__circle {
     display: block;
-    width:19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: $color-text-darkmode;
     transition: 0.3s;
   }
 }
 
-.dark-mode{
-  .button{
+.dark-mode {
+  .button {
     background-color: $color-button-darkmode;
   }
-  .toggler{
+  .toggler {
     background-color: $color-toggler-darkmode;
   }
 
-  #darkmode:checked ~ .toggler[for='darkmode'],
-#allsounds:checked ~ .toggler[for="allsounds"],
-#winsound:checked ~ .toggler[for="winsound"],
-#clicksound:checked ~ .toggler[for="clicksound"]{
-  background-color: $color-background-light;
-  .toggler__circle{
-    transform: translateX(65px - 19px - 6px);
+  #darkmode:checked ~ .toggler[for="darkmode"],
+  #allsounds:checked ~ .toggler[for="allsounds"],
+  #winsound:checked ~ .toggler[for="winsound"],
+  #clicksound:checked ~ .toggler[for="clicksound"] {
+    background-color: $color-background-light;
+    .toggler__circle {
+      transform: translateX(65px - 18px - 6px);
+    }
   }
 }
-  
-}
 
-#darkmode:checked ~ .toggler[for='darkmode'],
+#darkmode:checked ~ .toggler[for="darkmode"],
 #allsounds:checked ~ .toggler[for="allsounds"],
 #winsound:checked ~ .toggler[for="winsound"],
-#clicksound:checked ~ .toggler[for="clicksound"]{
+#clicksound:checked ~ .toggler[for="clicksound"] {
   background-color: $color-background-light;
-  .toggler__circle{
-    transform: translateX(65px - 19px - 6px);
+  .toggler__circle {
+    transform: translateX(65px - 18px - 6px);
   }
 }
