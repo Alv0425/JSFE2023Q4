@@ -8,7 +8,7 @@ export class Modal extends Base {
     this.modalBody = null;
   }
   openModal() {
-    this.overlay = this.createNode('div', ['overlay']);
+    this.overlay = this.createNode("div", ["overlay"]);
     document.body.append(this.overlay);
     this.modal = this.createNode("div", ["modal", `modal_${this.type}`]);
     const modalHeader = this.createNode("div", ["modal__header"]);
