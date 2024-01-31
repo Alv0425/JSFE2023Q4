@@ -8,7 +8,6 @@
   .nonogram{
     background-color: $color-button-darkmode;
   }
- 
 }
 
 .nonogram__container{
@@ -132,4 +131,8 @@
   &::before{
     transform: rotate(-45deg);
   }
+}
+
+.disabled {
+  pointer-events: none;
 }

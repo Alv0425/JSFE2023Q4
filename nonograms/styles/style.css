@@ -348,6 +348,105 @@ fieldset {
   transform: translateX(41px);
 }
 
+.overlay {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fade-in 0.3s ease;
+}
+
+.modal {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  background-color: #F0F0F0;
+  border-radius: 10px;
+}
+.modal_win {
+  width: 100%;
+  max-width: 300px;
+}
+.modal_win .modal__body {
+  align-items: center;
+  padding-bottom: 20px;
+}
+.modal_select {
+  height: 100vh;
+  max-height: 420px;
+}
+.modal_select .modal__body {
+  overflow: auto;
+}
+
+.modal__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.modal__title {
+  padding: 10px;
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: 900;
+  flex-grow: 1;
+}
+
+.modal__close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  aspect-ratio: 1/1;
+}
+.modal__close span {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 10px);
+  width: 20px;
+  height: 2px;
+  background-color: #3C486B;
+  border-radius: 1px;
+  transition: 0.5s;
+}
+.modal__close span:nth-child(1) {
+  transform: rotate(45deg);
+}
+.modal__close span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+@media (pointer: fine) and (hover: hover) {
+  .modal__close:hover span {
+    opacity: 0.7;
+  }
+}
+
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.modal__body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal__text {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -367,6 +466,24 @@ fieldset {
 .fade-out {
   pointer-events: none;
   animation: fade-out 0.3s ease forwards;
+}
+
+.modal__miniature {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: row;
+  aspect-ratio: 1/1;
+  width: 100px;
+}
+
+.modal__miniature-row {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+.dark {
+  background-color: #1B1B1E;
 }
 
 .nonogram {
@@ -498,6 +615,10 @@ fieldset {
 }
 .cell.cross::before {
   transform: rotate(-45deg);
+}
+
+.disabled {
+  pointer-events: none;
 }
 
 /*# sourceMappingURL=style.css.map */
