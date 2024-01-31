@@ -23,6 +23,15 @@ export class Game extends Base {
     }
   }
 
+  setTimer() {
+    if (!this.isTimerRunning) {
+      this.isTimerRunning = true;
+      this.interval = setInterval(() => {
+        this.timer += 0.1;
+        this.updateTimer();
+      },100);
+    }
+  }
   openGame(game, state, timer) {
     this.isTimerRunning = false;
     this.layout.nonogramFieldCont.classList.remove('disabled');
@@ -67,13 +76,7 @@ export class Game extends Base {
         event.target.classList.remove("cross");
         event.target.classList.toggle("black");
         this.checkGameState();
-        if (!this.isTimerRunning) {
-          this.isTimerRunning = true;
-          this.interval = setInterval(() => {
-            this.timer += 0.1;
-            this.updateTimer();
-          },100);
-        }
+        this.setTimer();
       }
     }
     this.layout.nonogramFieldCont.oncontextmenu = (event) => {
@@ -81,6 +84,7 @@ export class Game extends Base {
       if (event.target.classList.contains('cell')) {
         event.target.classList.remove("black");
         event.target.classList.toggle("cross");
+        this.setTimer();
       }
     }
 
