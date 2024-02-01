@@ -385,6 +385,13 @@ fieldset {
   overflow: auto;
 }
 
+.dark-mode .modal {
+  background-color: #3C486B;
+}
+.dark-mode .modal__close span {
+  background-color: #B4BBF9;
+}
+
 .modal__header {
   position: relative;
   display: flex;
@@ -484,6 +491,10 @@ fieldset {
 
 .dark {
   background-color: #1B1B1E;
+}
+
+.dark-mode .dark {
+  background-color: #B4BBF9;
 }
 
 .nonogram {

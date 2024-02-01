@@ -116,16 +116,19 @@ export class Layout extends Base {
       {},
       "Dark/light mode:",
     );
-    const input = this.createNode("input", ["input"], {
+    this.darkmodeToggler = this.createNode("input", ["input"], {
       type: "checkbox",
       id: "darkmode",
     });
+    this.darkmodeToggler.oninput = () => {
+      this.switchMode();
+    }
     const label = this.createNode("label", ["toggler", "toggler_darkmode"], {
       for: "darkmode",
     });
     const circle = this.createNode("span", ["toggler__circle"]);
     label.append(circle);
-    settingsDarkmode.append(settingsDarkmodeTitle, input, label);
+    settingsDarkmode.append(settingsDarkmodeTitle, this.darkmodeToggler, label);
     settingsContainer.append(settingsSounds, settingsDarkmode);
     const appScoreContainer = this.createNode("div", ["app__score"]);
     const appScoreTitle = this.createNode(

@@ -35,6 +35,17 @@
   }
 }
 
+.dark-mode{
+  .modal{
+    background-color: $color-container-darkmode;
+  }
+  .modal__close {
+    span{
+      background-color: $color-background-light;
+    }
+  }
+}
+
 .modal__header {
   position: relative;
   display: flex;
@@ -138,4 +149,8 @@
   background-color: $color-cell-dark;
 }
 
-
+.dark-mode{
+  .dark{
+    background-color: $color-background-light;
+  }
+}

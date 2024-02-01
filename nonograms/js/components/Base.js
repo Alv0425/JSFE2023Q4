@@ -1,5 +1,6 @@
 export class Base {
-  constructor() {}
+  constructor() {
+  }
 
   createNode(type, classlist, attrlist, content) {
     let node;
@@ -21,7 +22,7 @@ export class Base {
     }
     return node;
   }
-
+  
   clearNode(node) {
     while (node.firstChild) {
       node.removeChild(node.firstChild);
@@ -34,5 +35,10 @@ export class Base {
         node.addEventListener(eventType, handler);
       }
     }
+  }
+
+  emitEvent(node, eventName) {
+    const newEvent = new Event(eventName);
+    node.dispatchEvent(newEvent);
   }
 }
