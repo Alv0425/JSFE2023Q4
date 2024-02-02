@@ -17,6 +17,7 @@ export class Game extends Base {
   renderPlayboard() {
     this.layout = new Layout();
     this.layout.renderPage();
+    this.updateScoreTable();
     this.openGame(this.nonograms[0]);
     this.layout.appButtons["reset game"].onclick = () => {
       this.openGame(this.currentGame);
@@ -255,6 +256,7 @@ export class Game extends Base {
       winModal.modalBody.append(mini, textWin);
       this.layout.nonogramFieldCont.classList.add("disabled");
       this.updateHistory(this.currentGame, this.timer);
+      this.updateScoreTable();
     }
   }
 
@@ -270,6 +272,20 @@ export class Game extends Base {
       miniature.append(row);
     }
     return miniature;
+  }
+
+  updateScoreTable() {
+    this.clearNode(this.layout.scoreList);
+    const history = this.getHistory();
+    history.forEach((game) => {
+      const li = this.createNode("li", ['app__score-item']);
+      const name = this.createNode("span", ['app__score-item-name'], {}, game.game.hint);
+      const level = this.createNode("span", ['app__score-item-level'], {}, `${game.game.size} x ${game.game.size}`);
+      const time = this.createNode("span", ['app__score-item-time'], {}, this.convertTime(game.time));
+      const mini = this.showMiniature(game.game);
+      li.append(name, level, time, mini);
+      this.layout.scoreList.append(li);
+    });
   }
 
   showSolution() {

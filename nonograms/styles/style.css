@@ -429,6 +429,25 @@ fieldset {
   text-align: center;
 }
 
+.app__score-list {
+  margin-top: 10px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app__score-item {
+  padding: 7px;
+  border: #C5C6C8 1px solid;
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.app__score-item .modal__miniature {
+  width: 40px;
+}
+
 .dark-mode .app__main {
   background-color: #3C486B;
 }
@@ -446,6 +465,9 @@ fieldset {
 .dark-mode .app__settings-close span,
 .dark-mode .app__score-close span {
   background-color: #B4BBF9;
+}
+.dark-mode .app__score-item {
+  border-color: #516284;
 }
 
 .footer {

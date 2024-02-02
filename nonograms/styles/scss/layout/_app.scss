@@ -274,6 +274,25 @@
   text-align: center;
 }
 
+.app__score-list{
+  margin-top: 10px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app__score-item{
+  padding: 7px;
+  border: $color-toggler-lightmode 1px solid;
+  border-radius: 7px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  .modal__miniature{
+    width: 40px;
+  }
+}
+
 .dark-mode{
   .app__main{
     background-color: $color-container-darkmode;
@@ -294,5 +313,8 @@
     span{
       background-color: $color-background-light;
     }
+  }
+  .app__score-item{
+    border-color: #516284;
   }
 }
