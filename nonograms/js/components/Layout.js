@@ -159,6 +159,7 @@ export class Layout extends Base {
     });
     this.darkmodeToggler.oninput = () => {
       this.switchMode();
+      this.updateSettings();
     };
     const label = this.createNode("label", ["toggler", "toggler_darkmode"], {
       for: "darkmode",
@@ -189,6 +190,19 @@ export class Layout extends Base {
     appScoreContainer.append(appScoreHeader, this.scoreList);
     this.main.append(appContainer);
     this.body.append(this.main);
+    this.soundsTogglers["all sounds"].oninput = () => {
+      this.soundsTogglers["win sound"].checked = this.soundsTogglers["all sounds"].checked;
+      this.soundsTogglers["click sound"].checked = this.soundsTogglers["all sounds"].checked;
+      this.updateSettings();
+    }
+    this.soundsTogglers["win sound"].oninput = () => {
+      this.soundsTogglers["all sounds"].checked = this.soundsTogglers["win sound"].checked || this.soundsTogglers["click sound"].checked;
+      this.updateSettings();
+    }
+    this.soundsTogglers["click sound"].oninput = () => {
+      this.soundsTogglers["all sounds"].checked = this.soundsTogglers["win sound"].checked || this.soundsTogglers["click sound"].checked;
+      this.updateSettings();
+    }
   }
 
   renderFooter() {
@@ -215,10 +229,35 @@ export class Layout extends Base {
     this.renderHeader();
     this.renderMain();
     this.renderFooter();
+    this.loadSettings();
   }
 
   switchMode() {
     this.darkMode = !this.darkMode;
     this.body.classList.toggle("dark-mode");
+  }
+
+  loadSettings() {
+    const curSettings = this.getSettings();
+    this.darkmodeToggler.checked = curSettings.darkmode;
+    this.darkMode = curSettings.darkmode;
+    if (curSettings.darkmode) {
+      this.body.classList.add("dark-mode");
+    } else {
+      this.body.classList.remove("dark-mode");
+    }
+    this.soundsTogglers["all sounds"].checked = curSettings["all sounds"];
+    this.soundsTogglers["win sound"].checked = curSettings["win sound"];
+    this.soundsTogglers["click sound"].checked = curSettings["click sound"];
+  }
+
+  updateSettings() {
+    const newSettings = {
+      "darkmode": this.darkmodeToggler.checked,
+      "all sounds": this.soundsTogglers["all sounds"].checked,
+      "win sound": this.soundsTogglers["win sound"].checked,
+      "click sound": this.soundsTogglers["click sound"].checked
+    };
+    this.setSettings(newSettings);
   }
 }

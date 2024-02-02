@@ -82,6 +82,21 @@ export class Game extends Base {
       showGames(5);
       selectModal.modalBody.append(formSelect, selectContent);
     };
+    this.layout.appButtons["save game"].onclick = () => {
+      const set = this.cells.map((row) => row.map((cell) => {
+        if (cell.classList.contains('cross')) return 2;
+        if (cell.classList.contains('black')) return 1;
+        return 0;
+      }));
+      this.setSavedGame([this.currentGame, set, this.timer]);
+    }
+    this.layout.appButtons["open saved"].onclick = () => {
+      const savedGame = this.getSavedGame();
+      if (savedGame) {
+        this.openGame(...savedGame);
+      }
+    }
+    console.log(this.getLocalStorageObject());
   }
 
   setTimer() {
@@ -239,6 +254,7 @@ export class Game extends Base {
       )} seconds!"`;
       winModal.modalBody.append(mini, textWin);
       this.layout.nonogramFieldCont.classList.add("disabled");
+      this.updateHistory(this.currentGame, this.timer);
     }
   }
 
