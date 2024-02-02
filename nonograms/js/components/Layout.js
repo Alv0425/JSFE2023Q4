@@ -36,7 +36,27 @@ export class Layout extends Base {
       {},
       "Game name",
     );
-    appHeader.append(this.gameNameCont, this.timerCont);
+    const appHeaderButtons = this.createNode("div", ["app__header-buttons"]);
+    const scoreButton = this.createNode("button", ["app__score-button"]);
+    const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    star.append(use);
+    use.setAttribute("href", './assets/star-solid.svg#star');
+    star.setAttribute("viewBox", "0 0 576 576");
+    star.setAttribute("width", "30px");
+    star.classList.add("icon");
+    scoreButton.append(star);
+    const settingsButton = this.createNode("button", ["app__settings-button"]);
+    const gear = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const useGear = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    gear.append(useGear);
+    useGear.setAttribute("href", './assets/gear-solid.svg#gear');
+    gear.setAttribute("viewBox", "0 0 512 512");
+    gear.setAttribute("width", "30px");
+    gear.classList.add("icon");
+    settingsButton.append(gear);
+    appHeaderButtons.append(scoreButton, settingsButton);
+    appHeader.append(this.gameNameCont, this.timerCont, appHeaderButtons);
     const appBody = this.createNode("div", ["app__body"]);
     const appGameContainer = this.createNode("div", ["app__game-container"]);
     const appPlayFieldContainer = this.createNode("div", ["nonogram"]);
@@ -65,6 +85,23 @@ export class Layout extends Base {
     const appSidebar = this.createNode("div", ["app__sidebar"]);
     const navbuttons = this.createNode("div", ["app__nav-buttons"]);
     const settingsContainer = this.createNode("div", ["app__settings"]);
+    const appSettingsHeader = this.createNode("div", ["app__settings-header"]);
+    const appSettingsTitle = this.createNode(
+      "h2",
+      ["app__settings-title"],
+      {},
+      "SETTINGS",
+    );
+    const appSettingsClose = this.createNode('button', ["app__settings-close"]);
+    settingsButton.onclick = () => {
+      settingsContainer.classList.add("app__settings_active");
+    }
+    appSettingsClose.onclick = () => {
+      settingsContainer.classList.remove("app__settings_active");
+    }
+    appSettingsClose.append(this.createNode("span"), this.createNode("span"));
+    settingsContainer.append(appSettingsHeader);
+    appSettingsHeader.append(appSettingsTitle, appSettingsClose);
     appSidebar.append(navbuttons, settingsContainer);
     appMain.append(appHeader, appBody);
     appBody.append(appGameContainer, appSidebar);
@@ -122,7 +159,7 @@ export class Layout extends Base {
     });
     this.darkmodeToggler.oninput = () => {
       this.switchMode();
-    }
+    };
     const label = this.createNode("label", ["toggler", "toggler_darkmode"], {
       for: "darkmode",
     });
@@ -131,15 +168,25 @@ export class Layout extends Base {
     settingsDarkmode.append(settingsDarkmodeTitle, this.darkmodeToggler, label);
     settingsContainer.append(settingsSounds, settingsDarkmode);
     const appScoreContainer = this.createNode("div", ["app__score"]);
+    const appScoreHeader = this.createNode("div", ["app__score-header"]);
     const appScoreTitle = this.createNode(
       "h2",
       ["app__score-title"],
       {},
-      "Score",
+      "High Score",
     );
+    const appScoreClose = this.createNode('button', ["app__score-close"]);
+    appScoreClose.append(this.createNode("span"), this.createNode("span"));
+    scoreButton.onclick = () => {
+      appScoreContainer.classList.add("app__score_active");
+    }
+    appScoreClose.onclick = () => {
+      appScoreContainer.classList.remove("app__score_active");
+    }
+    appScoreHeader.append(appScoreTitle, appScoreClose)
     this.scoreList = this.createNode("ul", ["app__score-list"]);
     appContainer.append(appMain, appScoreContainer);
-    appScoreContainer.append(appScoreTitle, this.scoreList);
+    appScoreContainer.append(appScoreHeader, this.scoreList);
     this.main.append(appContainer);
     this.body.append(this.main);
   }

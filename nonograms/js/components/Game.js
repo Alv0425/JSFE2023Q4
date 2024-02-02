@@ -21,6 +21,67 @@ export class Game extends Base {
     this.layout.appButtons["reset game"].onclick = () => {
       this.openGame(this.currentGame);
     };
+    this.layout.appButtons["play random"].onclick = () => {
+      const sequenceLength = this.nonograms.length;
+      this.openGame(this.nonograms[Math.floor(Math.random() * sequenceLength)]);
+    };
+    this.layout.appButtons["show solution"].onclick = () => {
+      this.showSolution();
+    };
+    this.layout.appButtons["select game"].onclick = () => {
+      const selectModal = new Modal("select");
+      selectModal.openModal();
+      const formSelect = this.createNode("form", ["modal__form"]);
+      const modalInputs = {};
+      const selectContent = this.createNode("div", ["modal__content"]);
+      [5, 10, 15].forEach((size) => {
+        const input = this.createNode("input", ["input"], {
+          type: "radio",
+          id: `size-${size}`,
+          value: size,
+          name: "select",
+        });
+        modalInputs[`size-${size}`] = input;
+        const label = this.createNode("label", ["modal__tag"], {
+          for: `size-${size}`,
+        });
+        if (size === 5) {
+          label.textContent = "easy (5 x 5)";
+          input.checked = true;
+        }
+        if (size === 10) label.textContent = "medium (10 x 10)";
+        if (size === 15) label.textContent = "hard (15 x 15)";
+        formSelect.append(input, label);
+      });
+
+      const showGames = (value) => {
+        const allgames = this.nonograms.filter(
+          (game) => value * 1 === game.size,
+        );
+        this.clearNode(selectContent);
+        allgames.forEach((game) => {
+          const card = this.createNode("div", ["modal__card"]);
+          card.onclick = () => {
+            selectModal.closeModal();
+            this.openGame(game);
+          };
+          const cardTitle = this.createNode(
+            "p",
+            ["modal__card-title"],
+            {},
+            game.hint,
+          );
+          const mini = this.showMiniature(game);
+          card.append(cardTitle, mini);
+          selectContent.append(card);
+        });
+      };
+      formSelect.oninput = (e) => {
+        showGames(e.target.value);
+      };
+      showGames(5);
+      selectModal.modalBody.append(formSelect, selectContent);
+    };
   }
 
   setTimer() {
@@ -32,6 +93,7 @@ export class Game extends Base {
       }, 100);
     }
   }
+
   openGame(game, state, timer) {
     this.isTimerRunning = false;
     this.layout.nonogramFieldCont.classList.remove("disabled");
@@ -84,6 +146,7 @@ export class Game extends Base {
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("black");
         event.target.classList.toggle("cross");
+        this.checkGameState();
         this.setTimer();
       }
     };
@@ -157,48 +220,53 @@ export class Game extends Base {
     const isWin = () => {
       for (let i = 0; i < this.currentGame.size; i++) {
         for (let j = 0; j < this.currentGame.size; j++) {
-          if (
-            this.currentGame.field[i][j] === 0 &&
-            this.cells[i][j].classList.contains("black")
-          )
-            return false;
-          if (
-            this.currentGame.field[i][j] === 1 &&
-            !this.cells[i][j].classList.contains("black")
-          )
-            return false;
+          const isCellBlack = this.cells[i][j].classList.contains("black");
+          const gameCell = this.currentGame.field[i][j];
+          if (gameCell === 0 && isCellBlack) return false;
+          if (gameCell === 1 && !isCellBlack) return false;
         }
       }
       return true;
     };
-    console.log(isWin());
     if (isWin()) {
       const winModal = new Modal("win");
       winModal.openModal();
       clearInterval(this.interval);
-      const mini = this.showMiniature();
+      const mini = this.showMiniature(this.currentGame);
       const textWin = this.createNode("div", ["modal__text"]);
       textWin.textContent = `Great! You have solved the nonogram in ${Math.round(
         this.timer,
       )} seconds!"`;
       winModal.modalBody.append(mini, textWin);
       this.layout.nonogramFieldCont.classList.add("disabled");
-      console.log("openned");
     }
   }
 
-  showMiniature() {
-    console.log(this.currentGame);
+  showMiniature(game) {
     const miniature = this.createNode("div", ["modal__miniature"]);
-    for (let i = 0; i < this.currentGame.size; i++) {
+    for (let i = 0; i < game.size; i++) {
       const row = this.createNode("div", ["modal__miniature-row"]);
-      for (let j = 0; j < this.currentGame.size; j++) {
+      for (let j = 0; j < game.size; j++) {
         const cell = this.createNode("div", ["modal__miniature-cell"]);
-        if (this.currentGame.field[i][j] === 1) cell.classList.add("dark");
+        if (game.field[i][j] === 1) cell.classList.add("dark");
         row.append(cell);
       }
       miniature.append(row);
     }
     return miniature;
+  }
+
+  showSolution() {
+    for (let i = 0; i < this.currentGame.size; i++) {
+      for (let j = 0; j < this.currentGame.size; j++) {
+        this.cells[i][j].classList.remove("black");
+        this.cells[i][j].classList.remove("cross");
+        if (this.currentGame.field[i][j] === 1) {
+          this.cells[i][j].classList.add("black");
+        }
+      }
+    }
+    this.layout.nonogramFieldCont.classList.add("disabled");
+    clearInterval(this.interval);
   }
 }

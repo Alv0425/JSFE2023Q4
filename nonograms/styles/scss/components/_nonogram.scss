@@ -2,6 +2,7 @@
   background-color: $color-text-darkmode;
   padding: 10px;
   border-radius: 10px;
+  min-width: 410px;
 }
 
 .dark-mode {
@@ -16,7 +17,7 @@
   grid-template-rows: 1fr 2fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  min-width: 350px;
+  min-width: 410px;
   aspect-ratio: 1 / 1;
 }
 
@@ -50,7 +51,7 @@
   grid-auto-flow: row;
   .clues{
     display: flex;
-    gap:7px;
+    gap:12px;
     align-items: center;
     justify-content: end;
     padding-right: 10px;
@@ -73,6 +74,7 @@
 
 .clue {
   color: $color-cell-dark;
+  font-size: 14px;
 }
 
 .row{

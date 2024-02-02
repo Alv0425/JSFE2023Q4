@@ -128,17 +128,23 @@ fieldset {
 
 .header {
   margin: 0 auto;
-  padding: 20px 10px;
+  padding: 10px 10px;
 }
 
 .header__title {
   font-family: Montserrat;
-  font-size: 75px;
+  font-size: 60px;
   font-weight: 900;
+}
+@media (width <= 768px) {
+  .header__title {
+    font-size: 48px;
+  }
 }
 
 .main {
   display: flex;
+  padding: 10px;
 }
 @media (width <= 1100px) {
   .main {
@@ -154,7 +160,7 @@ fieldset {
 }
 
 .app__body {
-  width: 700px;
+  max-width: 700px;
   min-height: 500px;
 }
 
@@ -165,6 +171,17 @@ fieldset {
   gap: 40px;
   font-weight: 700;
   font-size: 24px;
+}
+
+.app__name-game-cont {
+  width: 200px;
+  text-transform: capitalize;
+}
+
+.app__header-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
 }
 
 .app__main {
@@ -178,7 +195,13 @@ fieldset {
 .app__body {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+@media (width <= 680px) {
+  .app__body {
+    gap: 0;
+  }
 }
 
 .app__sidebar {
@@ -202,6 +225,11 @@ fieldset {
   gap: 10px;
 }
 
+.app__settings-header {
+  display: flex;
+  padding: 0 10px 10px 10px;
+}
+
 .app__settings-title {
   font-size: 18px;
   font-weight: 700;
@@ -220,11 +248,60 @@ fieldset {
   gap: 10px;
   padding: 10px;
 }
+@media (width <= 680px) {
+  .app__nav-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 .app__game-buttons {
   display: flex;
+  padding: 0 10px;
   gap: 10px;
   justify-content: center;
+}
+@media (width <= 680px) {
+  .app__game-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.app__score-close {
+  display: none;
+}
+
+.app__score-button {
+  display: none;
+}
+@media (width <= 1100px) {
+  .app__score-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+  }
+  .app__score-button .icon {
+    fill: #3C486B;
+  }
+}
+
+.app__settings-button {
+  display: none;
+}
+@media (width <= 680px) {
+  .app__settings-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+  }
+  .app__settings-button .icon {
+    fill: #3C486B;
+  }
 }
 
 .app__score {
@@ -234,13 +311,118 @@ fieldset {
   background-color: #F0F0F0;
   border-radius: 20px;
 }
+
 @media (width <= 1100px) {
   .app__score {
+    position: fixed;
+    border-radius: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 15;
+    transform: translateX(100%);
+    transition: 1s;
+  }
+  .app__score .app__score-close {
+    display: block;
     position: absolute;
     right: 0;
     top: 0;
-    transform: translateX(100%);
+    width: 30px;
+    aspect-ratio: 1/1;
   }
+  .app__score .app__score-close span {
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 2px;
+    background-color: #3C486B;
+    border-radius: 1px;
+    transition: 0.5s;
+  }
+  .app__score .app__score-close span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .app__score .app__score-close span:nth-child(2) {
+    transform: rotate(-45deg);
+  }
+}
+@media (width <= 1100px) and (pointer: fine) and (hover: hover) {
+  .app__score .app__score-close:hover span {
+    opacity: 0.7;
+  }
+}
+
+.app__settings-header {
+  display: none;
+}
+@media (width <= 680px) {
+  .app__settings-header {
+    display: flex;
+  }
+}
+@media (width <= 680px) {
+  .app__settings {
+    position: fixed;
+    padding: 10px;
+    width: 350px;
+    border-radius: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 15;
+    transform: translateX(100%);
+    transition: 1s;
+    background-color: #F0F0F0;
+  }
+  .app__settings .app__settings-close {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    aspect-ratio: 1/1;
+  }
+  .app__settings .app__settings-close span {
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 2px;
+    background-color: #3C486B;
+    border-radius: 1px;
+    transition: 0.5s;
+  }
+  .app__settings .app__settings-close span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .app__settings .app__settings-close span:nth-child(2) {
+    transform: rotate(-45deg);
+  }
+}
+@media (width <= 680px) and (pointer: fine) and (hover: hover) {
+  .app__settings .app__settings-close:hover span {
+    opacity: 0.7;
+  }
+}
+
+@media (width <= 680px) {
+  .app__settings_active {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: translateX(0);
+  }
+}
+
+@media (width <= 1100px) {
+  .app__score_active {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: translateX(0);
+  }
+}
+
+.app__score-header {
+  position: relative;
 }
 
 .app__score-title {
@@ -250,12 +432,20 @@ fieldset {
 .dark-mode .app__main {
   background-color: #3C486B;
 }
+.dark-mode .app__settings,
 .dark-mode .app__score {
   background-color: #3C486B;
 }
 .dark-mode .app__settings-sounds,
 .dark-mode .app__settings-darkmode {
   border-color: #516284;
+}
+.dark-mode .icon {
+  fill: #B4BBF9;
+}
+.dark-mode .app__settings-close span,
+.dark-mode .app__score-close span {
+  background-color: #B4BBF9;
 }
 
 .footer {
@@ -454,6 +644,40 @@ fieldset {
   text-align: center;
 }
 
+.modal__form {
+  display: flex;
+  gap: 10px;
+}
+
+.modal__tag {
+  padding: 7px 10px;
+  background-color: #C5C6C8;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+#size-5:checked ~ .modal__tag[for=size-5],
+#size-10:checked ~ .modal__tag[for=size-10],
+#size-15:checked ~ .modal__tag[for=size-15] {
+  background-color: #B4BBF9;
+}
+
+.modal__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.modal__card {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #C5C6C8;
+  cursor: pointer;
+}
+.modal__card .modal__miniature {
+  width: 50px;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -496,11 +720,23 @@ fieldset {
 .dark-mode .dark {
   background-color: #B4BBF9;
 }
+.dark-mode .modal__tag {
+  background-color: #686A79;
+}
+.dark-mode #size-5:checked ~ .modal__tag[for=size-5],
+.dark-mode #size-10:checked ~ .modal__tag[for=size-10],
+.dark-mode #size-15:checked ~ .modal__tag[for=size-15] {
+  background-color: #676C99;
+}
+.dark-mode .modal__card {
+  background-color: #686A79;
+}
 
 .nonogram {
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 10px;
+  min-width: 410px;
 }
 
 .dark-mode .nonogram {
@@ -513,7 +749,7 @@ fieldset {
   grid-template-rows: 1fr 2fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  min-width: 350px;
+  min-width: 410px;
   aspect-ratio: 1/1;
 }
 
@@ -547,7 +783,7 @@ fieldset {
 }
 .nonogram__clues-y-cont .clues {
   display: flex;
-  gap: 7px;
+  gap: 12px;
   align-items: center;
   justify-content: end;
   padding-right: 10px;
@@ -569,6 +805,7 @@ fieldset {
 
 .clue {
   color: #1B1B1E;
+  font-size: 14px;
 }
 
 .row {
