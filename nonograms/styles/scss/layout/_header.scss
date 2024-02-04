@@ -1,0 +1,13 @@
+.header{
+  margin: 0 auto;
+  padding: 10px 10px;
+}
+
+.header__title{
+  font-family: Montserrat;
+  font-size: 60px;
+  font-weight: 900;
+  @media (width <= 768px) {
+    font-size: 48px;
+  }
+}

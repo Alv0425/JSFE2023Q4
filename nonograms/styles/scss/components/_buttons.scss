@@ -1,0 +1,66 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  min-width: 170px;
+  background-color: $color-background-light;
+  border-radius: 100px;
+  font-weight: 700;
+}
+
+.input {
+  display: none;
+}
+
+.toggler {
+  display: flex;
+  padding: 3px;
+  width: 65px;
+  height: 24px;
+  border-radius: 100px;
+  background-color: $color-toggler-lightmode;
+  cursor: pointer;
+  .toggler__circle {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: $color-text-darkmode;
+    transition: 0.3s;
+  }
+}
+
+#darkmode:checked ~ .toggler[for="darkmode"],
+#allsounds:checked ~ .toggler[for="allsounds"],
+#winsound:checked ~ .toggler[for="winsound"],
+#cellsounds:checked ~ .toggler[for="cellsounds"] {
+  background-color: $color-background-light;
+  .toggler__circle {
+    transform: translateX(65px - 18px - 6px);
+  }
+}
+
+
+.dark-mode {
+  .button {
+    background-color: $color-button-darkmode;
+  }
+  .toggler {
+    background-color: $color-toggler-darkmode;
+  }
+
+  .toggler__circle{
+    background-color: $color-background-light;
+  }
+
+  #darkmode:checked ~ .toggler[for="darkmode"],
+  #allsounds:checked ~ .toggler[for="allsounds"],
+  #winsound:checked ~ .toggler[for="winsound"],
+  #cellsounds:checked ~ .toggler[for="cellsounds"] {
+    background-color: $color-button-darkmode;
+    .toggler__circle {
+      transform: translateX(65px - 18px - 6px);
+    }
+  }
+}

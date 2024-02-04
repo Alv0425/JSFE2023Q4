@@ -1,0 +1,23 @@
+.footer{
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.footer__container{
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.footer__year{
+  &::before{
+    content: "©";
+    margin-right: 7px;
+  }
+}
+
+.footer__author{
+  text-decoration: none;
+  color: inherit;
+}
