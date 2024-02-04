@@ -136,6 +136,9 @@
   padding: 10px;
   border-radius: 10px;
   background-color: $color-toggler-lightmode;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   cursor: pointer;
   .modal__miniature{
     width: 50px;

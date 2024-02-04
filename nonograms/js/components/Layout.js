@@ -41,16 +41,19 @@ export class Layout extends Base {
     const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
     star.append(use);
-    use.setAttribute("href", './assets/star-solid.svg#star');
+    use.setAttribute("href", "./assets/star-solid.svg#star");
     star.setAttribute("viewBox", "0 0 576 576");
     star.setAttribute("width", "30px");
     star.classList.add("icon");
     scoreButton.append(star);
     const settingsButton = this.createNode("button", ["app__settings-button"]);
     const gear = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    const useGear = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    const useGear = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "use",
+    );
     gear.append(useGear);
-    useGear.setAttribute("href", './assets/gear-solid.svg#gear');
+    useGear.setAttribute("href", "./assets/gear-solid.svg#gear");
     gear.setAttribute("viewBox", "0 0 512 512");
     gear.setAttribute("width", "30px");
     gear.classList.add("icon");
@@ -92,13 +95,13 @@ export class Layout extends Base {
       {},
       "SETTINGS",
     );
-    const appSettingsClose = this.createNode('button', ["app__settings-close"]);
+    const appSettingsClose = this.createNode("button", ["app__settings-close"]);
     settingsButton.onclick = () => {
       settingsContainer.classList.add("app__settings_active");
-    }
+    };
     appSettingsClose.onclick = () => {
       settingsContainer.classList.remove("app__settings_active");
-    }
+    };
     appSettingsClose.append(this.createNode("span"), this.createNode("span"));
     settingsContainer.append(appSettingsHeader);
     appSettingsHeader.append(appSettingsTitle, appSettingsClose);
@@ -176,33 +179,39 @@ export class Layout extends Base {
       {},
       "High Score",
     );
-    const appScoreClose = this.createNode('button', ["app__score-close"]);
+    const appScoreClose = this.createNode("button", ["app__score-close"]);
     appScoreClose.append(this.createNode("span"), this.createNode("span"));
     scoreButton.onclick = () => {
       appScoreContainer.classList.add("app__score_active");
-    }
+    };
     appScoreClose.onclick = () => {
       appScoreContainer.classList.remove("app__score_active");
-    }
-    appScoreHeader.append(appScoreTitle, appScoreClose)
+    };
+    appScoreHeader.append(appScoreTitle, appScoreClose);
     this.scoreList = this.createNode("ul", ["app__score-list"]);
     appContainer.append(appMain, appScoreContainer);
     appScoreContainer.append(appScoreHeader, this.scoreList);
     this.main.append(appContainer);
     this.body.append(this.main);
     this.soundsTogglers["all sounds"].oninput = () => {
-      this.soundsTogglers["win sound"].checked = this.soundsTogglers["all sounds"].checked;
-      this.soundsTogglers["click sound"].checked = this.soundsTogglers["all sounds"].checked;
+      this.soundsTogglers["win sound"].checked =
+        this.soundsTogglers["all sounds"].checked;
+      this.soundsTogglers["click sound"].checked =
+        this.soundsTogglers["all sounds"].checked;
       this.updateSettings();
-    }
+    };
     this.soundsTogglers["win sound"].oninput = () => {
-      this.soundsTogglers["all sounds"].checked = this.soundsTogglers["win sound"].checked || this.soundsTogglers["click sound"].checked;
+      this.soundsTogglers["all sounds"].checked =
+        this.soundsTogglers["win sound"].checked ||
+        this.soundsTogglers["click sound"].checked;
       this.updateSettings();
-    }
+    };
     this.soundsTogglers["click sound"].oninput = () => {
-      this.soundsTogglers["all sounds"].checked = this.soundsTogglers["win sound"].checked || this.soundsTogglers["click sound"].checked;
+      this.soundsTogglers["all sounds"].checked =
+        this.soundsTogglers["win sound"].checked ||
+        this.soundsTogglers["click sound"].checked;
       this.updateSettings();
-    }
+    };
   }
 
   renderFooter() {
@@ -253,10 +262,10 @@ export class Layout extends Base {
 
   updateSettings() {
     const newSettings = {
-      "darkmode": this.darkmodeToggler.checked,
+      darkmode: this.darkmodeToggler.checked,
       "all sounds": this.soundsTogglers["all sounds"].checked,
       "win sound": this.soundsTogglers["win sound"].checked,
-      "click sound": this.soundsTogglers["click sound"].checked
+      "click sound": this.soundsTogglers["click sound"].checked,
     };
     this.setSettings(newSettings);
   }

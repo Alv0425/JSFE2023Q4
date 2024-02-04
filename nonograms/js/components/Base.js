@@ -48,22 +48,24 @@ export class Base {
     );
     if (!hasProperty) {
       const templateObj = {
-        "saved game": '',
-        "settings": {
-          'darkmode': false,
-          'all sounds': true,
-          'win sound': true,
-          'click sound': true
+        "saved game": "",
+        settings: {
+          darkmode: false,
+          "all sounds": true,
+          "win sound": true,
+          "click sound": true,
         },
-        "history": []
-      }
+        history: [],
+      };
       localStorage["alv0425-nonograms"] = JSON.stringify(templateObj);
     }
   }
 
   getLocalStorageObject() {
     this.checkLocalstorage();
-    const localstorageObj = JSON.parse(localStorage.getItem("alv0425-nonograms"));
+    const localstorageObj = JSON.parse(
+      localStorage.getItem("alv0425-nonograms"),
+    );
     return localstorageObj;
   }
 
@@ -77,13 +79,13 @@ export class Base {
   getSavedGame() {
     this.checkLocalstorage();
     const currentObj = JSON.parse(localStorage.getItem("alv0425-nonograms"));
-    return (currentObj["saved game"]);
+    return currentObj["saved game"];
   }
 
   updateHistory(newgame, newtime) {
     this.checkLocalstorage();
     const currentObj = JSON.parse(localStorage.getItem("alv0425-nonograms"));
-    currentObj.history.push({game: newgame, time: newtime});
+    currentObj.history.push({ game: newgame, time: newtime });
     if (currentObj.history.length > 5) currentObj.history.shift();
     localStorage["alv0425-nonograms"] = JSON.stringify(currentObj);
   }
@@ -99,7 +101,7 @@ export class Base {
     const currentObj = JSON.parse(localStorage.getItem("alv0425-nonograms"));
     return currentObj.settings;
   }
-  
+
   setSettings(settings) {
     this.checkLocalstorage();
     const currentObj = JSON.parse(localStorage.getItem("alv0425-nonograms"));
@@ -114,7 +116,9 @@ export class Base {
       window.localStorage.removeItem(key);
       return true;
     } catch (e) {
-      console.log("localStorage is not availible in this browser. Please, enable it to more stable work of app.");
+      console.log(
+        "localStorage is not availible in this browser. Please, enable it to more stable work of app.",
+      );
       return false;
     }
   }

@@ -1,6 +1,7 @@
 import { Layout } from "./Layout.js";
 import { Base } from "./Base.js";
 import { Modal } from "./Modal.js";
+import { Sound  } from "./Sound.js";
 export class Game extends Base {
   constructor(nonograms) {
     super();
@@ -12,9 +13,11 @@ export class Game extends Base {
     this.cluesY = [];
     this.currentGame = [];
     this.isTimerRunning = false;
+    this.sounds = null;
   }
 
   renderPlayboard() {
+    this.sounds = new Sound();
     this.layout = new Layout();
     this.layout.renderPage();
     this.updateScoreTable();
@@ -84,19 +87,21 @@ export class Game extends Base {
       selectModal.modalBody.append(formSelect, selectContent);
     };
     this.layout.appButtons["save game"].onclick = () => {
-      const set = this.cells.map((row) => row.map((cell) => {
-        if (cell.classList.contains('cross')) return 2;
-        if (cell.classList.contains('black')) return 1;
-        return 0;
-      }));
+      const set = this.cells.map((row) =>
+        row.map((cell) => {
+          if (cell.classList.contains("cross")) return 2;
+          if (cell.classList.contains("black")) return 1;
+          return 0;
+        }),
+      );
       this.setSavedGame([this.currentGame, set, this.timer]);
-    }
+    };
     this.layout.appButtons["open saved"].onclick = () => {
       const savedGame = this.getSavedGame();
       if (savedGame) {
         this.openGame(...savedGame);
       }
-    }
+    };
     console.log(this.getLocalStorageObject());
   }
 
@@ -152,6 +157,11 @@ export class Game extends Base {
     this.layout.nonogramFieldCont.onclick = (event) => {
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("cross");
+        if (event.target.classList.contains('black')) {
+          this.sounds.playEmpty(!this.layout.soundsTogglers["click sound"].checked);
+        } else {
+          this.sounds.playFill(!this.layout.soundsTogglers["click sound"].checked);
+        }
         event.target.classList.toggle("black");
         this.checkGameState();
         this.setTimer();
@@ -161,6 +171,11 @@ export class Game extends Base {
       event.preventDefault();
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("black");
+        if (event.target.classList.contains('cross')) {
+          this.sounds.playEmpty(!this.layout.soundsTogglers["click sound"].checked);
+        } else {
+          this.sounds.playCross(!this.layout.soundsTogglers["click sound"].checked);
+        }
         event.target.classList.toggle("cross");
         this.checkGameState();
         this.setTimer();
@@ -252,11 +267,12 @@ export class Game extends Base {
       const textWin = this.createNode("div", ["modal__text"]);
       textWin.textContent = `Great! You have solved the nonogram in ${Math.round(
         this.timer,
-      )} seconds!"`;
+      )} seconds!`;
       winModal.modalBody.append(mini, textWin);
       this.layout.nonogramFieldCont.classList.add("disabled");
       this.updateHistory(this.currentGame, this.timer);
       this.updateScoreTable();
+      this.sounds.playWin(!this.layout.soundsTogglers["win sound"].checked);
     }
   }
 
@@ -278,10 +294,25 @@ export class Game extends Base {
     this.clearNode(this.layout.scoreList);
     const history = this.getHistory();
     history.forEach((game) => {
-      const li = this.createNode("li", ['app__score-item']);
-      const name = this.createNode("span", ['app__score-item-name'], {}, game.game.hint);
-      const level = this.createNode("span", ['app__score-item-level'], {}, `${game.game.size} x ${game.game.size}`);
-      const time = this.createNode("span", ['app__score-item-time'], {}, this.convertTime(game.time));
+      const li = this.createNode("li", ["app__score-item"]);
+      const name = this.createNode(
+        "span",
+        ["app__score-item-name"],
+        {},
+        game.game.hint,
+      );
+      const level = this.createNode(
+        "span",
+        ["app__score-item-level"],
+        {},
+        `${game.game.size} x ${game.game.size}`,
+      );
+      const time = this.createNode(
+        "span",
+        ["app__score-item-time"],
+        {},
+        this.convertTime(game.time),
+      );
       const mini = this.showMiniature(game.game);
       li.append(name, level, time, mini);
       this.layout.scoreList.append(li);

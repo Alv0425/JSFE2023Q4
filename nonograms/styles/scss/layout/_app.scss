@@ -287,10 +287,16 @@
   border: $color-toggler-lightmode 1px solid;
   border-radius: 7px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 50px minmax(50px, 80px);
+  gap: 10px;
   .modal__miniature{
-    width: 40px;
+    width: 30px;
   }
+}
+
+.app__score-item-time{
+  display: flex;
+  justify-content: end;
 }
 
 .dark-mode{
