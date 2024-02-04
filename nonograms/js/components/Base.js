@@ -53,7 +53,7 @@ export class Base {
           darkmode: false,
           "all sounds": true,
           "win sound": true,
-          "click sound": true,
+          "cell sounds": true,
         },
         history: [],
       };
