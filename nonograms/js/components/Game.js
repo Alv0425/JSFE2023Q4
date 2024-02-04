@@ -158,9 +158,9 @@ export class Game extends Base {
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("cross");
         if (event.target.classList.contains('black')) {
-          this.sounds.playEmpty(!this.layout.soundsTogglers["click sound"].checked);
+          this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
         } else {
-          this.sounds.playFill(!this.layout.soundsTogglers["click sound"].checked);
+          this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
         }
         event.target.classList.toggle("black");
         this.checkGameState();
@@ -172,9 +172,9 @@ export class Game extends Base {
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("black");
         if (event.target.classList.contains('cross')) {
-          this.sounds.playEmpty(!this.layout.soundsTogglers["click sound"].checked);
+          this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
         } else {
-          this.sounds.playCross(!this.layout.soundsTogglers["click sound"].checked);
+          this.sounds.playCross(!this.layout.soundsTogglers["cell sounds"].checked);
         }
         event.target.classList.toggle("cross");
         this.checkGameState();

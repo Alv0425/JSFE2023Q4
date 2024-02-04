@@ -34,7 +34,7 @@
 #darkmode:checked ~ .toggler[for="darkmode"],
 #allsounds:checked ~ .toggler[for="allsounds"],
 #winsound:checked ~ .toggler[for="winsound"],
-#clicksound:checked ~ .toggler[for="clicksound"] {
+#cellsounds:checked ~ .toggler[for="cellsounds"] {
   background-color: $color-background-light;
   .toggler__circle {
     transform: translateX(65px - 18px - 6px);
@@ -57,7 +57,7 @@
   #darkmode:checked ~ .toggler[for="darkmode"],
   #allsounds:checked ~ .toggler[for="allsounds"],
   #winsound:checked ~ .toggler[for="winsound"],
-  #clicksound:checked ~ .toggler[for="clicksound"] {
+  #cellsounds:checked ~ .toggler[for="cellsounds"] {
     background-color: $color-button-darkmode;
     .toggler__circle {
       transform: translateX(65px - 18px - 6px);

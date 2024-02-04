@@ -534,13 +534,13 @@ fieldset {
 #darkmode:checked ~ .toggler[for=darkmode],
 #allsounds:checked ~ .toggler[for=allsounds],
 #winsound:checked ~ .toggler[for=winsound],
-#clicksound:checked ~ .toggler[for=clicksound] {
+#cellsounds:checked ~ .toggler[for=cellsounds] {
   background-color: #B4BBF9;
 }
 #darkmode:checked ~ .toggler[for=darkmode] .toggler__circle,
 #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
 #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
-#clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
+#cellsounds:checked ~ .toggler[for=cellsounds] .toggler__circle {
   transform: translateX(41px);
 }
 
@@ -556,13 +556,13 @@ fieldset {
 .dark-mode #darkmode:checked ~ .toggler[for=darkmode],
 .dark-mode #allsounds:checked ~ .toggler[for=allsounds],
 .dark-mode #winsound:checked ~ .toggler[for=winsound],
-.dark-mode #clicksound:checked ~ .toggler[for=clicksound] {
+.dark-mode #cellsounds:checked ~ .toggler[for=cellsounds] {
   background-color: #676C99;
 }
 .dark-mode #darkmode:checked ~ .toggler[for=darkmode] .toggler__circle,
 .dark-mode #allsounds:checked ~ .toggler[for=allsounds] .toggler__circle,
 .dark-mode #winsound:checked ~ .toggler[for=winsound] .toggler__circle,
-.dark-mode #clicksound:checked ~ .toggler[for=clicksound] .toggler__circle {
+.dark-mode #cellsounds:checked ~ .toggler[for=cellsounds] .toggler__circle {
   transform: translateX(41px);
 }
 

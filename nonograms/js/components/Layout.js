@@ -128,7 +128,7 @@ export class Layout extends Base {
       "Sounds:",
     );
     settingsSounds.append(settingsSoundsTitle);
-    ["all sounds", "win sound", "click sound"].forEach((sound) => {
+    ["all sounds", "win sound", "cell sounds"].forEach((sound) => {
       const togglerContainer = this.createNode("div", ["app__sound-toggler"]);
       const input = this.createNode("input", ["input"], {
         type: "checkbox",
@@ -196,20 +196,20 @@ export class Layout extends Base {
     this.soundsTogglers["all sounds"].oninput = () => {
       this.soundsTogglers["win sound"].checked =
         this.soundsTogglers["all sounds"].checked;
-      this.soundsTogglers["click sound"].checked =
+      this.soundsTogglers["cell sounds"].checked =
         this.soundsTogglers["all sounds"].checked;
       this.updateSettings();
     };
     this.soundsTogglers["win sound"].oninput = () => {
       this.soundsTogglers["all sounds"].checked =
         this.soundsTogglers["win sound"].checked ||
-        this.soundsTogglers["click sound"].checked;
+        this.soundsTogglers["cell sounds"].checked;
       this.updateSettings();
     };
-    this.soundsTogglers["click sound"].oninput = () => {
+    this.soundsTogglers["cell sounds"].oninput = () => {
       this.soundsTogglers["all sounds"].checked =
         this.soundsTogglers["win sound"].checked ||
-        this.soundsTogglers["click sound"].checked;
+        this.soundsTogglers["cell sounds"].checked;
       this.updateSettings();
     };
   }
@@ -257,7 +257,7 @@ export class Layout extends Base {
     }
     this.soundsTogglers["all sounds"].checked = curSettings["all sounds"];
     this.soundsTogglers["win sound"].checked = curSettings["win sound"];
-    this.soundsTogglers["click sound"].checked = curSettings["click sound"];
+    this.soundsTogglers["cell sounds"].checked = curSettings["cell sounds"];
   }
 
   updateSettings() {
@@ -265,7 +265,7 @@ export class Layout extends Base {
       darkmode: this.darkmodeToggler.checked,
       "all sounds": this.soundsTogglers["all sounds"].checked,
       "win sound": this.soundsTogglers["win sound"].checked,
-      "click sound": this.soundsTogglers["click sound"].checked,
+      "cell sounds": this.soundsTogglers["cell sounds"].checked,
     };
     this.setSettings(newSettings);
   }
