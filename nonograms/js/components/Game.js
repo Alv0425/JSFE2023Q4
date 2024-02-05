@@ -87,6 +87,7 @@ export class Game extends Base {
       selectModal.modalBody.append(formSelect, selectContent);
     };
     this.layout.appButtons["save game"].onclick = () => {
+      if (this.layout.nonogramFieldCont.classList.contains("disabled")) return;
       const set = this.cells.map((row) =>
         row.map((cell) => {
           if (cell.classList.contains("cross")) return 2;
@@ -102,7 +103,6 @@ export class Game extends Base {
         this.openGame(...savedGame);
       }
     };
-    console.log(this.getLocalStorageObject());
   }
 
   setTimer() {
@@ -115,12 +115,22 @@ export class Game extends Base {
     }
   }
 
+  fillCell(cell) {
+    cell.classList.remove('cross');
+    if (!cell.classList.contains('black') && this.firstCellFilled) {
+      this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
+      cell.classList.add('black');
+    }
+    if (cell.classList.contains('black') && !this.firstCellFilled) {
+      this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
+      cell.classList.remove('black');
+    }
+	}
+
   openGame(game, state, timer) {
     this.isTimerRunning = false;
     this.layout.nonogramFieldCont.classList.remove("disabled");
-    this.clearNode(this.layout.nonogramFieldCont);
-    this.clearNode(this.layout.cluesXCont);
-    this.clearNode(this.layout.cluesYCont);
+    this.layout.updateNonogramCont();
     this.layout.gameNameCont.textContent = game.hint;
     this.cells = [];
     this.currentGame = game;
@@ -134,6 +144,7 @@ export class Game extends Base {
     this.interval = null;
     this.cluesX = [];
     this.cluesY = [];
+    if (this.timer > 0) this.setTimer();
     for (let i = 0; i < game.size; i++) {
       const row = [];
       for (let j = 0; j < game.size; j++) {
@@ -154,19 +165,45 @@ export class Game extends Base {
     this.layout.cluesXCont.append(...this.cluesX);
     this.layout.cluesYCont.append(...this.cluesY);
     this.layout.nonogramFieldCont.append(...rows);
-    this.layout.nonogramFieldCont.onclick = (event) => {
-      if (event.target.classList.contains("cell")) {
-        event.target.classList.remove("cross");
-        if (event.target.classList.contains('black')) {
-          this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
-        } else {
-          this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
-        }
-        event.target.classList.toggle("black");
+    this.firstCellFilled = false;
+    this.addListeners([this.layout.nonogramFieldCont],["mousedown"], (e) => {
+      this.mousedown = true;
+			this.firstCellFilled = !e.target.classList.contains('black');
+      if (this.mousedown && e.target.classList.contains('cell') && e.button === 0) {
+        this.fillCell(e.target);
         this.checkGameState();
         this.setTimer();
       }
-    };
+    });
+    this.addListeners([this.layout.nonogramFieldCont],["mouseover"], (e) => {
+      if (this.mousedown && e.target.classList.contains('cell')) {
+        this.fillCell(e.target);
+        this.checkGameState();
+        this.setTimer();
+      }
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont],["mouseup"], () => {
+      this.mousedown = false;
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont],["mouseleave"], () => {
+      this.mousedown = false;
+    });
+
+    // this.layout.nonogramFieldCont.onclick = (event) => {
+    //   if (event.target.classList.contains("cell")) {
+    //     event.target.classList.remove("cross");
+    //     if (event.target.classList.contains('black')) {
+    //       this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
+    //     } else {
+    //       this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
+    //     }
+    //     event.target.classList.toggle("black");
+    //     this.checkGameState();
+    //     this.setTimer();
+    //   }
+    // };
     this.layout.nonogramFieldCont.oncontextmenu = (event) => {
       event.preventDefault();
       if (event.target.classList.contains("cell")) {

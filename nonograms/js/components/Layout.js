@@ -24,6 +24,18 @@ export class Layout extends Base {
     this.body.append(this.header);
   }
 
+  updateNonogramCont(){
+    this.clearNode(this.nonogramContainer);
+    this.cluesXCont = this.createNode("div", ["nonogram__clues-x-cont"]);
+    this.cluesYCont = this.createNode("div", ["nonogram__clues-y-cont"]);
+    this.nonogramFieldCont = this.createNode("div", ["nonogram__field-cont"]);
+    this.nonogramContainer.append(
+      this.cluesXCont,
+      this.cluesYCont,
+      this.nonogramFieldCont
+    )
+  }
+
   renderMain() {
     this.main = this.createNode("main", ["main"]);
     const appContainer = this.createNode("section", ["app"]);
@@ -63,16 +75,16 @@ export class Layout extends Base {
     const appBody = this.createNode("div", ["app__body"]);
     const appGameContainer = this.createNode("div", ["app__game-container"]);
     const appPlayFieldContainer = this.createNode("div", ["nonogram"]);
-    const nonogramContainer = this.createNode("div", ["nonogram__container"]);
+    this.nonogramContainer = this.createNode("div", ["nonogram__container"]);
     this.cluesXCont = this.createNode("div", ["nonogram__clues-x-cont"]);
     this.cluesYCont = this.createNode("div", ["nonogram__clues-y-cont"]);
     this.nonogramFieldCont = this.createNode("div", ["nonogram__field-cont"]);
-    nonogramContainer.append(
+    this.nonogramContainer.append(
       this.cluesXCont,
       this.cluesYCont,
       this.nonogramFieldCont,
     );
-    appPlayFieldContainer.append(nonogramContainer);
+    appPlayFieldContainer.append(this.nonogramContainer);
     const appGameButtons = this.createNode("div", ["app__game-buttons"]);
     ["show solution", "reset game"].forEach((text) => {
       const newButton = this.createNode(
@@ -154,7 +166,7 @@ export class Layout extends Base {
       "h3",
       ["app__settings-title"],
       {},
-      "Dark/light mode:",
+      "Dark mode:",
     );
     this.darkmodeToggler = this.createNode("input", ["input"], {
       type: "checkbox",
