@@ -36,6 +36,12 @@ export class Layout extends Base {
     )
   }
 
+  showHint(hintText) {
+    const hintTextCont = this.createNode('p',['nonogram__hint'], {}, hintText);
+    this.main.append(hintTextCont);
+    setTimeout(() => {hintTextCont.remove()}, 1000);
+  }
+
   renderMain() {
     this.main = this.createNode("main", ["main"]);
     const appContainer = this.createNode("section", ["app"]);

@@ -28,6 +28,7 @@ export class Game extends Base {
     this.layout.appButtons["play random"].onclick = () => {
       const sequenceLength = this.nonograms.length;
       this.openGame(this.nonograms[Math.floor(Math.random() * sequenceLength)]);
+      this.layout.showHint('Random game opened!');
     };
     this.layout.appButtons["show solution"].onclick = () => {
       this.showSolution();
@@ -87,7 +88,10 @@ export class Game extends Base {
       selectModal.modalBody.append(formSelect, selectContent);
     };
     this.layout.appButtons["save game"].onclick = () => {
-      if (this.layout.nonogramFieldCont.classList.contains("disabled")) return;
+      if (this.layout.nonogramFieldCont.classList.contains("disabled")) {
+        this.layout.showHint('Cannot save finished game!');
+        return;
+      }
       const set = this.cells.map((row) =>
         row.map((cell) => {
           if (cell.classList.contains("cross")) return 2;
@@ -96,11 +100,15 @@ export class Game extends Base {
         }),
       );
       this.setSavedGame([this.currentGame, set, this.timer]);
+      this.layout.showHint('Game saved!');
     };
     this.layout.appButtons["open saved"].onclick = () => {
       const savedGame = this.getSavedGame();
       if (savedGame) {
         this.openGame(...savedGame);
+        this.layout.showHint('Saved game opened!');
+      } else {
+        this.layout.showHint('Still have no saved game!');
       }
     };
   }
