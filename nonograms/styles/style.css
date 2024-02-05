@@ -454,6 +454,28 @@ fieldset {
   justify-content: end;
 }
 
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.nonogram__hint {
+  padding: 10px;
+  font-size: 18px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  animation: fadeinout 1s linear forwards;
+}
+
 .dark-mode .app__main {
   background-color: #3C486B;
 }
