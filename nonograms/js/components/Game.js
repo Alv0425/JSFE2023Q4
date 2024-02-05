@@ -87,6 +87,7 @@ export class Game extends Base {
       selectModal.modalBody.append(formSelect, selectContent);
     };
     this.layout.appButtons["save game"].onclick = () => {
+      if (this.layout.nonogramFieldCont.classList.contains("disabled")) return;
       const set = this.cells.map((row) =>
         row.map((cell) => {
           if (cell.classList.contains("cross")) return 2;
@@ -134,6 +135,7 @@ export class Game extends Base {
     this.interval = null;
     this.cluesX = [];
     this.cluesY = [];
+    if (this.timer > 0) this.setTimer();
     for (let i = 0; i < game.size; i++) {
       const row = [];
       for (let j = 0; j < game.size; j++) {
