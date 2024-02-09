@@ -7,6 +7,9 @@
   background-color: $color-background-light;
   border-radius: 100px;
   font-weight: 700;
+  @media (width <= 450px) {
+    min-width: 100px;
+  }
 }
 
 .input {

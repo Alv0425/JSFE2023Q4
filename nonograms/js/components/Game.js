@@ -1,7 +1,7 @@
 import { Layout } from "./Layout.js";
 import { Base } from "./Base.js";
 import { Modal } from "./Modal.js";
-import { Sound  } from "./Sound.js";
+import { Sound } from "./Sound.js";
 export class Game extends Base {
   constructor(nonograms) {
     super();
@@ -28,7 +28,7 @@ export class Game extends Base {
     this.layout.appButtons["play random"].onclick = () => {
       const sequenceLength = this.nonograms.length;
       this.openGame(this.nonograms[Math.floor(Math.random() * sequenceLength)]);
-      this.layout.showHint('Random game opened!');
+      this.layout.showHint("Random game opened!");
     };
     this.layout.appButtons["show solution"].onclick = () => {
       this.showSolution();
@@ -89,7 +89,7 @@ export class Game extends Base {
     };
     this.layout.appButtons["save game"].onclick = () => {
       if (this.layout.nonogramFieldCont.classList.contains("disabled")) {
-        this.layout.showHint('Cannot save finished game!');
+        this.layout.showHint("Cannot save finished game!");
         return;
       }
       const set = this.cells.map((row) =>
@@ -100,15 +100,15 @@ export class Game extends Base {
         }),
       );
       this.setSavedGame([this.currentGame, set, this.timer]);
-      this.layout.showHint('Game saved!');
+      this.layout.showHint("Game saved!");
     };
     this.layout.appButtons["open saved"].onclick = () => {
       const savedGame = this.getSavedGame();
       if (savedGame) {
         this.openGame(...savedGame);
-        this.layout.showHint('Saved game opened!');
+        this.layout.showHint("Saved game opened!");
       } else {
-        this.layout.showHint('Still have no saved game!');
+        this.layout.showHint("Still have no saved game!");
       }
     };
   }
@@ -124,16 +124,94 @@ export class Game extends Base {
   }
 
   fillCell(cell) {
-    cell.classList.remove('cross');
-    if (!cell.classList.contains('black') && this.firstCellFilled) {
+    cell.classList.remove("cross");
+    if (!cell.classList.contains("black") && this.firstCellFilled) {
       this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
-      cell.classList.add('black');
+      cell.classList.add("black");
     }
-    if (cell.classList.contains('black') && !this.firstCellFilled) {
+    if (cell.classList.contains("black") && !this.firstCellFilled) {
       this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
-      cell.classList.remove('black');
+      cell.classList.remove("black");
     }
-	}
+  }
+
+  clearHover() {
+    for (const row of this.cells) {
+      for (let i = 0; i < this.currentGame.size; i++) {
+        row[i].classList.remove("hovered");
+        this.cluesX[i].classList.remove("hovered");
+        this.cluesY[i].classList.remove("hovered");
+      }
+    }
+  }
+
+  hoverCell(cell) {
+    if (cell.id) {
+      this.clearHover();
+      const [yIndex, xIndex] = cell.id.split("-").map((i) => i * 1);
+      for (let i = 0; i < this.currentGame.size; i++) {
+        this.cells[i][xIndex].classList.add("hovered");
+        this.cells[yIndex][i].classList.add("hovered");
+      }
+      this.cluesX[xIndex].classList.add("hovered");
+      this.cluesY[yIndex].classList.add("hovered");
+    }
+  }
+
+  checkClues(cell) {
+    if (cell.id) {
+      const [yIndex, xIndex] = cell.id.split("-").map((i) => i * 1);
+      const curRow = this.cells[yIndex];
+      const curCol = this.cells.map((row) => row[xIndex]);
+      const colarr = this.getLengths(curCol);
+      const rowarr = this.getLengths(curRow);
+      const checkMatch = (arr1, arr2) => {
+        let i = 0;
+        while (i < arr1.length) {
+          if (arr1[i] !== arr2[i]) return false;
+          i += 1;
+        }
+        return true;
+      };
+      if (checkMatch(this.tipsX[xIndex], colarr)) {
+        this.cluesX[xIndex].classList.add("completed");
+      } else {
+        this.cluesX[xIndex].classList.remove("completed");
+      }
+      if (checkMatch(this.tipsY[yIndex], rowarr)) {
+        this.cluesY[yIndex].classList.add("completed");
+      } else {
+        this.cluesY[yIndex].classList.remove("completed");
+      }
+    }
+  }
+
+  getLengths(arr) {
+    let len = 0;
+    return arr.reduce((accum, cell, index) => {
+      if (cell.classList.contains("black")) {
+        len += 1;
+        if (index === this.currentGame.size - 1) accum.push(len);
+      } else if (len !== 0) {
+        accum.push(len);
+        len = 0;
+      }
+      return accum;
+    }, []);
+  }
+
+  drawMiniature() {
+    this.clearNode(this.layout.miniatureCont);
+    const curField = this.cells.map((row) =>
+      row.map((cell) => (cell.classList.contains("black") ? 1 : 0)),
+    );
+    const curgame = {
+      field: curField,
+      size: curField.length,
+    };
+    const mini = this.showMiniature(curgame);
+    this.layout.miniatureCont.append(mini);
+  }
 
   openGame(game, state, timer) {
     this.isTimerRunning = false;
@@ -156,7 +234,9 @@ export class Game extends Base {
     for (let i = 0; i < game.size; i++) {
       const row = [];
       for (let j = 0; j < game.size; j++) {
-        const newCell = this.createNode("button", ["cell"]);
+        const newCell = this.createNode("button", ["cell"], {
+          id: `${i}-${j}`,
+        });
         if (state[i][j] === 1) newCell.classList.add("black");
         if (state[i][j] === 2) newCell.classList.add("cross");
         row.push(newCell);
@@ -174,55 +254,71 @@ export class Game extends Base {
     this.layout.cluesYCont.append(...this.cluesY);
     this.layout.nonogramFieldCont.append(...rows);
     this.firstCellFilled = false;
-    this.addListeners([this.layout.nonogramFieldCont],["mousedown"], (e) => {
+    this.addListeners([this.layout.nonogramFieldCont], ["mousedown"], (e) => {
       this.mousedown = true;
-			this.firstCellFilled = !e.target.classList.contains('black');
-      if (this.mousedown && e.target.classList.contains('cell') && e.button === 0) {
+      this.firstCellFilled = !e.target.classList.contains("black");
+      if (
+        this.mousedown &&
+        e.target.classList.contains("cell") &&
+        e.button === 0
+      ) {
         this.fillCell(e.target);
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(e.target);
         this.setTimer();
       }
     });
-    this.addListeners([this.layout.nonogramFieldCont],["mouseover"], (e) => {
-      if (this.mousedown && e.target.classList.contains('cell')) {
+    this.addListeners([this.layout.nonogramFieldCont], ["mouseover"], (e) => {
+      if (this.mousedown && e.target.classList.contains("cell")) {
         this.fillCell(e.target);
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(e.target);
         this.setTimer();
       }
     });
 
-    this.addListeners([this.layout.nonogramFieldCont],["mouseup"], () => {
+    this.addListeners([this.layout.nonogramFieldCont], ["toucancel"], (e) => {
+      if (e.target.classList.contains("cell")) {
+        console.log(e.target);
+      }
+    });
+    this.addListeners([this.layout.nonogramFieldCont], ["mouseover"], (e) => {
+      if (e.target.classList.contains("cell")) {
+        this.hoverCell(e.target);
+      }
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont], ["mouseleave"], () => {
+      this.clearHover();
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont], ["mouseup"], () => {
       this.mousedown = false;
     });
 
-    this.addListeners([this.layout.nonogramFieldCont],["mouseleave"], () => {
+    this.addListeners([this.layout.nonogramFieldCont], ["mouseleave"], () => {
       this.mousedown = false;
     });
 
-    // this.layout.nonogramFieldCont.onclick = (event) => {
-    //   if (event.target.classList.contains("cell")) {
-    //     event.target.classList.remove("cross");
-    //     if (event.target.classList.contains('black')) {
-    //       this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
-    //     } else {
-    //       this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
-    //     }
-    //     event.target.classList.toggle("black");
-    //     this.checkGameState();
-    //     this.setTimer();
-    //   }
-    // };
     this.layout.nonogramFieldCont.oncontextmenu = (event) => {
       event.preventDefault();
       if (event.target.classList.contains("cell")) {
         event.target.classList.remove("black");
-        if (event.target.classList.contains('cross')) {
-          this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
+        if (event.target.classList.contains("cross")) {
+          this.sounds.playEmpty(
+            !this.layout.soundsTogglers["cell sounds"].checked,
+          );
         } else {
-          this.sounds.playCross(!this.layout.soundsTogglers["cell sounds"].checked);
+          this.sounds.playCross(
+            !this.layout.soundsTogglers["cell sounds"].checked,
+          );
         }
         event.target.classList.toggle("cross");
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(event.target);
         this.setTimer();
       }
     };
@@ -242,20 +338,20 @@ export class Game extends Base {
         return accum;
       }, []);
     };
-    const tipsX = [];
-    const tipsY = [];
+    this.tipsX = [];
+    this.tipsY = [];
     for (let i = 0; i < game.size; i++) {
-      tipsX.push(setClues(curCol(i)));
-      tipsY.push(setClues(curRow(i)));
+      this.tipsX.push(setClues(curCol(i)));
+      this.tipsY.push(setClues(curRow(i)));
     }
-    tipsX.forEach((tip, index) => {
+    this.tipsX.forEach((tip, index) => {
       const tipsSetX = tip.map((num) => {
         return this.createNode("div", ["clue"], {}, `${num}`);
       });
       this.clearNode(this.cluesX[index]);
       this.cluesX[index].append(...tipsSetX);
     });
-    tipsY.forEach((tip, index) => {
+    this.tipsY.forEach((tip, index) => {
       const tipsSetY = tip.map((num) => {
         return this.createNode("div", ["clue"], {}, `${num}`);
       });

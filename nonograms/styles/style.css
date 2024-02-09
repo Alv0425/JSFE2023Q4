@@ -141,6 +141,11 @@ fieldset {
     font-size: 48px;
   }
 }
+@media (width <= 400px) {
+  .header__title {
+    font-size: 32px;
+  }
+}
 
 .main {
   display: flex;
@@ -159,7 +164,7 @@ fieldset {
   margin: 0 auto;
 }
 
-.app__body {
+size .app__body {
   max-width: 700px;
   min-height: 500px;
 }
@@ -172,10 +177,22 @@ fieldset {
   font-weight: 700;
   font-size: 24px;
 }
+@media (width <= 500px) {
+  .app__header {
+    gap: 10px;
+  }
+}
 
 .app__name-game-cont {
   width: 200px;
   text-transform: capitalize;
+}
+@media (width <= 500px) {
+  .app__name-game-cont {
+    width: auto;
+    min-width: 100px;
+    font-size: 24px;
+  }
 }
 
 .app__header-buttons {
@@ -458,7 +475,10 @@ fieldset {
   0% {
     opacity: 0;
   }
-  50% {
+  30% {
+    opacity: 1;
+  }
+  70% {
     opacity: 1;
   }
   100% {
@@ -467,6 +487,7 @@ fieldset {
 }
 .nonogram__hint {
   padding: 10px;
+  background-color: rgba(180, 187, 249, 0.5);
   font-size: 18px;
   position: fixed;
   bottom: 0;
@@ -496,6 +517,9 @@ fieldset {
 }
 .dark-mode .app__score-item {
   border-color: #516284;
+}
+.dark-mode .nonogram__hint {
+  background-color: rgba(60, 72, 107, 0.5);
 }
 
 .footer {
@@ -529,6 +553,11 @@ fieldset {
   background-color: #B4BBF9;
   border-radius: 100px;
   font-weight: 700;
+}
+@media (width <= 450px) {
+  .button {
+    min-width: 100px;
+  }
 }
 
 .input {
@@ -791,6 +820,11 @@ fieldset {
   border-radius: 10px;
   min-width: 410px;
 }
+@media (width <= 500px) {
+  .nonogram {
+    min-width: 250px;
+  }
+}
 
 .dark-mode .nonogram {
   background-color: #676C99;
@@ -804,6 +838,11 @@ fieldset {
   grid-row-gap: 0px;
   min-width: 410px;
   aspect-ratio: 1/1;
+}
+@media (width <= 500px) {
+  .nonogram__container {
+    min-width: 250px;
+  }
 }
 
 .nonogram__clues-x-cont {
@@ -820,6 +859,11 @@ fieldset {
   justify-content: end;
   padding-bottom: 10px;
   border-right: 1px solid #1B1B1E;
+}
+@media (width <= 450px) {
+  .nonogram__clues-x-cont .clues {
+    gap: 10px;
+  }
 }
 .nonogram__clues-x-cont .clues:nth-child(5n+5) {
   border-right: 3px solid #1B1B1E;
@@ -856,9 +900,15 @@ fieldset {
   grid-auto-flow: row;
 }
 
-.clue {
-  color: #1B1B1E;
-  font-size: 14px;
+.nonogram__miniature-cont {
+  grid-area: 1/1/2/2;
+  padding: 10px;
+}
+.nonogram__miniature-cont .modal__miniature {
+  width: 100%;
+}
+.nonogram__miniature-cont .modal__miniature-cell.dark {
+  background-color: #1B1B1E;
 }
 
 .row {
@@ -920,6 +970,54 @@ fieldset {
 
 .disabled {
   pointer-events: none;
+}
+
+.clues {
+  color: #1B1B1E;
+  font-size: 14px;
+}
+@media (width <= 500px) {
+  .clues {
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+@media (width <= 450px) {
+  .clues {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+@media (width <= 380px) {
+  .clues {
+    font-size: 11px;
+    line-height: 10px;
+  }
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .clues.hovered,
+  .cell.hovered {
+    background-color: rgba(27, 27, 30, 0.1);
+  }
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .cell.black.hovered {
+    background-color: rgba(27, 27, 30, 0.9);
+  }
+}
+
+.cell.completed {
+  background-color: rgba(27, 27, 30, 0.05);
+}
+
+.cell.completed.black {
+  background-color: #1B1B1E;
+}
+
+.clues.completed {
+  color: rgba(27, 27, 30, 0.5);
 }
 
 /*# sourceMappingURL=style.css.map */
