@@ -24,7 +24,7 @@ export class Layout extends Base {
     this.body.append(this.header);
   }
 
-  updateNonogramCont(){
+  updateNonogramCont() {
     this.clearNode(this.nonogramContainer);
     this.cluesXCont = this.createNode("div", ["nonogram__clues-x-cont"]);
     this.cluesYCont = this.createNode("div", ["nonogram__clues-y-cont"]);
@@ -34,14 +34,16 @@ export class Layout extends Base {
       this.miniatureCont,
       this.cluesXCont,
       this.cluesYCont,
-      this.nonogramFieldCont
-    )
+      this.nonogramFieldCont,
+    );
   }
 
   showHint(hintText) {
-    const hintTextCont = this.createNode('p',['nonogram__hint'], {}, hintText);
+    const hintTextCont = this.createNode("p", ["nonogram__hint"], {}, hintText);
     this.main.append(hintTextCont);
-    setTimeout(() => {hintTextCont.remove()}, 1000);
+    setTimeout(() => {
+      hintTextCont.remove();
+    }, 1000);
   }
 
   renderMain() {
