@@ -243,6 +243,7 @@ export class Game extends Base {
       }
       this.cells.push(row);
     }
+
     const rows = this.cells.map((row) => {
       const newrow = this.createNode("div", ["row"]);
       this.cluesX.push(this.createNode("div", ["clues"]));
@@ -253,6 +254,7 @@ export class Game extends Base {
     this.layout.cluesXCont.append(...this.cluesX);
     this.layout.cluesYCont.append(...this.cluesY);
     this.layout.nonogramFieldCont.append(...rows);
+    this.drawMiniature();
     this.firstCellFilled = false;
     this.addListeners([this.layout.nonogramFieldCont], ["mousedown"], (e) => {
       this.mousedown = true;
@@ -321,8 +323,7 @@ export class Game extends Base {
         this.checkClues(event.target);
         this.setTimer();
       }
-    };
-
+    };    
     const curRow = (y) => game.field[y];
     const curCol = (x) => game.field.map((row) => row[x]);
     const setClues = (arr) => {
