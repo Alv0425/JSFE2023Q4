@@ -10,3 +10,6 @@ getNonograms().then(() => {
   let game = new Game(nonograms);
   game.renderPlayboard();
 });
+
+
+

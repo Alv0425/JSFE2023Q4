@@ -29,7 +29,9 @@ export class Layout extends Base {
     this.cluesXCont = this.createNode("div", ["nonogram__clues-x-cont"]);
     this.cluesYCont = this.createNode("div", ["nonogram__clues-y-cont"]);
     this.nonogramFieldCont = this.createNode("div", ["nonogram__field-cont"]);
+    this.miniatureCont = this.createNode("div", ["nonogram__miniature-cont"]);
     this.nonogramContainer.append(
+      this.miniatureCont,
       this.cluesXCont,
       this.cluesYCont,
       this.nonogramFieldCont
@@ -84,8 +86,10 @@ export class Layout extends Base {
     this.nonogramContainer = this.createNode("div", ["nonogram__container"]);
     this.cluesXCont = this.createNode("div", ["nonogram__clues-x-cont"]);
     this.cluesYCont = this.createNode("div", ["nonogram__clues-y-cont"]);
+    this.miniatureCont = this.createNode("div", ["nonogram__miniature-cont"]);
     this.nonogramFieldCont = this.createNode("div", ["nonogram__field-cont"]);
     this.nonogramContainer.append(
+      this.miniatureCont,
       this.cluesXCont,
       this.cluesYCont,
       this.nonogramFieldCont,

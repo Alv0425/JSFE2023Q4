@@ -3,6 +3,9 @@
   padding: 10px;
   border-radius: 10px;
   min-width: 410px;
+  @media (width <= 500px) {
+    min-width: 250px;
+  }
 }
 
 .dark-mode {
@@ -19,6 +22,9 @@
   grid-row-gap: 0px;
   min-width: 410px;
   aspect-ratio: 1 / 1;
+  @media (width <= 500px) {
+    min-width: 250px;
+  }
 }
 
 .nonogram__clues-x-cont{
@@ -34,6 +40,9 @@
     justify-content: end;
     padding-bottom: 10px;
     border-right: 1px solid $color-cell-dark;
+    @media (width <= 450px) {
+      gap:10px;      
+    }
   }
 
   .clues:nth-child(5n + 5){
@@ -72,10 +81,20 @@
   grid-auto-flow: row;
 }
 
-.clue {
-  color: $color-cell-dark;
-  font-size: 14px;
+.nonogram__miniature-cont { 
+  grid-area: 1 / 1 / 2 / 2;
+  padding: 10px; 
+  .modal__miniature {
+    width: 100%;
+  }
+  .modal__miniature-cell.dark {
+    background-color: $color-cell-dark;
+  }
 }
+
+// .clue {
+//   font-size: 14px;
+// }
 
 .row{
   display: grid;
@@ -138,3 +157,46 @@
 .disabled {
   pointer-events: none;
 }
+
+.clues{
+  color: $color-cell-dark;
+  font-size: 14px;
+  @media (width <= 500px) {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  @media (width <= 450px) {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  @media (width <= 380px) {
+    font-size: 11px;
+    line-height: 10px;
+  }
+}
+
+.clues.hovered,
+.cell.hovered{
+  @media (pointer:fine) and (hover:hover) {
+    background-color: rgba($color: $color-cell-dark, $alpha: 0.1);
+  }
+}
+
+.cell.black.hovered {
+  @media (pointer:fine) and (hover:hover) {
+    background-color: rgba($color: $color-cell-dark, $alpha: 0.9);
+  }
+}
+
+.cell.completed {
+  background-color: rgba($color: $color-cell-dark, $alpha: 0.05);
+}
+
+.cell.completed.black {
+  background-color: $color-cell-dark;
+}
+
+.clues.completed{
+  color: rgba($color: $color-cell-dark, $alpha: 0.5);
+}
+

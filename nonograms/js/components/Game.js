@@ -135,6 +135,83 @@ export class Game extends Base {
     }
 	}
 
+  clearHover() {
+    for (const row of this.cells) {
+      for (let i = 0; i < this.currentGame.size; i++) {
+        row[i].classList.remove('hovered');
+        this.cluesX[i].classList.remove('hovered');
+        this.cluesY[i].classList.remove('hovered');
+      }
+    }
+  }
+
+  hoverCell(cell) {
+    if (cell.id) {
+      this.clearHover();
+        const [yIndex, xIndex] = cell.id.split('-').map((i) => i * 1);
+        for (let i = 0; i < this.currentGame.size; i++) {
+          this.cells[i][xIndex].classList.add('hovered');
+          this.cells[yIndex][i].classList.add('hovered');
+          
+        }
+        this.cluesX[xIndex].classList.add('hovered');
+        this.cluesY[yIndex].classList.add('hovered');
+    }
+  }
+
+  checkClues(cell) {
+    if (cell.id) {
+      const [yIndex, xIndex] = cell.id.split('-').map((i) => i * 1);
+      const curRow = this.cells[yIndex];
+      const curCol = this.cells.map((row) => row[xIndex]);
+      const colarr = this.getLengths(curCol);
+      const rowarr = this.getLengths(curRow);
+      const checkMatch = (arr1, arr2) => {
+        let i = 0;
+        while (i < arr1.length) {
+          if (arr1[i] !== arr2[i]) return false;
+          i += 1;
+        }
+        return true;
+      }
+      if (checkMatch(this.tipsX[xIndex], colarr)) {
+        this.cluesX[xIndex].classList.add('completed');
+      } else {
+        this.cluesX[xIndex].classList.remove('completed');
+      }
+      if (checkMatch(this.tipsY[yIndex], rowarr)) {
+        this.cluesY[yIndex].classList.add('completed');
+      } else {
+        this.cluesY[yIndex].classList.remove('completed');
+      }
+    }
+  }  
+
+  getLengths(arr) {
+    let len = 0;
+    return arr.reduce((accum, cell, index) => {
+      if (cell.classList.contains('black')) {
+        len += 1;
+        if (index === this.currentGame.size - 1) accum.push(len);
+      } else if (len !== 0) {
+        accum.push(len);
+        len = 0;
+      }
+      return accum;
+    }, []);
+  }
+
+  drawMiniature() {
+    this.clearNode(this.layout.miniatureCont);
+    const curField = this.cells.map((row) => row.map((cell) => cell.classList.contains('black') ? 1 : 0));
+    const curgame = {
+      field: curField,
+      size: curField.length
+    }
+    const mini = this.showMiniature(curgame);
+    this.layout.miniatureCont.append(mini);
+  }
+
   openGame(game, state, timer) {
     this.isTimerRunning = false;
     this.layout.nonogramFieldCont.classList.remove("disabled");
@@ -156,7 +233,7 @@ export class Game extends Base {
     for (let i = 0; i < game.size; i++) {
       const row = [];
       for (let j = 0; j < game.size; j++) {
-        const newCell = this.createNode("button", ["cell"]);
+        const newCell = this.createNode("button", ["cell"], {id: `${i}-${j}`});
         if (state[i][j] === 1) newCell.classList.add("black");
         if (state[i][j] === 2) newCell.classList.add("cross");
         row.push(newCell);
@@ -180,6 +257,8 @@ export class Game extends Base {
       if (this.mousedown && e.target.classList.contains('cell') && e.button === 0) {
         this.fillCell(e.target);
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(e.target);
         this.setTimer();
       }
     });
@@ -187,8 +266,25 @@ export class Game extends Base {
       if (this.mousedown && e.target.classList.contains('cell')) {
         this.fillCell(e.target);
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(e.target);
         this.setTimer();
       }
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont],["toucancel"], (e) => {
+      if (e.target.classList.contains('cell')) {
+        console.log(e.target);
+      }
+    });
+    this.addListeners([this.layout.nonogramFieldCont],["mouseover"],(e) => {
+      if (e.target.classList.contains('cell')) {
+        this.hoverCell(e.target);
+      }
+    });
+
+    this.addListeners([this.layout.nonogramFieldCont],["mouseleave"],() => {
+      this.clearHover();
     });
 
     this.addListeners([this.layout.nonogramFieldCont],["mouseup"], () => {
@@ -199,19 +295,6 @@ export class Game extends Base {
       this.mousedown = false;
     });
 
-    // this.layout.nonogramFieldCont.onclick = (event) => {
-    //   if (event.target.classList.contains("cell")) {
-    //     event.target.classList.remove("cross");
-    //     if (event.target.classList.contains('black')) {
-    //       this.sounds.playEmpty(!this.layout.soundsTogglers["cell sounds"].checked);
-    //     } else {
-    //       this.sounds.playFill(!this.layout.soundsTogglers["cell sounds"].checked);
-    //     }
-    //     event.target.classList.toggle("black");
-    //     this.checkGameState();
-    //     this.setTimer();
-    //   }
-    // };
     this.layout.nonogramFieldCont.oncontextmenu = (event) => {
       event.preventDefault();
       if (event.target.classList.contains("cell")) {
@@ -223,6 +306,8 @@ export class Game extends Base {
         }
         event.target.classList.toggle("cross");
         this.checkGameState();
+        this.drawMiniature();
+        this.checkClues(event.target);
         this.setTimer();
       }
     };
@@ -242,20 +327,20 @@ export class Game extends Base {
         return accum;
       }, []);
     };
-    const tipsX = [];
-    const tipsY = [];
+    this.tipsX = [];
+    this.tipsY = [];
     for (let i = 0; i < game.size; i++) {
-      tipsX.push(setClues(curCol(i)));
-      tipsY.push(setClues(curRow(i)));
+      this.tipsX.push(setClues(curCol(i)));
+      this.tipsY.push(setClues(curRow(i)));
     }
-    tipsX.forEach((tip, index) => {
+    this.tipsX.forEach((tip, index) => {
       const tipsSetX = tip.map((num) => {
         return this.createNode("div", ["clue"], {}, `${num}`);
       });
       this.clearNode(this.cluesX[index]);
       this.cluesX[index].append(...tipsSetX);
     });
-    tipsY.forEach((tip, index) => {
+    this.tipsY.forEach((tip, index) => {
       const tipsSetY = tip.map((num) => {
         return this.createNode("div", ["clue"], {}, `${num}`);
       });
