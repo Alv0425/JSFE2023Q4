@@ -1,5 +1,5 @@
 ### Self-introdaction video:
-[>>>litk to the video<<<](https://youtu.be/mFEZCV-XA80)
+[>link to the video<](https://youtu.be/mFEZCV-XA80)
 
 ### Transcript:
 Hi! My name is Aliona, and this is my self-introdaction video.  I'm from Belarus, and by profession I'm a physicist. I graduated from the Faculty of Physics of the Belarusian State University. And in recent years I worked at a research center developing optical materials and lasers. Last year I faced with a number of life troubles and I decided to change my occupation. During my studies and work, I used Matlab, Matematica,  and some Python libraries for data visualization. So, I already had some coding experience. But the choice of direction was pretty hard for me. Mostly I drew on the inspiration and support of my brother. 
