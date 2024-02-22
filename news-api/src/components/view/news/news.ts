@@ -1,38 +1,55 @@
 import './news.css';
-import { IArticles } from '../../interfaces/interfaces';
+import { IArticles } from '../../auxiliary/interfaces';
+import { isHTMLElement } from '../../auxiliary/checks';
 
-class News {
+interface INews {
+    draw: (data: IArticles[]) => void;
+}
+
+class News implements INews{
     draw(data: IArticles[]) {
         const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
         const fragment = document.createDocumentFragment();
-        const newsItemTemp = document.querySelector('#newsItemTemp') as HTMLTemplateElement;
-
+        
+        // function isHTMLElement(element: unknown) : HTMLElement {
+        //     if (!(element instanceof HTMLElement)) throw new Error(`element is not instance of HTMLElement`);
+        //     return element;
+        // }
+    
+        const newsItemTemp = document.querySelector('#newsItemTemp');
+        if (!(newsItemTemp instanceof HTMLTemplateElement)) throw new Error(`newsItemTemp is not HTMLTemplateElement`);
         news.forEach((item, idx) => {
-            const newsClone = newsItemTemp.content.cloneNode(true) as HTMLElement;
+            const newsClone = newsItemTemp.content.cloneNode(true);
+            if (!(newsClone instanceof DocumentFragment)) throw new Error('newsClone in not instance of DocumentFragment');
 
-            if (idx % 2) (newsClone.querySelector('.news__item') as HTMLElement).classList.add('alt');
+            const newsItem = isHTMLElement(newsClone.querySelector('.news__item'));
+            const newsMetaPhoto = isHTMLElement(newsClone.querySelector('.news__meta-photo'));
+            const newsMetaAuthor = isHTMLElement(newsClone.querySelector('.news__meta-author'));
+            const newsMetaDate = isHTMLElement(newsClone.querySelector('.news__meta-date'));
+            const newsDescrTitle = isHTMLElement(newsClone.querySelector('.news__description-title'));
+            const newsDescrSource = isHTMLElement(newsClone.querySelector('.news__description-source'));
+            const newsDescrCont = isHTMLElement(newsClone.querySelector('.news__description-content'));
+            const newsReadMore = isHTMLElement(newsClone.querySelector('.news__read-more a'))
 
-            (newsClone.querySelector('.news__meta-photo') as HTMLElement).style.backgroundImage = `url(${
-                item.urlToImage || 'img/news_placeholder.jpg'
-            })`;
-            (newsClone.querySelector('.news__meta-author') as HTMLElement).textContent =
-                item.author || item.source.name;
-            (newsClone.querySelector('.news__meta-date') as HTMLElement).textContent = item.publishedAt
+            if (idx % 2) newsItem.classList.add('alt');      
+            newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+            newsMetaAuthor.textContent = item.author || item.source.name;
+            newsMetaDate.textContent = item.publishedAt
                 .slice(0, 10)
                 .split('-')
                 .reverse()
                 .join('-');
-
-            (newsClone.querySelector('.news__description-title') as HTMLElement).textContent = item.title;
-            (newsClone.querySelector('.news__description-source') as HTMLElement).textContent = item.source.name;
-            (newsClone.querySelector('.news__description-content') as HTMLElement).textContent = item.description;
-            (newsClone.querySelector('.news__read-more a') as HTMLElement).setAttribute('href', item.url);
+            newsDescrTitle.textContent = item.title;
+            newsDescrSource.textContent = item.source.name;
+            newsDescrCont.textContent = item.description;
+            newsReadMore.setAttribute('href', item.url);
 
             fragment.append(newsClone);
         });
 
-        (document.querySelector('.news') as HTMLElement).innerHTML = '';
-        (document.querySelector('.news') as HTMLElement).appendChild(fragment);
+        const newsElement = isHTMLElement(document.querySelector('.news'));
+        newsElement.innerHTML = '';
+        newsElement.appendChild(fragment);
     }
 }
 
