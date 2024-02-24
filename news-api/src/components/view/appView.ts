@@ -1,8 +1,13 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { ResponseSources, ResponceNews } from '../auxiliary/interfaces';
+import { ResponseSources, ResponseNews } from '../auxiliary/interfaces';
 
-export class AppView {
+interface AppViewInterface {
+    drawNews: (data: ResponseNews) => void;
+    drawSources: (data: ResponseSources) => void;
+}
+
+export class AppView implements AppViewInterface{
     private news: News;
     private sources: Sources;
 
@@ -11,12 +16,12 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    drawNews(data: ResponceNews | undefined) {
+    public drawNews(data: ResponseNews) : void {
         const values = data?.articles ? data?.articles : [];
         this.news.draw(values);
     }
 
-    drawSources(data: ResponseSources | undefined) {
+    public drawSources(data: ResponseSources) : void {
         const values = data?.sources ? data?.sources : [];
         this.sources.draw(values);
     }
