@@ -14,12 +14,22 @@ class AppController extends AppLoader {
         );
     }
 
+    public getRandomNews(callback: CallbackOfType<ResponseNews | ResponseSources>) {
+        super.getResp(
+            {
+                endpoint: Endpoint.everything,
+                options: {},
+            },
+            callback
+        );
+    }
+
     public getNews(e: Event, callback: CallbackOfType<ResponseNews | ResponseSources>) {
         let target = e.target;
         const newsContainer = getElementOfType(HTMLElement, e.currentTarget);
         while (target !== newsContainer) {
             if (getElementOfType(HTMLElement, target).classList.contains('source__item')) {
-                const sourceId = getElementOfType(HTMLElement,target).getAttribute('data-source-id');
+                const sourceId = getElementOfType(HTMLElement, target).getAttribute('data-source-id');
                 if (newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId ?? '');
                     super.getResp(

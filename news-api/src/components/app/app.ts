@@ -13,6 +13,9 @@ class App {
 
     start() {
         const sourcesElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
+        this.controller.getRandomNews((data) => {
+            if (isResponseNews(data)) this.view.drawNews(data);
+        });
         sourcesElement.addEventListener('click', (e) =>
             this.controller.getNews(e, (data) => {
                 if (isResponseNews(data)) this.view.drawNews(data);
