@@ -7,7 +7,7 @@ interface AppViewInterface {
     drawSources: (data: ResponseSources) => void;
 }
 
-export class AppView implements AppViewInterface{
+export class AppView implements AppViewInterface {
     private news: News;
     private sources: Sources;
 
@@ -16,12 +16,12 @@ export class AppView implements AppViewInterface{
         this.sources = new Sources();
     }
 
-    public drawNews(data: ResponseNews) : void {
+    public drawNews(data: ResponseNews): void {
         const values = data?.articles ? data?.articles : [];
         this.news.draw(values);
     }
 
-    public drawSources(data: ResponseSources) : void {
+    public drawSources(data: ResponseSources): void {
         const values = data?.sources ? data?.sources : [];
         this.sources.draw(values);
     }
