@@ -1,19 +1,19 @@
 import { SortByOptions } from './enums';
 
 export interface Articles {
-    id: string;
-    name: string;
+    id: string | null;
+    name: string | null;
     source: {
         id: string | null;
-        name: string;
+        name: string | null;
     };
-    author: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string;
-    publishedAt: string;
-    content: string;
+    author: string | null;
+    title: string | null;
+    description: string | null;
+    url: string | null;
+    urlToImage: string | null;
+    publishedAt: string | null;
+    content: string | null;
 }
 
 export interface Source {
@@ -30,11 +30,15 @@ export interface ResponseNews {
     status: 'ok' | 'error';
     totalResults: number;
     articles: Articles[];
+    message?: string;
+    code?: string;
 }
 
 export interface ResponseSources {
     status: 'ok' | 'error';
     sources: Source[];
+    message?: string;
+    code?: string;
 }
 
 export interface RequestApiKey {
@@ -65,14 +69,3 @@ export type CallbackDefault = () => void;
 export interface TypeOfAncestor<T> {
     new (...params: unknown[]): T;
 }
-
-// export interface MyProcessEnv {
-//   API_URL: string;
-//   API_KEY: string;
-// }
-
-// declare global {
-//   namespace NodeJS {
-//     interface ProcessEnv extends MyProcessEnv {}
-//   }
-// }

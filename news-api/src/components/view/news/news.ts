@@ -26,11 +26,13 @@ class News implements NewsInterface {
             if (idx % 2) newsItem.classList.add('alt');
             newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
             newsMetaAuthor.textContent = item.author || item.source.name;
-            newsMetaDate.textContent = item.publishedAt.slice(0, 10).split('-').reverse().join('-');
+            newsMetaDate.textContent = item.publishedAt
+                ? item.publishedAt.slice(0, 10).split('-').reverse().join('-')
+                : '';
             newsDescrTitle.textContent = item.title;
             newsDescrSource.textContent = item.source.name;
-            newsDescrCont.textContent = item.description;
-            newsReadMore.setAttribute('href', item.url);
+            newsDescrCont.textContent = item.description || '';
+            newsReadMore.setAttribute('href', item.url || '#');
             fragment.append(newsClone);
         });
 
