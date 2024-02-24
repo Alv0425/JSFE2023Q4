@@ -26,7 +26,7 @@ export interface Source {
     country: string;
 }
 
-export interface ResponceNews {
+export interface ResponseNews {
     status: 'ok' | 'error';
     totalResults: number;
     articles: Articles[];
@@ -44,7 +44,7 @@ export interface RequestApiKey {
 export interface RequestOptions {
     q?: string;
     searchin?: string;
-    sources?: string;
+    sources?: string | null;
     domains?: string;
     excludeDomains?: string;
     from?: string;
@@ -55,10 +55,24 @@ export interface RequestOptions {
     page?: number;
 }
 
-export type SomeResponse = ResponceNews | ResponseSources;
+export type SomeResponse = ResponseNews | ResponseSources;
 
-export type CallbackOfType<T> = (param?: T) => void;
+export type CallbackOfType<T> = (param: T) => void;
+export type CallbackNews = CallbackOfType<ResponseNews>;
+export type CallbackSources = CallbackOfType<ResponseSources>;
+export type CallbackDefault = () => void;
 
 export interface TypeOfAncestor<T> {
     new (...params: unknown[]): T;
 }
+
+// export interface MyProcessEnv {
+//   API_URL: string;
+//   API_KEY: string;
+// }
+
+// declare global {
+//   namespace NodeJS {
+//     interface ProcessEnv extends MyProcessEnv {}
+//   }
+// }
