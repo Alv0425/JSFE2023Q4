@@ -59,6 +59,8 @@ class Loader implements LoaderInterface {
             const fetchResp = await fetch(this.makeUrl(options, endpoint), { method });
             this.errorHandler(fetchResp);
             const data = (await fetchResp.json()) as ResponseNews | ResponseSources;
+            if (data.status === 'error')
+                throw new Error(`Error code: ${data.code ?? ''}. Message: ${data.message ?? ''}`);
             callback(data);
         } catch (err) {
             console.error(err);

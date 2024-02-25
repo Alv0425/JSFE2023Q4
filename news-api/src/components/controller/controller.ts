@@ -32,6 +32,7 @@ class AppController extends AppLoader {
                 const sourceId = getElementOfType(HTMLElement, target).getAttribute('data-source-id');
                 if (newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId ?? '');
+                    getElementOfType(HTMLElement, target).focus();
                     super.getResp(
                         {
                             endpoint: Endpoint.everything,

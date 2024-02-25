@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 const EslintPlug = require('eslint-webpack-plugin');
+//const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index'),
@@ -17,6 +18,10 @@ const baseConfig = {
             {
                 test: /\.ts$/i,
                 use: 'ts-loader',
+            },
+            {
+                test: /\.(png|jpg|svg|gif|ico)$/,
+                type: 'asset/resource',
             },
         ],
     },
