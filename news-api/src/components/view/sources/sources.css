@@ -105,6 +105,10 @@
     transition: 0.3s;
 }
 
+.source__item_active{
+    box-shadow: 0 0 4px 0px #30c5ff;
+}
+
 .source__item:hover::before {
     transform: translateX(0);
 }
