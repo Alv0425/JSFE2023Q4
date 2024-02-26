@@ -1,7 +1,7 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 import { getElementOfType, isResponseNews, isResponseSources } from '../auxiliary/helpers';
-import { RequestOptions } from '../auxiliary/interfaces';
+import { RequestOptions, SearchObj } from '../auxiliary/interfaces';
 
 class App {
     private controller: AppController;
@@ -13,14 +13,14 @@ class App {
     }
 
     start() {
-        const sourcesElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
-        const searchField = this.view.drawSearchField();
-        const searchForm = getElementOfType(HTMLFormElement, searchField.search);
+        const sourcesElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
+        const searchField: SearchObj = this.view.drawSearchField();
+        const searchForm: HTMLFormElement = getElementOfType(HTMLFormElement, searchField.search);
         searchField.sourceLabel.textContent = 'all sources';
-        const sourceReset = getElementOfType(HTMLButtonElement, searchField.sourceReset);
+        const sourceReset: HTMLButtonElement = getElementOfType(HTMLButtonElement, searchField.sourceReset);
         sourceReset.onclick = () => {
             sourceReset.classList.remove('show');
-            const curSouce = sourcesElement.getAttribute('data-source');
+            const curSouce: string | null = sourcesElement.getAttribute('data-source');
             searchField.sourceLabel.textContent = 'all sources';
             if (curSouce) {
                 console.log(document.getElementById(curSouce));
@@ -29,7 +29,7 @@ class App {
                 );
             }
             sourcesElement.setAttribute('data-source', '');
-            const curValue = getElementOfType(HTMLInputElement, searchField.searchInput).value;
+            const curValue: string = getElementOfType(HTMLInputElement, searchField.searchInput).value;
             this.controller.getCustomNews({ q: curValue || 'cats' }, (data) => {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
@@ -37,9 +37,9 @@ class App {
         this.view.drawFilter();
         searchForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const curValue = getElementOfType(HTMLInputElement, searchField.searchInput).value;
+            const curValue: string = getElementOfType(HTMLInputElement, searchField.searchInput).value;
             const reqOptions: RequestOptions = {};
-            const curSouce = sourcesElement.getAttribute('data-source');
+            const curSouce: string | null = sourcesElement.getAttribute('data-source');
             if (curValue) reqOptions.q = curValue;
             if (curSouce) reqOptions.sources = curSouce;
             if (!curSouce && !curValue) reqOptions.q = 'cats';

@@ -2,12 +2,12 @@ import News from './news/news';
 import Sources from './sources/sources';
 import SearchBar from './searchbar/searchbar';
 import Filter from './filter/filter';
-import { ResponseSources, ResponseNews, FilterObj } from '../auxiliary/interfaces';
+import { ResponseSources, ResponseNews, FilterObj, SearchObj } from '../auxiliary/interfaces';
 
 interface AppViewInterface {
     drawNews: (data: ResponseNews) => void;
     drawSources: (data: ResponseSources) => void;
-    drawSearchField: () => Record<string, HTMLElement>;
+    drawSearchField: () => SearchObj;
     drawFilter: () => FilterObj;
 }
 
@@ -34,13 +34,13 @@ export class AppView implements AppViewInterface {
         this.sources.draw(values);
     }
 
-    public drawSearchField(): Record<string, HTMLElement> {
+    public drawSearchField(): SearchObj {
         const searchObj = this.searchBar.drawSearchBar();
         return searchObj;
     }
 
     public drawFilter(): FilterObj {
-        const filterObj = this.filter.drawFilter();
+        const filterObj: FilterObj = this.filter.drawFilter();
         return filterObj;
     }
 }

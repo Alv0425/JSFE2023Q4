@@ -30,19 +30,3 @@ export enum Category {
     sports,
     technology,
 }
-
-export enum ReqOptionsKeys {
-    apiKey,
-    q,
-    searchin,
-    sources,
-    domains,
-    excludeDomains,
-    from,
-    to,
-    language,
-    sortBy,
-    pageSize,
-    page,
-    country,
-}

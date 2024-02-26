@@ -7,21 +7,45 @@ interface NewsInterface {
 }
 
 class News implements NewsInterface {
-    draw(data: Articles[]) {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
-        const fragment = document.createDocumentFragment();
-        const newsItemTemp = getElementOfType(HTMLTemplateElement, document.querySelector('#newsItemTemp'));
+    public draw(data: Articles[]) {
+        const news: Articles[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+        const fragment: DocumentFragment = document.createDocumentFragment();
+        const newsItemTemp: HTMLTemplateElement = getElementOfType(
+            HTMLTemplateElement,
+            document.querySelector('#newsItemTemp')
+        );
         news.forEach((item, idx) => {
-            const documFragment = getElementOfType(DocumentFragment, newsItemTemp.content);
-            const newsClone = getElementOfType(DocumentFragment, documFragment.cloneNode(true));
-            const newsItem = getElementOfType(HTMLElement, newsClone.querySelector('.news__item'));
-            const newsMetaPhoto = getElementOfType(HTMLElement, newsClone.querySelector('.news__meta-photo'));
-            const newsMetaAuthor = getElementOfType(HTMLElement, newsClone.querySelector('.news__meta-author'));
-            const newsMetaDate = getElementOfType(HTMLElement, newsClone.querySelector('.news__meta-date'));
-            const newsDescrTitle = getElementOfType(HTMLElement, newsClone.querySelector('.news__description-title'));
-            const newsDescrSource = getElementOfType(HTMLElement, newsClone.querySelector('.news__description-source'));
-            const newsDescrCont = getElementOfType(HTMLElement, newsClone.querySelector('.news__description-content'));
-            const newsReadMore = getElementOfType(HTMLElement, newsClone.querySelector('.news__read-more a'));
+            const documFragment: DocumentFragment = getElementOfType(DocumentFragment, newsItemTemp.content);
+            const newsClone: DocumentFragment = getElementOfType(DocumentFragment, documFragment.cloneNode(true));
+            const newsItem: HTMLElement = getElementOfType(HTMLElement, newsClone.querySelector('.news__item'));
+            const newsMetaPhoto: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__meta-photo')
+            );
+            const newsMetaAuthor: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__meta-author')
+            );
+            const newsMetaDate: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__meta-date')
+            );
+            const newsDescrTitle: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__description-title')
+            );
+            const newsDescrSource: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__description-source')
+            );
+            const newsDescrCont: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__description-content')
+            );
+            const newsReadMore: HTMLElement = getElementOfType(
+                HTMLElement,
+                newsClone.querySelector('.news__read-more a')
+            );
 
             if (idx % 2) newsItem.classList.add('alt');
             newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || './assets/placeholder.png'})`;
@@ -36,7 +60,7 @@ class News implements NewsInterface {
             fragment.append(newsClone);
         });
 
-        const newsElement = getElementOfType(HTMLElement, document.querySelector('.news'));
+        const newsElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.news'));
         newsElement.innerHTML = '';
         newsElement.appendChild(fragment);
     }

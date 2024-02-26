@@ -65,6 +65,13 @@ export interface FilterObj {
     inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;
 }
 
+export interface SearchObj {
+    search: HTMLElement;
+    searchInput: HTMLInputElement;
+    sourceReset: HTMLElement;
+    sourceLabel: HTMLElement;
+}
+
 export type SomeResponse = ResponseNews | ResponseSources;
 
 export type CallbackOfType<T> = (param: T) => void;
