@@ -1,7 +1,10 @@
 export enum Endpoint {
     everything = 'everything',
     sources = 'sources',
+    topheadlines = 'top-headlines',
 }
+
+export type EndpointType = `${Endpoint}`;
 
 export enum RespStatusCode {
     OK = 200,
@@ -31,4 +34,5 @@ export enum ReqOptionsKeys {
     sortBy,
     pageSize,
     page,
+    country,
 }

@@ -57,6 +57,7 @@ export interface RequestOptions {
     sortBy?: keyof typeof SortByOptions;
     pageSize?: number;
     page?: number;
+    country?: string;
 }
 
 export type SomeResponse = ResponseNews | ResponseSources;
