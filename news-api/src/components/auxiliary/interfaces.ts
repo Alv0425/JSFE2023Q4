@@ -1,4 +1,4 @@
-import { SortByOptions } from './enums';
+import { SortByOptions, Category } from './enums';
 
 export interface Articles {
     id: string | null;
@@ -21,7 +21,7 @@ export interface Source {
     name: string;
     description: string;
     url: string;
-    category: string;
+    category: keyof typeof Category;
     language: string;
     country: string;
 }
@@ -62,7 +62,7 @@ export interface RequestOptions {
 
 export interface FilterObj {
     filter: HTMLFormElement;
-    inputs: [HTMLInputElement, HTMLLabelElement][];
+    inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;
 }
 
 export type SomeResponse = ResponseNews | ResponseSources;

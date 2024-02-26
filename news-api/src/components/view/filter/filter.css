@@ -1,16 +1,17 @@
 .filter{
   display: flex;
   max-width: 1200px;
-  justify-content: center;
+  justify-content: start;
   flex-wrap: wrap;
   gap:10px;
-  padding: 10px;
+  padding: 10px 10px 20px 40px;
   margin: 0 auto;
 }
 
 @media (width <= 748px) {
   .filter{
     max-width: 500px;
+    justify-content: center;
   }
 }
 

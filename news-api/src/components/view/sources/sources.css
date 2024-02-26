@@ -78,13 +78,9 @@
     border-radius: 30px;
 }
 
-/* .source__item:nth-last-child(-n+10) {
-    flex-grow: 2;
+.source__item_hidden{
+    display: none;
 }
-
-.source__item:last-child{
-    margin-right: auto;
-} */
 
 .source__item_active,
 .source__item {
@@ -116,14 +112,6 @@
 .source__item_active::before {
     transform: translateX(0);
 }
-
-/* .source__item:hover,
-.source__item:focus {
-    border-color: #3fcc59;
-    color: #69db7e;
-    box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
-    transform: translateY(-0.25em);
-} */
 
 .source__item-name {
     font-weight: 400;
