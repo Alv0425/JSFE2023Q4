@@ -5,6 +5,10 @@ import { createNode, getElementOfType } from '../../auxiliary/helpers';
 class Layout {
     drawSearchBar() {
         const search: HTMLElement = createNode('form', ['search']) as HTMLFormElement;
+        const sourceLabelCont = createNode('div', ['search__source']);
+        const sourceReset = createNode('button', ['search__source-button'], { type: 'button' });
+        const sourceLabel = createNode('h2', ['search__source-label']);
+        sourceLabelCont.append(sourceReset, sourceLabel);
         const searchContainer: HTMLElement = createNode('div', ['search__container']);
         const searchField: HTMLElement = createNode('div', ['search__field']);
         const searchIcon: HTMLElement = createNode('button', ['search__icon'], { type: 'submit' });
@@ -14,10 +18,9 @@ class Layout {
             autocomplete: 'off',
             placeholder: 'search...',
         }) as HTMLInputElement;
-        const searchButton: HTMLButtonElement = createNode('button', ['search__cross'], {
-            disabled: 'true',
-        }) as HTMLButtonElement;
-        search.append(searchContainer);
+        const searchButton: HTMLButtonElement = createNode('button', ['search__cross']) as HTMLButtonElement;
+        searchButton.disabled = true;
+        search.append(sourceLabelCont, searchContainer);
         searchContainer.append(searchField);
         searchField.append(searchIcon, searchInput, searchButton);
         const sourcesCont = getElementOfType(HTMLElement, document.querySelector('.scroll-container'));
@@ -41,7 +44,8 @@ class Layout {
         return {
             search: search,
             searchInput: searchInput,
-            searchButton: searchButton,
+            sourceReset: sourceReset,
+            sourceLabel: sourceLabel,
         };
     }
 }

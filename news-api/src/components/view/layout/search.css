@@ -1,6 +1,7 @@
 .search{
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   background-color: var(--black);
   justify-content: center;
 }
@@ -9,7 +10,7 @@
   padding: 20px;
   display: flex;
   gap:15px;
-  justify-content: center;
+  justify-content: start;
 }
 
 .search__field{
@@ -32,6 +33,8 @@
   font-size: 17px;
   border: none;
   background-color: transparent;
+  width: 100%;
+  max-width: 500px;
 }
 
 .search__input:focus{
@@ -72,6 +75,37 @@
   font-size: 17px;
   border: none;
   pointer-events: none;
+}
+
+.search__source{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 10px;
+}
+
+.search__source-button{
+  display: none;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../../../assets/circle-xmark-solid.svg);
+}
+
+.search__source-button.show{
+  display: block;
+}
+
+@media (width <= 648px) {
+  .search{
+    grid-template-columns: 1fr;
+  }
+
+  .search__container,
+  .search__source{
+    justify-content: center;
+  }
 }
 
 input[type="search"]::-webkit-search-decoration,

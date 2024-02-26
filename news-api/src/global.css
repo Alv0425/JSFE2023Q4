@@ -8,6 +8,10 @@ body {
     font-family: Montserrat, sans-serif;
 }
 
+button{
+    cursor: pointer;
+}
+
 /* *{
     border: 1px red solid;
 } */

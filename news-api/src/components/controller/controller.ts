@@ -24,7 +24,7 @@ class AppController extends AppLoader {
         );
     }
 
-    public getNews(e: Event, callback: CallbackOfType<ResponseNews | ResponseSources>) {
+    public getNews(e: Event, keyword: string, callback: CallbackOfType<ResponseNews | ResponseSources>) {
         let target: EventTarget | null = e.target;
         const newsContainer: HTMLElement = getElementOfType(HTMLElement, e.currentTarget);
         while (target !== newsContainer) {
@@ -42,21 +42,16 @@ class AppController extends AppLoader {
                     getElementOfType(HTMLElement, target).classList.remove('source__item_active');
                 }
                 let reqOptions: RequestOptions = {
-                    q: 'cats',
+                    q: keyword || 'cats',
                 };
                 if (curSourceId !== sourceId) {
                     reqOptions = {
                         sources: sourceId,
                     };
+                    if (keyword) reqOptions.q = keyword;
                     newsContainer.setAttribute('data-source', sourceId ?? '');
                 }
-                super.getResp(
-                    {
-                        endpoint: Endpoint.everything,
-                        options: reqOptions,
-                    },
-                    callback
-                );
+                this.getCustomNews(reqOptions, callback);
                 return;
             }
             target = getElementOfType(HTMLElement, target).parentNode;
