@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -31,20 +31,20 @@ header h1 {
     gap: 20px;
 }
 .footer .copyright {
-    color:rgba(255,255,255,0.2);
+    color: rgba(255, 255, 255, 0.2);
     text-align: center;
 }
 .footer .year {
-    color:rgba(255,255,255,0.2);
+    color: rgba(255, 255, 255, 0.2);
     text-align: center;
 }
 .footer .copyright a {
-    color:#fff;
+    color: #fff;
     opacity: 0.3;
     text-decoration: none;
     transition: 1s;
 }
-@media (hover:hover) and (pointer:fine) {
+@media (hover: hover) and (pointer: fine) {
     .footer .copyright a:hover {
         opacity: 0.7;
     }
@@ -54,17 +54,16 @@ header h1 {
     content: '©';
 }
 
-.footer .github{
+.footer .github {
     position: relative;
     margin-right: 40px;
-    color:#fff;
+    color: #fff;
     text-decoration: none;
     opacity: 0.3;
     transition: 1s;
 }
 
-
-.footer .github::after{
+.footer .github::after {
     position: absolute;
     content: '';
     top: -5px;
@@ -75,9 +74,9 @@ header h1 {
     background-size: contain;
     filter: grayscale(100) brightness(3);
     transition: 1s;
-  }
+}
 
-  .footer .rss-link{
+.footer .rss-link {
     display: block;
     width: 70px;
     height: 30px;
@@ -88,12 +87,11 @@ header h1 {
     background-size: contain;
     filter: grayscale(100) brightness(3);
     transition: 1s;
-  }
+}
 
-  @media (hover:hover) and (pointer:fine)  {
+@media (hover: hover) and (pointer: fine) {
     .footer .github:hover,
-    .footer .rss-link:hover{
+    .footer .rss-link:hover {
         opacity: 0.7;
     }
-    
 }
