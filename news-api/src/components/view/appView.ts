@@ -1,6 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import Layout from './layout/layout';
+import SearchBar from './layout/searchbar';
 import { ResponseSources, ResponseNews } from '../auxiliary/interfaces';
 
 interface AppViewInterface {
@@ -12,12 +12,12 @@ interface AppViewInterface {
 export class AppView implements AppViewInterface {
     private news: News;
     private sources: Sources;
-    private layout: Layout;
+    private searchBar: SearchBar;
 
     constructor() {
         this.news = new News();
         this.sources = new Sources();
-        this.layout = new Layout();
+        this.searchBar = new SearchBar();
     }
 
     public drawNews(data: ResponseNews): void {
@@ -31,7 +31,7 @@ export class AppView implements AppViewInterface {
     }
 
     public drawSearchField(): Record<string, HTMLElement> {
-        const obj = this.layout.drawSearchBar();
+        const obj = this.searchBar.drawSearchBar();
         return obj;
     }
 }
