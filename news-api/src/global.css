@@ -6,6 +6,9 @@ body {
     color: #fff;
     background: #17181c;
     font-family: Montserrat, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 button{
@@ -34,6 +37,7 @@ header h1 {
     align-items: center;
     justify-content: center;
     gap: 20px;
+    margin-top: auto;
 }
 .footer .copyright {
     color: rgba(255, 255, 255, 0.2);
