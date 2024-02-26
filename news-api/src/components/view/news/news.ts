@@ -1,6 +1,6 @@
 import './news.css';
 import { Articles } from '../../auxiliary/interfaces';
-import { getElementOfType } from '../../auxiliary/checks';
+import { getElementOfType } from '../../auxiliary/helpers';
 
 interface NewsInterface {
     draw: (data: Articles[]) => void;
@@ -24,7 +24,7 @@ class News implements NewsInterface {
             const newsReadMore = getElementOfType(HTMLElement, newsClone.querySelector('.news__read-more a'));
 
             if (idx % 2) newsItem.classList.add('alt');
-            newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
+            newsMetaPhoto.style.backgroundImage = `url(${item.urlToImage || './assets/placeholder.png'})`;
             newsMetaAuthor.textContent = item.author || item.source.name;
             newsMetaDate.textContent = item.publishedAt
                 ? item.publishedAt.slice(0, 10).split('-').reverse().join('-')
