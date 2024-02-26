@@ -64,6 +64,7 @@ class App {
                 }
             } else {
                 searchField.sourceLabel.textContent = 'all sources';
+                sourceReset.classList.remove('show');
             }
         });
         this.controller.getSources((data) => {
