@@ -18,7 +18,6 @@ class App {
         const searchForm = getElementOfType(HTMLFormElement, searchField.search);
         searchField.sourceLabel.textContent = 'all sources';
         const sourceReset = getElementOfType(HTMLButtonElement, searchField.sourceReset);
-        console.log(sourceReset);
         sourceReset.onclick = () => {
             sourceReset.classList.remove('show');
             const curSouce = sourcesElement.getAttribute('data-source');
@@ -35,6 +34,7 @@ class App {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
         };
+        this.view.drawFilter();
         searchForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const curValue = getElementOfType(HTMLInputElement, searchField.searchInput).value;

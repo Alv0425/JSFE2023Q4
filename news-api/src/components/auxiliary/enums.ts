@@ -16,9 +16,19 @@ export enum RespStatusCode {
 }
 
 export enum SortByOptions {
-    relevancy = 'relevancy',
-    popularity = 'popularity',
-    publishedAt = 'publishedAt',
+    relevancy,
+    popularity,
+    publishedAt,
+}
+
+export enum Category {
+    business,
+    entertainment,
+    general,
+    health,
+    science,
+    sports,
+    technology,
 }
 
 export enum ReqOptionsKeys {

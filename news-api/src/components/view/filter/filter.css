@@ -1,0 +1,44 @@
+.filter{
+  display: flex;
+  max-width: 1200px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap:10px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+@media (width <= 748px) {
+  .filter{
+    max-width: 500px;
+  }
+}
+
+.filter__input{
+  display: none;
+}
+
+.filter__label{
+    display: flex;
+    justify-content: center;
+    background: none;
+    border: 2px solid #30c5ff;
+    font: inherit;
+    line-height: 1;
+    padding: 0.3em 0.5em;
+    color: #70d6ff;
+    transition: 0.25s;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+#business:checked ~ .filter__label[for="business"],
+#entertainment:checked ~ .filter__label[for="entertainment"],
+#general:checked ~ .filter__label[for="general"],
+#health:checked ~ .filter__label[for="health"],
+#science:checked ~ .filter__label[for="science"],
+#sports:checked ~ .filter__label[for="sports"],
+#technology:checked ~ .filter__label[for="technology"]{
+  color: black;
+  background-color: #30c5ff;
+}

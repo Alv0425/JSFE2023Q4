@@ -60,6 +60,11 @@ export interface RequestOptions {
     country?: string;
 }
 
+export interface FilterObj {
+    filter: HTMLFormElement;
+    inputs: [HTMLInputElement, HTMLLabelElement][];
+}
+
 export type SomeResponse = ResponseNews | ResponseSources;
 
 export type CallbackOfType<T> = (param: T) => void;

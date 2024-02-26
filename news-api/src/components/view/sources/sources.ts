@@ -15,11 +15,12 @@ class Sources implements SourcesInterface {
         data.forEach((item) => {
             const sourceClone = sourceItemTemp.content.cloneNode(true);
             if (!(sourceClone instanceof DocumentFragment))
-                throw new Error('sourceClone in not instance of DocumentFragment');
+                throw new Error('sourceClone is not instance of DocumentFragment');
             const sourceItemName = getElementOfType(HTMLElement, sourceClone.querySelector('.source__item-name'));
             const sourceItem = getElementOfType(HTMLElement, sourceClone.querySelector('.source__item'));
             sourceItemName.textContent = item.name;
             sourceItem.setAttribute('data-source-id', item.id);
+            sourceItem.setAttribute('data-category', item.category);
             sourceItem.setAttribute('id', item.id);
             fragment.append(sourceClone);
         });
