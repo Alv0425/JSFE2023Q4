@@ -2,7 +2,7 @@
  
 ## Badges Overview
 
-Here is a collection of badges I earned from completing Microsoft Learn's TypeScript modules:
+I have successfully completed Microsoft Learn's TypeScript modules, and as a result, I have earned these badges: 🏆
 
 1. [**Getting Started with TypeScript**: <img alt="⭐Badge⭐" src="https://learn.microsoft.com/en-us/training/achievements/typescript/typescript-get-started.svg" width=30>](https://learn.microsoft.com/api/achievements/share/en-us/alv0425/8R645S6W?sharingId=31EA8433DACC585)
 2. [**Declare Variable Types in TypeScript**: <img alt="⭐Badge⭐" src="https://learn.microsoft.com/training/achievements/typescript/typescript-declare-variable-types.svg" width=30>](https://learn.microsoft.com/api/achievements/share/en-us/alv0425/EJ7HBSMP?sharingId=31EA8433DACC585)
