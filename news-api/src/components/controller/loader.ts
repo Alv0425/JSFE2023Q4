@@ -2,7 +2,7 @@ import { CallbackOfType, ResponseNews, ResponseSources, RequestOptions, RequestA
 import { Endpoint, RespStatusCode } from '../auxiliary/enums';
 
 interface FetchReq {
-    endpoint: keyof typeof Endpoint;
+    endpoint: `${Endpoint}`;
     options?: RequestOptions;
 }
 
@@ -36,7 +36,7 @@ class Loader implements LoaderInterface {
         return res;
     }
 
-    private makeUrl(options: RequestOptions, endpoint: keyof typeof Endpoint): URL {
+    private makeUrl(options: RequestOptions, endpoint: `${Endpoint}`): URL {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
         const allKeyValuePairs: [string, string | number | null][] = Object.entries(urlOptions);
@@ -51,7 +51,7 @@ class Loader implements LoaderInterface {
 
     private async load(
         method: string,
-        endpoint: keyof typeof Endpoint,
+        endpoint: `${Endpoint}`,
         callback: CallbackOfType<ResponseNews | ResponseSources>,
         options: RequestOptions
     ) {
