@@ -106,8 +106,10 @@
     box-shadow: 0 0 4px 0px #30c5ff;
 }
 
-.source__item:hover::before {
-    transform: translateX(0);
+@media (pointer:fine) and (hover:hover) {
+    .source__item:hover::before {
+        transform: translateX(0);
+    }   
 }
 
 .source__item_active::before {
@@ -140,6 +142,7 @@
     .source__item {
         flex-shrink: 0;
         width: calc(100% - 15px);
+        max-height: 42px;
     }
     .source__item {
         margin: auto;
