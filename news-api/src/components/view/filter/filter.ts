@@ -21,7 +21,9 @@ class Filter {
                 value: category,
             }) as HTMLInputElement;
             input.checked = true;
-            const label = createNode('label', ['filter__label'], { for: category }) as HTMLLabelElement;
+            const label: HTMLLabelElement = createNode('label', ['filter__label'], {
+                for: category,
+            }) as HTMLLabelElement;
             label.textContent = category;
             return [input, label];
         });

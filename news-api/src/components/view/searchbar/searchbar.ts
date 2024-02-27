@@ -1,13 +1,12 @@
 import './search.css';
 import { createNode, getElementOfType } from '../../auxiliary/helpers';
-//import { ResponseSources } from '../../auxiliary/interfaces';
 
-class Layout {
+class SearchBar {
     drawSearchBar() {
         const search: HTMLElement = createNode('form', ['search']) as HTMLFormElement;
-        const sourceLabelCont = createNode('div', ['search__source']);
-        const sourceReset = createNode('button', ['search__source-button'], { type: 'button' });
-        const sourceLabel = createNode('h2', ['search__source-label']);
+        const sourceLabelCont: HTMLElement = createNode('div', ['search__source']);
+        const sourceReset: HTMLElement = createNode('button', ['search__source-button'], { type: 'button' });
+        const sourceLabel: HTMLElement = createNode('h2', ['search__source-label']);
         sourceLabelCont.append(sourceReset, sourceLabel);
         const searchContainer: HTMLElement = createNode('div', ['search__container']);
         const searchField: HTMLElement = createNode('div', ['search__field']);
@@ -23,9 +22,8 @@ class Layout {
         search.append(sourceLabelCont, searchContainer);
         searchContainer.append(searchField);
         searchField.append(searchIcon, searchInput, searchButton);
-        const sourcesCont = getElementOfType(HTMLElement, document.querySelector('.scroll-container'));
+        const sourcesCont: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.scroll-container'));
         sourcesCont.after(search);
-        console.log(search);
         searchInput.onkeyup = () => {
             if (searchInput.value) {
                 searchButton.disabled = false;
@@ -50,4 +48,4 @@ class Layout {
     }
 }
 
-export default Layout;
+export default SearchBar;

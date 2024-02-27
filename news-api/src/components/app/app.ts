@@ -23,7 +23,6 @@ class App {
             const curSouce: string | null = sourcesElement.getAttribute('data-source');
             searchField.sourceLabel.textContent = 'all sources';
             if (curSouce) {
-                console.log(document.getElementById(curSouce));
                 getElementOfType(HTMLButtonElement, document.getElementById(curSouce)).classList.remove(
                     'source__item_active'
                 );

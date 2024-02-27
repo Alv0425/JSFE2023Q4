@@ -45,7 +45,6 @@ class Loader implements LoaderInterface {
             const reqValue = value ? value : '';
             url += `${key}=${reqValue}&`;
         }
-        console.log(url);
         return new URL(url.slice(0, -1));
     }
 
