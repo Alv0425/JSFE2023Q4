@@ -23,13 +23,19 @@ export function isResponseSources(res: ResponseNews | ResponseSources): res is R
     return typeof res === 'object' && res !== null && res !== undefined && 'status' in res && 'sources' in res;
 }
 
-export function createNode(type: string, classname?: string[], attributes?: KeyValuePairs) {
+export function createNode<T extends keyof HTMLElementTagNameMap>(
+    type: T,
+    classname?: string[],
+    attributes?: KeyValuePairs
+): HTMLElementTagNameMap[T] {
     const newElement = document.createElement(type);
-    if (!classname) return newElement;
-    newElement.classList.add(...classname);
-    if (!attributes) return newElement;
-    for (const key in attributes) {
-        newElement.setAttribute(key, attributes[key]);
+    if (classname) {
+        newElement.classList.add(...classname);
+    }
+    if (attributes) {
+        for (const key in attributes) {
+            newElement.setAttribute(key, attributes[key]);
+        }
     }
     return newElement;
 }

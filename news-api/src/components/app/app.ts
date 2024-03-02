@@ -12,7 +12,7 @@ class App {
         this.view = new AppView();
     }
 
-    start() {
+    public start() {
         const sourcesElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
         const searchField: SearchObj = this.view.drawSearchField();
         const searchForm: HTMLFormElement = getElementOfType(HTMLFormElement, searchField.search);
@@ -54,9 +54,11 @@ class App {
             this.controller.getNews(e, keyword, (data) => {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
-            const curSouce = sourcesElement.getAttribute('data-source');
+            const curSouce: string | null = sourcesElement.getAttribute('data-source');
             if (curSouce) {
-                const textLabel = document.getElementById(curSouce)?.querySelector('.source__item-name')?.textContent;
+                const textLabel: string | null | undefined = document
+                    .getElementById(curSouce)
+                    ?.querySelector('.source__item-name')?.textContent;
                 if (textLabel) {
                     searchField.sourceLabel.textContent = textLabel;
                     sourceReset.classList.add('show');

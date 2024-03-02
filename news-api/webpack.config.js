@@ -32,9 +32,9 @@ const baseConfig = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
-        assetModuleFilename: (pathData) => {
-            const filepath = path.dirname(pathData.filename).split('/').slice(1).join('/');
-            return `${filepath}/[name].[hash][ext][query]`;
+        assetModuleFilename: (assetsPath) => {
+            const assetDest = path.dirname(assetsPath.filename).split('/').slice(1).join('/');
+            return `${assetDest}/[name].[ext]`;
         },
     },
     plugins: [

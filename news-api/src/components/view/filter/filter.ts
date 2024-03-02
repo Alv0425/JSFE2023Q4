@@ -6,24 +6,23 @@ import { FilterObj } from '../../auxiliary/interfaces';
 class Filter {
     private inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;
     private categories: (keyof typeof Category)[];
-
     constructor() {
         this.inputs = {};
         this.categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
     }
-    drawFilter(): FilterObj {
-        const filter: HTMLFormElement = createNode('form', ['filter']) as HTMLFormElement;
+    public drawFilter(): FilterObj {
+        const filter = createNode('form', ['filter']);
 
         const inputs: [HTMLInputElement, HTMLLabelElement][] = this.categories.map((category) => {
             const input = createNode('input', ['filter__input'], {
                 id: category,
                 type: 'checkbox',
                 value: category,
-            }) as HTMLInputElement;
+            });
             input.checked = true;
             const label: HTMLLabelElement = createNode('label', ['filter__label'], {
                 for: category,
-            }) as HTMLLabelElement;
+            });
             label.textContent = category;
             return [input, label];
         });
@@ -40,7 +39,7 @@ class Filter {
             inputs: this.inputs,
         };
     }
-    filterSources(sourcesCont: HTMLElement) {
+    private filterSources(sourcesCont: HTMLElement) {
         const sourcesButtons = sourcesCont.querySelectorAll<HTMLElement>('button.source__item');
         if (sourcesButtons.length === 0) return;
         for (const btn of sourcesButtons) {

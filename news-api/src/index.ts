@@ -1,5 +1,5 @@
-import App from './components/app/app';
 import './global.css';
+import App from './components/app/app';
 import './assets/github.svg';
 import './assets/rss.svg';
 import './assets/search.svg';
