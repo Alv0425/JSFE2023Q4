@@ -29,9 +29,7 @@ export function createNode<T extends keyof HTMLElementTagNameMap>(
     attributes?: KeyValuePairs
 ): HTMLElementTagNameMap[T] {
     const newElement = document.createElement(type);
-    if (classname) {
-        newElement.classList.add(...classname);
-    }
+    if (classname) newElement.classList.add(...classname);
     if (attributes) {
         for (const key in attributes) {
             newElement.setAttribute(key, attributes[key]);

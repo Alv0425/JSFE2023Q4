@@ -3,20 +3,20 @@ import { createNode, getElementOfType } from '../../auxiliary/helpers';
 
 class SearchBar {
     drawSearchBar() {
-        const search: HTMLElement = createNode('form', ['search']);
+        const search: HTMLFormElement = createNode('form', ['search']);
         const sourceLabelCont: HTMLElement = createNode('div', ['search__source']);
-        const sourceReset: HTMLElement = createNode('button', ['search__source-button'], { type: 'button' });
+        const sourceReset: HTMLButtonElement = createNode('button', ['search__source-button'], { type: 'button' });
         const sourceLabel: HTMLElement = createNode('h2', ['search__source-label']);
         sourceLabelCont.append(sourceReset, sourceLabel);
         const searchContainer: HTMLElement = createNode('div', ['search__container']);
         const searchField: HTMLElement = createNode('div', ['search__field']);
-        const searchIcon: HTMLElement = createNode('button', ['search__icon'], { type: 'submit' });
+        const searchIcon: HTMLButtonElement = createNode('button', ['search__icon'], { type: 'submit' });
         const searchInput: HTMLInputElement = createNode('input', ['search__input'], {
             autofocus: 'true',
             type: 'search',
             autocomplete: 'off',
             placeholder: 'search...',
-        }) as HTMLInputElement;
+        });
         const searchButton: HTMLButtonElement = createNode('button', ['search__cross']);
         searchButton.disabled = true;
         search.append(sourceLabelCont, searchContainer);
