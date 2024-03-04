@@ -7,7 +7,7 @@ interface FetchReq {
 }
 
 interface LoaderInterface {
-    getResp(IFetchRespObj: FetchReq, callback: CallbackOfType<ResponseNews | ResponseSources>): void;
+    getResp(FetchRespObj: FetchReq, callback: CallbackOfType<ResponseNews | ResponseSources>): void;
 }
 
 class Loader implements LoaderInterface {
@@ -48,19 +48,21 @@ class Loader implements LoaderInterface {
         return new URL(url.slice(0, -1));
     }
 
-    private async load(
+    private async load<T extends ResponseNews | ResponseSources>(
         method: string,
         endpoint: `${Endpoint}`,
-        callback: CallbackOfType<ResponseNews | ResponseSources>,
+        callback: CallbackOfType<T>,
         options: RequestOptions
     ) {
         try {
-            const fetchResp = await fetch(this.makeUrl(options, endpoint), { method });
+            const fetchResp: Response = await fetch(this.makeUrl(options, endpoint), { method });
             this.errorHandler(fetchResp);
-            const data = (await fetchResp.json()) as ResponseNews | ResponseSources;
-            if (data.status === 'error')
+            const data = (await fetchResp.json()) as T;
+            if (!data.status) throw new Error('Cannot read status');
+            if (data.status === 'error') {
                 throw new Error(`Error code: ${data.code ?? ''}. Message: ${data.message ?? ''}`);
-            callback(data);
+            }
+            if (data.status === 'ok') callback(data);
         } catch (err) {
             console.error(err);
         }
