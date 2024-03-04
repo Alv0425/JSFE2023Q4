@@ -1,7 +1,7 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
-import { getElementOfType, isResponseNews, isResponseSources } from '../auxiliary/helpers';
-import { RequestOptions, SearchObj } from '../auxiliary/interfaces';
+import { getElementOfType, isResponseNews, isResponseSources } from '../utils/helpers';
+import { RequestOptions, SearchObj } from '../utils/interfaces';
 
 class App {
     private controller: AppController;

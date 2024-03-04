@@ -2,7 +2,7 @@ import News from './news/news';
 import Sources from './sources/sources';
 import SearchBar from './searchbar/searchbar';
 import Filter from './filter/filter';
-import { ResponseSources, ResponseNews, FilterObj, SearchObj } from '../auxiliary/interfaces';
+import { ResponseSources, ResponseNews, FilterObj, SearchObj } from '../utils/interfaces';
 
 interface AppViewInterface {
     drawNews: (data: ResponseNews) => void;

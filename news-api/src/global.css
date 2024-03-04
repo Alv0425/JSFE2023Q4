@@ -9,6 +9,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 10px;
 }
 
 button{
@@ -82,7 +84,6 @@ header h1 {
     height: 23px;
     background-image: url(./assets/github.svg);
     background-size: contain;
-    filter: grayscale(100) brightness(3);
     transition: 1s;
 }
 
@@ -95,7 +96,6 @@ header h1 {
     background-image: url(./assets/rss.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    filter: grayscale(100) brightness(3);
     transition: 1s;
 }
 

@@ -1,7 +1,7 @@
 import './filter.css';
-import { createNode, getElementOfType } from '../../auxiliary/helpers';
-import { Category } from '../../auxiliary/enums';
-import { FilterObj } from '../../auxiliary/interfaces';
+import { createNode, getElementOfType } from '../../utils/helpers';
+import { Category } from '../../utils/enums';
+import { FilterObj } from '../../utils/interfaces';
 
 class Filter {
     private inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;

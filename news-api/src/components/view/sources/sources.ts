@@ -1,6 +1,6 @@
 import './sources.css';
-import { Source } from '../../auxiliary/interfaces';
-import { getElementOfType, clearNode } from '../../auxiliary/helpers';
+import { Source } from '../../utils/interfaces';
+import { getElementOfType, clearNode } from '../../utils/helpers';
 
 interface SourcesInterface {
     draw: (data: Source[]) => void;

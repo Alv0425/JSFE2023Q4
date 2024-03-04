@@ -1,5 +1,5 @@
-import { CallbackOfType, ResponseNews, ResponseSources, RequestOptions, RequestApiKey } from '../auxiliary/interfaces';
-import { Endpoint, RespStatusCode } from '../auxiliary/enums';
+import { CallbackOfType, ResponseNews, ResponseSources, RequestOptions, RequestApiKey } from '../utils/interfaces';
+import { Endpoint, RespStatusCode } from '../utils/enums';
 
 interface FetchReq {
     endpoint: `${Endpoint}`;

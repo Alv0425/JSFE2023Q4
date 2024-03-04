@@ -1,5 +1,5 @@
 import './search.css';
-import { createNode, getElementOfType } from '../../auxiliary/helpers';
+import { createNode, getElementOfType } from '../../utils/helpers';
 
 class SearchBar {
     drawSearchBar() {

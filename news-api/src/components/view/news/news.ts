@@ -1,6 +1,6 @@
 import './news.css';
-import { Articles } from '../../auxiliary/interfaces';
-import { getElementOfType } from '../../auxiliary/helpers';
+import { Articles } from '../../utils/interfaces';
+import { getElementOfType } from '../../utils/helpers';
 
 interface NewsInterface {
     draw: (data: Articles[]) => void;

@@ -1,8 +1,8 @@
 import AppLoader from './appLoader';
 
-import { ResponseNews, ResponseSources, CallbackOfType, RequestOptions } from '../auxiliary/interfaces';
-import { getElementOfType } from '../auxiliary/helpers';
-import { Endpoint } from '../auxiliary/enums';
+import { ResponseNews, ResponseSources, CallbackOfType, RequestOptions } from '../utils/interfaces';
+import { getElementOfType } from '../utils/helpers';
+import { Endpoint } from '../utils/enums';
 
 class AppController extends AppLoader {
     public getSources(callback: CallbackOfType<ResponseNews | ResponseSources>) {
