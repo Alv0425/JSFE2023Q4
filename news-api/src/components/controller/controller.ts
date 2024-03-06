@@ -1,11 +1,11 @@
 import AppLoader from './appLoader';
 
-import { ResponseNews, ResponseSources, CallbackOfType, RequestOptions } from '../utils/interfaces';
+import { IResponseNews, IResponseSources, CallbackOfType, IRequestOptions } from '../utils/interfaces';
 import { getElementOfType } from '../utils/helpers';
 import { Endpoint } from '../utils/enums';
 
 class AppController extends AppLoader {
-    public getSources(callback: CallbackOfType<ResponseNews | ResponseSources>) {
+    public getSources(callback: CallbackOfType<IResponseNews | IResponseSources>) {
         super.getResp(
             {
                 endpoint: Endpoint.sources,
@@ -14,7 +14,7 @@ class AppController extends AppLoader {
         );
     }
 
-    public getCustomNews(reqOptions: RequestOptions, callback: CallbackOfType<ResponseNews | ResponseSources>) {
+    public getCustomNews(reqOptions: IRequestOptions, callback: CallbackOfType<IResponseNews | IResponseSources>) {
         super.getResp(
             {
                 endpoint: Endpoint.everything,
@@ -24,7 +24,7 @@ class AppController extends AppLoader {
         );
     }
 
-    public getNews(e: Event, keyword: string, callback: CallbackOfType<ResponseNews | ResponseSources>) {
+    public getNews(e: Event, keyword: string, callback: CallbackOfType<IResponseNews | IResponseSources>) {
         let target: EventTarget | null = e.target;
         const newsContainer: HTMLElement = getElementOfType(HTMLElement, e.currentTarget);
         while (target !== newsContainer) {
@@ -41,7 +41,7 @@ class AppController extends AppLoader {
                     newsContainer.setAttribute('data-source', '');
                     getElementOfType(HTMLElement, target).classList.remove('source__item_active');
                 }
-                let reqOptions: RequestOptions = {
+                let reqOptions: IRequestOptions = {
                     q: keyword || 'cats',
                 };
                 if (curSourceId !== sourceId) {

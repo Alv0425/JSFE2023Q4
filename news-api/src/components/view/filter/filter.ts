@@ -1,7 +1,7 @@
 import './filter.css';
 import { createNode, getElementOfType } from '../../utils/helpers';
 import { Category } from '../../utils/enums';
-import { FilterObj } from '../../utils/interfaces';
+import { IFilterObj } from '../../utils/interfaces';
 
 class Filter {
     private inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;
@@ -10,9 +10,8 @@ class Filter {
         this.inputs = {};
         this.categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
     }
-    public drawFilter(): FilterObj {
+    public drawFilter(): IFilterObj {
         const filter = createNode('form', ['filter']);
-
         const inputs: [HTMLInputElement, HTMLLabelElement][] = this.categories.map((category) => {
             const input = createNode('input', ['filter__input'], {
                 id: category,
@@ -40,7 +39,7 @@ class Filter {
         };
     }
     private filterSources(sourcesCont: HTMLElement) {
-        const sourcesButtons = sourcesCont.querySelectorAll<HTMLElement>('button.source__item');
+        const sourcesButtons = sourcesCont.querySelectorAll<HTMLButtonElement>('button.source__item');
         if (sourcesButtons.length === 0) return;
         for (const btn of sourcesButtons) {
             btn.classList.add('source__item_hidden');

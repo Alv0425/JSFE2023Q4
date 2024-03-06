@@ -1,14 +1,14 @@
 import './news.css';
-import { Articles } from '../../utils/interfaces';
+import { IArticles } from '../../utils/interfaces';
 import { getElementOfType } from '../../utils/helpers';
 
-interface NewsInterface {
-    draw: (data: Articles[]) => void;
+interface INewsInterface {
+    draw: (data: IArticles[]) => void;
 }
 
-class News implements NewsInterface {
-    public draw(data: Articles[]) {
-        const news: Articles[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+class News implements INewsInterface {
+    public draw(data: IArticles[]) {
+        const news: IArticles[] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
         const fragment: DocumentFragment = document.createDocumentFragment();
         const newsItemTemp: HTMLTemplateElement = getElementOfType(
             HTMLTemplateElement,

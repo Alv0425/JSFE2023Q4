@@ -1,7 +1,7 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 import { getElementOfType, isResponseNews, isResponseSources } from '../utils/helpers';
-import { RequestOptions, SearchObj } from '../utils/interfaces';
+import { IRequestOptions, ISearchObj } from '../utils/interfaces';
 
 class App {
     private controller: AppController;
@@ -13,12 +13,17 @@ class App {
     }
 
     public start() {
+        this.view.drawFilter();
+        // draw search field and current source label
         const sourcesElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
-        const searchField: SearchObj = this.view.drawSearchField();
+        const searchField: ISearchObj = this.view.drawSearchField();
         const searchForm: HTMLFormElement = getElementOfType(HTMLFormElement, searchField.search);
+        // set initial value of source label to 'all sources'
         searchField.sourceLabel.textContent = 'all sources';
-        const sourceReset: HTMLButtonElement = getElementOfType(HTMLButtonElement, searchField.sourceReset);
+        const sourceReset: HTMLButtonElement = searchField.sourceReset;
         sourceReset.onclick = () => {
+            // handle click on 'reset lelected souce' button: hide it, and set default text,
+            // then draw news with provided keyword in searchfield (or default value, 'cats', if input value == '')
             sourceReset.classList.remove('show');
             const curSouce: string | null = sourcesElement.getAttribute('data-source');
             searchField.sourceLabel.textContent = 'all sources';
@@ -33,11 +38,12 @@ class App {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
         };
-        this.view.drawFilter();
         searchForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            // search form submit handler
             const curValue: string = getElementOfType(HTMLInputElement, searchField.searchInput).value;
-            const reqOptions: RequestOptions = {};
+            // set request options. If no search input value and source provided, set default value for keyword
+            const reqOptions: IRequestOptions = {};
             const curSouce: string | null = sourcesElement.getAttribute('data-source');
             if (curValue) reqOptions.q = curValue;
             if (curSouce) reqOptions.sources = curSouce;
@@ -46,15 +52,19 @@ class App {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
         });
+        // show default news onload
         this.controller.getCustomNews({ q: 'cats' }, (data) => {
             if (isResponseNews(data)) this.view.drawNews(data);
         });
+        // handle click on sources elements
         sourcesElement.addEventListener('click', (e) => {
+            // draw news for selected source; if value provided in search input, uplate query with keyword
             const keyword = getElementOfType(HTMLInputElement, searchField.searchInput).value;
             this.controller.getNews(e, keyword, (data) => {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
             const curSouce: string | null = sourcesElement.getAttribute('data-source');
+            // set current source label
             if (curSouce) {
                 const textLabel: string | null | undefined = document
                     .getElementById(curSouce)

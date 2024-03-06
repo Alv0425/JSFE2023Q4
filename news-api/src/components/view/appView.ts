@@ -2,16 +2,16 @@ import News from './news/news';
 import Sources from './sources/sources';
 import SearchBar from './searchbar/searchbar';
 import Filter from './filter/filter';
-import { ResponseSources, ResponseNews, FilterObj, SearchObj } from '../utils/interfaces';
+import { IResponseSources, IResponseNews, IFilterObj, ISearchObj } from '../utils/interfaces';
 
-interface AppViewInterface {
-    drawNews: (data: ResponseNews) => void;
-    drawSources: (data: ResponseSources) => void;
-    drawSearchField: () => SearchObj;
-    drawFilter: () => FilterObj;
+interface IAppViewInterface {
+    drawNews: (data: IResponseNews) => void;
+    drawSources: (data: IResponseSources) => void;
+    drawSearchField: () => ISearchObj;
+    drawFilter: () => IFilterObj;
 }
 
-export class AppView implements AppViewInterface {
+export class AppView implements IAppViewInterface {
     private news: News;
     private sources: Sources;
     private searchBar: SearchBar;
@@ -24,23 +24,23 @@ export class AppView implements AppViewInterface {
         this.filter = new Filter();
     }
 
-    public drawNews(data: ResponseNews): void {
+    public drawNews(data: IResponseNews): void {
         const values = data?.articles ? data?.articles : [];
         this.news.draw(values);
     }
 
-    public drawSources(data: ResponseSources): void {
+    public drawSources(data: IResponseSources): void {
         const values = data?.sources ? data?.sources : [];
         this.sources.draw(values);
     }
 
-    public drawSearchField(): SearchObj {
+    public drawSearchField(): ISearchObj {
         const searchObj = this.searchBar.drawSearchBar();
         return searchObj;
     }
 
-    public drawFilter(): FilterObj {
-        const filterObj: FilterObj = this.filter.drawFilter();
+    public drawFilter(): IFilterObj {
+        const filterObj: IFilterObj = this.filter.drawFilter();
         return filterObj;
     }
 }

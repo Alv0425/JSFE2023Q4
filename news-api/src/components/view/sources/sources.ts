@@ -1,13 +1,13 @@
 import './sources.css';
-import { Source } from '../../utils/interfaces';
+import { ISource } from '../../utils/interfaces';
 import { getElementOfType, clearNode } from '../../utils/helpers';
 
-interface SourcesInterface {
-    draw: (data: Source[]) => void;
+interface ISourcesInterface {
+    draw: (data: ISource[]) => void;
 }
 
-class Sources implements SourcesInterface {
-    public draw(data: Source[]) {
+class Sources implements ISourcesInterface {
+    public draw(data: ISource[]) {
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLTemplateElement = getElementOfType(
             HTMLTemplateElement,
@@ -15,7 +15,7 @@ class Sources implements SourcesInterface {
         );
         const sourcesElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
         clearNode(sourcesElement);
-        data.forEach((item: Source) => {
+        data.forEach((item: ISource) => {
             const sourceClone: Node = sourceItemTemp.content.cloneNode(true);
             if (!(sourceClone instanceof DocumentFragment))
                 throw new Error('sourceClone is not instance of DocumentFragment');

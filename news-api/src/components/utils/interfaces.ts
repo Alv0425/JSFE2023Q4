@@ -1,6 +1,6 @@
 import { SortByOptions, Category } from './enums';
 
-export interface Articles {
+export interface IArticles {
     id: string | null;
     name: string | null;
     source: {
@@ -16,7 +16,7 @@ export interface Articles {
     content: string | null;
 }
 
-export interface Source {
+export interface ISource {
     id: string;
     name: string;
     description: string;
@@ -26,26 +26,26 @@ export interface Source {
     country: string;
 }
 
-export interface ResponseNews {
+export interface IResponseNews {
     status: 'ok' | 'error';
     totalResults: number;
-    articles: Articles[];
+    articles: IArticles[];
     message?: string;
     code?: string;
 }
 
-export interface ResponseSources {
+export interface IResponseSources {
     status: 'ok' | 'error';
-    sources: Source[];
+    sources: ISource[];
     message?: string;
     code?: string;
 }
 
-export interface RequestApiKey {
+export interface IRequestApiKey {
     apiKey: string;
 }
 
-export interface RequestOptions {
+export interface IRequestOptions {
     q?: string;
     searchin?: string;
     sources?: string | null;
@@ -60,25 +60,20 @@ export interface RequestOptions {
     country?: string;
 }
 
-export interface FilterObj {
+export interface IFilterObj {
     filter: HTMLFormElement;
     inputs: Partial<Record<keyof typeof Category, HTMLInputElement>>;
 }
 
-export interface SearchObj {
+export interface ISearchObj {
     search: HTMLElement;
     searchInput: HTMLInputElement;
-    sourceReset: HTMLElement;
+    sourceReset: HTMLButtonElement;
     sourceLabel: HTMLElement;
 }
 
-export type SomeResponse = ResponseNews | ResponseSources;
-
 export type CallbackOfType<T> = (param: T) => void;
-export type CallbackNews = CallbackOfType<ResponseNews>;
-export type CallbackSources = CallbackOfType<ResponseSources>;
-export type CallbackDefault = () => void;
 
-export interface TypeOfAncestor<T> {
+export interface ITypeOfAncestor<T> {
     new (...params: unknown[]): T;
 }

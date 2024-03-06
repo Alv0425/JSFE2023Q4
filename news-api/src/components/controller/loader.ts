@@ -1,19 +1,19 @@
-import { CallbackOfType, ResponseNews, ResponseSources, RequestOptions, RequestApiKey } from '../utils/interfaces';
-import { Endpoint, RespStatusCode } from '../utils/enums';
+import { CallbackOfType, IResponseNews, IResponseSources, IRequestOptions, IRequestApiKey } from '../utils/interfaces';
+import { RespStatusCode, EndpointType } from '../utils/enums';
 
-interface FetchReq {
-    endpoint: `${Endpoint}`;
-    options?: RequestOptions;
+interface IFetchReq {
+    endpoint: EndpointType;
+    options?: IRequestOptions;
 }
 
-interface LoaderInterface {
-    getResp(FetchRespObj: FetchReq, callback: CallbackOfType<ResponseNews | ResponseSources>): void;
+interface ILoaderInterface {
+    getResp(FetchRespObj: IFetchReq, callback: CallbackOfType<IResponseNews | IResponseSources>): void;
 }
 
-class Loader implements LoaderInterface {
+class Loader implements ILoaderInterface {
     constructor(
         private baseLink: string,
-        private options: RequestApiKey
+        private options: IRequestApiKey
     ) {}
 
     private callbackGetResp = () => {
@@ -21,8 +21,8 @@ class Loader implements LoaderInterface {
     };
 
     public getResp(
-        { endpoint, options = {} }: FetchReq,
-        callback: CallbackOfType<ResponseNews | ResponseSources> = this.callbackGetResp
+        { endpoint, options = {} }: IFetchReq,
+        callback: CallbackOfType<IResponseNews | IResponseSources> = this.callbackGetResp
     ): void {
         this.load('GET', endpoint, callback, options);
     }
@@ -36,7 +36,7 @@ class Loader implements LoaderInterface {
         return res;
     }
 
-    private makeUrl(options: RequestOptions, endpoint: `${Endpoint}`): URL {
+    private makeUrl(options: IRequestOptions, endpoint: EndpointType): URL {
         const urlOptions = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
         const allKeyValuePairs: [string, string | number | null][] = Object.entries(urlOptions);
@@ -48,11 +48,11 @@ class Loader implements LoaderInterface {
         return new URL(url.slice(0, -1));
     }
 
-    private async load<T extends ResponseNews | ResponseSources>(
+    private async load<T extends IResponseNews | IResponseSources>(
         method: string,
-        endpoint: `${Endpoint}`,
+        endpoint: EndpointType,
         callback: CallbackOfType<T>,
-        options: RequestOptions
+        options: IRequestOptions
     ) {
         try {
             const fetchResp: Response = await fetch(this.makeUrl(options, endpoint), { method });
