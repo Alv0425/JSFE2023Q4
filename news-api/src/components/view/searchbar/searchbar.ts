@@ -4,6 +4,7 @@ import { createNode, getElementOfType } from '../../utils/helpers';
 class SearchBar {
     drawSearchBar() {
         const search: HTMLFormElement = createNode('form', ['search']);
+        search.onsubmit = (e) => e.preventDefault();
         const sourceLabelCont: HTMLElement = createNode('div', ['search__source']);
         const sourceReset: HTMLButtonElement = createNode('button', ['search__source-button'], { type: 'button' });
         const sourceLabel: HTMLElement = createNode('h2', ['search__source-label']);

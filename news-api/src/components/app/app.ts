@@ -17,7 +17,8 @@ class App {
         // draw search field and current source label
         const sourcesElement: HTMLElement = getElementOfType(HTMLElement, document.querySelector('.sources'));
         const searchField: ISearchObj = this.view.drawSearchField();
-        const searchForm: HTMLFormElement = getElementOfType(HTMLFormElement, searchField.search);
+        // const searchForm: HTMLFormElement = getElementOfType(HTMLFormElement, searchField.search);
+        const searchInput: HTMLInputElement = getElementOfType(HTMLInputElement, searchField.searchInput);
         // set initial value of source label to 'all sources'
         searchField.sourceLabel.textContent = 'all sources';
         const sourceReset: HTMLButtonElement = searchField.sourceReset;
@@ -38,7 +39,7 @@ class App {
                 if (isResponseNews(data)) this.view.drawNews(data);
             });
         };
-        searchForm.addEventListener('submit', (e) => {
+        searchInput.addEventListener('input', (e) => {
             e.preventDefault();
             // search form submit handler
             const curValue: string = getElementOfType(HTMLInputElement, searchField.searchInput).value;
