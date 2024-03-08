@@ -21,10 +21,23 @@
   "rules": {
     "no-debugger": "off",
     "no-console": 0,
-    "@typescript-eslint/no-var-requires": "off",
-    "eslint global-require": "off",
     "class-methods-use-this": "off",
-    "@typescript-eslint/no-explicit-any": 2
+    "@typescript-eslint/no-explicit-any": 2,
+    "@typescript-eslint/explicit-member-accessibility": ["warn"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "types": ["boolean"],
+        "format": ["PascalCase"],
+        "prefix": ["is", "should", "has", "can", "did", "will"]
+      },
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "prefix": ["I"]
+      }
+    ]
   },
   "noInlineConfig": true
 }

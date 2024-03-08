@@ -1,13 +1,14 @@
 #!/usr/bin/env sh
 cd rss-puzzle
 npm run lint
-localBranch="$(git rev-parse --abbrev-ref HEAD)"
-branchPattern='^((fix|feat|chore|refactor|docs)\/[a-zA-Z0-9\-]+)$'
-message="Invalid branch name"
+npx validate-branch-name 
+# localBranch="$(git rev-parse --abbrev-ref HEAD)"
+# branchPattern='^((fix|feat|chore|refactor|docs)\/[a-zA-Z0-9\-]+)$'
+# message="Invalid branch name"
 
-if [[ ! $localBranch =~ $branchPattern ]]; then
-    echo "$message"
-    exit 1
-fi
+# if [[ ! $localBranch =~ $branchPattern ]]; then
+#     echo "$message"
+#     exit 1
+# fi
 
-exit 0
+# exit 0
