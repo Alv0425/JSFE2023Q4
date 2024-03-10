@@ -31,7 +31,11 @@ const base = {
     filename: "index.js",
     path: path.resolve(__dirname, "./dist"),
     assetModuleFilename: (assetsPath) => {
-      const assetDest = path.dirname(assetsPath.filename).split("/").slice(1).join("/");
+      const assetDest = path
+        .dirname(assetsPath.filename)
+        .split("/")
+        .slice(1)
+        .join("/");
       return `${assetDest}/[name].[ext]`;
     },
   },
