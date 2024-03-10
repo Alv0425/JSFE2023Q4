@@ -1,4 +1,4 @@
-import Component from "./component";
+import Component, { Props } from "./component";
 
 export const div = (
   classList: string[],
@@ -25,26 +25,39 @@ export const button = (
   type: "button" | "submit" | "reset" | undefined = "button",
   id?: string,
 ) =>
-  new Component<HTMLButtonElement>(
-    "button",
-    classList,
-    { textContent, type, id },
-    { type, id },
-  );
-
-export const input = (
-  classList: string[],
-  type: string,
-  id: string,
-  textContent: string = "",
-  placeholder?: string,
-) =>
-  new Component<HTMLInputElement>("input", classList, {
+  new Component<HTMLButtonElement>("button", classList, {
     textContent,
     type,
     id,
-    placeholder,
   });
+
+export const input = (classList: string[], props: Props<HTMLInputElement>) =>
+  new Component<HTMLInputElement>("input", classList, props);
+
+export const label = (
+  classList: string[],
+  idLabel: string,
+  textContent: string = "",
+) =>
+  new Component<HTMLLabelElement>(
+    "label",
+    classList,
+    {
+      textContent,
+    },
+    { for: idLabel },
+  );
+
+export const form = (classList: string[], id?: string) => {
+  const formComponent = new Component<HTMLInputElement>(
+    "input",
+    classList,
+    {},
+    { id },
+  );
+  formComponent.setAttribute("action", "");
+  return formComponent;
+};
 
 export const span = (classList: string[], textContent?: string) => {
   const spanComponent = new Component("span", classList);

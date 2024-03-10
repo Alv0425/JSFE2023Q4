@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  z-index: 2;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  max-width: 1024px;
+  align-items: center;
+  padding: 10px;
+}

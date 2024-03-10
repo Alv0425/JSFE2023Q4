@@ -25,7 +25,7 @@ const base = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: ["", ".ts", ".js"],
   },
   output: {
     filename: "index.js",
@@ -49,8 +49,8 @@ const base = {
     new CopyPlugin({
       patterns: [
         {
-          from: "src/images",
-          to: "assets",
+          from: "src/assets/background",
+          to: "assets/background",
         },
       ],
     }),

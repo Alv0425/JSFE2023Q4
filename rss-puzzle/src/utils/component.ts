@@ -38,7 +38,7 @@ class Component<T extends HTMLElement = HTMLElement> {
       });
     }
     if (props) {
-      this.node = { ...this.node, ...props };
+      Object.assign(this.node, props);
     }
     if (attrs) {
       Object.keys(attrs).forEach((key) => {
@@ -64,8 +64,9 @@ class Component<T extends HTMLElement = HTMLElement> {
   public append(child: Component | HTMLElement | null) {
     if (!child) return;
     if (child instanceof Component) {
-      this.node.append(child.node);
-      this.content.push(child.node);
+      console.log(child.getComponent());
+      this.node.append(child.getComponent());
+      this.content.push(child.getComponent());
     } else {
       this.node.append(child);
     }
