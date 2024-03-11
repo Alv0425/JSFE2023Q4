@@ -6,7 +6,6 @@ class MainCont extends Component {
   public constructor() {
     super("main", ["main"]);
     document.body.append(this.getComponent());
-    this.drawLogin();
   }
 
   public drawLogin() {

@@ -1,8 +1,8 @@
 import Header from "./view/header/header";
 import Footer from "./view/footer/footer";
 import MainCont from "./view/main/maincontainer";
-import LoginScreen from "./view/loginscreen/loginscreen";
 import Blobs from "./view/background/blobs";
+import storage from "./services/localstorage";
 
 class AppView {
   public blobs: Blobs;
@@ -13,16 +13,19 @@ class AppView {
 
   public footer: Footer;
 
-  public loginScreen: LoginScreen;
-
   public constructor() {
     this.blobs = new Blobs();
     this.header = new Header();
     this.main = new MainCont();
     this.footer = new Footer();
-    this.loginScreen = new LoginScreen();
-    console.log(this.header.getComponent());
+    storage.checkFirstLoad();
+    if (storage.getData().firstName) {
+      console.log("start page load");
+    } else {
+      this.main.drawLogin();
+    }
   }
 }
 
-export default AppView;
+const view = () => new AppView();
+export default view;

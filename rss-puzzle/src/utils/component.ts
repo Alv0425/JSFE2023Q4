@@ -64,7 +64,6 @@ class Component<T extends HTMLElement = HTMLElement> {
   public append(child: Component | HTMLElement | null) {
     if (!child) return;
     if (child instanceof Component) {
-      console.log(child.getComponent());
       this.node.append(child.getComponent());
       this.content.push(child.getComponent());
     } else {

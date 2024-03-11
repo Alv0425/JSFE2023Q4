@@ -25,6 +25,7 @@
 }
 
 .login-form__input {
+  position: relative;
   outline: none;
   border: var(--color-label-dark) 1px solid;
   padding: 10px;
@@ -32,6 +33,13 @@
   max-width: 100%;
   display: block;
   border-radius: 10px;
+}
+
+.login-form__input:valid {
+  background-image: url(../../../assets/icons/circle-check-solid.svg);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
 .login-form__button {
@@ -57,4 +65,27 @@
 .login-form__button:hover {
   background-color: var(--color-highlight);
   color: var(--color-body-dark);
+}
+
+.login-form__button:disabled {
+  pointer-events: none;
+}
+
+.login-form__hint {
+  color: var(--color-text-red);
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+}
+
+.login-form__hint::before {
+  content: "!";
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px var(--color-text-red) solid;
 }

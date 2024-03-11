@@ -25,3 +25,14 @@ export interface ILevel {
   rounds: IRound[];
   roundsCount: number;
 }
+
+export interface IStats {
+  rounds?: string[];
+}
+
+export interface IStorage {
+  firstName?: string;
+  surname?: string;
+
+  stats?: IStats;
+}
