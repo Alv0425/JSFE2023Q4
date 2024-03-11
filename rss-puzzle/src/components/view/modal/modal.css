@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadein 0.3s ease-in;
+}
+
+.modal {
+  background-color: var(--color-container);
+  border-radius: 30px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.modal_logout {
+  max-width: 290px;
+}
+
+.modal__title {
+  margin: 0;
+  text-align: center;
+}
+
+.modal__text {
+  margin: 0;
+  text-align: center;
+}
+
+.modal__buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.modal__button {
+  min-width: 100px;
+}

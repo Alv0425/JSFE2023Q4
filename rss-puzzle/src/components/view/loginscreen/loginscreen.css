@@ -9,6 +9,7 @@
   padding: 20px 40px 40px 40px;
   border-radius: 30px;
   background-color: var(--color-container);
+  animation: fadein 0.5s ease-in;
 }
 
 .login-form__title {
@@ -43,21 +44,8 @@
 }
 
 .login-form__button {
-  position: relative;
-  background-color: var(--color-label-light);
-  color: var(--color-text-light);
   font-size: 16px;
   width: 100%;
-  border: none;
-  display: flex;
-  flex-grow: 0;
-  max-height: 40px;
-  padding: 10px;
-  border-radius: 100px;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  cursor: pointer;
   margin-top: 10px;
   transition: 0.3s;
 }

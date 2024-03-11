@@ -1,3 +1,4 @@
+import eventEmitter from "../../utils/eventemitter";
 import { IStorage } from "../../utils/types/interfaces";
 
 class LocalStorage {
@@ -12,12 +13,17 @@ class LocalStorage {
       stats: {},
     };
     this.key = "alv0425-rss-pz";
+    eventEmitter.on("logout", () => this.clearStorage());
   }
 
   public checkFirstLoad() {
     if (!Object.prototype.hasOwnProperty.call(localStorage, this.key)) {
       localStorage.setItem(this.key, JSON.stringify(this.templateData));
     }
+  }
+
+  private clearStorage() {
+    this.saveLoginData(this.templateData);
   }
 
   public saveLoginData(data: IStorage) {

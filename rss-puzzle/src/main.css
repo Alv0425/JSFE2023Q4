@@ -38,3 +38,48 @@ body {
   background-color: var(--color-body-dark);
   transition: 2s;
 }
+
+button {
+  background-color: var(--color-label-light);
+  color: var(--color-text-light);
+  font-size: 16px;
+  border: none;
+  display: flex;
+  flex-grow: 0;
+  max-height: 40px;
+  padding: 10px;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: fadein 0.3s ease-in;
+}
+
+button:hover {
+  background-color: var(--color-highlight);
+  color: var(--color-body-dark);
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeout 0.3s ease-in forwards;
+}

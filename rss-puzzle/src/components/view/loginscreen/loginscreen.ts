@@ -3,6 +3,7 @@ import Component from "../../../utils/component";
 import { button, div, h2, input, label } from "../../../utils/elements";
 import formhandler, { FormHandler } from "../../services/formhandler";
 import storage from "../../services/localstorage";
+import eventEmitter from "../../../utils/eventemitter";
 
 class LoginScreen extends Component {
   public loginFirstName: Component[] = [];
@@ -60,6 +61,7 @@ class LoginScreen extends Component {
         data.firstName = inputFirstName.value;
         data.surname = inputSurname.value;
         storage.saveLoginData(data);
+        eventEmitter.emit("login");
       }
     });
   }

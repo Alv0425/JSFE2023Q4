@@ -1,6 +1,7 @@
 import "./header.css";
 import Component from "../../../utils/component";
 import { button, div, h1 } from "../../../utils/elements";
+import modal from "../modal/modal";
 
 class Header extends Component {
   private loginButton: Component;
@@ -15,6 +16,9 @@ class Header extends Component {
     );
     const headerCont = this.getContent()[0] as Component;
     this.loginButton = button(["header__button"], "LOG OUT");
+    this.loginButton.addListener("click", () => {
+      modal.openMmodalLogout();
+    });
     headerCont.append(this.loginButton.getComponent());
     this.draw();
   }

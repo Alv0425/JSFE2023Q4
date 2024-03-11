@@ -1,0 +1,21 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  background-image: url(../../../assets/icons/loader.svg);
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  animation: spin 3s linear infinite;
+}
+
+.overlay_loader {
+  background-color: rgba(0, 0, 0, 0.8);
+}
