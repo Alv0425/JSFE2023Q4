@@ -20,7 +20,7 @@ class AppView {
     this.footer = new Footer();
     storage.checkFirstLoad();
     if (storage.getData().firstName) {
-      console.log("start page load");
+      this.main.drawStartScreen();
     } else {
       this.main.drawLogin();
     }

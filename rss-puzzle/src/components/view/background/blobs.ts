@@ -1,5 +1,6 @@
 import "./blobs.css";
 import createSvg from "../../../utils/helpers/createsvg";
+import eventEmitter from "../../../utils/eventemitter";
 
 class Blobs {
   public constructor() {
@@ -12,6 +13,14 @@ class Blobs {
       "blob-right",
     );
     document.body.append(blobLeft, blobRight);
+    eventEmitter.on("login", () => {
+      blobLeft.classList.add("blob-log-in");
+      blobRight.classList.add("blob-log-in");
+    });
+    eventEmitter.on("logout", () => {
+      blobLeft.classList.remove("blob-log-in");
+      blobRight.classList.remove("blob-log-in");
+    });
   }
 }
 

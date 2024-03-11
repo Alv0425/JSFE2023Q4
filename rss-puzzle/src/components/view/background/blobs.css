@@ -7,6 +7,8 @@
   width: 100%;
   height: 100%;
   opacity: 0.5;
+  transform: rotate(30deg);
+  transition: 1s;
 }
 
 .blob-right {
@@ -19,4 +21,9 @@
   height: 100%;
   transform: rotate(-30deg);
   opacity: 0.5;
+  transition: 1s;
+}
+
+.blob-log-in{
+  transform: rotate(0deg) scale(1.3);
 }

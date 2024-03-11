@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   z-index: 2;
+  transition: 1s;
 }
 
 .header__logo {
@@ -10,7 +11,10 @@
   flex-grow: 1;
   text-align: center;
   margin: 0;
+  opacity: 0;
   padding-left: 94px;
+  transition: opacity 1s;
+  animation: fadein 1s ease-in forwards;
 }
 
 .header__container {
@@ -48,5 +52,5 @@
 }
 
 .login-screen .header__logo {
-  padding-left: 0;
+  visibility: hidden;
 }
