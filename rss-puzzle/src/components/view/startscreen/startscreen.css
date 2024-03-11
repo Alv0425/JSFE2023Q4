@@ -1,20 +1,39 @@
-.start-screen{
+.start-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 490px;
+  max-width: 470px;
   background-color: rgba(31, 32, 65, 0.5);
   border-radius: 30px;
   padding: 20px;
+  animation: fadein 0.5s ease-in;
 }
 
-.start-screen__text{
+.start-screen__text {
   text-align: 10px;
   font-size: 1.2rem;
   line-height: 2rem;
   text-align: center;
 }
 
-.start-screen__title{
+.start-screen__greeting,
+.start-screen__title {
   text-align: center;
+}
+
+@keyframes showgreeting {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.start-screen__greeting {
+  color: var(--color-highlight);
+  font-size: 2rem;
+  animation: showgreeting 0.9s ease-out;
 }

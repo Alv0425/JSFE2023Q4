@@ -36,6 +36,11 @@ class LocalStorage {
     if (data) dataObj = JSON.parse(data);
     return dataObj;
   }
+
+  public getName() {
+    const data = this.getData();
+    return `${data.firstName} ${data.surname}`;
+  }
 }
 
 const storage = new LocalStorage();

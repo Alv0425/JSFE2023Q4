@@ -1,5 +1,6 @@
 import Component from "../../../utils/component";
 import { h2, p } from "../../../utils/elements";
+import storage from "../../services/localstorage";
 import PuzzlesBg from "../background/puzzlesbg";
 import "./startscreen.css";
 
@@ -12,7 +13,7 @@ class StartScreen extends Component {
       ["start-screen"],
       {},
       {},
-      h2(["start-screen__title"], "Welcome to RSS PUZZLE game!"),
+      h2(["start-screen__greeting"], `Hello, ${storage.getName()}!`),
       p(
         ["start-screen__text"],
         "RSS-PUZZLE is a game designed to enhance English language skills.",
