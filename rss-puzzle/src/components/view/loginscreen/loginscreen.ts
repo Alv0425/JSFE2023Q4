@@ -2,6 +2,7 @@ import "./loginscreen.css";
 import Component from "../../../utils/component";
 import { button, div, h2, input, label } from "../../../utils/elements";
 import formhandler, { FormHandler } from "../../services/formhandler";
+import storage from "../../services/localstorage";
 
 class LoginScreen extends Component {
   public loginFirstName: Component[] = [];
@@ -50,7 +51,15 @@ class LoginScreen extends Component {
         this.surnameStatus.length === 0 &&
         this.firstNameStatus.length === 0
       ) {
-        console.log("submit");
+        const data = storage.getData();
+        const inputFirstName =
+          this.loginFirstName[1].getComponent() as HTMLInputElement;
+        data.firstName = inputFirstName.value;
+        const inputSurname =
+          this.loginSurname[1].getComponent() as HTMLInputElement;
+        data.firstName = inputFirstName.value;
+        data.surname = inputSurname.value;
+        storage.saveLoginData(data);
       }
     });
   }

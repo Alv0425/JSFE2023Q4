@@ -18,10 +18,11 @@ class LocalStorage {
     if (!Object.prototype.hasOwnProperty.call(localStorage, this.key)) {
       localStorage.setItem(this.key, JSON.stringify(this.templateData));
     }
-    if (!this.getData().firstName) console.log("sdfsdf");
   }
 
-  public saveData() {}
+  public saveLoginData(data: IStorage) {
+    localStorage.setItem(this.key, JSON.stringify(data));
+  }
 
   public getData() {
     const data = localStorage.getItem(this.key);
