@@ -51,7 +51,6 @@ button {
   border-radius: 100px;
   justify-content: center;
   align-items: center;
-  margin-left: auto;
   cursor: pointer;
   transition: 0.3s;
   animation: fadein 0.3s ease-in;

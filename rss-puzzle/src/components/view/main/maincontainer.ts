@@ -10,6 +10,7 @@ class MainCont extends Component {
     document.body.append(this.getComponent());
     eventEmitter.on("logout", () => this.drawLogin());
     eventEmitter.on("login", () => this.drawStartScreen());
+    eventEmitter.on("startclicked", () => this.drawMainScreen());
   }
 
   public drawStartScreen() {
@@ -24,6 +25,10 @@ class MainCont extends Component {
     document.body.classList.add("login-screen");
     const loginScr = new LoginScreen();
     this.append(loginScr);
+  }
+
+  public drawMainScreen() {
+    this.clear();
   }
 }
 export default MainCont;

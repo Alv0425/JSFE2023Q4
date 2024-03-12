@@ -37,3 +37,51 @@
   font-size: 2rem;
   animation: showgreeting 0.9s ease-out;
 }
+
+.start-screen__button {
+  min-width: 150px;
+  display: flex;
+  gap: 5px;
+}
+
+.start-screen__button-label {
+  transform: translateX(12px);
+  transition: 0.5s;
+}
+
+.start-screen__button-icon {
+  position: relative;
+  display: block;
+  background-image: url(../../../assets/icons/play.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.start-screen__button-icon::after {
+  content: "";
+  position: absolute;
+  background-image: url(../../../assets/icons/play.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+}
+
+.start-screen__button:hover .start-screen__button-label {
+  transform: translateX(0);
+}
+
+.start-screen__button:hover .start-screen__button-icon {
+  opacity: 1;
+}
+
+.start-screen__button:hover .start-screen__button-icon::after {
+  transform: translateX(7px);
+}

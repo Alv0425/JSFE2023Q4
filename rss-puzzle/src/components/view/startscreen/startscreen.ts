@@ -1,5 +1,6 @@
 import Component from "../../../utils/component";
-import { h2, p } from "../../../utils/elements";
+import { button, h2, p, span } from "../../../utils/elements";
+import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
 import PuzzlesBg from "../background/puzzlesbg";
 import "./startscreen.css";
@@ -24,7 +25,19 @@ class StartScreen extends Component {
       ),
       p(["start-screen__text"], "Good luck and have fun!"),
     );
+    const startButton = button(
+      ["start-screen__button"],
+      "",
+      "button",
+      "start-button",
+    );
+    startButton.appendContent([
+      span(["start-screen__button-label"], "START"),
+      span(["start-screen__button-icon"]),
+    ]);
+    this.append(startButton);
     this.puzzlesBg = new PuzzlesBg();
+    startButton.addListener("click", () => eventEmitter.emit("startclicked"));
   }
 }
 
