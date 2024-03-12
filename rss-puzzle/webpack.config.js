@@ -25,7 +25,7 @@ const base = {
     ],
   },
   resolve: {
-    extensions: ["", ".ts", ".js"],
+    extensions: [".ts", ".js"],
   },
   output: {
     filename: "index.js",
@@ -48,6 +48,10 @@ const base = {
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
+        {
+          from: "src/components/data",
+          to: "assets/data",
+        },
         {
           from: "src/assets/background",
           to: "assets/background",

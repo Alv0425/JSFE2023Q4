@@ -83,3 +83,6 @@ export const ul = (
   if (items) listComponent.appendContent(items);
   return listComponent;
 };
+
+export const img = (classList: string[], src: string, alt: string) =>
+  new Component("img", classList, {}, { src, alt });

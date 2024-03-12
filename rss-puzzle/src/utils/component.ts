@@ -18,6 +18,8 @@ class Component<T extends HTMLElement = HTMLElement> {
 
   protected content: (Component | HTMLElement | null)[] = [];
 
+  protected childComponents: Component[] = [];
+
   protected listeners: {
     eType: keyof GlobalEventHandlersEventMap;
     handler: EventListenerOrEventListenerObject;
@@ -61,11 +63,16 @@ class Component<T extends HTMLElement = HTMLElement> {
     return this.content;
   }
 
+  public getChildComponents() {
+    return this.childComponents;
+  }
+
   public append(child: Component | HTMLElement | null) {
     if (!child) return;
     if (child instanceof Component) {
       this.node.append(child.getComponent());
       this.content.push(child.getComponent());
+      this.childComponents.push(child);
     } else {
       this.node.append(child);
     }
@@ -79,6 +86,10 @@ class Component<T extends HTMLElement = HTMLElement> {
 
   public setAttribute(key: string, value: string) {
     if (value !== undefined) this.node.setAttribute(key, value);
+  }
+
+  public setTextContent(str: string) {
+    if (str) this.node.textContent = str;
   }
 
   public addListener(
@@ -107,6 +118,17 @@ class Component<T extends HTMLElement = HTMLElement> {
         this.node.removeEventListener(listener.eType, listener.handler);
       }
     });
+  }
+
+  public setStyleAttribute(key: string, value: string) {
+    this.node.style.setProperty(key, value);
+  }
+
+  public getSize() {
+    return {
+      width: this.node.clientWidth,
+      height: this.node.clientHeight,
+    };
   }
 
   public setBgImage(

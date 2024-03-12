@@ -1,0 +1,27 @@
+.card {
+  position: relative;
+  flex-grow: 1;
+  cursor: pointer;
+  height: 100%;
+}
+
+.card__base,
+.card__image,
+.card__text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.card__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__base {
+  background-color: var(--color-container);
+  border-radius: 2px;
+}
