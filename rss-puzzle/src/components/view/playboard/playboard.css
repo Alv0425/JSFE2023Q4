@@ -61,3 +61,7 @@
 .wordplace {
   flex-grow: 1;
 }
+
+.placed {
+  flex-grow: 0;
+}

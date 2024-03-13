@@ -45,15 +45,21 @@ class Game {
 
   public generateSources(sentenceIdx: number) {
     const sentence = this.wordSentences[sentenceIdx];
-    const jumbledCards = sentence.wordCards.sort(() => Math.random() - 0.5);
+    const jumbledCards = sentence.wordCards;
     this.state.currentSentence.sourceBlock = jumbledCards.map(
       (card) => card.wordIndex,
     );
     return jumbledCards;
   }
 
+  public resizeAllCards(containerSize: { width: number; height: number }) {
+    this.wordSentences.forEach((sentence) => {
+      sentence.resizeCards(containerSize);
+    });
+  }
+
   public generateWordsPlaces(cards: Card[]) {
-    return cards.map((card) => div(["wordplace"], card));
+    return cards.map((card) => div(["wordplace", "placed"], card));
   }
 
   public generateResultArea(sentenceIdx: number) {

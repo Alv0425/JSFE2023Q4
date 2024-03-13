@@ -56,7 +56,11 @@ class Playboard extends Component {
       const cardContainer: HTMLElement =
         this.cardWordplacesResult[i].getComponent();
       if (cardContainer.children.length === 0) {
+        if (!(card instanceof Component)) return;
+        const parent = card.getComponent().parentElement;
+        if (parent) parent.classList.remove("placed");
         cardContainer.append(card.getComponent());
+        cardContainer.classList.add("placed");
         break;
       }
       i += 1;
@@ -67,6 +71,12 @@ class Playboard extends Component {
     const dataLevel = await dataHandler.fetchLevelsData(level);
     const game = new Game(dataLevel.rounds[round]);
     this.currentCards = game.generateSources(0);
+    game.resizeAllCards(this.playboardPuzzleContainer.getSize());
+    window.addEventListener("resize", () => {
+      const size = this.playboardField.getSize();
+      size.width -= 20;
+      game.resizeAllCards(size);
+    });
     this.cardWordplacesSource = game.generateWordsPlaces(this.currentCards);
     const resultArea = game.generateResultArea(0);
     this.cardWordplacesResult = resultArea.getChildComponents();

@@ -1,8 +1,18 @@
+@keyframes placeword {
+  0% {
+    transform: scale(1.05) translateY(5%);
+  }
+  100% {
+    transform: scale(1) translateY(0%);
+  }
+}
+
 .card {
   position: relative;
   flex-grow: 1;
   cursor: pointer;
   height: 100%;
+  animation: placeword 0.15s ease-in;
 }
 
 .card__base,

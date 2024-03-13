@@ -2,7 +2,7 @@ import "./card.css";
 import Component from "../../utils/component";
 import { div, span } from "../../utils/elements";
 
-class Card extends Component {
+class Card extends Component<HTMLElement> {
   public text: string;
 
   public baseCardLayer: Component;
@@ -31,6 +31,24 @@ class Card extends Component {
     this.sentenceIdx = sentenceIdx;
     this.wordIndex = wordIndex;
     this.position = "source";
+  }
+
+  public getComponent() {
+    return this.node;
+  }
+
+  public setWidth(
+    containerSize: { width: number; height: number },
+    weight: number,
+  ) {
+    this.setStyleAttribute(
+      "width",
+      `${Math.round(containerSize.width * weight)}px`,
+    );
+    this.setStyleAttribute(
+      "font-size",
+      `${Math.round((containerSize.height * 0.38) / 10)}px`,
+    );
   }
 }
 
