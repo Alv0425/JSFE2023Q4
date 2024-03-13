@@ -124,6 +124,10 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.node.style.setProperty(key, value);
   }
 
+  public removeStyleAttribute(key: string) {
+    this.node.style.removeProperty(key);
+  }
+
   public getSize() {
     return {
       width: this.node.clientWidth,

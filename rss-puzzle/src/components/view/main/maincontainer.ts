@@ -3,7 +3,6 @@ import Component from "../../../utils/component";
 import LoginScreen from "../loginscreen/loginscreen";
 import eventEmitter from "../../../utils/eventemitter";
 import StartScreen from "../startscreen/startscreen";
-import dataHandler from "../../services/datahandler";
 import Playboard from "../playboard/playboard";
 
 class MainCont extends Component {
@@ -30,8 +29,6 @@ class MainCont extends Component {
   }
 
   public async drawMainScreen() {
-    const data = await dataHandler.fetchLevelsData(6);
-    console.log(data);
     this.clear();
     const playboard = new Playboard();
     playboard.startFirstRound();

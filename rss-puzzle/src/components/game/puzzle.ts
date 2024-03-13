@@ -45,7 +45,11 @@ class Game {
 
   public generateSources(sentenceIdx: number) {
     const sentence = this.wordSentences[sentenceIdx];
-    const jumbledCards = sentence.wordCards;
+    const order = Array.from(
+      { length: sentence.wordCards.length },
+      (_, i) => i,
+    ).sort(() => Math.random() - 0.5);
+    const jumbledCards = order.map((i) => sentence.wordCards[order[i]]);
     this.state.currentSentence.sourceBlock = jumbledCards.map(
       (card) => card.wordIndex,
     );
@@ -59,16 +63,23 @@ class Game {
   }
 
   public generateWordsPlaces(cards: Card[]) {
-    return cards.map((card) => div(["wordplace", "placed"], card));
+    return cards.map((card) => {
+      const container = div(["wordplace", "placed"], card);
+      container.setAttribute(
+        "id",
+        `source-${card.sentenceIdx}-${card.wordIndex}`,
+      );
+      return container.getComponent();
+    });
   }
 
   public generateResultArea(sentenceIdx: number) {
     const sentenceContainer = div(["puzzle__sentence"]);
     const sentence = this.wordSentences[sentenceIdx];
     sentence.wordCards.forEach((card, idx) => {
-      const draggable = div(["wordplace"]);
-      draggable.setAttribute("id", `${sentenceIdx}-${idx}`);
-      sentenceContainer.append(draggable);
+      const droppable = div(["wordplace"]);
+      droppable.setAttribute("id", `result-${sentenceIdx}-${idx}`);
+      sentenceContainer.append(droppable);
     });
     return sentenceContainer;
   }

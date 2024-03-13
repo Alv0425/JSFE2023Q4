@@ -13,6 +13,7 @@
   cursor: pointer;
   height: 100%;
   animation: placeword 0.15s ease-in;
+  transition: 0.5s;
 }
 
 .card__base,
@@ -29,9 +30,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateX(0.1em);
 }
 
 .card__base {
+  position: relative;
   background-color: var(--color-container);
-  border-radius: 2px;
+  border-radius: 3px;
+}
+
+.card:hover {
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+  z-index: 3;
 }

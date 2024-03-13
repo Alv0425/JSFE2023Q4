@@ -23,6 +23,7 @@
     "no-console": 0,
     "class-methods-use-this": "off",
     "@typescript-eslint/no-explicit-any": 2,
+    "prefer-destructuring": "off",
     "@typescript-eslint/explicit-member-accessibility": ["warn"],
     "@typescript-eslint/naming-convention": [
       "error",

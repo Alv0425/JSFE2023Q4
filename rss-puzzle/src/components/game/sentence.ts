@@ -1,3 +1,4 @@
+import eventEmitter from "../../utils/eventemitter";
 import { IWord } from "../../utils/types/interfaces";
 import Card from "./card";
 
@@ -24,6 +25,7 @@ class Sentence {
     this.wordCards.forEach((card, idx) => {
       card.setWidth(containerSize, this.wordWeights[idx]);
     });
+    eventEmitter.emit("cardsresized");
   }
 }
 

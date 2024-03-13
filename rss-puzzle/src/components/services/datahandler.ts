@@ -14,7 +14,6 @@ class DataHandler {
     );
     if (!fetchResponse.ok) throw new Error("Cannot read levels data");
     const levelData = (await fetchResponse.json()) as ILevel;
-    console.log(levelData);
     return levelData;
   }
 
