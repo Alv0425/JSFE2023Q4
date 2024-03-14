@@ -1,12 +1,13 @@
 import "./playboard.css";
 import Component from "../../../utils/component";
-import { button, div } from "../../../utils/elements";
+import { div } from "../../../utils/elements";
 import dataHandler from "../../services/datahandler";
 import Game from "../../game/puzzle";
 import Card from "../../game/card";
 import Sentence from "../../game/sentence";
 import eventEmitter from "../../../utils/eventemitter";
 import { getElementOfType } from "../../../utils/helpers/getelementoftype";
+import GameButton from "./gamebutton/gamebutton";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -62,6 +63,16 @@ class Playboard extends Component {
     eventEmitter.on("sentencesolved", () => {
       this.setSolved();
     });
+    eventEmitter.on("continue-game", () => {
+      this.nextSentence();
+    });
+    eventEmitter.on("check-sentence", () => {
+      this.currentSentenceContainer?.classList.toggle("check-mode");
+      this.checkSentence();
+    });
+    eventEmitter.on("source-block-filled", () =>
+      this.currentSentenceContainer?.classList.remove("check-mode"),
+    );
   }
 
   private setSolved() {
@@ -69,31 +80,55 @@ class Playboard extends Component {
     this.currentSentenceContainer?.classList.add("puzzle__sentence_correct");
   }
 
+  private nextSentence() {
+    this.clearSentenceBlocks();
+    this.playboardSourceContainer.clear();
+    if (this.game) {
+      if (this.game.state.currentSentence.current < 9) {
+        this.game.state.currentSentence.current += 1;
+        console.log(this.game.state.currentSentence.current);
+        this.loadSentence(this.game.state.currentSentence.current);
+        this.drawContinueButton();
+      } else {
+        this.openNextRound();
+      }
+    }
+  }
+
   public drawContinueButton() {
-    const nextButton = button(
-      ["playboard__button"],
-      "Continue",
-      "button",
-      "continue",
-    );
-    nextButton.getComponent().disabled = true;
+    const nextButton = new GameButton();
     this.playboardButtons.append(nextButton);
     eventEmitter.on("sentencesolved", () => {
       nextButton.getComponent().disabled = false;
     });
-    nextButton.addListener("click", () => {
-      this.clearSentenceBlocks();
-      this.playboardSourceContainer.clear();
-      if (this.game) {
-        if (this.game.state.currentSentence.current < 9) {
-          this.game.state.currentSentence.current += 1;
-          console.log(this.game.state.currentSentence.current);
-          this.loadSentence(this.game.state.currentSentence.current);
-          this.drawContinueButton();
-        } else {
-          this.openNextRound();
-        }
-      }
+  }
+
+  private checkSentence() {
+    const correctWords = this.currentSentence?.words;
+    if (!correctWords) return;
+    const actualWords = this.game?.state.currentSentence.resultBlock.map(
+      (order) => {
+        if (order === -1) return "";
+        return correctWords[order];
+      },
+    );
+    if (!actualWords) return;
+    if (correctWords.join(" ") === actualWords.join(" "))
+      eventEmitter.emit("sentencesolved");
+    correctWords.forEach((word, i) => {
+      console.log(actualWords[i] === word, actualWords[i], word);
+      getElementOfType(
+        HTMLElement,
+        this.cardWordplacesResult[i],
+      ).classList.remove("error");
+      getElementOfType(
+        HTMLElement,
+        this.cardWordplacesResult[i],
+      ).classList.remove("correct");
+      const correctness = actualWords[i] === word ? "correct" : "error";
+      getElementOfType(HTMLElement, this.cardWordplacesResult[i]).classList.add(
+        correctness,
+      );
     });
   }
 
@@ -201,13 +236,13 @@ class Playboard extends Component {
     this.game.state.currentSentence.sourceBlock = this.getStat(
       this.cardWordplacesSource,
     );
-    if (
-      this.game.state.currentSentence.resultBlock.every(
-        (wordplaceIdx, i) => wordplaceIdx === i,
-      )
-    ) {
-      eventEmitter.emit("sentencesolved");
+    if (this.game.state.currentSentence.sourceBlock.every((i) => i < 0)) {
+      eventEmitter.emit("source-block-epmty");
+      console.log("source-block-epmty");
+    } else {
+      eventEmitter.emit("source-block-filled");
     }
+    this.checkSentence();
   }
 
   private getStat(cards: HTMLElement[]) {
