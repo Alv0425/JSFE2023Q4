@@ -24,12 +24,33 @@ class Game {
 
   public state: IGameState;
 
+  public roundIndex: number;
+
+  public levelIndex: number;
+
   public constructor(info: IRound) {
     this.info = info;
+    const levelid = info.levelData.id.split("_");
+    this.roundIndex = parseInt(levelid[1], 10);
+    this.levelIndex = parseInt(levelid[0], 10);
     this.wordSentences = this.info.words.map((sentence, index) => {
       const sentenceObj = new Sentence(sentence, index);
       return sentenceObj;
     });
+    this.state = {
+      isCurrent: false,
+      isFinished: false,
+      solvedSentences: [],
+      openedSentences: [],
+      currentSentence: {
+        current: 0,
+        sourceBlock: [],
+        resultBlock: [],
+      },
+    };
+  }
+
+  public resetGameState() {
     this.state = {
       isCurrent: false,
       isFinished: false,

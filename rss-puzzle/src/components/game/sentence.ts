@@ -9,6 +9,8 @@ class Sentence {
 
   public wordWeights: number[];
 
+  public sentenceIdx: number;
+
   public constructor(sentence: IWord, idx: number) {
     this.words = sentence.textExample.split(" ");
     this.wordCards = this.words.map((word, index) => {
@@ -19,6 +21,7 @@ class Sentence {
     this.wordWeights = this.words.map(
       (word) => (word.length + 2) / (sentenceLength + 2 * this.words.length),
     );
+    this.sentenceIdx = idx;
   }
 
   public resizeCards(containerSize: { width: number; height: number }) {

@@ -1,6 +1,6 @@
 import "./playboard.css";
 import Component from "../../../utils/component";
-import { div } from "../../../utils/elements";
+import { button, div } from "../../../utils/elements";
 import dataHandler from "../../services/datahandler";
 import Game from "../../game/puzzle";
 import Card from "../../game/card";
@@ -14,6 +14,8 @@ class Playboard extends Component {
   public playboardHints: Component<HTMLElement>;
 
   public playboardField: Component<HTMLElement>;
+
+  public playboardButtons: Component;
 
   public playboardPuzzleContainer: Component<HTMLElement>;
 
@@ -36,6 +38,7 @@ class Playboard extends Component {
     this.playboardHeader = div(["playboard__header"]);
     this.playboardHints = div(["playboard__hints"]);
     this.playboardField = div(["playboard__field"]);
+    this.playboardButtons = div(["playboard__buttons"]);
     this.playboardPuzzleContainer = div(["playboard__puzzle-container"]);
     this.playboardSourceContainer = div(["playboard__source-container"]);
     this.playboardField.appendContent([
@@ -46,6 +49,7 @@ class Playboard extends Component {
       this.playboardHeader,
       this.playboardHints,
       this.playboardField,
+      this.playboardButtons,
     ]);
     eventEmitter.on("cardsresized", () => {
       this.resizeContainers();
@@ -55,6 +59,56 @@ class Playboard extends Component {
       size.width -= 20;
       if (this.game) this.game.resizeAllCards(size);
     });
+    eventEmitter.on("sentencesolved", () => {
+      this.setSolved();
+    });
+  }
+
+  private setSolved() {
+    this.currentCards.forEach((card) => card.removeAllListeners());
+    this.currentSentenceContainer?.classList.add("puzzle__sentence_correct");
+  }
+
+  public drawContinueButton() {
+    const nextButton = button(
+      ["playboard__button"],
+      "Continue",
+      "button",
+      "continue",
+    );
+    nextButton.getComponent().disabled = true;
+    this.playboardButtons.append(nextButton);
+    eventEmitter.on("sentencesolved", () => {
+      nextButton.getComponent().disabled = false;
+    });
+    nextButton.addListener("click", () => {
+      this.clearSentenceBlocks();
+      this.playboardSourceContainer.clear();
+      if (this.game) {
+        if (this.game.state.currentSentence.current < 9) {
+          this.game.state.currentSentence.current += 1;
+          console.log(this.game.state.currentSentence.current);
+          this.loadSentence(this.game.state.currentSentence.current);
+          this.drawContinueButton();
+        } else {
+          this.openNextRound();
+        }
+      }
+    });
+  }
+
+  private async openNextRound() {
+    if (!this.game) return;
+    const level = this.game.levelIndex;
+    const round = this.game.roundIndex;
+    const dataLevel = await dataHandler.fetchLevelsData(level);
+    if (dataLevel.roundsCount === round) {
+      console.log("open next level");
+      return;
+    }
+    this.clearAll();
+    console.log(level, round + 1, "openning");
+    await this.openRound(level, round + 1);
   }
 
   public resizeContainers() {
@@ -73,14 +127,19 @@ class Playboard extends Component {
     });
   }
 
+  private clearSentenceBlocks() {
+    this.playboardSourceContainer.clear();
+    this.playboardButtons.clear();
+    this.cardWordplacesSource = [];
+    this.cardWordplacesResult = [];
+    this.currentCards = [];
+  }
+
   public clearAll() {
     this.playboardHeader.clear();
     this.playboardHints.clear();
     this.playboardPuzzleContainer.clear();
-    this.playboardSourceContainer.clear();
-    this.cardWordplacesSource = [];
-    this.cardWordplacesResult = [];
-    this.currentCards = [];
+    this.clearSentenceBlocks();
   }
 
   public swapPlaces(place1: HTMLElement, place2: HTMLElement) {
@@ -93,10 +152,13 @@ class Playboard extends Component {
     } else if (elementRightSibling) {
       elementRightSibling.before(place1);
     }
-    if (this.currentSentenceContainer)
+    if (this.currentSentenceContainer) {
+      if (!this.currentSentenceContainer.children.length) return;
       this.cardWordplacesResult = Array.from(
         this.currentSentenceContainer.children,
       ) as HTMLElement[];
+    }
+    if (!this.playboardSourceContainer.getComponent().children.length) return;
     this.cardWordplacesSource = Array.from(
       this.playboardSourceContainer.getComponent().children,
     ) as HTMLElement[];
@@ -125,6 +187,43 @@ class Playboard extends Component {
     return target;
   }
 
+  public updateCurrentGameStats() {
+    if (!this.game) return;
+    if (!this.currentSentence) return;
+    this.game.state.isCurrent = true;
+    this.game.state.currentSentence.current = this.currentSentence.sentenceIdx;
+    this.game.state.currentSentence.resultBlock = this.getStat(
+      this.cardWordplacesResult as HTMLElement[],
+    );
+    this.game.state.currentSentence.resultBlock = this.getStat(
+      this.cardWordplacesResult as HTMLElement[],
+    );
+    this.game.state.currentSentence.sourceBlock = this.getStat(
+      this.cardWordplacesSource,
+    );
+    if (
+      this.game.state.currentSentence.resultBlock.every(
+        (wordplaceIdx, i) => wordplaceIdx === i,
+      )
+    ) {
+      eventEmitter.emit("sentencesolved");
+    }
+  }
+
+  private getStat(cards: HTMLElement[]) {
+    const stat = [];
+    for (let i = 0; i < cards.length; i += 1) {
+      const cardRes = getElementOfType(HTMLElement, cards[i]);
+      if (!cardRes.classList.contains("placed")) {
+        stat.push(-1);
+      } else {
+        const wordidx = cardRes.getAttribute("id")?.split("-")[2];
+        if (wordidx) stat.push(parseInt(wordidx, 10));
+      }
+    }
+    return stat;
+  }
+
   public async placeCard(card: Card, target: HTMLElement | null) {
     const destType = card.position === "result" ? "source" : "result";
     const dest = document.getElementById(
@@ -150,7 +249,9 @@ class Playboard extends Component {
   public async openRound(level: number, round: number) {
     const dataLevel = await dataHandler.fetchLevelsData(level);
     this.game = new Game(dataLevel.rounds[round]);
+    console.log(this.game);
     this.loadSentence(0);
+    this.drawContinueButton();
   }
 
   public loadSentence(idx: number) {
@@ -159,7 +260,8 @@ class Playboard extends Component {
     this.cardWordplacesSource = this.game.generateWordsPlaces(
       this.currentCards,
     );
-    this.game.resizeAllCards(this.playboardPuzzleContainer.getSize());
+    const fieldsize = this.playboardPuzzleContainer.getSize();
+    this.game.resizeAllCards(fieldsize);
     const resultArea = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
     this.currentSentenceContainer = resultArea.getComponent();
@@ -169,6 +271,7 @@ class Playboard extends Component {
     this.currentCards.forEach((card) => {
       card.addListener("click", () => {
         this.placeCard(card, this.findPlace(card));
+        this.updateCurrentGameStats();
         if (this.game)
           this.game.resizeAllCards(this.playboardPuzzleContainer.getSize());
       });
@@ -176,7 +279,7 @@ class Playboard extends Component {
   }
 
   public async startFirstRound() {
-    this.openRound(1, 3);
+    this.openRound(1, 0);
   }
 }
 

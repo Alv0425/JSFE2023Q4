@@ -156,11 +156,18 @@ class Component<T extends HTMLElement = HTMLElement> {
       }
     });
     this.content = [];
+    this.clearAll();
   }
 
   public destroy() {
     this.clear();
     this.node.remove();
+  }
+
+  public clearAll() {
+    while (this.node.firstChild) {
+      this.node.removeChild(this.node.firstChild);
+    }
   }
 }
 
