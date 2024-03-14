@@ -8,6 +8,7 @@ import Sentence from "../../game/sentence";
 import eventEmitter from "../../../utils/eventemitter";
 import { getElementOfType } from "../../../utils/helpers/getelementoftype";
 import GameButton from "./gamebutton/gamebutton";
+import AutocompleteButton from "./autocomplete/autocomplete";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -52,16 +53,27 @@ class Playboard extends Component {
       this.playboardField,
       this.playboardButtons,
     ]);
+    this.setListeners();
+  }
+
+  private resize() {
+    const size = this.playboardField.getSize();
+    size.width -= 20;
+    if (this.game) this.game.resizeAllCards(size);
+  }
+
+  private setListeners() {
     eventEmitter.on("cardsresized", () => {
       this.resizeContainers();
     });
     window.addEventListener("resize", () => {
-      const size = this.playboardField.getSize();
-      size.width -= 20;
-      if (this.game) this.game.resizeAllCards(size);
+      this.resize();
     });
     eventEmitter.on("sentencesolved", () => {
       this.setSolved();
+    });
+    eventEmitter.on("sentencearranged", () => {
+      this.setArranged();
     });
     eventEmitter.on("continue-game", () => {
       this.nextSentence();
@@ -73,11 +85,52 @@ class Playboard extends Component {
     eventEmitter.on("source-block-filled", () =>
       this.currentSentenceContainer?.classList.remove("check-mode"),
     );
+    eventEmitter.on("autocomplete", async () => {
+      if (!this.currentSentenceContainer) return;
+      await this.currentSentence?.animateArrangingCards(
+        this.currentSentenceContainer,
+      );
+      this.currentCards.forEach((card) => card.removeAllListeners());
+      setTimeout(() => {
+        eventEmitter.emit("sentencearranged");
+        this.arrangeSentence();
+        this.currentSentenceContainer?.classList.remove("check-mode");
+      }, 500);
+    });
+  }
+
+  private arrangeSentence() {
+    this.cardWordplacesResult.sort((place1, place2) => {
+      let id1: string | undefined;
+      let id2: string | undefined;
+      if (place1 instanceof HTMLElement)
+        id1 = place1.getAttribute("id")?.split("-")[2];
+      if (place2 instanceof HTMLElement)
+        id2 = place2.getAttribute("id")?.split("-")[2];
+      if (!id1 || !id2) return 0;
+      return parseInt(id1, 10) - parseInt(id2, 10);
+    });
+    this.cardWordplacesResult.forEach((place, i) => {
+      if (this.currentSentence?.wordCards[i])
+        if (place)
+          place.append(this.currentSentence?.wordCards[i].getComponent());
+      if (place instanceof HTMLElement) {
+        place.remove();
+        place.classList.add("placed", "correct");
+        place.classList.add("error");
+        this.currentSentenceContainer?.append(place);
+      }
+    });
   }
 
   private setSolved() {
     this.currentCards.forEach((card) => card.removeAllListeners());
     this.currentSentenceContainer?.classList.add("puzzle__sentence_correct");
+  }
+
+  private setArranged() {
+    this.currentCards.forEach((card) => card.removeAllListeners());
+    this.currentSentenceContainer?.classList.add("puzzle__sentence_arranged");
   }
 
   private nextSentence() {
@@ -86,13 +139,16 @@ class Playboard extends Component {
     if (this.game) {
       if (this.game.state.currentSentence.current < 9) {
         this.game.state.currentSentence.current += 1;
-        console.log(this.game.state.currentSentence.current);
         this.loadSentence(this.game.state.currentSentence.current);
-        // this.drawContinueButton();
       } else {
         this.openNextRound();
       }
     }
+  }
+
+  public drawAutocompleteButton() {
+    const autocompleteButton = new AutocompleteButton();
+    this.playboardButtons.append(autocompleteButton);
   }
 
   public drawContinueButton() {
@@ -116,7 +172,6 @@ class Playboard extends Component {
     if (correctWords.join(" ") === actualWords.join(" "))
       eventEmitter.emit("sentencesolved");
     correctWords.forEach((word, i) => {
-      console.log(actualWords[i] === word, actualWords[i], word);
       getElementOfType(
         HTMLElement,
         this.cardWordplacesResult[i],
@@ -138,11 +193,12 @@ class Playboard extends Component {
     const round = this.game.roundIndex;
     const dataLevel = await dataHandler.fetchLevelsData(level);
     if (dataLevel.roundsCount === round) {
-      console.log("open next level");
+      if (level === 6) return;
+      this.clearAll();
+      await this.openRound(level + 1, 0);
       return;
     }
     this.clearAll();
-    console.log(level, round + 1, "openning");
     await this.openRound(level, round + 1);
   }
 
@@ -238,7 +294,6 @@ class Playboard extends Component {
     );
     if (this.game.state.currentSentence.sourceBlock.every((i) => i < 0)) {
       eventEmitter.emit("source-block-epmty");
-      console.log("source-block-epmty");
     } else {
       eventEmitter.emit("source-block-filled");
     }
@@ -284,9 +339,9 @@ class Playboard extends Component {
   public async openRound(level: number, round: number) {
     const dataLevel = await dataHandler.fetchLevelsData(level);
     this.game = new Game(dataLevel.rounds[round]);
-    console.log(this.game);
     this.loadSentence(0);
     this.drawContinueButton();
+    this.drawAutocompleteButton();
   }
 
   public loadSentence(idx: number) {
@@ -296,8 +351,7 @@ class Playboard extends Component {
     this.cardWordplacesSource = this.game.generateWordsPlaces(
       this.currentCards,
     );
-    const fieldsize = this.playboardPuzzleContainer.getSize();
-    this.game.resizeAllCards(fieldsize);
+    this.resize();
     const resultArea = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
     this.currentSentenceContainer = resultArea.getComponent();
@@ -308,8 +362,7 @@ class Playboard extends Component {
       card.addListener("click", () => {
         this.placeCard(card, this.findPlace(card));
         this.updateCurrentGameStats();
-        if (this.game)
-          this.game.resizeAllCards(this.playboardPuzzleContainer.getSize());
+        this.resize();
       });
     });
   }

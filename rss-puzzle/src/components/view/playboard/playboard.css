@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 10px;
   overflow: hidden;
+  animation: fadein 0.5s ease-in;
 }
 
 .playboard__header {
@@ -42,6 +43,11 @@
   grid-template-rows: repeat(10, 1fr);
 }
 
+.playboard__buttons {
+  display: flex;
+  gap: 10px;
+}
+
 .playboard__button {
   min-width: 150px;
 }
@@ -52,13 +58,13 @@
   display: flex;
   transition: 0.5s;
 }
-
+.puzzle__sentence_arranged,
 .puzzle__sentence_correct {
   position: relative;
   pointer-events: none;
   filter: brightness(1.2);
 }
-
+.puzzle__sentence_arranged::before,
 .puzzle__sentence_correct::before {
   position: absolute;
   content: "";
@@ -66,10 +72,16 @@
   left: -45px;
   width: 1.2rem;
   height: 100%;
-  background-image: url(../../../assets/icons/circle-check-solid.svg);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.puzzle__sentence_correct::before {
+  background-image: url(../../../assets/icons/circle-check-solid.svg);
+}
+.puzzle__sentence_arranged::before {
+  background-image: url(../../../assets/icons/circle-xmark-solid.svg);
 }
 
 .word {

@@ -24,6 +24,20 @@ class Sentence {
     this.sentenceIdx = idx;
   }
 
+  public async animateArrangingCards(container: HTMLElement) {
+    const baseCoords = container.getBoundingClientRect();
+    const currentCardsWidths = this.wordCards.map((card) => card.currentWidth);
+    const shifts = [0];
+    let shift = 0;
+    for (let i = 0; i < this.wordCards.length - 1; i += 1) {
+      shift += currentCardsWidths[i];
+      shifts.push(shift);
+    }
+    this.wordCards.forEach((card, i) =>
+      card.moveTo(baseCoords.x + shifts[i], baseCoords.y),
+    );
+  }
+
   public resizeCards(containerSize: { width: number; height: number }) {
     this.wordCards.forEach((card, idx) => {
       card.setWidth(containerSize, this.wordWeights[idx]);

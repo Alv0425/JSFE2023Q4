@@ -57,6 +57,22 @@ class Card extends Component<HTMLElement> {
     if (parent) parent.style.setProperty("width", `${this.currentWidth}px`);
   }
 
+  public async moveTo(x: number, y: number) {
+    const startCoords = this.getComponent().getBoundingClientRect();
+    const shiftX = Math.round(x - startCoords.x);
+    const shiftY = Math.round(y - startCoords.y);
+    this.setStyleAttribute(
+      "transform",
+      `translateX(${shiftX}px) translateY(${shiftY}px)`,
+    );
+    return new Promise((res) => {
+      setTimeout(() => {
+        res(true);
+        this.removeStyleAttribute("transform");
+      }, 500);
+    });
+  }
+
   public async animateMove(start: HTMLElement, finish: HTMLElement) {
     const startCoords = start.getBoundingClientRect();
     const finishCoords = finish.getBoundingClientRect();

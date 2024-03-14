@@ -22,6 +22,10 @@ class GameButton extends Component<HTMLButtonElement> {
     eventEmitter.on("sentencesolved", () => {
       this.changeButtonState();
     });
+    eventEmitter.on("sentencearranged", () => {
+      this.getComponent().disabled = false;
+      this.setState("Continue");
+    });
     eventEmitter.on("startsentence", () => {
       this.getComponent().disabled = true;
       this.setState("Check");
