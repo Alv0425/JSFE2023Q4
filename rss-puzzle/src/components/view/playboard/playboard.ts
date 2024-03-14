@@ -88,7 +88,7 @@ class Playboard extends Component {
         this.game.state.currentSentence.current += 1;
         console.log(this.game.state.currentSentence.current);
         this.loadSentence(this.game.state.currentSentence.current);
-        this.drawContinueButton();
+        // this.drawContinueButton();
       } else {
         this.openNextRound();
       }
@@ -164,7 +164,6 @@ class Playboard extends Component {
 
   private clearSentenceBlocks() {
     this.playboardSourceContainer.clear();
-    this.playboardButtons.clear();
     this.cardWordplacesSource = [];
     this.cardWordplacesResult = [];
     this.currentCards = [];
@@ -173,6 +172,7 @@ class Playboard extends Component {
   public clearAll() {
     this.playboardHeader.clear();
     this.playboardHints.clear();
+    this.playboardButtons.clear();
     this.playboardPuzzleContainer.clear();
     this.clearSentenceBlocks();
   }
@@ -291,6 +291,7 @@ class Playboard extends Component {
 
   public loadSentence(idx: number) {
     if (!this.game) return;
+    eventEmitter.emit("startsentence");
     this.currentCards = this.game.generateSources(idx);
     this.cardWordplacesSource = this.game.generateWordsPlaces(
       this.currentCards,

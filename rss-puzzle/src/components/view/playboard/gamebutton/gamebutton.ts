@@ -13,14 +13,18 @@ class GameButton extends Component<HTMLButtonElement> {
     );
     this.setTextContent("Check");
     this.getComponent().disabled = true;
-    eventEmitter.on("sentencesolved", () => {
-      this.changeButtonState();
-    });
     eventEmitter.on("source-block-epmty", () => {
       this.getComponent().disabled = false;
     });
     eventEmitter.on("source-block-filled", () => {
       this.getComponent().disabled = true;
+    });
+    eventEmitter.on("sentencesolved", () => {
+      this.changeButtonState();
+    });
+    eventEmitter.on("startsentence", () => {
+      this.getComponent().disabled = true;
+      this.setState("Check");
     });
     this.addListener("click", () => {
       if (this.buttonState === "Check") {
@@ -35,6 +39,11 @@ class GameButton extends Component<HTMLButtonElement> {
     this.buttonState = this.buttonState === "Check" ? "Continue" : "Check";
     this.setTextContent(this.buttonState);
     this.getComponent().disabled = false;
+  }
+
+  private setState(state: "Continue" | "Check") {
+    this.buttonState = state;
+    this.setTextContent(this.buttonState);
   }
 }
 
