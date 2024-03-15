@@ -18,13 +18,9 @@ class Sentence {
       return newCard;
     });
     this.wordCards[0].getComponent().classList.add("card_start");
-    this.wordCards[this.wordCards.length - 1]
-      .getComponent()
-      .classList.add("card_end");
+    this.wordCards[this.wordCards.length - 1].getComponent().classList.add("card_end");
     const sentenceLength = this.words.join("").length;
-    this.wordWeights = this.words.map(
-      (word) => (word.length + 2) / (sentenceLength + 2 * this.words.length),
-    );
+    this.wordWeights = this.words.map((word) => (word.length + 2) / (sentenceLength + 2 * this.words.length));
     this.sentenceIdx = idx;
   }
 
@@ -37,9 +33,7 @@ class Sentence {
       shift += currentCardsWidths[i];
       shifts.push(shift);
     }
-    this.wordCards.forEach((card, i) =>
-      card.moveTo(baseCoords.x + shifts[i], baseCoords.y),
-    );
+    this.wordCards.forEach((card, i) => card.moveTo(baseCoords.x + shifts[i], baseCoords.y));
   }
 
   public resizeCards(containerSize: { width: number; height: number }) {

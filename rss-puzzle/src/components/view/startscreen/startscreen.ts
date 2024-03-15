@@ -15,26 +15,15 @@ class StartScreen extends Component {
       {},
       {},
       h2(["start-screen__greeting"], `Hello, ${storage.getName()}!`),
-      p(
-        ["start-screen__text"],
-        "RSS-PUZZLE is a game designed to enhance English language skills.",
-      ),
+      p(["start-screen__text"], "RSS-PUZZLE is a game designed to enhance English language skills."),
       p(
         ["start-screen__text"],
         "You will be challenged to assemble sentences from jumbled puzzle-like word cards. Once you have properly organized all the words, you will reveal beautiful artwork.",
       ),
       p(["start-screen__text"], "Good luck and have fun!"),
     );
-    const startButton = button(
-      ["start-screen__button"],
-      "",
-      "button",
-      "start-button",
-    );
-    startButton.appendContent([
-      span(["start-screen__button-label"], "START"),
-      span(["start-screen__button-icon"]),
-    ]);
+    const startButton = button(["start-screen__button"], "", "button", "start-button");
+    startButton.appendContent([span(["start-screen__button-label"], "START"), span(["start-screen__button-icon"])]);
     this.append(startButton);
     this.puzzlesBg = new PuzzlesBg();
     startButton.addListener("click", () => eventEmitter.emit("startclicked"));

@@ -69,10 +69,7 @@ class Game {
     const jumbledCards = sentence.wordCards.slice();
     for (let i = jumbledCards.length - 1; i > 0; i -= 1) {
       const rand = Math.floor(Math.random() * (i + 1));
-      [jumbledCards[i], jumbledCards[rand]] = [
-        jumbledCards[rand],
-        jumbledCards[i],
-      ];
+      [jumbledCards[i], jumbledCards[rand]] = [jumbledCards[rand], jumbledCards[i]];
     }
     // const order = Array.from(
     //   { length: sentence.wordCards.length },
@@ -94,10 +91,7 @@ class Game {
   public generateWordsPlaces(cards: Card[]) {
     return cards.map((card) => {
       const container = div(["wordplace", "placed"], card);
-      container.setAttribute(
-        "id",
-        `source-${card.sentenceIdx}-${card.wordIndex}`,
-      );
+      container.setAttribute("id", `source-${card.sentenceIdx}-${card.wordIndex}`);
       return container.getComponent();
     });
   }

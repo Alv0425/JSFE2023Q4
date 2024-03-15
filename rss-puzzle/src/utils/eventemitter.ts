@@ -16,9 +16,7 @@ class EventEmitter {
 
   public off(event: string, handler?: HandlerType) {
     if (handler) {
-      this.eventList[event] = this.eventList[event].filter(
-        (cb) => handler !== cb,
-      );
+      this.eventList[event] = this.eventList[event].filter((cb) => handler !== cb);
     } else {
       this.eventList[event] = [];
     }

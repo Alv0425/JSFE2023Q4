@@ -14,14 +14,10 @@ class TranslationHint {
   }
 
   public setHint(hintText: string) {
-    this.hintContainer
-      .getComponent()
-      .classList.add("playboard__translation-hint_hide");
+    this.hintContainer.getComponent().classList.add("playboard__translation-hint_hide");
     setTimeout(() => {
       this.hintText.setTextContent(hintText);
-      this.hintContainer
-        .getComponent()
-        .classList.remove("playboard__translation-hint_hide");
+      this.hintContainer.getComponent().classList.remove("playboard__translation-hint_hide");
     }, 500);
   }
 

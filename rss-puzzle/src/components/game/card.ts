@@ -39,12 +39,7 @@ class Card extends Component<HTMLElement> {
     this.baseCardLayer.append(this.baseCircle);
     this.baseImageLayer = div(["card__image"]);
     this.textCardLayer = span(["card__text"], text);
-    this.appendContent([
-      this.baseCardLayer,
-      this.baseImageLayer,
-      this.textCardLayer,
-      this.borderCircle,
-    ]);
+    this.appendContent([this.baseCardLayer, this.baseImageLayer, this.textCardLayer, this.borderCircle]);
     this.sentenceIdx = sentenceIdx;
     this.wordIndex = wordIndex;
     this.position = "source";
@@ -56,20 +51,11 @@ class Card extends Component<HTMLElement> {
     return this.node;
   }
 
-  public setWidth(
-    containerSize: { width: number; height: number },
-    weight: number,
-  ) {
+  public setWidth(containerSize: { width: number; height: number }, weight: number) {
     this.currentWidth = Math.round(containerSize.width * weight);
     this.setStyleAttribute("width", `${this.currentWidth}px`);
-    this.setStyleAttribute(
-      "height",
-      `${Math.round(containerSize.height * 0.1)}px`,
-    );
-    this.setStyleAttribute(
-      "font-size",
-      `${Math.round((containerSize.height * 0.38) / 10)}px`,
-    );
+    this.setStyleAttribute("height", `${Math.round(containerSize.height * 0.1)}px`);
+    this.setStyleAttribute("font-size", `${Math.round((containerSize.height * 0.38) / 10)}px`);
     const parent = this.getComponent().parentElement;
     if (parent) parent.style.setProperty("width", `${this.currentWidth}px`);
     this.baseCircle.setStyleAttribute(
@@ -82,10 +68,7 @@ class Card extends Component<HTMLElement> {
     const startCoords = this.getComponent().getBoundingClientRect();
     const shiftX = Math.round(x - startCoords.x);
     const shiftY = Math.round(y - startCoords.y);
-    this.setStyleAttribute(
-      "transform",
-      `translateX(${shiftX}px) translateY(${shiftY}px)`,
-    );
+    this.setStyleAttribute("transform", `translateX(${shiftX}px) translateY(${shiftY}px)`);
     return new Promise((res) => {
       setTimeout(() => {
         res(true);
@@ -99,10 +82,7 @@ class Card extends Component<HTMLElement> {
     const finishCoords = finish.getBoundingClientRect();
     const shiftX = Math.round(finishCoords.x - startCoords.x);
     const shiftY = Math.round(finishCoords.y - startCoords.y);
-    this.setStyleAttribute(
-      "transform",
-      `translateX(${shiftX}px) translateY(${shiftY}px)`,
-    );
+    this.setStyleAttribute("transform", `translateX(${shiftX}px) translateY(${shiftY}px)`);
     return new Promise((res) => {
       setTimeout(() => {
         res(true);
@@ -161,11 +141,7 @@ class Card extends Component<HTMLElement> {
       document.querySelector(".playboard__field"),
     ).getBoundingClientRect();
     if (x < fieldCoords.x || y < fieldCoords.y) return false;
-    if (
-      x > fieldCoords.x + fieldCoords.width ||
-      y > fieldCoords.y + fieldCoords.width
-    )
-      return false;
+    if (x > fieldCoords.x + fieldCoords.width || y > fieldCoords.y + fieldCoords.width) return false;
     return true;
   }
 
@@ -183,17 +159,12 @@ class Card extends Component<HTMLElement> {
 
   public dragCardMouse(event: MouseEvent, drophandler: () => void) {
     const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX =
-      event.clientX - this.getComponent().getBoundingClientRect().left;
-    const shiftY =
-      event.clientY - this.getComponent().getBoundingClientRect().top;
+    const shiftX = event.clientX - this.getComponent().getBoundingClientRect().left;
+    const shiftY = event.clientY - this.getComponent().getBoundingClientRect().top;
     const move1 = (e: MouseEvent) => {
       if (shiftX > 5 || shiftY > 5) this.draggable = true;
       const coord = this.getCoords(e);
-      this.setCoordinates(
-        coord.x - startCoords.x - shiftX,
-        coord.y - startCoords.y - shiftY,
-      );
+      this.setCoordinates(coord.x - startCoords.x - shiftX, coord.y - startCoords.y - shiftY);
       this.checkElementBelow(coord.x, coord.y);
     };
     document.body.addEventListener("mousemove", move1);
@@ -209,20 +180,13 @@ class Card extends Component<HTMLElement> {
 
   public dragCardTouch(event: TouchEvent, drophandler: () => void) {
     const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX =
-      event.touches[0].clientX -
-      this.getComponent().getBoundingClientRect().left;
-    const shiftY =
-      event.touches[0].clientY -
-      this.getComponent().getBoundingClientRect().top;
+    const shiftX = event.touches[0].clientX - this.getComponent().getBoundingClientRect().left;
+    const shiftY = event.touches[0].clientY - this.getComponent().getBoundingClientRect().top;
     const move = (e: TouchEvent) => {
       document.body.classList.add("fixed");
       if (shiftX > 5 || shiftY > 5) this.draggable = true;
       const coord = this.getCoords(e);
-      this.setCoordinates(
-        coord.x - startCoords.x - shiftX,
-        coord.y - startCoords.y - shiftY,
-      );
+      this.setCoordinates(coord.x - startCoords.x - shiftX, coord.y - startCoords.y - shiftY);
       this.checkElementBelow(coord.x, coord.y);
     };
     document.body.addEventListener("touchmove", move);

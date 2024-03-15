@@ -1,8 +1,5 @@
 export type Props<T extends HTMLElement = HTMLElement> = Partial<
-  Omit<
-    T,
-    "className" | "style" | "children" | "tagName" | "dataset" | "classList"
-  >
+  Omit<T, "className" | "style" | "children" | "tagName" | "dataset" | "classList">
 >;
 
 export type Attrs = Partial<Record<string, string>>;
@@ -110,11 +107,7 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.listeners.forEach((listener) => {
       if (listener.eType === type) {
         if (listener.options) {
-          this.node.removeEventListener(
-            listener.eType,
-            listener.handler,
-            listener.options,
-          );
+          this.node.removeEventListener(listener.eType, listener.handler, listener.options);
         } else {
           this.node.removeEventListener(listener.eType, listener.handler);
         }
@@ -125,11 +118,7 @@ class Component<T extends HTMLElement = HTMLElement> {
   public removeAllListeners() {
     this.listeners.forEach((listener) => {
       if (listener.options) {
-        this.node.removeEventListener(
-          listener.eType,
-          listener.handler,
-          listener.options,
-        );
+        this.node.removeEventListener(listener.eType, listener.handler, listener.options);
       } else {
         this.node.removeEventListener(listener.eType, listener.handler);
       }

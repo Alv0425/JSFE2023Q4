@@ -5,12 +5,7 @@ class GameButton extends Component<HTMLButtonElement> {
   private buttonState: "Check" | "Continue" = "Check";
 
   public constructor() {
-    super(
-      "button",
-      ["playboard__button"],
-      {},
-      { id: "playboard-button", type: "button" },
-    );
+    super("button", ["playboard__button"], {}, { id: "playboard-button", type: "button" });
     this.setTextContent("Check");
     this.getComponent().disabled = true;
     eventEmitter.on("source-block-epmty", () => {

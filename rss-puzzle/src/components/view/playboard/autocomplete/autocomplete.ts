@@ -3,12 +3,7 @@ import eventEmitter from "../../../../utils/eventemitter";
 
 class AutocompleteButton extends Component<HTMLButtonElement> {
   public constructor() {
-    super(
-      "button",
-      ["playboard__button"],
-      {},
-      { id: "playboard-button-autocomplete", type: "button" },
-    );
+    super("button", ["playboard__button"], {}, { id: "playboard-button-autocomplete", type: "button" });
     this.setTextContent("Auto-Complete");
     this.addListener("click", () => {
       this.getComponent().disabled = true;

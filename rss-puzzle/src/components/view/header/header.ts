@@ -12,10 +12,7 @@ class Header extends Component {
 
   public constructor() {
     super("header", ["header"]);
-    this.headerCont = div(
-      ["header__container"],
-      h1(["header__logo"], "RSS PUZZLE"),
-    );
+    this.headerCont = div(["header__container"], h1(["header__logo"], "RSS PUZZLE"));
     this.loginButton = button(["header__button"], "LOG OUT");
     this.loginButton.addListener("click", () => {
       modal.openMmodalLogout();

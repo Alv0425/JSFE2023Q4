@@ -4,14 +4,11 @@ class DataHandler {
   private urlPrefix: string;
 
   public constructor() {
-    this.urlPrefix =
-      "https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/";
+    this.urlPrefix = "https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/";
   }
 
   public async fetchLevelsData(level: number) {
-    const fetchResponse: Response = await fetch(
-      `./assets/data/wordCollectionLevel${level}.json`,
-    );
+    const fetchResponse: Response = await fetch(`./assets/data/wordCollectionLevel${level}.json`);
     if (!fetchResponse.ok) throw new Error("Cannot read levels data");
     const levelData = (await fetchResponse.json()) as ILevel;
     return levelData;

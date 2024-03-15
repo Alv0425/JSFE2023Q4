@@ -22,35 +22,18 @@ class Modal extends Component {
     const modalLogout = div(
       ["modal", "modal_logout"],
       h2(["modal__title"], "Are you sure?"),
-      p(
-        ["modal__text"],
-        "Logging out will remove all of your saved data and progress in localStorage.",
-      ),
+      p(["modal__text"], "Logging out will remove all of your saved data and progress in localStorage."),
     );
-    const closeButton = button(
-      ["modal__button"],
-      "close",
-      "button",
-      "close-btn",
-    );
+    const closeButton = button(["modal__button"], "close", "button", "close-btn");
     closeButton.addListener("click", () => this.closeModal());
-    const logoutButton = button(
-      ["modal__button"],
-      "logout",
-      "button",
-      "logout-btn",
-    );
+    const logoutButton = button(["modal__button"], "logout", "button", "logout-btn");
     logoutButton.addListener("click", () => {
       this.closeModal();
       loader.draw();
       loader.close();
       eventEmitter.emit("logout");
     });
-    const modalButtons = div(
-      ["modal__buttons-container"],
-      closeButton,
-      logoutButton,
-    );
+    const modalButtons = div(["modal__buttons-container"], closeButton, logoutButton);
     modalLogout.appendContent([modalButtons]);
     this.append(modalLogout);
   }

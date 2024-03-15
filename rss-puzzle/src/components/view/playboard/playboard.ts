@@ -48,16 +48,8 @@ class Playboard extends Component {
     this.playboardButtons = div(["playboard__buttons"]);
     this.playboardPuzzleContainer = div(["playboard__puzzle-container"]);
     this.playboardSourceContainer = div(["playboard__source-container"]);
-    this.playboardField.appendContent([
-      this.playboardPuzzleContainer,
-      this.playboardSourceContainer,
-    ]);
-    this.appendContent([
-      this.playboardHeader,
-      this.playboardHints,
-      this.playboardField,
-      this.playboardButtons,
-    ]);
+    this.playboardField.appendContent([this.playboardPuzzleContainer, this.playboardSourceContainer]);
+    this.appendContent([this.playboardHeader, this.playboardHints, this.playboardField, this.playboardButtons]);
     this.setListeners();
     this.drawHints();
   }
@@ -90,14 +82,10 @@ class Playboard extends Component {
       this.currentSentenceContainer?.classList.toggle("check-mode");
       this.checkSentence();
     });
-    eventEmitter.on("source-block-filled", () =>
-      this.currentSentenceContainer?.classList.remove("check-mode"),
-    );
+    eventEmitter.on("source-block-filled", () => this.currentSentenceContainer?.classList.remove("check-mode"));
     eventEmitter.on("autocomplete", async () => {
       if (!this.currentSentenceContainer) return;
-      await this.currentSentence?.animateArrangingCards(
-        this.currentSentenceContainer,
-      );
+      await this.currentSentence?.animateArrangingCards(this.currentSentenceContainer);
       this.currentCards.forEach((card) => card.removeAllListeners());
       setTimeout(() => {
         eventEmitter.emit("sentencearranged");
@@ -116,17 +104,14 @@ class Playboard extends Component {
     this.cardWordplacesResult.sort((place1, place2) => {
       let id1: string | undefined;
       let id2: string | undefined;
-      if (place1 instanceof HTMLElement)
-        id1 = place1.getAttribute("id")?.split("-")[2];
-      if (place2 instanceof HTMLElement)
-        id2 = place2.getAttribute("id")?.split("-")[2];
+      if (place1 instanceof HTMLElement) id1 = place1.getAttribute("id")?.split("-")[2];
+      if (place2 instanceof HTMLElement) id2 = place2.getAttribute("id")?.split("-")[2];
       if (!id1 || !id2) return 0;
       return parseInt(id1, 10) - parseInt(id2, 10);
     });
     this.cardWordplacesResult.forEach((place, i) => {
       if (this.currentSentence?.wordCards[i])
-        if (place)
-          place.append(this.currentSentence?.wordCards[i].getComponent());
+        if (place) place.append(this.currentSentence?.wordCards[i].getComponent());
       if (place instanceof HTMLElement) {
         place.remove();
         place.classList.add("placed", "correct");
@@ -175,30 +160,20 @@ class Playboard extends Component {
   private checkSentence() {
     const correctWords = this.currentSentence?.words;
     if (!correctWords) return;
-    const actualWords = this.game?.state.currentSentence.resultBlock.map(
-      (order) => {
-        if (order === -1) return "";
-        return correctWords[order];
-      },
-    );
+    const actualWords = this.game?.state.currentSentence.resultBlock.map((order) => {
+      if (order === -1) return "";
+      return correctWords[order];
+    });
     if (!actualWords) return;
     if (correctWords.join(" ") === actualWords.join(" ")) {
       eventEmitter.emit("sentencesolved");
       this.currentSentenceContainer?.classList.remove("check-mode");
     }
     correctWords.forEach((word, i) => {
-      getElementOfType(
-        HTMLElement,
-        this.cardWordplacesResult[i],
-      ).classList.remove("error");
-      getElementOfType(
-        HTMLElement,
-        this.cardWordplacesResult[i],
-      ).classList.remove("correct");
+      getElementOfType(HTMLElement, this.cardWordplacesResult[i]).classList.remove("error");
+      getElementOfType(HTMLElement, this.cardWordplacesResult[i]).classList.remove("correct");
       const correctness = actualWords[i] === word ? "correct" : "error";
-      getElementOfType(HTMLElement, this.cardWordplacesResult[i]).classList.add(
-        correctness,
-      );
+      getElementOfType(HTMLElement, this.cardWordplacesResult[i]).classList.add(correctness);
     });
   }
 
@@ -220,16 +195,10 @@ class Playboard extends Component {
   public resizeContainers() {
     if (!this.currentSentence) return;
     this.currentSentence.wordCards.forEach((card) => {
-      const sourceContainer = document.getElementById(
-        `source-${card.sentenceIdx}-${card.wordIndex}`,
-      );
-      const resultContainer = document.getElementById(
-        `result-${card.sentenceIdx}-${card.wordIndex}`,
-      );
-      if (sourceContainer)
-        sourceContainer.style.setProperty("width", `${card.currentWidth}px`);
-      if (resultContainer)
-        resultContainer.style.setProperty("width", `${card.currentWidth}px`);
+      const sourceContainer = document.getElementById(`source-${card.sentenceIdx}-${card.wordIndex}`);
+      const resultContainer = document.getElementById(`result-${card.sentenceIdx}-${card.wordIndex}`);
+      if (sourceContainer) sourceContainer.style.setProperty("width", `${card.currentWidth}px`);
+      if (resultContainer) resultContainer.style.setProperty("width", `${card.currentWidth}px`);
       sourceContainer?.classList.remove("highlight");
       resultContainer?.classList.remove("highlight");
     });
@@ -264,30 +233,19 @@ class Playboard extends Component {
   private updateCardsContainers() {
     if (this.currentSentenceContainer) {
       if (!this.currentSentenceContainer.children.length) return;
-      this.cardWordplacesResult = Array.from(
-        this.currentSentenceContainer.children,
-      ) as HTMLElement[];
+      this.cardWordplacesResult = Array.from(this.currentSentenceContainer.children) as HTMLElement[];
     }
     if (!this.playboardSourceContainer.getComponent().children.length) return;
-    this.cardWordplacesSource = Array.from(
-      this.playboardSourceContainer.getComponent().children,
-    ) as HTMLElement[];
+    this.cardWordplacesSource = Array.from(this.playboardSourceContainer.getComponent().children) as HTMLElement[];
   }
 
   public findPlace(card: Card) {
     let i = 0;
-    let cardContainer = getElementOfType(
-      HTMLElement,
-      this.cardWordplacesResult[0],
-    );
+    let cardContainer = getElementOfType(HTMLElement, this.cardWordplacesResult[0]);
     let target: HTMLElement | null = null;
     while (i < this.currentCards.length) {
-      cardContainer = getElementOfType(
-        HTMLElement,
-        this.cardWordplacesResult[i],
-      );
-      if (card.position === "result")
-        cardContainer = this.cardWordplacesSource[i];
+      cardContainer = getElementOfType(HTMLElement, this.cardWordplacesResult[i]);
+      if (card.position === "result") cardContainer = this.cardWordplacesSource[i];
       if (!cardContainer.classList.contains("placed")) {
         target = !target ? cardContainer : target;
         break;
@@ -302,15 +260,9 @@ class Playboard extends Component {
     if (!this.currentSentence) return;
     this.game.state.isCurrent = true;
     this.game.state.currentSentence.current = this.currentSentence.sentenceIdx;
-    this.game.state.currentSentence.resultBlock = this.getStat(
-      this.cardWordplacesResult as HTMLElement[],
-    );
-    this.game.state.currentSentence.resultBlock = this.getStat(
-      this.cardWordplacesResult as HTMLElement[],
-    );
-    this.game.state.currentSentence.sourceBlock = this.getStat(
-      this.cardWordplacesSource,
-    );
+    this.game.state.currentSentence.resultBlock = this.getStat(this.cardWordplacesResult as HTMLElement[]);
+    this.game.state.currentSentence.resultBlock = this.getStat(this.cardWordplacesResult as HTMLElement[]);
+    this.game.state.currentSentence.sourceBlock = this.getStat(this.cardWordplacesSource);
     if (this.game.state.currentSentence.sourceBlock.every((i) => i < 0)) {
       eventEmitter.emit("source-block-epmty");
     } else {
@@ -337,9 +289,7 @@ class Playboard extends Component {
     let destType = "result";
     const targetID = target?.getAttribute("id");
     if (targetID) destType = targetID.split("-")[0];
-    const dest = document.getElementById(
-      `${destType}-${card.sentenceIdx}-${card.wordIndex}`,
-    );
+    const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     if (target?.classList.contains("placed")) {
       if (dest) {
@@ -350,8 +300,7 @@ class Playboard extends Component {
         card.unsetCoordinates();
         cardComp.draggable = false;
         target?.classList.remove("highlight");
-        if (destType === "result" || destType === "source")
-          cardComp.position = destType;
+        if (destType === "result" || destType === "source") cardComp.position = destType;
       }
       this.updateCardsContainers();
       this.updateCurrentGameStats();
@@ -372,16 +321,13 @@ class Playboard extends Component {
     card.unsetCoordinates();
     cardComp.draggable = false;
     target?.classList.remove("highlight");
-    if (destType === "result" || destType === "source")
-      cardComp.position = destType;
+    if (destType === "result" || destType === "source") cardComp.position = destType;
   }
 
   public async placeCard(card: Card, target: HTMLElement | null) {
     card.unsetCoordinates();
     const destType = card.position === "result" ? "source" : "result";
-    const dest = document.getElementById(
-      `${destType}-${card.sentenceIdx}-${card.wordIndex}`,
-    );
+    const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     let cardContainer = target;
     if (dest) {
@@ -412,15 +358,11 @@ class Playboard extends Component {
     if (!this.game) return;
     eventEmitter.emit("startsentence");
     this.currentCards = this.game.generateSources(idx);
-    this.cardWordplacesSource = this.game.generateWordsPlaces(
-      this.currentCards,
-    );
+    this.cardWordplacesSource = this.game.generateWordsPlaces(this.currentCards);
     this.resize();
     const resultArea = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
-    this.hints.translationHint?.setHint(
-      this.game.info.words[idx].textExampleTranslate,
-    );
+    this.hints.translationHint?.setHint(this.game.info.words[idx].textExampleTranslate);
     this.currentSentenceContainer = resultArea.getComponent();
     this.cardWordplacesResult = resultArea.getContent();
     this.playboardSourceContainer.appendContent(this.cardWordplacesSource);
@@ -432,8 +374,7 @@ class Playboard extends Component {
   private addListenersToCards() {
     this.currentCards.forEach((card) => {
       const draghandler = () => {
-        if (card.draggable && card.curTarget instanceof HTMLElement)
-          this.placeCardOndrop(card, card.curTarget);
+        if (card.draggable && card.curTarget instanceof HTMLElement) this.placeCardOndrop(card, card.curTarget);
         this.updateCardsContainers();
         this.updateCurrentGameStats();
         this.resize();
