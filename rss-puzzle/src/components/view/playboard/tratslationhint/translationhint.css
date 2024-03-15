@@ -1,0 +1,15 @@
+.playboard__translation-hint {
+  display: flex;
+  opacity: 1;
+  transition: 0.5s;
+  user-select: none;
+  font-size: 0.9rem;
+}
+
+.playboard__translation-hint_hide {
+  opacity: 0;
+}
+
+.playboard__hint-label {
+  margin: 0;
+}

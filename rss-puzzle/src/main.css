@@ -96,3 +96,7 @@ button:disabled {
 .fade-out {
   animation: fadeout 0.3s ease-in forwards;
 }
+
+.fade-in {
+  animation: fadein 0.3s ease-in forwards;
+}

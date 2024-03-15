@@ -16,6 +16,10 @@
 
 .playboard__hints {
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(31, 32, 65, 0.5);
+  border-radius: 10px;
 }
 
 .playboard__field {

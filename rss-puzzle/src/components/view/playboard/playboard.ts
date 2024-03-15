@@ -9,9 +9,14 @@ import eventEmitter from "../../../utils/eventemitter";
 import { getElementOfType } from "../../../utils/helpers/getelementoftype";
 import GameButton from "./gamebutton/gamebutton";
 import AutocompleteButton from "./autocomplete/autocomplete";
+import TranslationHint from "./tratslationhint/translationhint";
 
 class Playboard extends Component {
   public playboardHeader: Component;
+
+  private hints: {
+    translationHint?: TranslationHint;
+  } = {};
 
   public playboardHints: Component<HTMLElement>;
 
@@ -54,6 +59,7 @@ class Playboard extends Component {
       this.playboardButtons,
     ]);
     this.setListeners();
+    this.drawHints();
   }
 
   private resize() {
@@ -99,6 +105,11 @@ class Playboard extends Component {
         this.currentSentenceContainer?.classList.remove("check-mode");
       }, 500);
     });
+  }
+
+  private drawHints() {
+    this.hints.translationHint = new TranslationHint();
+    this.playboardHints.append(this.hints.translationHint.getHintContainer());
   }
 
   private arrangeSentence() {
@@ -173,14 +184,7 @@ class Playboard extends Component {
     if (!actualWords) return;
     if (correctWords.join(" ") === actualWords.join(" ")) {
       eventEmitter.emit("sentencesolved");
-      // if (!this.currentSentenceContainer) return;
-      // this.currentSentence?.animateArrangingCards(
-      //   this.currentSentenceContainer,
-      // );
-      setTimeout(() => {
-        this.arrangeSentence();
-        this.currentSentenceContainer?.classList.remove("check-mode");
-      }, 10);
+      this.currentSentenceContainer?.classList.remove("check-mode");
     }
     correctWords.forEach((word, i) => {
       getElementOfType(
@@ -239,8 +243,6 @@ class Playboard extends Component {
   }
 
   public clearAll() {
-    this.playboardHeader.clear();
-    this.playboardHints.clear();
     this.playboardButtons.clear();
     this.playboardPuzzleContainer.clear();
     this.clearSentenceBlocks();
@@ -416,6 +418,9 @@ class Playboard extends Component {
     this.resize();
     const resultArea = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
+    this.hints.translationHint?.setHint(
+      this.game.info.words[idx].textExampleTranslate,
+    );
     this.currentSentenceContainer = resultArea.getComponent();
     this.cardWordplacesResult = resultArea.getContent();
     this.playboardSourceContainer.appendContent(this.cardWordplacesSource);
