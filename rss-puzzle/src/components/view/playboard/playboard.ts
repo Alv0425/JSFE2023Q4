@@ -96,8 +96,11 @@ class Playboard extends Component {
   }
 
   private drawHints() {
+    const hintTogglersContainer = div(["playboard__hints-torrlers"]);
+    this.playboardHeader.append(hintTogglersContainer);
     this.hints.translationHint = new TranslationHint();
     this.playboardHints.append(this.hints.translationHint.getHintContainer());
+    hintTogglersContainer.append(this.hints.translationHint.getHintToggler());
   }
 
   private arrangeSentence() {

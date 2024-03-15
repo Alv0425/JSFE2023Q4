@@ -13,3 +13,24 @@
 .playboard__hint-label {
   margin: 0;
 }
+
+.playboard__hint-toggler-icon {
+  height: 25px;
+  fill: #fff;
+}
+
+.playboard__hint-translation-toggler {
+  width: 40px;
+}
+
+.playboard__hint-translation-toggler:hover .playboard__hint-toggler-icon {
+  fill: var(--color-label-dark);
+}
+
+.playboard__hint-translation-toggler_active .playboard__hint-toggler-icon {
+  fill: var(--color-label-dark);
+}
+
+.playboard__hint-translation-toggler_active {
+  background-color: var(--color-highlight);
+}

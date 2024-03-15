@@ -12,6 +12,7 @@
 
 .playboard__header {
   padding: 10px;
+  display: flex;
 }
 
 .playboard__hints {
@@ -45,6 +46,10 @@
   aspect-ratio: 9 / 5;
   display: grid;
   grid-template-rows: repeat(10, 1fr);
+}
+
+.playboard__hints-torrlers {
+  margin-left: auto;
 }
 
 .playboard__buttons {

@@ -52,6 +52,10 @@ const base = {
           from: "src/assets/background",
           to: "assets/background",
         },
+        {
+          from: "src/assets/icons",
+          to: "assets/icons",
+        },
       ],
     }),
   ],
