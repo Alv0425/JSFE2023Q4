@@ -28,11 +28,14 @@ class Card extends Component<HTMLElement> {
 
   public curTarget: HTMLElement | Element | null = null;
 
+  public borderCircle: Component<HTMLElement>;
+
   public constructor(text: string, sentenceIdx: number, wordIndex: number) {
     super("div", ["card"]);
     this.text = text;
     this.baseCardLayer = div(["card__base"], div(["card__base-rect"]));
     this.baseCircle = div(["card__base-circle"]);
+    this.borderCircle = div(["card__border-circle"]);
     this.baseCardLayer.append(this.baseCircle);
     this.baseImageLayer = div(["card__image"]);
     this.textCardLayer = span(["card__text"], text);
@@ -40,6 +43,7 @@ class Card extends Component<HTMLElement> {
       this.baseCardLayer,
       this.baseImageLayer,
       this.textCardLayer,
+      this.borderCircle,
     ]);
     this.sentenceIdx = sentenceIdx;
     this.wordIndex = wordIndex;
@@ -59,11 +63,19 @@ class Card extends Component<HTMLElement> {
     this.currentWidth = Math.round(containerSize.width * weight);
     this.setStyleAttribute("width", `${this.currentWidth}px`);
     this.setStyleAttribute(
+      "height",
+      `${Math.round(containerSize.height * 0.1)}px`,
+    );
+    this.setStyleAttribute(
       "font-size",
       `${Math.round((containerSize.height * 0.38) / 10)}px`,
     );
     const parent = this.getComponent().parentElement;
     if (parent) parent.style.setProperty("width", `${this.currentWidth}px`);
+    this.baseCircle.setStyleAttribute(
+      "mask",
+      `radial-gradient(0.6em at calc(${this.currentWidth}px - 0.6em) 50%, #000 90%, transparent 100%)`,
+    );
   }
 
   public async moveTo(x: number, y: number) {

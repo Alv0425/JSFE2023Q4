@@ -57,8 +57,9 @@ class Playboard extends Component {
   }
 
   private resize() {
-    const size = this.playboardField.getSize();
+    const size = this.playboardHeader.getSize();
     size.width -= 20;
+    size.height = Math.floor((size.width * 5) / 9);
     if (this.game) this.game.resizeAllCards(size);
     this.resizeContainers();
   }

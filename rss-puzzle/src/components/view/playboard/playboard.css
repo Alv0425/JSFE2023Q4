@@ -23,13 +23,14 @@
   width: 100%;
   padding: 10px;
   border-radius: 10px;
-  display: grid;
-  grid-template-rows: 10fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .playboard__source-container {
   width: 100%;
+  min-height: 40px;
   display: flex;
 }
 

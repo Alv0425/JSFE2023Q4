@@ -17,6 +17,10 @@ class Sentence {
       const newCard = new Card(word, idx, index);
       return newCard;
     });
+    this.wordCards[0].getComponent().classList.add("card_start");
+    this.wordCards[this.wordCards.length - 1]
+      .getComponent()
+      .classList.add("card_end");
     const sentenceLength = this.words.join("").length;
     this.wordWeights = this.words.map(
       (word) => (word.length + 2) / (sentenceLength + 2 * this.words.length),
