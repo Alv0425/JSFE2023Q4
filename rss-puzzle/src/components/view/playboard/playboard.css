@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow: hidden;
   animation: fadein 0.5s ease-in;
 }
 
@@ -97,6 +96,11 @@
 
 .wordplace {
   transition: 0.5s;
+}
+
+.wordplace.highlight {
+  background-color: rgba(255, 200, 87, 0.3);
+  transition: 1s;
 }
 
 .placed {

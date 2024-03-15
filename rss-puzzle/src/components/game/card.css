@@ -16,6 +16,7 @@
   transition: 0.5s;
   outline: 0.2px solid var(--color-body-dark);
   border-radius: 3px;
+  user-select: none;
 }
 
 .card__base,

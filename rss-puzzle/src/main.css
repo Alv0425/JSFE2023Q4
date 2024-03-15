@@ -39,6 +39,14 @@ body {
   transition: 2s;
 }
 
+.fixed {
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 button {
   background-color: var(--color-label-light);
   color: var(--color-text-light);
@@ -54,6 +62,7 @@ button {
   cursor: pointer;
   transition: 0.3s;
   animation: fadein 0.3s ease-in;
+  user-select: none;
 }
 
 button:hover {

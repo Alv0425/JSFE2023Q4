@@ -60,6 +60,7 @@ class Playboard extends Component {
     const size = this.playboardField.getSize();
     size.width -= 20;
     if (this.game) this.game.resizeAllCards(size);
+    this.resizeContainers();
   }
 
   private setListeners() {
@@ -169,8 +170,17 @@ class Playboard extends Component {
       },
     );
     if (!actualWords) return;
-    if (correctWords.join(" ") === actualWords.join(" "))
+    if (correctWords.join(" ") === actualWords.join(" ")) {
       eventEmitter.emit("sentencesolved");
+      // if (!this.currentSentenceContainer) return;
+      // this.currentSentence?.animateArrangingCards(
+      //   this.currentSentenceContainer,
+      // );
+      setTimeout(() => {
+        this.arrangeSentence();
+        this.currentSentenceContainer?.classList.remove("check-mode");
+      }, 10);
+    }
     correctWords.forEach((word, i) => {
       getElementOfType(
         HTMLElement,
@@ -215,6 +225,8 @@ class Playboard extends Component {
         sourceContainer.style.setProperty("width", `${card.currentWidth}px`);
       if (resultContainer)
         resultContainer.style.setProperty("width", `${card.currentWidth}px`);
+      sourceContainer?.classList.remove("highlight");
+      resultContainer?.classList.remove("highlight");
     });
   }
 
@@ -243,6 +255,10 @@ class Playboard extends Component {
     } else if (elementRightSibling) {
       elementRightSibling.before(place1);
     }
+    this.updateCardsContainers();
+  }
+
+  private updateCardsContainers() {
     if (this.currentSentenceContainer) {
       if (!this.currentSentenceContainer.children.length) return;
       this.cardWordplacesResult = Array.from(
@@ -314,7 +330,51 @@ class Playboard extends Component {
     return stat;
   }
 
+  public placeCardOndrop(card: Card, target: HTMLElement | null) {
+    let destType = "result";
+    const targetID = target?.getAttribute("id");
+    if (targetID) destType = targetID.split("-")[0];
+    const dest = document.getElementById(
+      `${destType}-${card.sentenceIdx}-${card.wordIndex}`,
+    );
+    if (!target) return;
+    if (target?.classList.contains("placed")) {
+      if (dest) {
+        dest.append(card.getComponent());
+        target.before(dest);
+        dest.classList.add("placed");
+        const cardComp = card;
+        card.unsetCoordinates();
+        cardComp.draggable = false;
+        target?.classList.remove("highlight");
+        if (destType === "result" || destType === "source")
+          cardComp.position = destType;
+      }
+      this.updateCardsContainers();
+      this.updateCurrentGameStats();
+      return;
+    }
+    let cardContainer = target;
+    if (dest) {
+      this.swapPlaces(target, dest);
+      cardContainer = dest;
+    }
+    if (!(card instanceof Component)) return;
+    const parent = card.getComponent().parentElement;
+    if (!parent) return;
+    parent.classList.remove("placed");
+    cardContainer.classList.add("placed");
+    cardContainer.append(card.getComponent());
+    const cardComp = card;
+    card.unsetCoordinates();
+    cardComp.draggable = false;
+    target?.classList.remove("highlight");
+    if (destType === "result" || destType === "source")
+      cardComp.position = destType;
+  }
+
   public async placeCard(card: Card, target: HTMLElement | null) {
+    card.unsetCoordinates();
     const destType = card.position === "result" ? "source" : "result";
     const dest = document.getElementById(
       `${destType}-${card.sentenceIdx}-${card.wordIndex}`,
@@ -333,6 +393,7 @@ class Playboard extends Component {
     await card.animateMove(parent, cardContainer);
     cardContainer.append(card.getComponent());
     const cardComp = card;
+    cardComp.draggable = false;
     cardComp.position = cardComp.position === "result" ? "source" : "result";
   }
 
@@ -358,8 +419,31 @@ class Playboard extends Component {
     this.cardWordplacesResult = resultArea.getContent();
     this.playboardSourceContainer.appendContent(this.cardWordplacesSource);
     this.playboardPuzzleContainer.append(resultArea);
+    this.resizeContainers();
+    this.addListenersToCards();
+  }
+
+  private addListenersToCards() {
     this.currentCards.forEach((card) => {
+      const draghandler = () => {
+        if (card.draggable && card.curTarget instanceof HTMLElement)
+          this.placeCardOndrop(card, card.curTarget);
+        this.updateCardsContainers();
+        this.updateCurrentGameStats();
+        this.resize();
+      };
+      card.addListener("mousedown", (e) => {
+        card.dragCardMouse(e as MouseEvent, draghandler);
+      });
+      card.addListener("touchstart", (e) => {
+        card.dragCardTouch(e as TouchEvent, draghandler);
+      });
       card.addListener("click", () => {
+        if (card.draggable) {
+          const myCard = card;
+          myCard.draggable = false;
+          return;
+        }
         this.placeCard(card, this.findPlace(card));
         this.updateCurrentGameStats();
         this.resize();

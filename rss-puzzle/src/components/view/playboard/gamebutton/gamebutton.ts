@@ -20,7 +20,8 @@ class GameButton extends Component<HTMLButtonElement> {
       this.getComponent().disabled = true;
     });
     eventEmitter.on("sentencesolved", () => {
-      this.changeButtonState();
+      this.getComponent().disabled = false;
+      this.setState("Continue");
     });
     eventEmitter.on("sentencearranged", () => {
       this.getComponent().disabled = false;
@@ -33,16 +34,9 @@ class GameButton extends Component<HTMLButtonElement> {
     this.addListener("click", () => {
       if (this.buttonState === "Check") {
         eventEmitter.emit("check-sentence");
-        console.log("check-sentence");
       }
       if (this.buttonState === "Continue") eventEmitter.emit("continue-game");
     });
-  }
-
-  private changeButtonState() {
-    this.buttonState = this.buttonState === "Check" ? "Continue" : "Check";
-    this.setTextContent(this.buttonState);
-    this.getComponent().disabled = false;
   }
 
   private setState(state: "Continue" | "Check") {

@@ -106,6 +106,22 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.listeners.push(listenerObj);
   }
 
+  public removeListenerOfType(type: string) {
+    this.listeners.forEach((listener) => {
+      if (listener.eType === type) {
+        if (listener.options) {
+          this.node.removeEventListener(
+            listener.eType,
+            listener.handler,
+            listener.options,
+          );
+        } else {
+          this.node.removeEventListener(listener.eType, listener.handler);
+        }
+      }
+    });
+  }
+
   public removeAllListeners() {
     this.listeners.forEach((listener) => {
       if (listener.options) {
@@ -133,6 +149,14 @@ class Component<T extends HTMLElement = HTMLElement> {
       width: this.node.clientWidth,
       height: this.node.clientHeight,
     };
+  }
+
+  public hide() {
+    this.getComponent().hidden = true;
+  }
+
+  public show() {
+    this.getComponent().hidden = false;
   }
 
   public setBgImage(

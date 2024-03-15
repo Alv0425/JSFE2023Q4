@@ -20,6 +20,9 @@ class AutocompleteButton extends Component<HTMLButtonElement> {
     eventEmitter.on("startsentence", () => {
       this.getComponent().disabled = false;
     });
+    eventEmitter.on("source-block-epmty", () => {
+      this.getComponent().disabled = false;
+    });
   }
 }
 
