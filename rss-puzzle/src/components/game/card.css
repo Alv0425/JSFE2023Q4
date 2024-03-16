@@ -28,6 +28,11 @@
   left: 0;
 }
 
+.card__image {
+  opacity: 0;
+  transition: 1s;
+}
+
 .card__text {
   display: flex;
   justify-content: center;
@@ -118,4 +123,20 @@
 
 .card_end .card__border-circle {
   opacity: 0;
+}
+
+.playboard__field .puzzle__sentence_correct .card__image {
+  opacity: 1;
+}
+
+.playboard__field .puzzle__sentence_arranged .card__image {
+  animation: fadein 0.3s ease-in forwards;
+}
+
+.playboard__field-show-image .puzzle__sentence_arranged .card__image {
+  animation: none;
+}
+
+.playboard__field-show-image .card__image {
+  opacity: 1;
 }

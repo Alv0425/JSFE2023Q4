@@ -1,0 +1,17 @@
+.playboard__hint-image-toggler {
+  width: 40px;
+}
+
+.playboard__hint-image-toggler_active {
+  background-color: var(--color-highlight);
+  .playboard__hint-toggler-icon {
+    fill: var(--color-label-dark);
+  }
+}
+
+.playboard__hint-image-toggler:hover {
+  background-color: var(--color-highlight);
+  .playboard__hint-toggler-icon {
+    fill: var(--color-label-dark);
+  }
+}

@@ -11,11 +11,13 @@ import GameButton from "./gamebutton/gamebutton";
 import AutocompleteButton from "./autocomplete/autocomplete";
 import TranslationHint from "./tratslationhint/translationhint";
 import AudioHint from "./audiohint/audiohint";
+import ImageHint from "./imagehint/imagehint";
 
 class Playboard extends Component {
   public playboardHeader: Component;
 
   private hints: {
+    imagehint?: ImageHint;
     audioHint?: AudioHint;
     translationHint?: TranslationHint;
   } = {};
@@ -84,6 +86,12 @@ class Playboard extends Component {
       this.currentSentenceContainer?.classList.toggle("check-mode");
       this.checkSentence();
     });
+    eventEmitter.on("show-image-hint", () => {
+      this.playboardField.getComponent().classList.add("playboard__field-show-image");
+    });
+    eventEmitter.on("hide-image-hint", () => {
+      this.playboardField.getComponent().classList.remove("playboard__field-show-image");
+    });
     eventEmitter.on("source-block-filled", () => this.currentSentenceContainer?.classList.remove("check-mode"));
     eventEmitter.on("autocomplete", async () => {
       if (!this.currentSentenceContainer) return;
@@ -102,6 +110,7 @@ class Playboard extends Component {
     this.playboardHeader.append(hintTogglersContainer);
     this.hints.translationHint = new TranslationHint();
     this.hints.audioHint = new AudioHint();
+    this.hints.imagehint = new ImageHint();
     this.playboardHints.appendContent([
       this.hints.translationHint.getHintContainer(),
       this.hints.audioHint.getHintButton(),
@@ -109,6 +118,7 @@ class Playboard extends Component {
     hintTogglersContainer.appendContent([
       this.hints.translationHint.getHintToggler(),
       this.hints.audioHint.getHintToggler(),
+      this.hints.imagehint.getHintToggler(),
     ]);
   }
 
@@ -143,8 +153,8 @@ class Playboard extends Component {
     this.currentSentenceContainer?.classList.add("puzzle__sentence_arranged");
   }
 
-  private nextSentence() {
-    this.clearSentenceBlocks();
+  private async nextSentence() {
+    await this.clearSentenceBlocks();
     this.playboardSourceContainer.clear();
     if (this.game) {
       if (this.game.state.currentSentence.current < 9) {
@@ -196,11 +206,11 @@ class Playboard extends Component {
     const dataLevel = await dataHandler.fetchLevelsData(level);
     if (dataLevel.roundsCount === round) {
       if (level === 6) return;
-      this.clearAll();
+      await this.clearAll();
       await this.openRound(level + 1, 0);
       return;
     }
-    this.clearAll();
+    await this.clearAll();
     await this.openRound(level, round + 1);
   }
 
@@ -216,17 +226,33 @@ class Playboard extends Component {
     });
   }
 
-  private clearSentenceBlocks() {
-    this.playboardSourceContainer.clear();
-    this.cardWordplacesSource = [];
-    this.cardWordplacesResult = [];
-    this.currentCards = [];
+  private async clearSentenceBlocks() {
+    this.playboardSourceContainer.getComponent().classList.add("hide");
+    return new Promise((res) => {
+      setTimeout(() => {
+        this.playboardSourceContainer.clear();
+        this.cardWordplacesSource = [];
+        this.cardWordplacesResult = [];
+        this.currentCards = [];
+        res(true);
+        this.playboardSourceContainer.getComponent().classList.remove("hide");
+      }, 200);
+    });
   }
 
-  public clearAll() {
-    this.playboardButtons.clear();
-    this.playboardPuzzleContainer.clear();
-    this.clearSentenceBlocks();
+  public async clearAll() {
+    this.playboardPuzzleContainer.getComponent().classList.add("hide");
+    this.playboardButtons.getComponent().classList.add("hide");
+    await this.clearSentenceBlocks();
+    return new Promise((res) => {
+      setTimeout(() => {
+        this.playboardButtons.clear();
+        this.playboardPuzzleContainer.clear();
+        res(true);
+        this.playboardPuzzleContainer.getComponent().classList.remove("hide");
+        this.playboardButtons.getComponent().classList.remove("hide");
+      }, 300);
+    });
   }
 
   public swapPlaces(place1: HTMLElement, place2: HTMLElement) {
