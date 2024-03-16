@@ -382,6 +382,9 @@ class Playboard extends Component {
     this.playboardPuzzleContainer.append(resultArea);
     this.resizeContainers();
     this.addListenersToCards();
+    this.currentCards.forEach((card) => {
+      if (this.game) card.setBackground(this.game.info.levelData.imageSrc);
+    });
   }
 
   private addListenersToCards() {

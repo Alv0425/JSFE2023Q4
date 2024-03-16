@@ -14,7 +14,7 @@ class DataHandler {
     return levelData;
   }
 
-  public getImage(url: string) {
+  public getImageUrl(url: string) {
     return `${this.urlPrefix}images/${url}`;
   }
 

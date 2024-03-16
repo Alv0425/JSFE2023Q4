@@ -3,6 +3,7 @@ import Component from "../../utils/component";
 import { div, span } from "../../utils/elements";
 // import eventEmitter from "../../utils/eventemitter";
 import { getElementOfType } from "../../utils/helpers/getelementoftype";
+import dataHandler from "../services/datahandler";
 // import eventEmitter from "../../utils/eventemitter";
 
 class Card extends Component<HTMLElement> {
@@ -30,6 +31,10 @@ class Card extends Component<HTMLElement> {
 
   public borderCircle: Component<HTMLElement>;
 
+  public imageCardRect: Component<HTMLElement>;
+
+  public imageCardCircle: Component<HTMLElement>;
+
   public constructor(text: string, sentenceIdx: number, wordIndex: number) {
     super("div", ["card"]);
     this.text = text;
@@ -38,6 +43,9 @@ class Card extends Component<HTMLElement> {
     this.borderCircle = div(["card__border-circle"]);
     this.baseCardLayer.append(this.baseCircle);
     this.baseImageLayer = div(["card__image"]);
+    this.imageCardRect = div(["card__image-rect"]);
+    this.imageCardCircle = div(["card__image-circle"]);
+    this.baseImageLayer.appendContent([this.imageCardRect, this.imageCardCircle]);
     this.textCardLayer = span(["card__text"], text);
     this.appendContent([this.baseCardLayer, this.baseImageLayer, this.textCardLayer, this.borderCircle]);
     this.sentenceIdx = sentenceIdx;
@@ -62,6 +70,18 @@ class Card extends Component<HTMLElement> {
       "mask",
       `radial-gradient(0.6em at calc(${this.currentWidth}px - 0.6em) 50%, #000 90%, transparent 100%)`,
     );
+    this.imageCardCircle.setStyleAttribute(
+      "mask",
+      `radial-gradient(0.6em at calc(${this.currentWidth}px - 0.6em) 50%, #000 90%, transparent 100%)`,
+    );
+    this.imageCardRect.setStyleAttribute("background-size", `${containerSize.width}px auto`);
+    this.imageCardCircle.setStyleAttribute("background-size", `${containerSize.width}px auto`);
+  }
+
+  public setBackground(url: string) {
+    const urlToImage = dataHandler.getImageUrl(url);
+    this.imageCardCircle.setStyleAttribute("background-image", `url(${urlToImage})`);
+    this.imageCardRect.setStyleAttribute("background-image", `url(${urlToImage})`);
   }
 
   public async moveTo(x: number, y: number) {

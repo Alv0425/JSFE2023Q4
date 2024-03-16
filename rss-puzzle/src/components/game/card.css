@@ -14,7 +14,6 @@
   height: 100%;
   animation: placeword 0.15s ease-in;
   transition: 0.5s;
-
   border-radius: 3px;
   user-select: none;
 }
@@ -33,7 +32,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-shadow: 1px 1px 10px #000;
   transform: translateX(0.1em);
+  text-shadow:
+    1px 1px 2px black,
+    0 0 1em black,
+    0 0 0.2em black;
 }
 
 .card__base-rect {
@@ -44,6 +48,15 @@
   border: 0.1px solid var(--color-body-dark);
   mask: radial-gradient(0.55em at 0.15em 50%, #0000 90%, #000);
   box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.card__image-rect {
+  height: 100%;
+  position: relative;
+  border-radius: 1px;
+  border: 0.1px solid var(--color-body-dark);
+  mask: radial-gradient(0.55em at 0.15em 50%, #0000 90%, #000);
+  box-shadow: inset 0 0 4px rgba(29, 23, 23, 0.2);
 }
 
 .card__border-circle {
@@ -81,15 +94,25 @@
   transform: translate(0.75em);
 }
 
-.card_start .card__base-rect {
+.card__image-circle {
+  width: calc(100%);
+  margin-right: -0.7em;
   height: 100%;
-  position: relative;
-  background-color: var(--color-container);
-  border-radius: 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transform: translate(0.75em);
+}
+
+.card_start .card__base-rect,
+.card_start .card__image-rect {
+  height: 100%;
   mask: none;
 }
 
-.card_end .card__base-circle {
+.card_end .card__base-circle,
+.card_end .card__image-circle {
   display: none;
 }
 
