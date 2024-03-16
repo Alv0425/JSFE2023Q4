@@ -106,7 +106,10 @@ class Playboard extends Component {
       this.hints.translationHint.getHintContainer(),
       this.hints.audioHint.getHintButton(),
     ]);
-    hintTogglersContainer.appendContent([this.hints.translationHint.getHintToggler()]);
+    hintTogglersContainer.appendContent([
+      this.hints.translationHint.getHintToggler(),
+      this.hints.audioHint.getHintToggler(),
+    ]);
   }
 
   private arrangeSentence() {

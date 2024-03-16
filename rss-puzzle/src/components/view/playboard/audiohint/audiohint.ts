@@ -3,6 +3,7 @@ import Component from "../../../../utils/component";
 import createSvg from "../../../../utils/helpers/createsvg";
 import { button } from "../../../../utils/elements";
 import datahandler from "../../../services/datahandler";
+import eventEmitter from "../../../../utils/eventemitter";
 
 class AudioHint {
   private audioSource: string = "";
@@ -13,6 +14,8 @@ class AudioHint {
 
   public audio: HTMLAudioElement = new Audio();
 
+  public hintToggler: Component<HTMLButtonElement>;
+
   public constructor() {
     this.hintButton = button(["playboard__hint-audio-button"], "", "button", "audio-button");
     const iconBtn1 = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
@@ -20,6 +23,31 @@ class AudioHint {
     this.hintButton.getComponent().append(iconBtn1, iconBtn2);
     this.hintButton.addListener("click", () => {
       if (this.audioSource) this.playAudio();
+    });
+    this.hintToggler = button(
+      ["playboard__hint-audio-toggler", "playboard__hint-audio-toggler_active"],
+      "",
+      "button",
+      "audio-toggler",
+    );
+    const iconTgl = createSvg("./assets/icons/headphones-simple-solid.svg#headphones", "playboard__hint-toggler-icon");
+    this.hintToggler.getComponent().append(iconTgl);
+    this.hintToggler.addListener("click", () => {
+      if (this.on) {
+        this.hintToggler.getComponent().classList.remove("playboard__hint-audio-toggler_active");
+        this.on = false;
+        this.hideHint();
+      } else {
+        this.hintToggler.getComponent().classList.add("playboard__hint-audio-toggler_active");
+        this.on = true;
+        this.showhint();
+      }
+    });
+    eventEmitter.on("sentencesolved", () => this.showhint());
+    eventEmitter.on("sentencearranged", () => this.showhint());
+    eventEmitter.on("startsentence", () => {
+      this.hideHint();
+      if (this.on) this.showhint();
     });
   }
 
@@ -57,6 +85,10 @@ class AudioHint {
 
   public getHintButton() {
     return this.hintButton;
+  }
+
+  public getHintToggler() {
+    return this.hintToggler;
   }
 }
 

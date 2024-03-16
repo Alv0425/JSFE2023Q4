@@ -1,4 +1,4 @@
-.playboard__hint-toggler,
+.playboard__hint-audio-toggler,
 .playboard__hint-audio-button {
   width: 40px;
   height: 40px;
@@ -23,10 +23,21 @@
   width: 100%;
   height: 100%;
   fill: var(--color-text-light);
+  transition: 0.5s;
+}
+
+.playboard__hint-audio-toggler {
+  padding: 5px;
+}
+
+.playboard__hint-toggler-icon {
+  transition: 0.5s;
+  width: 100%;
 }
 
 .playboard__hint-audio-button:hover .playboard__audio-hint-icon-1,
-.playboard__hint-audio-button:hover .playboard__audio-hint-icon-2 {
+.playboard__hint-audio-button:hover .playboard__audio-hint-icon-2,
+.playboard__hint-audio-toggler:hover .playboard__hint-toggler-icon {
   fill: var(--color-label-dark);
 }
 
@@ -61,6 +72,11 @@
   background-color: var(--color-highlight);
 }
 
+.playboard__hint-audio-button_hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
 .playboard__hint-audio-button_active .playboard__audio-hint-icon-1 {
   animation: pulse 1.5s linear 1s alternate infinite;
   fill: var(--color-label-dark);
@@ -68,5 +84,13 @@
 
 .playboard__hint-audio-button_active .playboard__audio-hint-icon-2 {
   animation: pulse 1.5s linear alternate infinite;
+  fill: var(--color-label-dark);
+}
+
+.playboard__hint-audio-toggler_active {
+  background-color: var(--color-highlight);
+}
+
+.playboard__hint-audio-toggler_active .playboard__hint-toggler-icon {
   fill: var(--color-label-dark);
 }
