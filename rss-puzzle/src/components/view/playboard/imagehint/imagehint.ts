@@ -2,6 +2,7 @@ import Component from "../../../../utils/component";
 import { button } from "../../../../utils/elements";
 import eventEmitter from "../../../../utils/eventemitter";
 import createSvg from "../../../../utils/helpers/createsvg";
+import storage from "../../../services/localstorage";
 import "./imagehint.css";
 
 class ImageHint {
@@ -10,12 +11,7 @@ class ImageHint {
   public on: boolean = true;
 
   public constructor() {
-    this.hintToggler = button(
-      ["playboard__hint-image-toggler", "playboard__hint-image-toggler_active"],
-      "",
-      "button",
-      "image-toggler",
-    );
+    this.hintToggler = button(["playboard__hint-image-toggler"], "", "button", "image-toggler");
     const icon = createSvg("./assets/icons/image-solid.svg#image", "playboard__hint-toggler-icon");
     this.hintToggler.getComponent().append(icon);
     this.hintToggler.addListener("click", () => {
@@ -23,12 +19,17 @@ class ImageHint {
         this.hintToggler.getComponent().classList.remove("playboard__hint-image-toggler_active");
         this.on = false;
         this.hideHint();
+        this.saveOption();
       } else {
         this.hintToggler.getComponent().classList.add("playboard__hint-image-toggler_active");
         this.on = true;
         this.showhint();
+        this.saveOption();
       }
     });
+    const hintOptions = storage.getHintOptions();
+    this.on = hintOptions.imageHint;
+    if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-image-toggler_active");
     if (this.on) this.showhint();
   }
 
@@ -42,6 +43,12 @@ class ImageHint {
 
   public getHintToggler() {
     return this.hintToggler;
+  }
+
+  public saveOption() {
+    const hintOptions = storage.getHintOptions();
+    hintOptions.imageHint = this.on;
+    storage.setHintOptions(hintOptions);
   }
 }
 

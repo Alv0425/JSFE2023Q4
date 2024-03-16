@@ -4,6 +4,7 @@ import createSvg from "../../../../utils/helpers/createsvg";
 import { button } from "../../../../utils/elements";
 import datahandler from "../../../services/datahandler";
 import eventEmitter from "../../../../utils/eventemitter";
+import storage from "../../../services/localstorage";
 
 class AudioHint {
   private audioSource: string = "";
@@ -24,12 +25,7 @@ class AudioHint {
     this.hintButton.addListener("click", () => {
       if (this.audioSource) this.playAudio();
     });
-    this.hintToggler = button(
-      ["playboard__hint-audio-toggler", "playboard__hint-audio-toggler_active"],
-      "",
-      "button",
-      "audio-toggler",
-    );
+    this.hintToggler = button(["playboard__hint-audio-toggler"], "", "button", "audio-toggler");
     const iconTgl = createSvg("./assets/icons/headphones-simple-solid.svg#headphones", "playboard__hint-toggler-icon");
     this.hintToggler.getComponent().append(iconTgl);
     this.hintToggler.addListener("click", () => {
@@ -37,10 +33,12 @@ class AudioHint {
         this.hintToggler.getComponent().classList.remove("playboard__hint-audio-toggler_active");
         this.on = false;
         this.hideHint();
+        this.saveOption();
       } else {
         this.hintToggler.getComponent().classList.add("playboard__hint-audio-toggler_active");
         this.on = true;
         this.showhint();
+        this.saveOption();
       }
     });
     eventEmitter.on("sentencesolved", () => this.showhint());
@@ -49,6 +47,9 @@ class AudioHint {
       this.hideHint();
       if (this.on) this.showhint();
     });
+    const hintOptions = storage.getHintOptions();
+    this.on = hintOptions.audioHint;
+    if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-audio-toggler_active");
   }
 
   public setHint(hintText: string) {
@@ -89,6 +90,12 @@ class AudioHint {
 
   public getHintToggler() {
     return this.hintToggler;
+  }
+
+  public saveOption() {
+    const hintOptions = storage.getHintOptions();
+    hintOptions.audioHint = this.on;
+    storage.setHintOptions(hintOptions);
   }
 }
 

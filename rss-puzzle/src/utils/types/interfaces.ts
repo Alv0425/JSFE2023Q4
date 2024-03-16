@@ -37,6 +37,11 @@ export interface IStats {
 }
 
 export interface IStorage {
+  hintsOptions: {
+    imageHint: boolean;
+    translationHint: boolean;
+    audioHint: boolean;
+  };
   firstName?: string;
   surname?: string;
 

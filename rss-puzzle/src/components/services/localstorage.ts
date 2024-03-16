@@ -8,6 +8,11 @@ class LocalStorage {
 
   public constructor() {
     this.templateData = {
+      hintsOptions: {
+        imageHint: true,
+        audioHint: true,
+        translationHint: true,
+      },
       firstName: "",
       surname: "",
       stats: {},
@@ -32,7 +37,7 @@ class LocalStorage {
 
   public getData() {
     const data = localStorage.getItem(this.key);
-    let dataObj: IStorage = {};
+    let dataObj: IStorage = this.templateData;
     if (data) dataObj = JSON.parse(data);
     return dataObj;
   }
@@ -40,6 +45,19 @@ class LocalStorage {
   public getName() {
     const data = this.getData();
     return `${data.firstName} ${data.surname}`;
+  }
+
+  public getHintOptions() {
+    const data = this.getData();
+    return data.hintsOptions;
+  }
+
+  public setHintOptions({ imageHint, audioHint, translationHint }: Record<string, boolean>) {
+    const data = this.getData();
+    data.hintsOptions.imageHint = imageHint;
+    data.hintsOptions.audioHint = audioHint;
+    data.hintsOptions.translationHint = translationHint;
+    this.saveLoginData(data);
   }
 }
 
