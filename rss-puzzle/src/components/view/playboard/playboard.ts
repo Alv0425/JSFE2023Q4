@@ -10,11 +10,13 @@ import { getElementOfType } from "../../../utils/helpers/getelementoftype";
 import GameButton from "./gamebutton/gamebutton";
 import AutocompleteButton from "./autocomplete/autocomplete";
 import TranslationHint from "./tratslationhint/translationhint";
+import AudioHint from "./audiohint/audiohint";
 
 class Playboard extends Component {
   public playboardHeader: Component;
 
   private hints: {
+    audioHint?: AudioHint;
     translationHint?: TranslationHint;
   } = {};
 
@@ -99,8 +101,12 @@ class Playboard extends Component {
     const hintTogglersContainer = div(["playboard__hints-torrlers"]);
     this.playboardHeader.append(hintTogglersContainer);
     this.hints.translationHint = new TranslationHint();
-    this.playboardHints.append(this.hints.translationHint.getHintContainer());
-    hintTogglersContainer.append(this.hints.translationHint.getHintToggler());
+    this.hints.audioHint = new AudioHint();
+    this.playboardHints.appendContent([
+      this.hints.translationHint.getHintContainer(),
+      this.hints.audioHint.getHintButton(),
+    ]);
+    hintTogglersContainer.appendContent([this.hints.translationHint.getHintToggler()]);
   }
 
   private arrangeSentence() {
@@ -366,6 +372,7 @@ class Playboard extends Component {
     const resultArea = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
     this.hints.translationHint?.setHint(this.game.info.words[idx].textExampleTranslate);
+    this.hints.audioHint?.setAudio(this.game.info.words[idx].audioExample);
     this.currentSentenceContainer = resultArea.getComponent();
     this.cardWordplacesResult = resultArea.getContent();
     this.playboardSourceContainer.appendContent(this.cardWordplacesSource);

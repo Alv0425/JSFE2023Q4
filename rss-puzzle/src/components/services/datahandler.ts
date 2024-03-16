@@ -17,6 +17,10 @@ class DataHandler {
   public getImage(url: string) {
     return `${this.urlPrefix}images/${url}`;
   }
+
+  public getAudioUrl(url: string) {
+    return `${this.urlPrefix}${url}`;
+  }
 }
 
 const dataHandler = new DataHandler();
