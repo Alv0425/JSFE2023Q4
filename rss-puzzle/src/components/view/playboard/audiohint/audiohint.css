@@ -29,3 +29,44 @@
 .playboard__hint-audio-button:hover .playboard__audio-hint-icon-2 {
   fill: var(--color-label-dark);
 }
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  20% {
+    opacity: 0.5;
+    transform: scaleY(0.7);
+  }
+  40% {
+    opacity: 0.3;
+    transform: scaleY(0.5);
+  }
+  60% {
+    opacity: 0.5;
+    transform: scaleY(0.9);
+  }
+  80% {
+    opacity: 1;
+    transform: scaleY(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+.playboard__hint-audio-button_active {
+  pointer-events: none;
+  background-color: var(--color-highlight);
+}
+
+.playboard__hint-audio-button_active .playboard__audio-hint-icon-1 {
+  animation: pulse 1.5s linear 1s alternate infinite;
+  fill: var(--color-label-dark);
+}
+
+.playboard__hint-audio-button_active .playboard__audio-hint-icon-2 {
+  animation: pulse 1.5s linear alternate infinite;
+  fill: var(--color-label-dark);
+}

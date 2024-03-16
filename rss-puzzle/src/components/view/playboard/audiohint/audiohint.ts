@@ -47,8 +47,12 @@ class AudioHint {
 
   public playAudio() {
     if (!this.audioSource) return;
+    this.hintButton.getComponent().classList.add("playboard__hint-audio-button_active");
     this.audio.currentTime = 0;
     this.audio.play();
+    this.audio.addEventListener("ended", () => {
+      this.hintButton.getComponent().classList.remove("playboard__hint-audio-button_active");
+    });
   }
 
   public getHintButton() {
