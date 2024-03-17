@@ -3,13 +3,14 @@ import Component from "../../../utils/component";
 import { button, div, h2, p } from "../../../utils/elements";
 import eventEmitter from "../../../utils/eventemitter";
 import loader from "../loaderscreen/loader";
+// import playboard from "../playboard/playboard";
 
-class Modal extends Component {
+export class Modal extends Component {
   public constructor() {
     super("div", ["overlay"]);
   }
 
-  private closeModal() {
+  public closeModal() {
     this.getComponent().classList.add("fade-out");
     setTimeout(() => {
       this.getComponent().classList.remove("fade-out");

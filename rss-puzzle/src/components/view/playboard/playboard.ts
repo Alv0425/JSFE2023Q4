@@ -12,6 +12,7 @@ import AutocompleteButton from "./autocomplete/autocomplete";
 import TranslationHint from "./tratslationhint/translationhint";
 import AudioHint from "./audiohint/audiohint";
 import ImageHint from "./imagehint/imagehint";
+import SelectLevel from "./selectlevel/selectlevel";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -44,9 +45,13 @@ class Playboard extends Component {
 
   public currentCards: Card[] = [];
 
+  private selectLevel: SelectLevel;
+
   public constructor() {
     super("div", ["playboard"]);
     this.playboardHeader = div(["playboard__header"]);
+    this.selectLevel = new SelectLevel();
+    this.playboardHeader.append(this.selectLevel.button);
     this.playboardHints = div(["playboard__hints"]);
     this.playboardField = div(["playboard__field"]);
     this.playboardButtons = div(["playboard__buttons"]);
@@ -85,6 +90,10 @@ class Playboard extends Component {
     eventEmitter.on("check-sentence", () => {
       this.currentSentenceContainer?.classList.toggle("check-mode");
       this.checkSentence();
+    });
+    eventEmitter.on("open-select-modal", () => {
+      console.log("open-select-modal");
+      this.selectLevel.openMmodalSelectGame(this.loadGame.bind(this));
     });
     eventEmitter.on("show-image-hint", () => {
       this.playboardField.getComponent().classList.add("playboard__field-show-image");
@@ -214,6 +223,11 @@ class Playboard extends Component {
     await this.openRound(level, round + 1);
   }
 
+  private async loadGame(level: number, round: number) {
+    await this.clearAll();
+    await this.openRound(level, round);
+  }
+
   public resizeContainers() {
     if (!this.currentSentence) return;
     this.currentSentence.wordCards.forEach((card) => {
@@ -331,6 +345,9 @@ class Playboard extends Component {
     if (!target) return;
     if (target?.classList.contains("placed")) {
       if (dest) {
+        const parent = card.getComponent().parentElement;
+        if (!parent) return;
+        parent.classList.remove("placed");
         dest.append(card.getComponent());
         target.before(dest);
         dest.classList.add("placed");
@@ -445,4 +462,6 @@ class Playboard extends Component {
   }
 }
 
-export default Playboard;
+const playboard = new Playboard();
+
+export default playboard;
