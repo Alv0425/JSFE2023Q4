@@ -49,4 +49,12 @@ export interface IStorage {
   surname?: string;
 
   stats?: IStats;
+  lastRound?: {
+    level: number;
+    round: number;
+  };
+  currentRound?: {
+    level: number;
+    round: number;
+  };
 }

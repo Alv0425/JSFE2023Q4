@@ -73,7 +73,6 @@
   display: flex;
   gap: 10px;
   animation: fadein 0.3s ease-in;
-  min-height: 60px;
 }
 
 .playboard__button {
@@ -112,6 +111,16 @@
 }
 .puzzle__sentence_arranged::before {
   background-image: url(../../../assets/icons/circle-xmark-solid.svg);
+}
+
+.playboard__round-label {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 20px;
+  padding: 10px;
+  background-color: rgba(31, 32, 65, 0.5);
+  border-radius: 10px;
 }
 
 .word {

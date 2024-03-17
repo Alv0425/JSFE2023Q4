@@ -20,7 +20,8 @@ class SelectLevel {
     });
   }
 
-  public createRoundItem(roundData: IRound, index: number) {
+  public createRoundItem(roundData: IRound, roundIdx: number, levelIdx: number) {
+    const currentRound = storage.getCurrentRound();
     const container = li(["round-item"]);
     const storedRoundData = storage.getRoundStats(roundData.levelData.id);
     if (storedRoundData) container.getComponent().classList.add("round-item_solved");
@@ -32,11 +33,13 @@ class SelectLevel {
       return wordLabel;
     });
     const roundIndex = div(["round-item__index"]);
-    roundIndex.setTextContent(`${index + 1}`);
+    roundIndex.setTextContent(`${roundIdx + 1}`);
     const roundImage = div(["round-item__image"]);
     roundImage.setStyleAttribute("background-image", `url(${dataHandler.getImageUrl(roundData.levelData.cutSrc)})`);
     const wordsContainer = div(["round-item__words"], ...words);
     container.appendContent([roundIndex, roundImage, wordsContainer]);
+    if (roundIdx === currentRound?.round && levelIdx === currentRound.level)
+      container.getComponent().classList.add("round-item_current");
     return container;
   }
 
@@ -44,7 +47,7 @@ class SelectLevel {
     const data = await dataHandler.fetchLevelsData(level);
     roundsContainer.clear();
     data.rounds.forEach((round, index) => {
-      const item = this.createRoundItem(round, index);
+      const item = this.createRoundItem(round, index, level);
       roundsContainer.append(item);
       item.addListener("click", () => {
         this.modal.closeModal();
@@ -71,8 +74,11 @@ class SelectLevel {
         this.loadRounds(roundsContainer, level, callback);
       });
     });
-    levelButtons[0].getComponent().classList.add("modal__level-button_active");
-    this.loadRounds(roundsContainer, 1, callback);
+    const currentRound = storage.getCurrentRound();
+    if (currentRound) {
+      levelButtons[currentRound.level - 1].getComponent().classList.add("modal__level-button_active");
+      this.loadRounds(roundsContainer, currentRound.level, callback);
+    }
     levelsTabs.appendContent(levelButtons);
     modalselect.appendContent([levelsTabs, roundsContainer, closeButton]);
     levelButtons.forEach(async (btn, index) => {

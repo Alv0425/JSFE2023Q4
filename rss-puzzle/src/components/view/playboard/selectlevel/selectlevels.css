@@ -153,6 +153,7 @@
   border: none;
 }
 
+.round-item_current,
 .round-item:hover {
   border-color: var(--color-text-light);
   .round-item__index,
