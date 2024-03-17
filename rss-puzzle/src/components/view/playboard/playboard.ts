@@ -13,6 +13,7 @@ import TranslationHint from "./tratslationhint/translationhint";
 import AudioHint from "./audiohint/audiohint";
 import ImageHint from "./imagehint/imagehint";
 import SelectLevel from "./selectlevel/selectlevel";
+import storage from "../../services/localstorage";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -155,11 +156,13 @@ class Playboard extends Component {
   private setSolved() {
     this.currentCards.forEach((card) => card.removeAllListeners());
     this.currentSentenceContainer?.classList.add("puzzle__sentence_correct");
+    if (this.currentSentence) this.game?.state.solvedSentences.push(this.currentSentence?.sentenceIdx);
   }
 
   private setArranged() {
     this.currentCards.forEach((card) => card.removeAllListeners());
     this.currentSentenceContainer?.classList.add("puzzle__sentence_arranged");
+    if (this.currentSentence) this.game?.state.openedSentences.push(this.currentSentence?.sentenceIdx);
   }
 
   private async nextSentence() {
@@ -210,10 +213,19 @@ class Playboard extends Component {
 
   private async openNextRound() {
     if (!this.game) return;
+    console.log(this.game.state.openedSentences);
+    console.log(this.game.info.levelData.id);
+    storage.setRoundStats(
+      {
+        knownWords: this.game.state.solvedSentences,
+        unknownWords: this.game.state.openedSentences,
+      },
+      this.game.info.levelData.id,
+    );
     const level = this.game.levelIndex;
     const round = this.game.roundIndex;
     const dataLevel = await dataHandler.fetchLevelsData(level);
-    if (dataLevel.roundsCount === round) {
+    if (dataLevel.roundsCount - 1 === round) {
       if (level === 6) return;
       await this.clearAll();
       await this.openRound(level + 1, 0);

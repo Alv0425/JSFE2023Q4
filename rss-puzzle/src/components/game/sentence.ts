@@ -48,13 +48,11 @@ class Sentence {
       shifts.push(shift);
     }
     this.wordCards.forEach((card, idx) => {
-      console.log(`${shifts[idx]}px 0px`);
       card.imageCardRect.setStyleAttribute(
         "background-position",
         `-${shifts[idx]}px -${Math.floor((containerSize.height * this.sentenceIdx) / 10)}px`,
       );
       const fontSize = (containerSize.height * 0.38) / 10;
-      console.log(shifts[idx] + Math.floor(fontSize * 0.75));
       card.imageCardCircle.setStyleAttribute(
         "background-position",
         `-${shifts[idx] + Math.floor(fontSize * 0.75)}px -${Math.floor((containerSize.height * this.sentenceIdx) / 10)}px`,

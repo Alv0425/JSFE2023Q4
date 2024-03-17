@@ -31,7 +31,7 @@ class Game {
   public constructor(info: IRound) {
     this.info = info;
     const levelid = info.levelData.id.split("_");
-    this.roundIndex = parseInt(levelid[1], 10);
+    this.roundIndex = parseInt(levelid[1], 10) - 1;
     this.levelIndex = parseInt(levelid[0], 10);
     this.wordSentences = this.info.words.map((sentence, index) => {
       const sentenceObj = new Sentence(sentence, index);

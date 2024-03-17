@@ -5,6 +5,7 @@ import eventEmitter from "../../../../utils/eventemitter";
 import dataHandler from "../../../services/datahandler";
 import { Modal } from "../../modal/modal";
 import { IRound } from "../../../../utils/types/interfaces";
+import storage from "../../../services/localstorage";
 
 class SelectLevel {
   public button: Component;
@@ -21,7 +22,15 @@ class SelectLevel {
 
   public createRoundItem(roundData: IRound, index: number) {
     const container = li(["round-item"]);
-    const words = roundData.words.map((word) => span(["round-item__word"], word.word));
+    const storedRoundData = storage.getRoundStats(roundData.levelData.id);
+    if (storedRoundData) container.getComponent().classList.add("round-item_solved");
+    const words = roundData.words.map((word, idx) => {
+      const wordLabel = span(["round-item__word"], word.word);
+      if (storedRoundData?.knownWords.includes(idx)) wordLabel.getComponent().classList.add("round-item__word_solved");
+      if (storedRoundData?.unknownWords.includes(idx))
+        wordLabel.getComponent().classList.add("round-item__word_opened");
+      return wordLabel;
+    });
     const roundIndex = div(["round-item__index"]);
     roundIndex.setTextContent(`${index + 1}`);
     const roundImage = div(["round-item__image"]);
@@ -66,6 +75,10 @@ class SelectLevel {
     this.loadRounds(roundsContainer, 1, callback);
     levelsTabs.appendContent(levelButtons);
     modalselect.appendContent([levelsTabs, roundsContainer, closeButton]);
+    levelButtons.forEach(async (btn, index) => {
+      const isCompleted = await storage.checkLevelCompletion(index + 1);
+      if (isCompleted) btn.getComponent().classList.add("modal__level-button_completed");
+    });
   }
 }
 

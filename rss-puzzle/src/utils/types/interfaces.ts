@@ -32,9 +32,12 @@ export interface ILevel {
   roundsCount: number;
 }
 
-export interface IStats {
-  rounds?: string[];
+export interface IRoundResult {
+  knownWords: number[];
+  unknownWords: number[];
 }
+
+export type IStats = Record<string, IRoundResult>;
 
 export interface IStorage {
   hintsOptions: {

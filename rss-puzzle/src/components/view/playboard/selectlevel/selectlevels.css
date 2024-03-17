@@ -7,6 +7,33 @@
   min-width: 200px;
 }
 
+.modal__level-button {
+  padding: 5px;
+  min-width: 80px;
+}
+
+.modal__level-button_completed {
+  position: relative;
+  padding: 5px 20px 5px 3px;
+  min-width: 80px;
+}
+
+.modal__level-button_completed::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0.2rem;
+  width: 1.1rem;
+  height: 100%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.modal__level-button.modal__level-button_completed::after {
+  background-image: url(../../../../assets/icons/circle-check-solid-dark.svg);
+}
+
 .round-item {
   display: flex;
   justify-content: center;
@@ -18,6 +45,12 @@
   max-width: 500px;
   cursor: pointer;
   transition: 0.5s;
+  animation: fadein 0.5s ease-in;
+}
+
+.round-item_solved {
+  background-color: rgba(31, 32, 65, 0.5);
+  border-color: rgba(31, 32, 65);
 }
 
 .round-item__index {
@@ -34,6 +67,12 @@
   transition: 0.5s;
 }
 
+.round-item_solved .round-item__index {
+  color: rgba(31, 32, 65);
+  background-color: var(--color-container);
+  border: 1px solid rgba(31, 32, 65);
+}
+
 .round-item__image {
   width: 70px;
   height: 50px;
@@ -44,9 +83,17 @@
   background-color: var(--color-label-light);
 }
 
+.round-item_solved .round-item__image {
+  filter: blur(0) grayscale(0);
+}
+
 .modal__level-button_active {
   background-color: var(--color-highlight);
   color: var(--color-label-dark);
+}
+
+.modal__level-button_active.modal__level-button_completed::after {
+  background-image: url(../../../../assets/icons/circle-check-solid.svg);
 }
 
 .round-item__words {
@@ -60,18 +107,15 @@
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: var(--color-label-light);
   border-radius: 20px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-light);
 }
@@ -97,6 +141,18 @@
   transition: 0.5s;
 }
 
+.round-item__word_solved {
+  background-color: var(--color-label-light);
+  color: var(--color-text-light);
+  border: none;
+}
+
+.round-item__word_opened {
+  background-color: var(--color-highlight);
+  color: var(--color-label-dark);
+  border: none;
+}
+
 .round-item:hover {
   border-color: var(--color-text-light);
   .round-item__index,
@@ -104,4 +160,12 @@
     border-color: var(--color-text-light);
     color: var(--color-text-light);
   }
+}
+
+.round-item_solved:hover {
+  background-color: rgba(31, 32, 65, 0.3);
+}
+
+.round-item_solved:hover .round-item__word_opened {
+  color: var(--color-label-dark);
 }

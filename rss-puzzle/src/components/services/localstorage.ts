@@ -1,5 +1,6 @@
 import eventEmitter from "../../utils/eventemitter";
-import { IStorage } from "../../utils/types/interfaces";
+import { IRoundResult, IStorage } from "../../utils/types/interfaces";
+import dataHandler from "./datahandler";
 
 class LocalStorage {
   private templateData: IStorage;
@@ -57,6 +58,31 @@ class LocalStorage {
     data.hintsOptions.imageHint = imageHint;
     data.hintsOptions.audioHint = audioHint;
     data.hintsOptions.translationHint = translationHint;
+    this.saveLoginData(data);
+  }
+
+  public getRoundStats(roundId: string) {
+    const data = this.getData();
+    if (!data.stats) return null;
+    if (!data.stats[roundId]) return null;
+    return data.stats[roundId];
+  }
+
+  public async checkLevelCompletion(level: number) {
+    const data = this.getData();
+    const levelData = await dataHandler.fetchLevelsData(level);
+    if (!data.stats) return false;
+    const arrayID = levelData.rounds.map((round) => round.levelData.id);
+    return arrayID.every((id) => {
+      if (data.stats) return data.stats[id];
+      return false;
+    });
+  }
+
+  public setRoundStats(result: IRoundResult, roundId: string) {
+    const data = this.getData();
+    if (!data.stats) return;
+    data.stats[roundId] = result;
     this.saveLoginData(data);
   }
 }
