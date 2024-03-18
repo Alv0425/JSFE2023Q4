@@ -50,7 +50,9 @@
   opacity: 0.5;
 }
 
-.footer__github:hover,
-.footer__rss:hover {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .footer__github:hover,
+  .footer__rss:hover {
+    opacity: 1;
+  }
 }

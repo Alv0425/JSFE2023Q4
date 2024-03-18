@@ -33,9 +33,11 @@
   transition: 0.5s;
 }
 
-.header__button:hover {
-  color: var(--color-body-dark);
-  background-color: var(--color-highlight);
+@media (hover: hover) and (pointer: fine) {
+  .header__button:hover {
+    color: var(--color-body-dark);
+    background-color: var(--color-highlight);
+  }
 }
 
 .login-screen .header__button {

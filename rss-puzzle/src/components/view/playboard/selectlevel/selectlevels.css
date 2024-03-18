@@ -153,8 +153,7 @@
   border: none;
 }
 
-.round-item_current,
-.round-item:hover {
+.round-item_current {
   border-color: var(--color-text-light);
   .round-item__index,
   .round-item__word {
@@ -163,10 +162,22 @@
   }
 }
 
-.round-item_solved:hover {
-  background-color: rgba(31, 32, 65, 0.3);
-}
+@media (hover: hover) and (pointer: fine) {
+  .round-item_solved:hover {
+    background-color: rgba(31, 32, 65, 0.3);
+  }
 
-.round-item_solved:hover .round-item__word_opened {
-  color: var(--color-label-dark);
+  .round-item_solved:hover .round-item__word_opened {
+    color: var(--color-label-dark);
+  }
+
+  .round-item:hover {
+    border-color: var(--color-text-light);
+  }
+
+  .round-item:hover .round-item__index,
+  .round-item:hover .round-item__word {
+    border-color: var(--color-text-light);
+    color: var(--color-text-light);
+  }
 }

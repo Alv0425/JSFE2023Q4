@@ -79,7 +79,7 @@ class Card extends Component<HTMLElement> {
     );
     this.imageCardCircle.setStyleAttribute(
       "mask",
-      `radial-gradient(0.6em at calc(${this.currentWidth}px - 0.6em) 50%, #000 90%, transparent 100%)`,
+      `radial-gradient(0.55em at calc(${this.currentWidth}px - 0.6em) 50%, #000 90%, transparent 100%)`,
     );
     this.imageCardRect.setStyleAttribute("background-size", `${containerSize.width}px auto`);
     this.imageCardCircle.setStyleAttribute("background-size", `${containerSize.width}px auto`);

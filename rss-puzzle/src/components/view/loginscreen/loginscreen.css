@@ -50,9 +50,11 @@
   transition: 0.3s;
 }
 
-.login-form__button:hover {
-  background-color: var(--color-highlight);
-  color: var(--color-body-dark);
+@media (hover: hover) and (pointer: fine) {
+  .login-form__button:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-body-dark);
+  }
 }
 
 .login-form__button:disabled {

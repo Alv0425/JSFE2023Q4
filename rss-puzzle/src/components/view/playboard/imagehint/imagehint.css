@@ -10,9 +10,12 @@
   }
 }
 
-.playboard__hint-image-toggler:hover {
-  background-color: var(--color-highlight);
-  .playboard__hint-toggler-icon {
+@media (hover: hover) and (pointer: fine) {
+  .playboard__hint-image-toggler:hover {
+    background-color: var(--color-highlight);
+  }
+
+  .playboard__hint-image-toggler:hover .playboard__hint-toggler-icon {
     fill: var(--color-label-dark);
   }
 }

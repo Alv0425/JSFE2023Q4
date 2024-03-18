@@ -11,6 +11,7 @@
   --color-label-dark: #19547e;
   --color-text-light: #fbfef9;
   --color-text-red: #f22b29;
+  --color-container-grey: #e1e2ef;
 }
 
 html {
@@ -65,9 +66,11 @@ button {
   user-select: none;
 }
 
-button:hover {
-  background-color: var(--color-highlight);
-  color: var(--color-body-dark);
+@media (hover: hover) and (pointer: fine) {
+  button:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-body-dark);
+  }
 }
 
 button:disabled {

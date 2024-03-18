@@ -60,7 +60,8 @@
 .playboard__puzzle-container {
   width: 100%;
   background-size: 100% auto;
-  border: 1px solid gray;
+  border: 1px solid var(--color-container-grey);
+  background-color: var(--color-container-grey);
   aspect-ratio: 9 / 5.5;
   display: grid;
   grid-template-rows: repeat(10, 1fr);

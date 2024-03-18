@@ -74,14 +74,16 @@
   transition: 0.5s;
 }
 
-.start-screen__button:hover .start-screen__button-label {
-  transform: translateX(0);
-}
+@media (hover: hover) and (pointer: fine) {
+  .start-screen__button:hover .start-screen__button-label {
+    transform: translateX(0);
+  }
 
-.start-screen__button:hover .start-screen__button-icon {
-  opacity: 1;
-}
+  .start-screen__button:hover .start-screen__button-icon {
+    opacity: 1;
+  }
 
-.start-screen__button:hover .start-screen__button-icon::after {
-  transform: translateX(7px);
+  .start-screen__button:hover .start-screen__button-icon::after {
+    transform: translateX(7px);
+  }
 }
