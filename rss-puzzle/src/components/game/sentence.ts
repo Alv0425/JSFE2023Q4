@@ -11,6 +11,8 @@ class Sentence {
 
   public sentenceIdx: number;
 
+  public sentenceLength: number;
+
   public constructor(sentence: IWord, idx: number) {
     this.words = sentence.textExample.split(" ");
     this.wordCards = this.words.map((word, index) => {
@@ -19,8 +21,8 @@ class Sentence {
     });
     this.wordCards[0].getComponent().classList.add("card_start");
     this.wordCards[this.wordCards.length - 1].getComponent().classList.add("card_end");
-    const sentenceLength = this.words.join("").length;
-    this.wordWeights = this.words.map((word) => (word.length + 4) / (sentenceLength + 4 * this.words.length));
+    this.sentenceLength = this.words.join("").length;
+    this.wordWeights = this.words.map((word) => (word.length + 4) / (this.sentenceLength + 4 * this.words.length));
     this.sentenceIdx = idx;
   }
 
@@ -39,6 +41,9 @@ class Sentence {
   public resizeCards(containerSize: { width: number; height: number }) {
     this.wordCards.forEach((card, idx) => {
       card.setWidth(containerSize, this.wordWeights[idx]);
+      if (this.words.length > 9) {
+        card.textCardLayer.setStyleAttribute("transform", "scale(0.9)");
+      }
     });
     const currentCardsWidths = this.wordCards.map((card) => card.currentWidth);
     const shifts = [0];

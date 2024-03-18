@@ -18,6 +18,7 @@ class ImageInfo extends Component {
   }
 
   public setInfo(levelData: ILevelData) {
+    this.clear();
     const name = h3(["image-info__title"], `${levelData.name}`);
     const info = p(["image-info__meta"], `${levelData.author ?? ""}, ${levelData.year ?? ""}`);
     this.appendContent([name, info]);

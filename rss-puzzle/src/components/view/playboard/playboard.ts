@@ -15,7 +15,8 @@ import ImageHint from "./imagehint/imagehint";
 import SelectLevel from "./selectlevel/selectlevel";
 import storage from "../../services/localstorage";
 import loader from "../loaderscreen/loader";
-import imageInfo from "./imageinfo/imaheinfo";
+import imageInfo from "./imageinfo/imageinfo";
+import StatisticsButton from "./statisticsbutton/statisticsbutton";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -69,6 +70,7 @@ class Playboard extends Component {
     this.setListeners();
     this.drawHints();
     this.drawContinueButton();
+    this.drawStatisticsButton();
     this.drawAutocompleteButton();
     this.drawRoundLabel();
   }
@@ -209,8 +211,14 @@ class Playboard extends Component {
         this.loadSentence(this.game.state.currentSentence.current);
       } else {
         this.openNextRound();
+        eventEmitter.emit("open-next-round");
       }
     }
+  }
+
+  public drawStatisticsButton() {
+    const statisticsButton = new StatisticsButton();
+    this.playboardButtons.append(statisticsButton);
   }
 
   public drawAutocompleteButton() {
@@ -477,6 +485,7 @@ class Playboard extends Component {
     storage.setCurrentRound(level, round);
     this.updateRoundLabel(level, round);
     imageInfo.close();
+    eventEmitter.emit("open-round");
   }
 
   public loadSentence(idx: number) {

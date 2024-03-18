@@ -80,6 +80,9 @@ class Card extends Component<HTMLElement> {
     );
     this.imageCardRect.setStyleAttribute("background-size", `${containerSize.width}px auto`);
     this.imageCardCircle.setStyleAttribute("background-size", `${containerSize.width}px auto`);
+    this.textCardLayer.setStyleAttribute("transform", "scale(1)");
+    if (Math.round((containerSize.height * 0.38) / 10) > 16)
+      this.textCardLayer.setStyleAttribute("transform", "scale(0.8)");
   }
 
   public setBackground(url: string) {
