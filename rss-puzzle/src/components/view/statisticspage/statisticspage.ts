@@ -1,6 +1,6 @@
 import "./statisticspage.css";
 import Component from "../../../utils/component";
-import { button, div, h2, h3, li, span, ul } from "../../../utils/elements";
+import { button, div, h2, h3, img, li, p, span, ul } from "../../../utils/elements";
 import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
 import { IRound, IRoundResult } from "../../../utils/types/interfaces";
@@ -68,6 +68,15 @@ class StatisticsPage extends Component {
     return audioButton;
   }
 
+  public createImage(roundData: IRound) {
+    return div(
+      ["statistics-page__image-container"],
+      img(["statistics-page__image"], dataHandler.getImageUrl(roundData.levelData.cutSrc), roundData.levelData.name),
+      h3(["statistics-page__image-title"], `${roundData.levelData.name}`),
+      p(["statistics-page__image-info"], `${roundData.levelData.author}, ${roundData.levelData.year}`),
+    );
+  }
+
   public createWordsList(currentRoundStats: IRoundResult, roundData: IRound, type: "knownWords" | "unknownWords") {
     return currentRoundStats[type].reduce((acc: Component[], wordIdx) => {
       if (roundData) {
@@ -95,6 +104,7 @@ class StatisticsPage extends Component {
       ["statistics-page__results-container"],
       h3(["statistics-page__subtitle", "statistics-page__subtitle_unknown"], "I don't know"),
     );
+    if (currentRound?.roundInfo) this.roundInfo.append(this.createImage(currentRound.roundInfo));
     if (!currentRound) return;
     if (currentRound.currentStats) {
       if (currentRound.currentStats.knownWords.length) {
