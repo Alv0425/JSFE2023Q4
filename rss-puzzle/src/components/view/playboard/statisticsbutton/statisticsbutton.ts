@@ -7,8 +7,7 @@ class StatisticsButton extends Component<HTMLButtonElement> {
     super("button", ["playboard__statistics-button"], {}, { id: "playboard-button-statistics", type: "button" });
     this.setTextContent("Results");
     this.addListener("click", () => {
-      this.getComponent().disabled = true;
-      eventEmitter.emit("show-statistics");
+      eventEmitter.emit("show-results");
     });
     eventEmitter.on("startsentence", () => {
       this.getComponent().disabled = false;

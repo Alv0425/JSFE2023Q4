@@ -56,6 +56,9 @@ class Card extends Component<HTMLElement> {
     this.addListener("dragstart", (e) => e.preventDefault());
     eventEmitter.on("reveal-image", () => {
       this.getComponent().classList.add("fade-out-slow");
+      setTimeout(() => {
+        this.destroy();
+      }, 2000);
     });
   }
 

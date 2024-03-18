@@ -97,17 +97,19 @@ class Playboard extends Component {
     eventEmitter.on("sentencearranged", () => {
       this.setArranged();
     });
+    eventEmitter.on("statistics-page-closed", () => {
+      setTimeout(() => this.resize(), 100);
+    });
     eventEmitter.on("round-completed", () => {
       console.log("round-completed");
       eventEmitter.emit("reveal-image");
-      if (this.game)
+      if (this.game) {
         this.playboardPuzzleContainer.setStyleAttribute(
           "background-image",
           `url(${dataHandler.getImageUrl(this.game?.info.levelData.imageSrc)})`,
         );
-      if (this.game) storage.setLastCompletedRound(this.game.levelIndex, this.game.roundIndex);
-      if (this.game) console.log(`level ${this.game.levelIndex} round ${this.game.roundIndex}`);
-      if (this.game)
+        storage.setLastCompletedRound(this.game.levelIndex, this.game.roundIndex);
+        console.log(`level ${this.game.levelIndex} round ${this.game.roundIndex}`);
         storage.setRoundStats(
           {
             knownWords: this.game.state.solvedSentences,
@@ -115,7 +117,13 @@ class Playboard extends Component {
           },
           this.game.info.levelData.id,
         );
-      if (this.game) {
+        storage.setCurrentRoundStats(
+          {
+            knownWords: this.game.state.solvedSentences,
+            unknownWords: this.game.state.openedSentences,
+          },
+          this.game.info,
+        );
         imageInfo.setInfo(this.game.info.levelData);
         imageInfo.open();
       }

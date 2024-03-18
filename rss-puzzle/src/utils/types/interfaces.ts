@@ -57,4 +57,8 @@ export interface IStorage {
     level: number;
     round: number;
   };
+  currentRoundStats?: {
+    roundInfo?: IRound;
+    currentStats?: IRoundResult;
+  };
 }

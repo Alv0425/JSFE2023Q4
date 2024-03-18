@@ -1,5 +1,5 @@
 import eventEmitter from "../../utils/eventemitter";
-import { IRoundResult, IStorage } from "../../utils/types/interfaces";
+import { IRound, IRoundResult, IStorage } from "../../utils/types/interfaces";
 import dataHandler from "./datahandler";
 
 class LocalStorage {
@@ -25,6 +25,7 @@ class LocalStorage {
         level: 1,
         round: 0,
       },
+      currentRoundStats: {},
     };
     this.key = "alv0425-rss-pz";
     eventEmitter.on("logout", () => this.clearStorage());
@@ -120,6 +121,21 @@ class LocalStorage {
     if (!data.currentRound) return;
     data.currentRound = { level, round };
     this.saveLoginData(data);
+  }
+
+  public setCurrentRoundStats(result: IRoundResult, roindInfo: IRound) {
+    const data = this.getData();
+    if (!data.currentRoundStats) return;
+    data.currentRoundStats.currentStats = result;
+    data.currentRoundStats.roundInfo = roindInfo;
+    this.saveLoginData(data);
+  }
+
+  public getCurrentRoundStats() {
+    const data = this.getData();
+    if (!data.currentRoundStats) return null;
+    if (!data.currentRoundStats) return null;
+    return data.currentRoundStats;
   }
 }
 
