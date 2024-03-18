@@ -18,7 +18,7 @@ class StartScreen extends Component {
       p(["start-screen__text"], "RSS-PUZZLE is a game designed to enhance English language skills."),
       p(
         ["start-screen__text"],
-        "You will be challenged to assemble sentences from jumbled puzzle-like word cards. Once you have properly organized all the words, you will reveal beautiful artwork.",
+        "You will be challenged to assemble sentences from jigsaw puzzle word cards. Once you have properly organized all the words, the artwork will be revealed.",
       ),
       p(["start-screen__text"], "Good luck and have fun!"),
     );
