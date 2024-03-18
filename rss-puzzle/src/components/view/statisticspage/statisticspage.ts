@@ -1,8 +1,9 @@
 import "./statisticspage.css";
 import Component from "../../../utils/component";
-import { button, div, h2 } from "../../../utils/elements";
+import { button, div, h2, h3, li, span, ul } from "../../../utils/elements";
 import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
+import { IRound, IRoundResult } from "../../../utils/types/interfaces";
 
 class StatisticsPage extends Component {
   public buttonsContainer: Component<HTMLElement>;
@@ -17,7 +18,7 @@ class StatisticsPage extends Component {
     unlnown: [],
   };
 
-  // public roundInfo: Component<HTMLElement>;
+  public roundInfo: Component<HTMLElement>;
 
   public constructor() {
     super(
@@ -27,9 +28,10 @@ class StatisticsPage extends Component {
       {},
       div(["statistics-page__header"], h2(["statistics-page__header-title"], "Results")),
     );
+    this.roundInfo = div(["statistics-page__results"]);
     this.buttonsContainer = div(["statistics-page__buttons"]);
     const backButton = button(["statistics-page__button"], "Back To Game", "button", "back-button");
-    this.append(this.buttonsContainer);
+    this.appendContent([this.roundInfo, this.buttonsContainer]);
     const continueButton = button(["statistics-page__button"], "Continue", "button", "results-continue-button");
     this.buttonsContainer.appendContent([backButton, continueButton]);
     backButton.addListener("click", () => this.closePage());
@@ -40,9 +42,53 @@ class StatisticsPage extends Component {
     eventEmitter.on("round-completed", () => this.updateResults());
   }
 
+  public createWordsList(currentRoundStats: IRoundResult, roundData: IRound, type: "knownWords" | "unknownWords") {
+    return currentRoundStats[type].reduce((acc: Component[], wordIdx) => {
+      if (roundData) {
+        acc.push(
+          li(
+            ["statistics-page__results-item"],
+            "",
+            span(["statistics-page__results-item-text"], roundData.words[wordIdx].textExample),
+          ),
+        );
+      }
+      return acc;
+    }, []);
+  }
+
   public updateResults() {
-    const currentStats = storage.getCurrentRoundStats();
-    console.log(currentStats);
+    this.roundInfo.clear();
+    const currentRound = storage.getCurrentRoundStats();
+    const knownWordsContainer = div(
+      ["statistics-page__results-container"],
+      h3(["statistics-page__subtitle", "statistics-page__subtitle_known"], "I know"),
+    );
+    const unknownWordsContainer = div(
+      ["statistics-page__results-container"],
+      h3(["statistics-page__subtitle", "statistics-page__subtitle_unknown"], "I don't know"),
+    );
+    if (!currentRound) return;
+    if (currentRound.currentStats) {
+      if (currentRound.currentStats.knownWords.length) {
+        if (!currentRound.roundInfo) return;
+        const wodsList = ul(
+          ["statistics-page__results-list"],
+          this.createWordsList(currentRound.currentStats, currentRound.roundInfo, "knownWords"),
+        );
+        knownWordsContainer.append(wodsList);
+        this.roundInfo.append(knownWordsContainer);
+      }
+      if (currentRound.currentStats.unknownWords.length) {
+        if (!currentRound.roundInfo) return;
+        const wodsList = ul(
+          ["statistics-page__results-list"],
+          this.createWordsList(currentRound.currentStats, currentRound.roundInfo, "unknownWords"),
+        );
+        unknownWordsContainer.append(wodsList);
+        this.roundInfo.append(unknownWordsContainer);
+      }
+    }
   }
 
   public closePage() {
