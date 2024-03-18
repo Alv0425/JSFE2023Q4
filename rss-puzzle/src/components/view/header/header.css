@@ -7,7 +7,7 @@
 
 .header__logo {
   font-weight: 900;
-  font-size: 50px;
+  font-size: 45px;
   flex-grow: 1;
   text-align: center;
   margin: 0;
@@ -19,7 +19,7 @@
 
 .header__container {
   max-width: 1024px;
-  padding: 10px;
+  padding: 10px 10px 0px 10px;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -27,16 +27,7 @@
 }
 
 .header__button {
-  background-color: var(--color-label-light);
-  color: var(--color-text-light);
-  border: none;
-  display: flex;
   flex-grow: 0;
-  max-height: 40px;
-  padding: 10px;
-  border-radius: 100px;
-  justify-content: center;
-  align-items: center;
   margin-left: auto;
   cursor: pointer;
   transition: 0.5s;

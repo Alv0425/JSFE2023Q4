@@ -1,7 +1,7 @@
 .playboard__hint-audio-toggler,
 .playboard__hint-audio-button {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .playboard__hint-audio-button {
@@ -13,8 +13,8 @@
   grid-row-gap: 0px;
   justify-content: center;
   align-items: center;
-  padding: 7px;
-  padding-left: 9px;
+  padding: 5px;
+  padding-left: 6px;
 }
 
 .playboard__audio-hint-icon-1,

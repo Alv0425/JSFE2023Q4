@@ -1,0 +1,41 @@
+.image-info {
+  display: none;
+  transition: 1s;
+}
+
+.image-info_hide {
+  display: flex;
+  opacity: 0;
+}
+
+.image-info_show {
+  display: flex;
+  position: absolute;
+  z-index: 10;
+  gap: 10px;
+  padding: 13px;
+  bottom: 5px;
+  width: calc(100% - 20px);
+  background-color: rgba(31, 32, 65, 0.9);
+  animation: fadein 1s ease-in;
+  right: 10px;
+  border-radius: 15px;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(3px);
+  min-height: 50px;
+  justify-content: center;
+}
+
+.image-info__title,
+.image-info__meta {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+.image-info__title {
+  max-width: 700px;
+  text-align: center;
+  font-size: 0.9rem;
+}

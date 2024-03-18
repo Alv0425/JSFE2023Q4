@@ -55,7 +55,7 @@ button {
   display: flex;
   flex-grow: 0;
   max-height: 40px;
-  padding: 10px;
+  padding: 7px;
   border-radius: 100px;
   justify-content: center;
   align-items: center;
@@ -97,6 +97,14 @@ button:disabled {
   animation: fadeout 0.3s ease-in forwards;
 }
 
+.fade-out-slow {
+  animation: fadeout 2s ease-in forwards;
+}
+
 .fade-in {
   animation: fadein 0.3s ease-in forwards;
+}
+
+.fade-in-slow {
+  animation: fadein 2s ease-in forwards;
 }

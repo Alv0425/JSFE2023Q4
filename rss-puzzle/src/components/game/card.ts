@@ -4,6 +4,7 @@ import { div, span } from "../../utils/elements";
 // import eventEmitter from "../../utils/eventemitter";
 import { getElementOfType } from "../../utils/helpers/getelementoftype";
 import dataHandler from "../services/datahandler";
+import eventEmitter from "../../utils/eventemitter";
 // import eventEmitter from "../../utils/eventemitter";
 
 class Card extends Component<HTMLElement> {
@@ -53,6 +54,9 @@ class Card extends Component<HTMLElement> {
     this.position = "source";
     this.draggable = false;
     this.addListener("dragstart", (e) => e.preventDefault());
+    eventEmitter.on("reveal-image", () => {
+      this.getComponent().classList.add("fade-out-slow");
+    });
   }
 
   public getComponent() {

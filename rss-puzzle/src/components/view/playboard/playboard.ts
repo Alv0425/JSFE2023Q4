@@ -15,6 +15,7 @@ import ImageHint from "./imagehint/imagehint";
 import SelectLevel from "./selectlevel/selectlevel";
 import storage from "../../services/localstorage";
 import loader from "../loaderscreen/loader";
+import imageInfo from "./imageinfo/imaheinfo";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -51,6 +52,8 @@ class Playboard extends Component {
 
   public roundLabel: Component<HTMLElement> | null = null;
 
+  public aspectRatio: number = 6 / 9;
+
   public constructor() {
     super("div", ["playboard"]);
     this.playboardHeader = div(["playboard__header"]);
@@ -61,7 +64,7 @@ class Playboard extends Component {
     this.playboardButtons = div(["playboard__buttons"]);
     this.playboardPuzzleContainer = div(["playboard__puzzle-container"]);
     this.playboardSourceContainer = div(["playboard__source-container"]);
-    this.playboardField.appendContent([this.playboardPuzzleContainer, this.playboardSourceContainer]);
+    this.playboardField.appendContent([this.playboardPuzzleContainer, this.playboardSourceContainer, imageInfo]);
     this.appendContent([this.playboardHeader, this.playboardHints, this.playboardField, this.playboardButtons]);
     this.setListeners();
     this.drawHints();
@@ -73,7 +76,8 @@ class Playboard extends Component {
   private resize() {
     const size = this.playboardHeader.getSize();
     size.width -= 20;
-    size.height = Math.floor((size.width * 5) / 9);
+    size.height = Math.floor(size.width * this.aspectRatio);
+    this.playboardPuzzleContainer.setStyleAttribute("aspect-ratio", `1000 / ${Math.floor(this.aspectRatio * 1000)}`);
     if (this.game) this.game.resizeAllCards(size);
     this.resizeContainers();
   }
@@ -93,6 +97,12 @@ class Playboard extends Component {
     });
     eventEmitter.on("round-completed", () => {
       console.log("round-completed");
+      eventEmitter.emit("reveal-image");
+      if (this.game)
+        this.playboardPuzzleContainer.setStyleAttribute(
+          "background-image",
+          `url(${dataHandler.getImageUrl(this.game?.info.levelData.imageSrc)})`,
+        );
       if (this.game) storage.setLastCompletedRound(this.game.levelIndex, this.game.roundIndex);
       if (this.game) console.log(`level ${this.game.levelIndex} round ${this.game.roundIndex}`);
       if (this.game)
@@ -103,6 +113,10 @@ class Playboard extends Component {
           },
           this.game.info.levelData.id,
         );
+      if (this.game) {
+        imageInfo.setInfo(this.game.info.levelData);
+        imageInfo.open();
+      }
     });
     eventEmitter.on("continue-game", () => {
       this.nextSentence();
@@ -310,6 +324,7 @@ class Playboard extends Component {
         this.playboardPuzzleContainer.clear();
         res(true);
         this.playboardPuzzleContainer.getComponent().classList.remove("hide");
+        this.playboardPuzzleContainer.removeStyleAttribute("background-image");
       }, 300);
     });
   }
@@ -451,12 +466,17 @@ class Playboard extends Component {
     this.game = new Game(dataLevel.rounds[round]);
     this.loadSentence(0);
     loader.draw();
-    const image = new Image(300, 400);
+    const image = new Image();
     image.src = dataHandler.getImageUrl(this.game.info.levelData.imageSrc);
-    image.onload = () => loader.close();
+    image.onload = () => {
+      loader.close();
+      this.aspectRatio = image.height / image.width;
+      this.resize();
+    };
     setTimeout(() => loader.close(), 3000);
     storage.setCurrentRound(level, round);
     this.updateRoundLabel(level, round);
+    imageInfo.close();
   }
 
   public loadSentence(idx: number) {
