@@ -4,6 +4,8 @@ import { button, div, h2, h3, li, span, ul } from "../../../utils/elements";
 import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
 import { IRound, IRoundResult } from "../../../utils/types/interfaces";
+import dataHandler from "../../services/datahandler";
+import createSvg from "../../../utils/helpers/createsvg";
 
 class StatisticsPage extends Component {
   public buttonsContainer: Component<HTMLElement>;
@@ -42,6 +44,30 @@ class StatisticsPage extends Component {
     eventEmitter.on("round-completed", () => this.updateResults());
   }
 
+  public createSoundButton(url: string) {
+    const srcUrl = dataHandler.getAudioUrl(url);
+    const audio = new Audio(srcUrl);
+    const audioButton = button(["playboard__hint-audio-button"], "", "button", "audio-button");
+    const iconBtn1 = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
+    const iconBtn2 = createSvg("./assets/icons/waves-2.svg#waves2", "playboard__audio-hint-icon-2");
+    audioButton.getComponent().append(iconBtn1, iconBtn2);
+    audioButton.addListener("click", () => {
+      if (srcUrl) {
+        audioButton.getComponent().classList.add("playboard__hint-audio-button_active");
+        audio.currentTime = 0;
+        audio.play();
+        audio.addEventListener(
+          "ended",
+          () => {
+            audioButton.getComponent().classList.remove("playboard__hint-audio-button_active");
+          },
+          { once: true },
+        );
+      }
+    });
+    return audioButton;
+  }
+
   public createWordsList(currentRoundStats: IRoundResult, roundData: IRound, type: "knownWords" | "unknownWords") {
     return currentRoundStats[type].reduce((acc: Component[], wordIdx) => {
       if (roundData) {
@@ -50,6 +76,7 @@ class StatisticsPage extends Component {
             ["statistics-page__results-item"],
             "",
             span(["statistics-page__results-item-text"], roundData.words[wordIdx].textExample),
+            this.createSoundButton(roundData.words[wordIdx].audioExample),
           ),
         );
       }
