@@ -21,12 +21,6 @@ export interface IRound {
   words: IWord[];
 }
 
-export interface IGame extends IRound {
-  isSolved: boolean;
-  numbersSolved: number[];
-  numbersOpened: number[];
-}
-
 export interface ILevel {
   rounds: IRound[];
   roundsCount: number;

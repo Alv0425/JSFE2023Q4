@@ -10,16 +10,6 @@ import createSvg from "../../../utils/helpers/createsvg";
 class StatisticsPage extends Component {
   public buttonsContainer: Component<HTMLElement>;
 
-  // public roundTitle: Component<HTMLElement>;
-
-  public roundSentences: {
-    known: Component[];
-    unlnown: Component[];
-  } = {
-    known: [],
-    unlnown: [],
-  };
-
   public roundInfo: Component<HTMLElement>;
 
   public constructor() {

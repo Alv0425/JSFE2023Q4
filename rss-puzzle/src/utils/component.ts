@@ -148,18 +148,6 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.getComponent().hidden = false;
   }
 
-  public setBgImage(
-    imageUrl: string,
-    size: { width: number; height: number },
-    position: { left: number; top: number },
-  ) {
-    if (imageUrl) {
-      this.node.style.backgroundImage = `url(${imageUrl})`;
-      this.node.style.backgroundSize = `${size.width}px ${size.height}px`;
-      this.node.style.backgroundPosition = `${position.left}px ${position.top}px`;
-    }
-  }
-
   public clear() {
     this.content.forEach((child) => {
       if (child instanceof Component) {

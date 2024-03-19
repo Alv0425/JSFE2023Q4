@@ -17,6 +17,7 @@ import storage from "../../services/localstorage";
 import loader from "../loaderscreen/loader";
 import imageInfo from "./imageinfo/imageinfo";
 import StatisticsButton from "./statisticsbutton/statisticsbutton";
+import { IRoundResult } from "../../../utils/types/interfaces";
 
 class Playboard extends Component {
   public playboardHeader: Component;
@@ -85,60 +86,18 @@ class Playboard extends Component {
   }
 
   private setListeners() {
-    eventEmitter.on("cardsresized", () => {
-      this.resizeContainers();
-    });
-    window.addEventListener("resize", () => {
-      this.resize();
-    });
-    eventEmitter.on("sentencesolved", () => {
-      this.setSolved();
-    });
-    eventEmitter.on("sentencearranged", () => {
-      this.setArranged();
-    });
-    eventEmitter.on("statistics-page-closed", () => {
-      setTimeout(() => this.resize(), 100);
-    });
-    eventEmitter.on("round-completed", () => {
-      console.log("round-completed");
-      eventEmitter.emit("reveal-image");
-      if (this.game) {
-        this.playboardPuzzleContainer.setStyleAttribute(
-          "background-image",
-          `url(${dataHandler.getImageUrl(this.game?.info.levelData.imageSrc)})`,
-        );
-        storage.setLastCompletedRound(this.game.levelIndex, this.game.roundIndex);
-        console.log(`level ${this.game.levelIndex} round ${this.game.roundIndex}`);
-        storage.setRoundStats(
-          {
-            knownWords: this.game.state.solvedSentences,
-            unknownWords: this.game.state.openedSentences,
-          },
-          this.game.info.levelData.id,
-        );
-        storage.setCurrentRoundStats(
-          {
-            knownWords: this.game.state.solvedSentences,
-            unknownWords: this.game.state.openedSentences,
-          },
-          this.game.info,
-        );
-        imageInfo.setInfo(this.game.info.levelData);
-        imageInfo.open();
-      }
-    });
-    eventEmitter.on("continue-game", () => {
-      this.nextSentence();
-    });
+    eventEmitter.on("cardsresized", () => this.resizeContainers());
+    window.addEventListener("resize", () => this.resize());
+    eventEmitter.on("sentencesolved", () => this.setSolved());
+    eventEmitter.on("sentencearranged", () => this.setArranged());
+    eventEmitter.on("statistics-page-closed", () => setTimeout(() => this.resize(), 100));
+    eventEmitter.on("round-completed", () => this.completedRoundHandler());
+    eventEmitter.on("continue-game", () => this.nextSentence());
     eventEmitter.on("check-sentence", () => {
       this.currentSentenceContainer?.classList.toggle("check-mode");
       this.checkSentence();
     });
-    eventEmitter.on("open-select-modal", () => {
-      console.log("open-select-modal");
-      this.selectLevel.openMmodalSelectGame(this.loadGame.bind(this));
-    });
+    eventEmitter.on("open-select-modal", () => this.selectLevel.openMmodalSelectGame(this.openRound.bind(this)));
     eventEmitter.on("show-image-hint", () => {
       this.playboardField.getComponent().classList.add("playboard__field-show-image");
     });
@@ -147,15 +106,38 @@ class Playboard extends Component {
     });
     eventEmitter.on("source-block-filled", () => this.currentSentenceContainer?.classList.remove("check-mode"));
     eventEmitter.on("autocomplete", async () => {
-      if (!this.currentSentenceContainer) return;
-      await this.currentSentence?.animateArrangingCards(this.currentSentenceContainer);
-      this.currentCards.forEach((card) => card.removeAllListeners());
-      setTimeout(() => {
-        eventEmitter.emit("sentencearranged");
-        this.arrangeSentence();
-        this.currentSentenceContainer?.classList.remove("check-mode");
-      }, 500);
+      await this.arrangeCards();
     });
+  }
+
+  public async arrangeCards() {
+    if (!this.currentSentenceContainer) return;
+    await this.currentSentence?.animateArrangingCards(this.currentSentenceContainer);
+    this.currentCards.forEach((card) => card.removeAllListeners());
+    setTimeout(() => {
+      eventEmitter.emit("sentencearranged");
+      this.arrangeSentence();
+      this.currentSentenceContainer?.classList.remove("check-mode");
+    }, 500);
+  }
+
+  public completedRoundHandler() {
+    eventEmitter.emit("reveal-image");
+    if (this.game) {
+      this.playboardPuzzleContainer.setStyleAttribute(
+        "background-image",
+        `url(${dataHandler.getImageUrl(this.game?.info.levelData.imageSrc)})`,
+      );
+      storage.setLastCompletedRound(this.game.levelIndex, this.game.roundIndex);
+      const currentGameResult: IRoundResult = {
+        knownWords: this.game.state.solvedSentences,
+        unknownWords: this.game.state.openedSentences,
+      };
+      storage.setRoundStats(currentGameResult, this.game.info.levelData.id);
+      storage.setCurrentRoundStats(currentGameResult, this.game.info);
+      imageInfo.setInfo(this.game.info.levelData);
+      imageInfo.open();
+    }
   }
 
   private drawHints() {
@@ -199,7 +181,8 @@ class Playboard extends Component {
   private setSolved() {
     this.currentCards.forEach((card) => card.removeAllListeners());
     this.currentSentenceContainer?.classList.add("puzzle__sentence_correct");
-    if (this.currentSentence) this.game?.state.solvedSentences.push(this.currentSentence?.sentenceIdx);
+    if (this.currentSentence && !this.game?.state.solvedSentences.includes(this.currentSentence?.sentenceIdx))
+      this.game?.state.solvedSentences.push(this.currentSentence?.sentenceIdx);
     if (this.currentSentence?.sentenceIdx === 9) eventEmitter.emit("round-completed");
   }
 
@@ -280,30 +263,20 @@ class Playboard extends Component {
     const dataLevel = await dataHandler.fetchLevelsData(level);
     if (dataLevel.roundsCount - 1 === round) {
       if (level === 6) {
-        await this.clearAll();
         await this.openRound(1, 0);
         return;
       }
-      await this.clearAll();
       await this.openRound(level + 1, 0);
       return;
     }
-    await this.clearAll();
     await this.openRound(level, round + 1);
   }
 
   private async openNextRound() {
     if (!this.game) return;
-    console.log(this.game.state.openedSentences);
-    console.log(this.game.info.levelData.id);
     const level = this.game.levelIndex;
     const round = this.game.roundIndex;
     await this.loadNextRound(level, round);
-  }
-
-  private async loadGame(level: number, round: number) {
-    await this.clearAll();
-    await this.openRound(level, round);
   }
 
   public resizeContainers() {
@@ -326,8 +299,8 @@ class Playboard extends Component {
         this.cardWordplacesSource = [];
         this.cardWordplacesResult = [];
         this.currentCards = [];
-        res(true);
         this.playboardSourceContainer.getComponent().classList.remove("hide");
+        res(true);
       }, 200);
     });
   }
@@ -433,8 +406,6 @@ class Playboard extends Component {
         target?.classList.remove("highlight");
         if (destType === "result" || destType === "source") cardComp.position = destType;
       }
-      this.updateCardsContainers();
-      this.updateCurrentGameStats();
       return;
     }
     let cardContainer = target;
@@ -478,6 +449,8 @@ class Playboard extends Component {
   }
 
   public async openRound(level: number, round: number) {
+    eventEmitter.emit("open-round");
+    await this.clearAll();
     const dataLevel = await dataHandler.fetchLevelsData(level);
     this.game = new Game(dataLevel.rounds[round]);
     this.loadSentence(0);
@@ -493,7 +466,6 @@ class Playboard extends Component {
     storage.setCurrentRound(level, round);
     this.updateRoundLabel(level, round);
     imageInfo.close();
-    eventEmitter.emit("open-round");
   }
 
   public loadSentence(idx: number) {

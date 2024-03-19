@@ -14,7 +14,7 @@ class SelectLevel {
 
   public constructor() {
     this.modal = new Modal();
-    this.button = button(["button"], "Select Level", "submit", "select-level-button");
+    this.button = button(["button"], "Select Game", "submit", "select-level-button");
     this.button.addListener("click", () => {
       eventEmitter.emit("open-select-modal");
     });

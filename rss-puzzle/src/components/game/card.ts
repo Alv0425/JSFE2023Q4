@@ -1,11 +1,8 @@
 import "./card.css";
 import Component from "../../utils/component";
 import { div, span } from "../../utils/elements";
-// import eventEmitter from "../../utils/eventemitter";
-import { getElementOfType } from "../../utils/helpers/getelementoftype";
 import dataHandler from "../services/datahandler";
 import eventEmitter from "../../utils/eventemitter";
-// import eventEmitter from "../../utils/eventemitter";
 
 class Card extends Component<HTMLElement> {
   public text: string;
@@ -151,28 +148,6 @@ class Card extends Component<HTMLElement> {
         this.curTarget.classList.add("highlight");
       }
     }
-  }
-
-  public swapPlaces(place1: HTMLElement, place2: HTMLElement) {
-    if (place1 === place2) return;
-    const elementLeftSibling = place2.previousSibling;
-    const elementRightSibling = place2.previousSibling;
-    place1.before(place2);
-    if (elementLeftSibling) {
-      elementLeftSibling.after(place1);
-    } else if (elementRightSibling) {
-      elementRightSibling.before(place1);
-    }
-  }
-
-  private isInsideField(x: number, y: number) {
-    const fieldCoords = getElementOfType(
-      HTMLElement,
-      document.querySelector(".playboard__field"),
-    ).getBoundingClientRect();
-    if (x < fieldCoords.x || y < fieldCoords.y) return false;
-    if (x > fieldCoords.x + fieldCoords.width || y > fieldCoords.y + fieldCoords.width) return false;
-    return true;
   }
 
   public getCoords(e: MouseEvent | TouchEvent) {

@@ -50,20 +50,6 @@ class Game {
     };
   }
 
-  public resetGameState() {
-    this.state = {
-      isCurrent: false,
-      isFinished: false,
-      solvedSentences: [],
-      openedSentences: [],
-      currentSentence: {
-        current: 0,
-        sourceBlock: [],
-        resultBlock: [],
-      },
-    };
-  }
-
   public generateSources(sentenceIdx: number) {
     const sentence = this.wordSentences[sentenceIdx];
     const jumbledCards = sentence.wordCards.slice();
@@ -71,14 +57,6 @@ class Game {
       const rand = Math.floor(Math.random() * (i + 1));
       [jumbledCards[i], jumbledCards[rand]] = [jumbledCards[rand], jumbledCards[i]];
     }
-    // const order = Array.from(
-    //   { length: sentence.wordCards.length },
-    //   (_, i) => i,
-    // ).sort(() => Math.random() - 0.5);
-    // const jumbledCards = order.map((i) => sentence.wordCards[order[i]]);
-    // this.state.currentSentence.sourceBlock = jumbledCards.map(
-    //   (card) => card.wordIndex,
-    // );
     return jumbledCards;
   }
 

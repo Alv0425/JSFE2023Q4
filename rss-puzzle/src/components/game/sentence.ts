@@ -26,8 +26,7 @@ class Sentence {
     this.sentenceIdx = idx;
   }
 
-  public async animateArrangingCards(container: HTMLElement) {
-    const baseCoords = container.getBoundingClientRect();
+  private calculateShifts() {
     const currentCardsWidths = this.wordCards.map((card) => card.currentWidth);
     const shifts = [0];
     let shift = 0;
@@ -35,6 +34,12 @@ class Sentence {
       shift += currentCardsWidths[i];
       shifts.push(shift);
     }
+    return shifts;
+  }
+
+  public async animateArrangingCards(container: HTMLElement) {
+    const baseCoords = container.getBoundingClientRect();
+    const shifts = this.calculateShifts();
     this.wordCards.forEach((card, i) => card.moveTo(baseCoords.x + shifts[i], baseCoords.y));
   }
 
@@ -45,13 +50,7 @@ class Sentence {
         card.textCardLayer.setStyleAttribute("transform", "scale(0.9)");
       }
     });
-    const currentCardsWidths = this.wordCards.map((card) => card.currentWidth);
-    const shifts = [0];
-    let shift = 0;
-    for (let i = 0; i < this.wordCards.length - 1; i += 1) {
-      shift += currentCardsWidths[i];
-      shifts.push(shift);
-    }
+    const shifts = this.calculateShifts();
     this.wordCards.forEach((card, idx) => {
       card.imageCardRect.setStyleAttribute(
         "background-position",

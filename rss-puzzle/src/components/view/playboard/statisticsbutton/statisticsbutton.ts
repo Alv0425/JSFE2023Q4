@@ -10,18 +10,20 @@ class StatisticsButton extends Component<HTMLButtonElement> {
       eventEmitter.emit("show-results");
     });
     eventEmitter.on("startsentence", () => {
-      this.getComponent().disabled = false;
+      this.getComponent().disabled = true;
     });
     eventEmitter.on("open-round", () => this.hideButton());
     eventEmitter.on("autocomplete-hide", () => this.showButton());
   }
 
   public showButton() {
+    this.getComponent().disabled = false;
     this.getComponent().classList.remove("playboard__statistics-button_hide");
     this.getComponent().classList.add("playboard__statistics-button_show");
   }
 
   public hideButton() {
+    this.getComponent().disabled = true;
     this.getComponent().classList.add("fade-out");
     setTimeout(() => {
       this.getComponent().classList.remove("playboard__statistics-button_show");
