@@ -140,6 +140,18 @@ class Component<T extends HTMLElement = HTMLElement> {
     };
   }
 
+  public getCoordinates() {
+    const clientRect = this.getComponent().getBoundingClientRect();
+    return {
+      x: clientRect.left,
+      y: clientRect.top,
+      centerX: clientRect.left + clientRect.width / 2,
+      centerY: clientRect.top + clientRect.height / 2,
+      width: clientRect.width,
+      height: clientRect.height,
+    };
+  }
+
   public hide() {
     this.getComponent().hidden = true;
   }

@@ -107,6 +107,11 @@ class Playboard extends Component {
     eventEmitter.on("source-block-filled", () => this.currentSentenceContainer?.classList.remove("check-mode"));
     eventEmitter.on("autocomplete", async () => {
       await this.arrangeCards();
+      eventEmitter.emit("sentencearranged");
+    });
+    eventEmitter.on("sentencesolved-invalid-order", async () => {
+      await this.arrangeCards();
+      eventEmitter.emit("sentencesolved");
     });
   }
 
@@ -115,7 +120,6 @@ class Playboard extends Component {
     await this.currentSentence?.animateArrangingCards(this.currentSentenceContainer);
     this.currentCards.forEach((card) => card.removeAllListeners());
     setTimeout(() => {
-      eventEmitter.emit("sentencearranged");
       this.arrangeSentence();
       this.currentSentenceContainer?.classList.remove("check-mode");
     }, 500);
@@ -246,9 +250,12 @@ class Playboard extends Component {
       if (order === -1) return "";
       return correctWords[order];
     });
+    const isCorrectOrder = this.game?.state.currentSentence.resultBlock.every((order, idx) => idx === order);
+    console.log(isCorrectOrder);
     if (!actualWords) return;
     if (correctWords.join(" ") === actualWords.join(" ")) {
-      eventEmitter.emit("sentencesolved");
+      if (isCorrectOrder) eventEmitter.emit("sentencesolved");
+      if (!isCorrectOrder) eventEmitter.emit("sentencesolved-invalid-order");
       this.currentSentenceContainer?.classList.remove("check-mode");
     }
     correctWords.forEach((word, i) => {
@@ -386,28 +393,45 @@ class Playboard extends Component {
     return stat;
   }
 
-  public placeCardOndrop(card: Card, target: HTMLElement | null) {
+  public insertCard(card: Card, dest: HTMLElement, target: HTMLElement, destType: string) {
+    if (dest) {
+      const parent = card.getComponent().parentElement;
+      if (!parent) return;
+      parent.classList.remove("placed");
+      dest.append(card.getComponent());
+      if (card.isLeftSideTarget(target)) {
+        target.before(dest);
+      } else {
+        target.after(dest);
+      }
+      dest.classList.add("placed");
+      const cardComp = card;
+      card.unsetCoordinates();
+      cardComp.draggable = false;
+      target?.classList.remove("highlight");
+      if (destType === "result" || destType === "source") cardComp.position = destType;
+    }
+  }
+
+  public async placeCardOndrop(card: Card, target: HTMLElement | null) {
     let destType = "result";
     const targetID = target?.getAttribute("id");
     if (targetID) destType = targetID.split("-")[0];
     const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     if (target?.classList.contains("placed")) {
-      if (dest) {
-        const parent = card.getComponent().parentElement;
-        if (!parent) return;
-        parent.classList.remove("placed");
-        dest.append(card.getComponent());
-        target.before(dest);
-        dest.classList.add("placed");
-        const cardComp = card;
-        card.unsetCoordinates();
-        cardComp.draggable = false;
-        target?.classList.remove("highlight");
-        if (destType === "result" || destType === "source") cardComp.position = destType;
-      }
+      if (!dest) return;
+      this.insertCard(card, dest, target, destType);
       return;
     }
+    if (dest) await this.changePosition(card, target, dest, false);
+    card.unsetCoordinates();
+    card.unsetDraggable();
+    target?.classList.remove("highlight");
+    if (destType === "result" || destType === "source") card.setPosition(destType);
+  }
+
+  public async changePosition(card: Card, target: HTMLElement, dest: HTMLElement, isAnimate: boolean) {
     let cardContainer = target;
     if (dest) {
       this.swapPlaces(target, dest);
@@ -418,12 +442,8 @@ class Playboard extends Component {
     if (!parent) return;
     parent.classList.remove("placed");
     cardContainer.classList.add("placed");
+    if (isAnimate) await card.animateMove(parent, cardContainer);
     cardContainer.append(card.getComponent());
-    const cardComp = card;
-    card.unsetCoordinates();
-    cardComp.draggable = false;
-    target?.classList.remove("highlight");
-    if (destType === "result" || destType === "source") cardComp.position = destType;
   }
 
   public async placeCard(card: Card, target: HTMLElement | null) {
@@ -431,21 +451,9 @@ class Playboard extends Component {
     const destType = card.position === "result" ? "source" : "result";
     const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
-    let cardContainer = target;
-    if (dest) {
-      this.swapPlaces(target, dest);
-      cardContainer = dest;
-    }
-    if (!(card instanceof Component)) return;
-    const parent = card.getComponent().parentElement;
-    if (!parent) return;
-    parent.classList.remove("placed");
-    cardContainer.classList.add("placed");
-    await card.animateMove(parent, cardContainer);
-    cardContainer.append(card.getComponent());
-    const cardComp = card;
-    cardComp.draggable = false;
-    cardComp.position = cardComp.position === "result" ? "source" : "result";
+    if (dest) this.changePosition(card, target, dest, true);
+    card.unsetDraggable();
+    card.setPosition(card.position === "result" ? "source" : "result");
   }
 
   public async openRound(level: number, round: number) {
@@ -505,8 +513,7 @@ class Playboard extends Component {
       });
       card.addListener("click", () => {
         if (card.draggable) {
-          const myCard = card;
-          myCard.draggable = false;
+          card.unsetDraggable();
           return;
         }
         this.placeCard(card, this.findPlace(card));

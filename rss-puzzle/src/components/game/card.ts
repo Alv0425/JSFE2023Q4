@@ -164,17 +164,17 @@ class Card extends Component<HTMLElement> {
 
   public dragCardMouse(event: MouseEvent, drophandler: () => void) {
     const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX = event.clientX - this.getComponent().getBoundingClientRect().left;
-    const shiftY = event.clientY - this.getComponent().getBoundingClientRect().top;
-    const move1 = (e: MouseEvent) => {
+    const shiftX = event.clientX - this.getCoordinates().x;
+    const shiftY = event.clientY - this.getCoordinates().y;
+    const move = (e: MouseEvent) => {
       if (shiftX > 5 || shiftY > 5) this.draggable = true;
       const coord = this.getCoords(e);
       this.setCoordinates(coord.x - startCoords.x - shiftX, coord.y - startCoords.y - shiftY);
-      this.checkElementBelow(coord.x, coord.y);
+      this.checkElementBelow(this.getCoordinates().centerX, this.getCoordinates().centerY);
     };
-    document.body.addEventListener("mousemove", move1);
+    document.body.addEventListener("mousemove", move);
     document.body.addEventListener("mouseup", () => {
-      document.body.removeEventListener("mousemove", move1);
+      document.body.removeEventListener("mousemove", move);
       if (this.draggable) {
         this.unsetCoordinates();
         if (this.curTarget) drophandler();
@@ -185,8 +185,8 @@ class Card extends Component<HTMLElement> {
 
   public dragCardTouch(event: TouchEvent, drophandler: () => void) {
     const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX = event.touches[0].clientX - this.getComponent().getBoundingClientRect().left;
-    const shiftY = event.touches[0].clientY - this.getComponent().getBoundingClientRect().top;
+    const shiftX = event.touches[0].clientX - this.getCoordinates().x;
+    const shiftY = event.touches[0].clientY - this.getCoordinates().y;
     const move = (e: TouchEvent) => {
       document.body.classList.add("fixed");
       if (shiftX > 5 || shiftY > 5) this.draggable = true;
@@ -204,6 +204,25 @@ class Card extends Component<HTMLElement> {
       }
       this.unsetCoordinates();
     });
+  }
+
+  public unsetDraggable() {
+    this.draggable = false;
+  }
+
+  public setDraggable() {
+    this.draggable = false;
+  }
+
+  public setPosition(position: "source" | "result") {
+    this.position = position;
+  }
+
+  public isLeftSideTarget(target: HTMLElement) {
+    const cardCoords = this.getCoordinates();
+    const targetCoords = target.getBoundingClientRect();
+    const centerOfTarget = targetCoords.left + targetCoords.width / 2;
+    return cardCoords.centerX - centerOfTarget > 0;
   }
 }
 
