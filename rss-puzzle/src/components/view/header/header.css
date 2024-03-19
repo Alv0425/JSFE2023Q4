@@ -47,3 +47,11 @@
 .login-screen .header__logo {
   visibility: hidden;
 }
+
+@media (width <= 620px) {
+  .header__logo {
+    font-size: 30px;
+    text-align: start;
+    padding-left: 0px;
+  }
+}

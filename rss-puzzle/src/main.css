@@ -66,6 +66,14 @@ button {
   user-select: none;
 }
 
+@media (width <= 420px) {
+  p,
+  button {
+    padding: 7px;
+    font-size: 0.9rem;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   button:hover {
     background-color: var(--color-highlight);

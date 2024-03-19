@@ -113,6 +113,7 @@ class Playboard extends Component {
       await this.arrangeCards();
       eventEmitter.emit("sentencesolved");
     });
+    eventEmitter.on("image-revealed", () => this.playboardPuzzleContainer.clear());
   }
 
   public async arrangeCards() {
@@ -251,7 +252,6 @@ class Playboard extends Component {
       return correctWords[order];
     });
     const isCorrectOrder = this.game?.state.currentSentence.resultBlock.every((order, idx) => idx === order);
-    console.log(isCorrectOrder);
     if (!actualWords) return;
     if (correctWords.join(" ") === actualWords.join(" ")) {
       if (isCorrectOrder) eventEmitter.emit("sentencesolved");
@@ -427,7 +427,6 @@ class Playboard extends Component {
     if (dest) await this.changePosition(card, target, dest, false);
     card.unsetCoordinates();
     card.unsetDraggable();
-    target?.classList.remove("highlight");
     if (destType === "result" || destType === "source") card.setPosition(destType);
   }
 
@@ -442,6 +441,7 @@ class Playboard extends Component {
     if (!parent) return;
     parent.classList.remove("placed");
     cardContainer.classList.add("placed");
+    target?.classList.remove("highlight");
     if (isAnimate) await card.animateMove(parent, cardContainer);
     cardContainer.append(card.getComponent());
   }

@@ -130,17 +130,6 @@
   border-radius: 10px;
 }
 
-/* .word {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 0.5px gray solid;
-  height: 100%;
-  color: var(--color-text-light);
-  opacity: 0.5;
-  text-shadow: 0px 0px 4px rgb(0, 0, 0);
-} */
-
 .wordplace {
   transition: 0.5s;
 }
@@ -165,4 +154,35 @@
 
 .hide {
   opacity: 0;
+}
+
+@media (width <= 620px) {
+  .playboard {
+    padding: 10px 10px 10px 30px;
+  }
+  .playboard__buttons {
+    flex-wrap: wrap;
+  }
+  .playboard__button {
+    width: 100%;
+  }
+  .puzzle__sentence_arranged::before,
+  .puzzle__sentence_correct::before {
+    top: 0;
+    left: -34px;
+    width: 0.9rem;
+  }
+
+  .playboard__source-container {
+    min-height: 30px;
+  }
+}
+
+@media (width <= 420px) {
+  .playboard__source-container {
+    min-height: 20px;
+  }
+  .playboard {
+    font-size: 0.8rem;
+  }
 }

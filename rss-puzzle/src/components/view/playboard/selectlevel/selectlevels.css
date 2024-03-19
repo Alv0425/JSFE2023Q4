@@ -1,6 +1,7 @@
 .modal__levels-container {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .modal__levels-close {
@@ -36,8 +37,8 @@
 
 .round-item {
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding: 10px;
   gap: 10px;
   border: 1px solid var(--color-label-light);
@@ -99,6 +100,7 @@
 .round-item__words {
   display: flex;
   flex-wrap: wrap;
+  max-width: 300px;
   gap: 5px;
   transition: 0.5s;
 }

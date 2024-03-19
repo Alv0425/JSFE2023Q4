@@ -56,3 +56,13 @@
     opacity: 1;
   }
 }
+
+@media (width <= 420px) {
+  .footer__container {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .footer__rss {
+    width: 100px;
+  }
+}

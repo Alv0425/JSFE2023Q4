@@ -9,12 +9,16 @@
   display: flex;
   opacity: 1;
   transition: 1s;
-  /* animation: fadein 1s ease-in-out forwards; */
 }
 
 .playboard__statistics-button_hide {
   display: flex;
   opacity: 0;
   transition: 1s;
-  /* animation: fadeout 1s ease-in-out forwards; */
+}
+
+@media (width <= 620px) {
+  .playboard__statistics-button {
+    width: 100%;
+  }
 }
