@@ -32,6 +32,12 @@ class GameButton extends Component<HTMLButtonElement> {
       }
       if (this.buttonState === "Continue") eventEmitter.emit("continue-game");
     });
+    eventEmitter.on("reveal-image", () => {
+      this.getComponent().disabled = true;
+      setTimeout(() => {
+        this.getComponent().disabled = false;
+      }, 2000);
+    });
   }
 
   private setState(state: "Continue" | "Check") {

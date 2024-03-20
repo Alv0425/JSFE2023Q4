@@ -77,7 +77,7 @@ class Playboard extends Component {
   }
 
   private resize() {
-    const size = this.playboardHeader.getSize();
+    const size = this.playboardField.getSize();
     size.width -= 20;
     size.height = Math.floor(size.width * this.aspectRatio);
     this.playboardPuzzleContainer.setStyleAttribute("aspect-ratio", `1000 / ${Math.floor(this.aspectRatio * 1000)}`);
@@ -113,7 +113,6 @@ class Playboard extends Component {
       await this.arrangeCards();
       eventEmitter.emit("sentencesolved");
     });
-    eventEmitter.on("image-revealed", () => this.playboardPuzzleContainer.clear());
   }
 
   public async arrangeCards() {

@@ -31,6 +31,13 @@ class StatisticsPage extends Component {
       this.closePage();
       eventEmitter.emit("continue-game");
     });
+    eventEmitter.on("reveal-image", () => {
+      console.log("button is disabled");
+      continueButton.getComponent().disabled = true;
+      setTimeout(() => {
+        continueButton.getComponent().disabled = false;
+      }, 2000);
+    });
     eventEmitter.on("round-completed", () => this.updateResults());
   }
 

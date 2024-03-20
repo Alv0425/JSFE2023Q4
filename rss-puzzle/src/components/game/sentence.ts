@@ -24,6 +24,17 @@ class Sentence {
     this.sentenceLength = this.words.join("").length;
     this.wordWeights = this.words.map((word) => (word.length + 4) / (this.sentenceLength + 4 * this.words.length));
     this.sentenceIdx = idx;
+    eventEmitter.once("reveal-image", () => {
+      this.wordCards.forEach((card) => {
+        card.getComponent().classList.add("fade-out-slow");
+        setTimeout(() => {
+          card.removeAllListeners();
+          const parent = card.getComponent().parentElement;
+          card.destroy();
+          if (parent) parent.remove();
+        }, 2000);
+      });
+    });
   }
 
   private calculateShifts() {

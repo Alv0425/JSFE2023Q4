@@ -1,4 +1,5 @@
 import { div } from "../../utils/elements";
+// import eventEmitter from "../../utils/eventemitter";
 import { IRound } from "../../utils/types/interfaces";
 import Card from "./card";
 import Sentence from "./sentence";

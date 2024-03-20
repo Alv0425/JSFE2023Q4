@@ -2,7 +2,6 @@ import "./card.css";
 import Component from "../../utils/component";
 import { div, span } from "../../utils/elements";
 import dataHandler from "../services/datahandler";
-import eventEmitter from "../../utils/eventemitter";
 
 class Card extends Component<HTMLElement> {
   public text: string;
@@ -51,17 +50,6 @@ class Card extends Component<HTMLElement> {
     this.position = "source";
     this.draggable = false;
     this.addListener("dragstart", (e) => e.preventDefault());
-    eventEmitter.on("reveal-image", () => {
-      this.getComponent().classList.add("fade-out-slow");
-      setTimeout(() => {
-        this.destroy();
-        eventEmitter.emit("image-revealed");
-      }, 2000);
-    });
-  }
-
-  public getComponent() {
-    return this.node;
   }
 
   public setWidth(containerSize: { width: number; height: number }, weight: number) {
