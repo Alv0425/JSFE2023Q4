@@ -1,9 +1,9 @@
 import "./translationhint.css";
-import Component from "../../../../utils/component";
-import { button, div, p } from "../../../../utils/elements";
-import createSvg from "../../../../utils/helpers/createsvg";
-import eventEmitter from "../../../../utils/eventemitter";
-import storage from "../../../services/localstorage";
+import Component from "../../../../../utils/component";
+import { button, div, p } from "../../../../../utils/elements";
+import createSvg from "../../../../../utils/helpers/createsvg";
+import eventEmitter from "../../../../../utils/eventemitter";
+import storage from "../../../../services/localstorage";
 
 class TranslationHint {
   private hintText: Component;

@@ -1,5 +1,5 @@
-import Component from "../../../../utils/component";
-import eventEmitter from "../../../../utils/eventemitter";
+import Component from "../../../../../utils/component";
+import eventEmitter from "../../../../../utils/eventemitter";
 
 class GameButton extends Component<HTMLButtonElement> {
   private buttonState: "Check" | "Continue" = "Check";

@@ -1,8 +1,8 @@
-import Component from "../../../../utils/component";
-import { button } from "../../../../utils/elements";
-import eventEmitter from "../../../../utils/eventemitter";
-import createSvg from "../../../../utils/helpers/createsvg";
-import storage from "../../../services/localstorage";
+import Component from "../../../../../utils/component";
+import { button } from "../../../../../utils/elements";
+import eventEmitter from "../../../../../utils/eventemitter";
+import createSvg from "../../../../../utils/helpers/createsvg";
+import storage from "../../../../services/localstorage";
 import "./imagehint.css";
 
 class ImageHint {
@@ -29,8 +29,10 @@ class ImageHint {
     });
     const hintOptions = storage.getHintOptions();
     this.on = hintOptions.imageHint;
-    if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-image-toggler_active");
-    if (this.on) this.showhint();
+    eventEmitter.on("open-round", () => {
+      if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-image-toggler_active");
+      if (this.on) this.showhint();
+    });
   }
 
   public showhint() {

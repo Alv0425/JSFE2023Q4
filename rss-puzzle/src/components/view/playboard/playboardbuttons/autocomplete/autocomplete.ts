@@ -1,6 +1,6 @@
 import "./autocomplete.css";
-import Component from "../../../../utils/component";
-import eventEmitter from "../../../../utils/eventemitter";
+import Component from "../../../../../utils/component";
+import eventEmitter from "../../../../../utils/eventemitter";
 
 class AutocompleteButton extends Component<HTMLButtonElement> {
   public constructor() {
@@ -16,12 +16,8 @@ class AutocompleteButton extends Component<HTMLButtonElement> {
     eventEmitter.on("startsentence", () => {
       this.getComponent().disabled = false;
     });
-    eventEmitter.on("reveal-image", () => {
-      this.hideButton();
-    });
-    eventEmitter.on("statistics-button-hide", () => {
-      this.showButton();
-    });
+    eventEmitter.on("reveal-image", () => this.hideButton());
+    eventEmitter.on("statistics-button-hide", () => this.showButton());
     eventEmitter.on("source-block-epmty", () => {
       this.getComponent().disabled = false;
     });

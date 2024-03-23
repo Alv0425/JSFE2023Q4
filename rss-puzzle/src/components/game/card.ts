@@ -93,20 +93,6 @@ class Card extends Component<HTMLElement> {
     });
   }
 
-  public async animateMove(start: HTMLElement, finish: HTMLElement) {
-    const startCoords = start.getBoundingClientRect();
-    const finishCoords = finish.getBoundingClientRect();
-    const shiftX = Math.round(finishCoords.x - startCoords.x);
-    const shiftY = Math.round(finishCoords.y - startCoords.y);
-    this.setStyleAttribute("transform", `translateX(${shiftX}px) translateY(${shiftY}px)`);
-    return new Promise((res) => {
-      setTimeout(() => {
-        res(true);
-        this.removeStyleAttribute("transform");
-      }, 500);
-    });
-  }
-
   public setCoordinates(x: number, y: number) {
     this.setStyleAttribute("transition", "0s");
     this.setStyleAttribute("position", "relative");
@@ -139,7 +125,7 @@ class Card extends Component<HTMLElement> {
     }
   }
 
-  public getCoords(e: MouseEvent | TouchEvent) {
+  public getTargetCoords(e: Event) {
     const coord = { x: 0, y: 0 };
     if (e instanceof TouchEvent) {
       coord.x = e.touches[0].clientX;
@@ -151,42 +137,28 @@ class Card extends Component<HTMLElement> {
     return coord;
   }
 
-  public dragCardMouse(event: MouseEvent, drophandler: () => void) {
+  public dragCard(event: Event, drophandler: () => void) {
     const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX = event.clientX - this.getCoordinates().x;
-    const shiftY = event.clientY - this.getCoordinates().y;
-    const move = (e: MouseEvent) => {
-      if (shiftX > 5 || shiftY > 5) this.draggable = true;
-      const coord = this.getCoords(e);
-      this.setCoordinates(coord.x - startCoords.x - shiftX, coord.y - startCoords.y - shiftY);
-      this.checkElementBelow(this.getCoordinates().centerX, this.getCoordinates().centerY);
-    };
-    document.body.addEventListener("mousemove", move);
-    document.body.addEventListener("mouseup", () => {
-      document.body.removeEventListener("mousemove", move);
-      if (this.draggable) {
-        this.unsetCoordinates();
-        if (this.curTarget) drophandler();
-      }
-      this.unsetCoordinates();
-    });
-  }
-
-  public dragCardTouch(event: TouchEvent, drophandler: () => void) {
-    const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX = event.touches[0].clientX - this.getCoordinates().x;
-    const shiftY = event.touches[0].clientY - this.getCoordinates().y;
-    const move = (e: TouchEvent) => {
+    const shiftX = this.getTargetCoords(event).x - this.getCoordinates().x;
+    const shiftY = this.getTargetCoords(event).y - this.getCoordinates().y;
+    const move = (e: Event) => {
       document.body.classList.add("fixed");
       if (shiftX > 5 || shiftY > 5) this.draggable = true;
-      const coord = this.getCoords(e);
-      this.setCoordinates(coord.x - startCoords.x - shiftX, coord.y - startCoords.y - shiftY);
-      this.checkElementBelow(coord.x, coord.y);
+      this.setCoordinates(
+        this.getTargetCoords(e).x - startCoords.x - shiftX,
+        this.getTargetCoords(e).y - startCoords.y - shiftY,
+      );
+      this.checkElementBelow(this.getCoordinates().centerX, this.getCoordinates().centerY);
     };
-    document.body.addEventListener("touchmove", move);
-    document.body.addEventListener("touchend", () => {
+    const isMouseEvent = event instanceof MouseEvent;
+    const events: Record<string, keyof HTMLElementEventMap> = {
+      move: isMouseEvent ? "mousemove" : "touchmove",
+      end: isMouseEvent ? "mouseup" : "touchend",
+    };
+    document.body.addEventListener(events.move, move);
+    document.body.addEventListener(events.end, () => {
       document.body.classList.remove("fixed");
-      document.body.removeEventListener("touchmove", move);
+      document.body.removeEventListener(events.move, move);
       if (this.draggable) {
         this.unsetCoordinates();
         if (this.curTarget) drophandler();
@@ -196,10 +168,6 @@ class Card extends Component<HTMLElement> {
   }
 
   public unsetDraggable() {
-    this.draggable = false;
-  }
-
-  public setDraggable() {
     this.draggable = false;
   }
 

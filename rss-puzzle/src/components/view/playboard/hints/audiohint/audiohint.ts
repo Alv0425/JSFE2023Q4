@@ -1,10 +1,10 @@
 import "./audiohint.css";
-import Component from "../../../../utils/component";
-import createSvg from "../../../../utils/helpers/createsvg";
-import { button } from "../../../../utils/elements";
-import datahandler from "../../../services/datahandler";
-import eventEmitter from "../../../../utils/eventemitter";
-import storage from "../../../services/localstorage";
+import Component from "../../../../../utils/component";
+import createSvg from "../../../../../utils/helpers/createsvg";
+import { button } from "../../../../../utils/elements";
+import datahandler from "../../../../services/datahandler";
+import eventEmitter from "../../../../../utils/eventemitter";
+import storage from "../../../../services/localstorage";
 
 class AudioHint {
   private audioSource: string = "";

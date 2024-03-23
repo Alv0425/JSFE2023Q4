@@ -1,3 +1,5 @@
+import Component from "../component";
+
 export interface ILevelData {
   id: string;
   name: string;
@@ -56,3 +58,9 @@ export interface IStorage {
     currentStats?: IRoundResult;
   };
 }
+
+export interface ISelectLevel {
+  openMmodalSelectGame: (callback: (round: number, level: number) => void) => void;
+}
+
+export type ComponentType = HTMLElement | Component | null;

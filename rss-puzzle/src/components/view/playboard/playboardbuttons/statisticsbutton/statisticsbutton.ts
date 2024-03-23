@@ -1,6 +1,6 @@
 import "./statisticsbutton.css";
-import Component from "../../../../utils/component";
-import eventEmitter from "../../../../utils/eventemitter";
+import Component from "../../../../../utils/component";
+import eventEmitter from "../../../../../utils/eventemitter";
 
 class StatisticsButton extends Component<HTMLButtonElement> {
   public constructor() {

@@ -7,7 +7,7 @@ import { Modal } from "../../modal/modal";
 import { IRound } from "../../../../utils/types/interfaces";
 import storage from "../../../services/localstorage";
 
-class SelectLevel {
+export class SelectLevel {
   public button: Component;
 
   public modal: Modal;
@@ -88,4 +88,5 @@ class SelectLevel {
   }
 }
 
-export default SelectLevel;
+const selectLevel = new SelectLevel();
+export default selectLevel;
