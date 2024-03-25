@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+git log --oneline
+localBranch="$(git rev-parse --abbrev-ref HEAD)"
+echo "-------------------------"
+echo "Your current branch is:"
+echo $localBranch
+echo "-------------------------"
+exit 1
