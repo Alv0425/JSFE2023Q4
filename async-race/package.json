@@ -2,7 +2,7 @@
   "name": "async-race",
   "version": "1.0.0",
   "description": "An SPA for managing a car collection, operating their engines, and showcasing race statistics.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "cd .. && husky async-race/.husky",

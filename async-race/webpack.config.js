@@ -32,6 +32,9 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
   plugins: [
     new EslintPlugin({ extensions: "ts" }),
     new HtmlWebpackPlugin({
