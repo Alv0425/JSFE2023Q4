@@ -1,6 +1,6 @@
 .garage {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: minmax(300px, 350px) auto;
   grid-template-rows: auto auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
