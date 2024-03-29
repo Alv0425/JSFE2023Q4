@@ -1,3 +1,5 @@
+import main from "../../ui/main/main";
+
 const ROUTES = new Map([
   [
     "/",
@@ -8,13 +10,13 @@ const ROUTES = new Map([
   [
     "/garage",
     () => {
-      console.log("render-garage");
+      main.drawGarage();
     },
   ],
   [
     "/winners",
     () => {
-      console.log("render-winners");
+      main.drawWinners();
     },
   ],
 ]);
