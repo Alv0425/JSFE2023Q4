@@ -1,7 +1,7 @@
 import Component from "../../utils/component";
 
 class Pagination<T extends Component> {
-  collection: T[];
+  protected collection: T[];
 
   itemsPerPage: number;
 
@@ -32,6 +32,10 @@ class Pagination<T extends Component> {
 
   addItem(item: T) {
     this.collection.push(item);
+  }
+
+  updateCollection(collection: T[]) {
+    this.collection = collection;
   }
 
   getItemsOnPage(pageIndex: number) {
