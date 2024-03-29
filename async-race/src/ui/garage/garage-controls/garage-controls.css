@@ -1,0 +1,58 @@
+.garage__controls {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.garage__control-create,
+.garage__control-update {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.garage__control-color {
+  display: block;
+  background-color: transparent;
+  border: none;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.garage__control-color::-webkit-color-swatch {
+  border-radius: 10px;
+  border: 1px solid var(--color-text-light);
+}
+.garage__control-color::-moz-color-swatch {
+  border-radius: 10px;
+  border: 1px solid var(--color-text-light);
+}
+
+.garage__control-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--color-text-light);
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+}
+
+.garage__control-race {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.garage__control-race-start,
+.garage__control-race-stop {
+  flex-grow: 1;
+}
