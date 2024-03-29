@@ -1,0 +1,24 @@
+.garage {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.garage__title {
+  padding: 10px 0;
+}
+
+.garage__title {
+  grid-area: 1 / 1 / 2 / 3;
+}
+.garage__controls {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.garage__pagination {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.garage__pages {
+  grid-area: 3 / 1 / 4 / 3;
+}
