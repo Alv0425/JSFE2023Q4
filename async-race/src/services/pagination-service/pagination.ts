@@ -40,9 +40,11 @@ class Pagination<T extends Component> {
 
   getItemsOnPage(pageIndex: number) {
     const itemsCount = this.getItemCountOnPage(pageIndex);
+    const baseItemsCount = this.getItemCountOnPage(0);
     if (itemsCount <= 0) return [];
     if (!this.collection.length) return [];
-    return this.collection.slice(pageIndex, pageIndex + itemsCount + 1);
+    const slice = this.collection.slice(pageIndex * baseItemsCount, pageIndex * baseItemsCount + itemsCount);
+    return slice;
   }
 
   pageIndex(itemIndex: number) {
