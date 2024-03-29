@@ -42,13 +42,17 @@ module.exports = {
       filename: "index.html",
       // favicon: path.resolve(__dirname, "./src/assets/icons/favicon.svg"),
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: "src/components/data",
-    //       to: "assets/data",
-    //     },
-    //   ]
-    // }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "src/assets/car",
+          to: "assets/car",
+        },
+        {
+          from: "src/assets/icons",
+          to: "assets/icons",
+        },
+      ],
+    }),
   ],
 };

@@ -10,6 +10,14 @@ const CAR_STATES = {
       toState: "moving",
       callbacks: ["move-car"],
     },
+    reset: {
+      toState: "in-garage",
+      callbacks: ["reset"],
+    },
+    "start-car": {
+      toState: "ready",
+      callbacks: ["prepare-car"],
+    },
   },
   moving: {
     broke: {
@@ -24,11 +32,23 @@ const CAR_STATES = {
       toState: "finished",
       callbacks: ["stop-car-animation"],
     },
+    reset: {
+      toState: "in-garage",
+      callbacks: ["reset"],
+    },
+    "start-car": {
+      toState: "ready",
+      callbacks: ["prepare-car"],
+    },
   },
   broken: {
     reset: {
       toState: "in-garage",
       callbacks: ["reset"],
+    },
+    "start-car": {
+      toState: "ready",
+      callbacks: ["prepare-car"],
     },
   },
   paused: {
@@ -38,6 +58,10 @@ const CAR_STATES = {
     },
   },
   finished: {
+    "start-car": {
+      toState: "ready",
+      callbacks: ["prepare-car"],
+    },
     reset: {
       toState: "in-garage",
       callbacks: ["reset"],

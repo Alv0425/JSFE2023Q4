@@ -1,3 +1,4 @@
+import "./style.css";
 import raceManager from "./components/race-engine/race-manager";
 import createCar from "./services/api/create-car";
 import ENDPOINTS from "./services/api/endpoints";

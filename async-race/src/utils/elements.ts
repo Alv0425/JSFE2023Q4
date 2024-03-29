@@ -1,6 +1,6 @@
 import Component, { Props } from "./component";
 
-export const div = (classList: string[], ...children: (Component | HTMLElement | null)[]) =>
+export const div = (classList: string[], ...children: (Component | HTMLElement | null | SVGSVGElement)[]) =>
   new Component("div", classList, {}, {}, ...children);
 
 export const p = (classList: string[], textContent: string) => new Component("p", classList, { textContent });
@@ -15,15 +15,14 @@ export const a = (classList: string[], textContent: string, href: string) =>
 
 export const button = (
   classList: string[],
-  textContent: string = "",
-  type: "button" | "submit" | "reset" | undefined = "button",
-  id?: string,
-) =>
-  new Component<HTMLButtonElement>("button", classList, {
-    textContent,
-    type,
-    id,
-  });
+  text: string,
+  ...children: (Component | HTMLElement | SVGSVGElement | null)[]
+) => {
+  const btn = new Component<HTMLButtonElement>("button", classList, {}, {});
+  btn.setTextContent(text);
+  btn.appendContent(children);
+  return btn;
+};
 
 export const input = (classList: string[], props: Props<HTMLInputElement>) =>
   new Component<HTMLInputElement>("input", classList, props);
@@ -62,8 +61,9 @@ export const ul = (classList: string[], items?: (Component | HTMLElement)[]) => 
   return listComponent;
 };
 
-export const svgSprite = (url: string, classname: string) => {
+export const svgSprite = (url: string, classname: string, viewbox: string = "0 0 200 70.72") => {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewbox", viewbox);
   svg.classList.add(classname);
   const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
   use.setAttribute("href", url);

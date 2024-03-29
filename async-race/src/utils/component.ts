@@ -13,7 +13,7 @@ export interface IEventListenerDescription {
 class Component<T extends HTMLElement = HTMLElement> {
   protected node: T;
 
-  protected content: (Component | HTMLElement | null)[] = [];
+  protected content: (Component | HTMLElement | SVGSVGElement | null)[] = [];
 
   protected childComponents: Component[] = [];
 
@@ -28,7 +28,7 @@ class Component<T extends HTMLElement = HTMLElement> {
     classNames?: string[],
     props?: Props<T>,
     attrs?: Attrs,
-    ...content: (Component | HTMLElement | null)[]
+    ...content: (Component | HTMLElement | SVGSVGElement | null)[]
   ) {
     this.node = document.createElement(type) as T;
     if (classNames) {
@@ -64,7 +64,7 @@ class Component<T extends HTMLElement = HTMLElement> {
     return this.childComponents;
   }
 
-  public append(child: Component | HTMLElement | null) {
+  public append(child: Component | HTMLElement | null | SVGSVGElement) {
     if (!child) return;
     if (child instanceof Component) {
       this.node.append(child.getComponent());
@@ -75,7 +75,7 @@ class Component<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public appendContent(children: (Component | HTMLElement | null)[]) {
+  public appendContent(children: (Component | HTMLElement | null | SVGSVGElement)[]) {
     children.forEach((child) => {
       if (child) this.append(child);
     });

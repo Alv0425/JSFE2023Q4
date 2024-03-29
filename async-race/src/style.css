@@ -1,0 +1,72 @@
+* {
+  box-sizing: inherit;
+  font-family: inherit;
+}
+
+:root {
+  --color-body-dark: #1f2041;
+  --color-container: #4b3f72;
+  --color-highlight: #ffc857;
+  --color-label-light: #119da4;
+  --color-label-dark: #19547e;
+  --color-text-light: #fbfef9;
+  --color-text-red: #f22b29;
+  --color-container-grey: #e1e2ef;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-white);
+}
+
+body {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  font-family: Montserrat;
+  color: #ffffff;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-body-dark);
+  transition: 2s;
+}
+
+.fixed {
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+button {
+  background-color: var(--color-label-light);
+  color: var(--color-text-light);
+  font-size: 16px;
+  border: none;
+  display: flex;
+  flex-grow: 0;
+  max-height: 40px;
+  padding: 7px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: fadein 0.3s ease-in;
+  user-select: none;
+}
+
+button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

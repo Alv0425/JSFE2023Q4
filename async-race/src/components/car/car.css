@@ -1,0 +1,74 @@
+.car {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  padding: 10px;
+  background-color: var(--color-container);
+  border-radius: 10px;
+}
+
+.car__buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.car__body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.car__image {
+  position: relative;
+  width: 150px;
+  height: 55px;
+  stroke: #000;
+}
+
+.car__controls {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+
+.car__track {
+  position: relative;
+  display: flex;
+  height: 55px;
+  flex-grow: 1;
+  align-self: flex-end;
+}
+
+.car__road {
+  width: 100%;
+  height: 5px;
+  background-color: var(--color-body-dark);
+  border-radius: 10px;
+}
+.car__edit-button,
+.car__delete-button,
+.car__run-button,
+.car__stop-button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-body-dark);
+  }
+}
+
+.car__finish {
+  position: absolute;
+  background-image: url(./../../assets/car/finish.svg);
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  bottom: 0px;
+  right: 150px;
+}
