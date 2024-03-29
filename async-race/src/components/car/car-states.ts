@@ -4,6 +4,22 @@ const CAR_STATES = {
       toState: "ready",
       callbacks: ["prepare-car"],
     },
+    finish: {
+      toState: "in-garage",
+      callbacks: [],
+    },
+    broke: {
+      toState: "in-garage",
+      callbacks: [],
+    },
+    reset: {
+      toState: "in-garage",
+      callbacks: ["reset"],
+    },
+    "move-car": {
+      toState: "in-garage",
+      callbacks: ["reset"],
+    },
   },
   ready: {
     "move-car": {

@@ -40,17 +40,17 @@ class Car extends Component {
         ["car__body"],
         div(["car__controls"], this.controls.carRunButton, this.controls.carStopButton),
         this.carTrack,
+        div(["car__finish-place"]),
       ),
       div(["car__road"]),
     ]);
-    this.engine.setCarTrack(this.carTrack);
-    this.engine.setCar(this.carImage);
     this.engine.on({
       onmoveControls: () => this.controls.lockControlsOnMove(),
       unlockAllControls: () => this.controls.unlockAllControls(),
       lockStopButton: () => this.controls.lockStopButton(),
       startAnimation: (duration: number) => this.animateMove(duration),
       stopAnimation: () => this.stopMoving(),
+      moveCarToStart: () => this.moveCarToStart(),
     });
     this.controls.carRunButton.addListener("click", () => this.runCar());
     this.controls.carStopButton.addListener("click", () => this.stopCar());
@@ -59,10 +59,9 @@ class Car extends Component {
   public animateMove(duration: number) {
     const start = performance.now();
     const animate = (time: number) => {
-      const trackLength = this.carTrack.getSize().width - 170;
       let timeFr = (time - start) / duration;
       if (timeFr > 1) timeFr = 1;
-      this.carImage.style.setProperty("transform", `translateX(${Math.round(timeFr * trackLength)}px)`);
+      this.carImage.style.setProperty("left", `calc(${timeFr * 100}%)`);
       if (timeFr < 1) this.animationID = requestAnimationFrame(animate);
     };
     this.animationID = requestAnimationFrame(animate);
@@ -70,11 +69,10 @@ class Car extends Component {
 
   public stopMoving() {
     if (this.animationID) cancelAnimationFrame(this.animationID);
-    this.moveCarToStart();
   }
 
   public moveCarToStart() {
-    this.carImage.style.removeProperty("transform");
+    this.carImage.style.removeProperty("left");
   }
 
   public async runCar() {

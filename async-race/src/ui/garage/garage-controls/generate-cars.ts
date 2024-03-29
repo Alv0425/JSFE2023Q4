@@ -3,7 +3,7 @@ import Component from "../../../utils/component";
 class GenerateCarsControl extends Component {
   constructor() {
     super("button", ["garage__control-generate"], {}, { type: "button" });
-    this.setTextContent("Genetate 100 cars");
+    this.setTextContent("GENERATE 100 CARS");
   }
 }
 
