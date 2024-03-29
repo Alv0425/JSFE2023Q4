@@ -11,7 +11,7 @@ export const h2 = (classList: string[], textContent: string) => new Component("h
 
 export const h3 = (classList: string[], textContent: string) => new Component("h3", classList, { textContent });
 export const a = (classList: string[], textContent: string, href: string) =>
-  new Component("a", classList, { textContent }, { href, target: "_blanc" });
+  new Component("a", classList, { textContent }, { href });
 
 export const button = (
   classList: string[],
@@ -21,6 +21,7 @@ export const button = (
   const btn = new Component<HTMLButtonElement>("button", classList, {}, {});
   btn.setTextContent(text);
   btn.appendContent(children);
+  btn.setAttribute("type", "button");
   return btn;
 };
 

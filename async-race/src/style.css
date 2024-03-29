@@ -40,6 +40,12 @@ body {
   transition: 2s;
 }
 
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
 .fixed {
   overflow: hidden;
   top: 0;
