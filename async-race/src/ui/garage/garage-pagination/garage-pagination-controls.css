@@ -1,0 +1,19 @@
+.garage__pagination {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.garage__pagination-container {
+  display: flex;
+}
+
+.garage__pagination-prev,
+.garage__pagination-next,
+.garage__pagination-label {
+  flex-shrink: 0;
+  min-width: 40px;
+  padding: 5px;
+}
