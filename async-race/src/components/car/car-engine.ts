@@ -1,8 +1,6 @@
 import { IEngineStatusResponse } from "../../services/api/response-interfaces";
 import { setEngineStatus, setEngineStatusToDrive } from "../../services/api/set-engine-status";
 import State from "../../services/state-manager/state";
-import Component from "../../utils/component";
-// import animateCar from "./car-animation";
 import CAR_STATES from "./car-states";
 
 interface ICarCallbacks {
@@ -11,18 +9,12 @@ interface ICarCallbacks {
   lockStopButton: () => void;
   startAnimation: (duration: number) => void;
   stopAnimation: () => void;
+
+  moveCarToStart: () => void;
 }
 
 class CarEngine extends State {
   public abortController: AbortController = new AbortController();
-
-  private carTrack: Component | null = null;
-
-  private car: SVGSVGElement | null = null;
-
-  private animation: {
-    id: number;
-  } = { id: 0 };
 
   public animationRun = new Promise(() => {});
 
@@ -40,13 +32,6 @@ class CarEngine extends State {
           this.engineParams = await setEngineStatus(this.carId, "started");
           if (this.carControls)
             this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
-          // if (this.car && this.carTrack) {
-          //   this.animation = animateCar(
-          //     this.car,
-          //     this.engineParams.distance / this.engineParams.velocity,
-          //     this.carTrack,
-          //   );
-          // }
           this.emit("move-car");
         },
         "move-car": async () => {
@@ -56,30 +41,20 @@ class CarEngine extends State {
           if (driveCar.success) this.emit("finish");
         },
         "stop-car-animation": async () => {
-          // cancelAnimationFrame(this.animation.id);
           if (this.carControls) this.carControls.stopAnimation();
         },
         "abort-fetch": async () => {
           this.abortController.abort("Car stoped");
         },
         reset: async () => {
-          // cancelAnimationFrame(this.animation.id);
           this.engineParams = await setEngineStatus(this.carId, "stopped");
           if (this.carControls) this.carControls.stopAnimation();
-          // this.car?.style.removeProperty("transform");
+          if (this.carControls) this.carControls.moveCarToStart();
           this.abortController.abort("Car stoped");
           if (this.carControls) this.carControls.lockStopButton();
         },
       },
     });
-  }
-
-  public setCarTrack(track: Component) {
-    this.carTrack = track;
-  }
-
-  public setCar(car: SVGSVGElement) {
-    this.car = car;
   }
 
   public getEngineParams() {

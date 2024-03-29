@@ -18,3 +18,10 @@ export async function getCarByID(carID: number) {
   assertsObjectIsTypeOf(car, carResponseTemplate);
   return car;
 }
+
+export async function getAllCars() {
+  const res = await fetch(`${ENDPOINTS.GARAGE}`);
+  const cars: unknown = await res.json();
+  assertsArrayOfObjectIsTypeOf(cars, carResponseTemplate);
+  return cars;
+}
