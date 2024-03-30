@@ -28,6 +28,7 @@ class CarEngine extends State {
       states: CAR_STATES,
       callbacks: {
         "prepare-car": async () => {
+          this.abortController = new AbortController();
           if (this.carControls) this.carControls.onmoveControls();
           this.engineParams = await setEngineStatus(this.carId, "started");
           if (this.carControls)

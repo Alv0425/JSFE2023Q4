@@ -1,4 +1,6 @@
 import Car from "../../../components/car/car";
+import { create100Cars } from "../../../services/api/create-car";
+import eventEmitter from "../../../services/event-emitter";
 import Component from "../../../utils/component";
 import loader from "../../loader-screen/loader-screen";
 import carCollection from "./cars-collection";
@@ -14,17 +16,42 @@ class GaragePage extends Component {
     this.update();
     paginationControls.nextPageButton.addListener("click", () => this.nextPage());
     paginationControls.prevPageButton.addListener("click", () => this.prevPage());
+    eventEmitter.on("car-removed", () => {
+      this.redrawPageContent();
+    });
+    eventEmitter.on("car-created", () => {
+      carCollection.updateCarsCollection();
+      this.update();
+    });
+    eventEmitter.on("actualize-collection", async () => {
+      console.log("collection checked");
+      const isActual = await carCollection.checkCollection();
+      if (!isActual) this.restore();
+    });
+    eventEmitter.on("generate-random-cars", async () => {
+      await create100Cars();
+      carCollection.updateCarsCollection();
+      this.update();
+    });
+  }
+
+  private updateContent() {
+    loader.close();
+    this.currentCars = carCollection.getItemsOnPage(this.currentPageIndex);
+    this.appendContent(this.currentCars);
+    paginationControls.setTotalCount(carCollection.getItemCount());
+    paginationControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${carCollection.getPageCount()}`);
   }
 
   public update() {
     loader.draw();
-    carCollection.updateCarsCollection().then(() => {
-      loader.close();
-      this.currentCars = carCollection.getItemsOnPage(this.currentPageIndex);
-      this.appendContent(this.currentCars);
-      paginationControls.setTotalCount(carCollection.getItemCount());
-      paginationControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${carCollection.getPageCount()}`);
-    });
+    carCollection.updateCarsCollection().then(() => this.updateContent());
+  }
+
+  public restore() {
+    this.clearAll();
+    loader.draw();
+    carCollection.reloadCarsCollection().then(() => this.updateContent());
   }
 
   public nextPage() {
@@ -42,7 +69,13 @@ class GaragePage extends Component {
   private redrawPageContent() {
     this.clearAll();
     this.currentCars = carCollection.getItemsOnPage(this.currentPageIndex);
+    if (this.currentCars.length === 0) {
+      paginationControls.setTotalCount(carCollection.getItemCount());
+      this.prevPage();
+      return;
+    }
     this.appendContent(this.currentCars);
+    paginationControls.setTotalCount(carCollection.getItemCount());
     paginationControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${carCollection.getPageCount()}`);
   }
 }

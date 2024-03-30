@@ -28,6 +28,8 @@ export const carResponseTemplate: ICarResponse = {
 export interface IDriveStatusResponse {
   success: boolean;
 
+  status?: number;
+
   [key: string]: unknown;
 }
 
@@ -58,3 +60,9 @@ export const winnerResponseTemplate: IWinnerResponse = {
   wins: 1,
   time: 1,
 };
+
+export interface ICarOptions {
+  color: string;
+  name: string;
+  id?: number;
+}

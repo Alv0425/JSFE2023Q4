@@ -1,3 +1,5 @@
+import createCar from "../../../services/api/create-car";
+import eventEmitter from "../../../services/event-emitter";
 import Component from "../../../utils/component";
 import { button, input } from "../../../utils/elements";
 
@@ -14,6 +16,14 @@ class ControlCreate extends Component {
     this.color = input(["garage__control-color"], { type: "color", value: "#000" });
     this.button = button(["garage__control-button"], "CREATE");
     this.appendContent([this.input, this.color, this.button]);
+    this.button.addListener("click", async () => {
+      if (this.input.getComponent().value === "") return;
+      await createCar({
+        name: this.input.getComponent().value,
+        color: this.color.getComponent().value,
+      });
+      eventEmitter.emit("car-created");
+    });
   }
 }
 

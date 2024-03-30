@@ -1,4 +1,5 @@
 import { assertsArrayOfObjectIsTypeOf, assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
+import eventEmitter from "../event-emitter";
 import ENDPOINTS from "./endpoints";
 import { carResponseTemplate } from "./response-interfaces";
 
@@ -14,6 +15,7 @@ export async function getCarsOnPage(pageNum: number) {
 
 export async function getCarByID(carID: number) {
   const res = await fetch(`${ENDPOINTS.GARAGE}/${carID}`);
+  if (res.status === 404) eventEmitter.emit("actualize-collection");
   const car: unknown = await res.json();
   assertsObjectIsTypeOf(car, carResponseTemplate);
   return car;

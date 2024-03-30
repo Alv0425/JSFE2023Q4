@@ -3,12 +3,9 @@ import Component from "../../utils/component";
 import { div, span, svgSprite } from "../../utils/elements";
 import CarEngine from "./car-engine";
 import CarControls from "./car-controls";
-
-export interface ICarOptions {
-  color: string;
-  name: string;
-  id?: number;
-}
+import controlUpdate from "../../ui/garage/garage-controls/update-control";
+import eventEmitter from "../../services/event-emitter";
+import updateCar from "../../services/api/update-car";
 
 class Car extends Component {
   private engine = new CarEngine(this.id);
@@ -54,6 +51,20 @@ class Car extends Component {
     });
     this.controls.carRunButton.addListener("click", () => this.runCar());
     this.controls.carStopButton.addListener("click", () => this.stopCar());
+    this.controls.carEditButton.addListener("click", () => this.editCar());
+  }
+
+  public editCar() {
+    controlUpdate.setProps(this.id, this.name, this.color);
+    eventEmitter.once("edit-car", async () => {
+      if (controlUpdate.getId() !== `${this.id}`) return;
+      this.name = controlUpdate.getName();
+      this.color = controlUpdate.getColor();
+      await updateCar({ name: this.name, color: this.color, id: this.id });
+      this.nameLabel.setTextContent(this.name);
+      this.carImage.style.setProperty("fill", this.color);
+      controlUpdate.resetInputs();
+    });
   }
 
   public animateMove(duration: number) {
@@ -81,6 +92,10 @@ class Car extends Component {
 
   public stopCar() {
     this.engine.emit("reset");
+  }
+
+  public getID() {
+    return this.id;
   }
 }
 
