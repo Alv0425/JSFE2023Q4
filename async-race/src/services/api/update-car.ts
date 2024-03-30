@@ -1,7 +1,7 @@
-import { ICarOptions } from "../../components/car/car";
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
+import eventEmitter from "../event-emitter";
 import ENDPOINTS from "./endpoints";
-import { carResponseTemplate } from "./response-interfaces";
+import { ICarOptions, carResponseTemplate } from "./response-interfaces";
 
 async function updateCar({ name, color, id }: ICarOptions) {
   const response = await fetch(`${ENDPOINTS.GARAGE}/${id}`, {
@@ -11,6 +11,7 @@ async function updateCar({ name, color, id }: ICarOptions) {
       "Content-Type": "application/json",
     },
   });
+  if (response.status === 404) eventEmitter.emit("actualize-collection");
   if (!response.ok) {
     throw new Error(`Cannot update car id=${id} with options ${name}, ${color}`);
   } else {

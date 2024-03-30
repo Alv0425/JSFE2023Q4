@@ -1,8 +1,7 @@
-import { ICarOptions } from "../../components/car/car";
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
 import generateRandomCarOptions from "./generate-random-options";
-import { carResponseTemplate } from "./response-interfaces";
+import { ICarOptions, carResponseTemplate } from "./response-interfaces";
 
 async function createCar(options?: ICarOptions) {
   let carParams = options;
@@ -21,6 +20,15 @@ async function createCar(options?: ICarOptions) {
     assertsObjectIsTypeOf(car, carResponseTemplate);
     return car;
   }
+}
+
+export async function create100Cars() {
+  const promises = [];
+  for (let i = 0; i < 100; i += 1) {
+    promises.push(createCar());
+  }
+  const res = await Promise.all(promises);
+  return res;
 }
 
 export default createCar;
