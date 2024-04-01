@@ -1,6 +1,7 @@
 import "./garage-pagination-controls.css";
 import Component from "../../../utils/component";
 import { button, div, h2, span } from "../../../utils/elements";
+import eventEmitter from "../../../utils/event-emitter";
 
 class PaginationControls extends Component {
   totalCountLabel: Component<HTMLElement>;
@@ -21,6 +22,8 @@ class PaginationControls extends Component {
       this.totalCountLabel,
       div(["garage__pagination-container"], this.prevPageButton, this.paginationLabel, this.nextPageButton),
     ]);
+    eventEmitter.on("race-started", () => this.lockPagination());
+    eventEmitter.on("race-ended", () => this.unlockPagination());
   }
 
   public setTotalCount(count: number) {
@@ -29,6 +32,16 @@ class PaginationControls extends Component {
 
   public updatePaginationLabel(label: string) {
     this.paginationLabel.setTextContent(label);
+  }
+
+  public lockPagination() {
+    this.prevPageButton.getComponent().disabled = true;
+    this.nextPageButton.getComponent().disabled = true;
+  }
+
+  public unlockPagination() {
+    this.prevPageButton.getComponent().disabled = false;
+    this.nextPageButton.getComponent().disabled = false;
   }
 }
 

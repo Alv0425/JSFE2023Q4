@@ -21,6 +21,8 @@ class Car extends Component {
 
   controls: CarControls;
 
+  carStateLabel: Component<HTMLElement>;
+
   constructor(
     private id: number,
     private name: string,
@@ -31,9 +33,16 @@ class Car extends Component {
     this.carImage = svgSprite("./assets/car/sedan.svg#car0", "car__image");
     this.carImage.style.setProperty("fill", this.color);
     this.nameLabel = span(["car__name"], this.name);
+    this.carStateLabel = span(["car__state-label"], "");
     this.carTrack = div(["car__track"], this.carImage, div(["car__finish"]));
     this.appendContent([
-      div(["car__buttons"], this.controls.carEditButton, this.controls.carDeleteButton, this.nameLabel),
+      div(
+        ["car__buttons"],
+        this.controls.carEditButton,
+        this.controls.carDeleteButton,
+        this.nameLabel,
+        this.carStateLabel,
+      ),
       div(
         ["car__body"],
         div(["car__controls"], this.controls.carRunButton, this.controls.carStopButton),
@@ -49,6 +58,7 @@ class Car extends Component {
       startAnimation: (duration: number) => this.animateMove(duration),
       stopAnimation: () => this.stopMoving(),
       moveCarToStart: () => this.moveCarToStart(),
+      setCarStatus: (status: string) => this.updateCarStateLabel(status),
     });
     this.controls.carRunButton.addListener("click", () => this.engine.emit("start-car"));
     this.controls.carStopButton.addListener("click", () => this.engine.emit("reset"));
@@ -68,6 +78,10 @@ class Car extends Component {
     });
   }
 
+  public updateCarStateLabel(label: string) {
+    this.carStateLabel.setTextContent(label);
+  }
+
   public animateMove(duration: number) {
     const start = performance.now();
     const animate = (time: number) => {
@@ -84,6 +98,7 @@ class Car extends Component {
   }
 
   public moveCarToStart() {
+    this.updateCarStateLabel(" ");
     this.carImage.style.removeProperty("left");
   }
 
