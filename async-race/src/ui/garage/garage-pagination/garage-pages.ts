@@ -1,9 +1,8 @@
 import Car from "../../../components/car/car";
-import { create100Cars } from "../../../services/api/create-car";
-import eventEmitter from "../../../services/event-emitter";
+import eventEmitter from "../../../utils/event-emitter";
 import Component from "../../../utils/component";
 import loader from "../../loader-screen/loader-screen";
-import carCollection from "./cars-collection";
+import carCollection from "../../../components/cars-collection/cars-collection";
 import paginationControls from "./garage-pagination-controls";
 
 class GaragePage extends Component {
@@ -16,23 +15,12 @@ class GaragePage extends Component {
     this.update();
     paginationControls.nextPageButton.addListener("click", () => this.nextPage());
     paginationControls.prevPageButton.addListener("click", () => this.prevPage());
-    eventEmitter.on("car-removed", () => {
-      this.redrawPageContent();
-    });
-    eventEmitter.on("car-created", () => {
-      carCollection.updateCarsCollection();
-      this.update();
-    });
+    eventEmitter.on("car-removed", () => this.redrawPageContent());
     eventEmitter.on("actualize-collection", async () => {
-      console.log("collection checked");
       const isActual = await carCollection.checkCollection();
       if (!isActual) this.restore();
     });
-    eventEmitter.on("generate-random-cars", async () => {
-      await create100Cars();
-      carCollection.updateCarsCollection();
-      this.update();
-    });
+    eventEmitter.on("collection-changed", () => this.update());
   }
 
   private updateContent() {

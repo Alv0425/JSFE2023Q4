@@ -1,5 +1,5 @@
 import createCar from "../../../services/api/create-car";
-import eventEmitter from "../../../services/event-emitter";
+import eventEmitter from "../../../utils/event-emitter";
 import Component from "../../../utils/component";
 import { button, input } from "../../../utils/elements";
 
