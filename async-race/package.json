@@ -10,7 +10,8 @@
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
-    "ci:format": "prettier -c ."
+    "ci:format": "prettier -c .",
+    "deploy": "npm run build && npx gh-pages -d dist -e async-race"
   },
   "author": "Aliona Vilejshikova, @Alv0425",
   "license": "ISC",
