@@ -87,12 +87,6 @@ const CAR_STATES = {
       callbacks: [],
     },
   },
-  // paused: {
-  //   reset: {
-  //     toState: "in-garage",
-  //     callbacks: ["reset"],
-  //   },
-  // },
   finished: {
     "start-car": {
       toState: "ready",
