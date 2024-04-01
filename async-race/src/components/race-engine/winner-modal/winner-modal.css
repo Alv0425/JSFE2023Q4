@@ -1,0 +1,15 @@
+.overlay_transparent {
+  background-color: rgba(31, 32, 65, 0.1);
+  backdrop-filter: blur(1px);
+}
+.modal-winner {
+  max-width: 500px;
+  background-color: rgba(31, 32, 65, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  flex-direction: column;
+  backdrop-filter: blur(3px);
+}
