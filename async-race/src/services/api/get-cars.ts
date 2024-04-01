@@ -1,5 +1,5 @@
 import { assertsArrayOfObjectIsTypeOf, assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
-import eventEmitter from "../event-emitter";
+import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
 import { carResponseTemplate } from "./response-interfaces";
 
@@ -22,8 +22,13 @@ export async function getCarByID(carID: number) {
 }
 
 export async function getAllCars() {
-  const res = await fetch(`${ENDPOINTS.GARAGE}`);
-  const cars: unknown = await res.json();
-  assertsArrayOfObjectIsTypeOf(cars, carResponseTemplate);
-  return cars;
+  try {
+    const res = await fetch(`${ENDPOINTS.GARAGE}`);
+    const cars: unknown = await res.json();
+    assertsArrayOfObjectIsTypeOf(cars, carResponseTemplate);
+    return cars;
+  } catch (e) {
+    console.log("Failed to fetch. Please, launch the server.");
+    return [];
+  }
 }

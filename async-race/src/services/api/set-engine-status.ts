@@ -1,13 +1,12 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
-import eventEmitter from "../event-emitter";
+import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
 import { IDriveStatusResponse, driveStatusResponseTemplate, engineStatusResponseTemplate } from "./response-interfaces";
 
 export async function setEngineStatus(id: number, status: "started" | "stopped") {
   const res = await fetch(`${ENDPOINTS.ENGINE}?id=${id}&status=${status}`, { method: "PATCH" });
   if (res.status === 404) eventEmitter.emit("actualize-collection");
-  if (!res.ok) throw new Error(res.statusText);
-  if (res.status !== 200) throw new Error(res.statusText);
+  if (res.status === 404) console.log(`Car with such id was not found in the garage.`);
   const result: unknown = await res.json();
   assertsObjectIsTypeOf(result, engineStatusResponseTemplate);
   return result;
