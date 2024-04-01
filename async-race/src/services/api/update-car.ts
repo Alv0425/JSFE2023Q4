@@ -1,5 +1,5 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
-import eventEmitter from "../event-emitter";
+import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
 import { ICarOptions, carResponseTemplate } from "./response-interfaces";
 

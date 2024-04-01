@@ -4,11 +4,12 @@ import { div, span, svgSprite } from "../../utils/elements";
 import CarEngine from "./car-engine";
 import CarControls from "./car-controls";
 import controlUpdate from "../../ui/garage/garage-controls/update-control";
-import eventEmitter from "../../services/event-emitter";
+import eventEmitter from "../../utils/event-emitter";
 import updateCar from "../../services/api/update-car";
+import { setEngineStatus } from "../../services/api/set-engine-status";
 
 class Car extends Component {
-  private engine = new CarEngine(this.id);
+  public engine = new CarEngine(this.id);
 
   carImage: SVGSVGElement;
 
@@ -16,7 +17,7 @@ class Car extends Component {
 
   nameLabel: Component<HTMLElement>;
 
-  public animationID: number = 0;
+  private animationID: number = 0;
 
   controls: CarControls;
 
@@ -49,8 +50,8 @@ class Car extends Component {
       stopAnimation: () => this.stopMoving(),
       moveCarToStart: () => this.moveCarToStart(),
     });
-    this.controls.carRunButton.addListener("click", () => this.runCar());
-    this.controls.carStopButton.addListener("click", () => this.stopCar());
+    this.controls.carRunButton.addListener("click", () => this.engine.emit("start-car"));
+    this.controls.carStopButton.addListener("click", () => this.engine.emit("reset"));
     this.controls.carEditButton.addListener("click", () => this.editCar());
   }
 
@@ -86,11 +87,11 @@ class Car extends Component {
     this.carImage.style.removeProperty("left");
   }
 
-  public async runCar() {
-    this.engine.emit("start-car");
-  }
-
-  public stopCar() {
+  public async resetMoving() {
+    await setEngineStatus(this.id, "stopped");
+    this.stopMoving();
+    this.moveCarToStart();
+    this.controls.lockStopButton();
     this.engine.emit("reset");
   }
 

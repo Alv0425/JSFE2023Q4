@@ -1,5 +1,5 @@
 import { getCarByID } from "../../../services/api/get-cars";
-import eventEmitter from "../../../services/event-emitter";
+import eventEmitter from "../../../utils/event-emitter";
 import Component from "../../../utils/component";
 import { button, input } from "../../../utils/elements";
 

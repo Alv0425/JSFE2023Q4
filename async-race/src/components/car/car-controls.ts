@@ -44,6 +44,13 @@ class CarControls {
     this.carEditButton.getComponent().disabled = true;
   }
 
+  public lockAllControls() {
+    this.carRunButton.getComponent().disabled = true;
+    this.carDeleteButton.getComponent().disabled = true;
+    this.carEditButton.getComponent().disabled = true;
+    this.carStopButton.getComponent().disabled = true;
+  }
+
   public unlockAllControls() {
     this.carRunButton.getComponent().disabled = false;
     this.carDeleteButton.getComponent().disabled = false;

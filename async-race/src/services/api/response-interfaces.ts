@@ -66,3 +66,8 @@ export interface ICarOptions {
   name: string;
   id?: number;
 }
+
+export interface IWinnersInfoResponse extends IWinnerResponse {
+  color: string;
+  name: string;
+}

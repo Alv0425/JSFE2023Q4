@@ -4,7 +4,15 @@ const RACE_STATES = {
       toState: "cars-ready",
       callbacks: ["block-pagination-buttons", "prepare-cars"],
     },
-    reset: {
+    "reset-race": {
+      toState: "all-cars-in-garage",
+      callbacks: ["reset"],
+    },
+    "race-finish": {
+      toState: "all-cars-in-garage",
+      callbacks: ["reset"],
+    },
+    "cars-prepared": {
       toState: "all-cars-in-garage",
       callbacks: ["reset"],
     },
@@ -18,7 +26,7 @@ const RACE_STATES = {
       toState: "all-cars-in-garage",
       callbacks: ["restart-race"],
     },
-    reset: {
+    "reset-race": {
       toState: "all-cars-in-garage",
       callbacks: ["reset"],
     },
@@ -28,25 +36,25 @@ const RACE_STATES = {
       toState: "cars-finished",
       callbacks: ["stop-engines", "unlock-pagination-buttons"],
     },
-    "drive-finish": {
-      toState: "cars-finished",
-      callbacks: ["stop-engines", "unlock-pagination-buttons"],
-    },
     "start-race": {
       toState: "all-cars-in-garage",
       callbacks: ["restart-race"],
     },
-    reset: {
+    "reset-race": {
       toState: "all-cars-in-garage",
       callbacks: ["reset"],
+    },
+    "cars-prepared": {
+      toState: "all-cars-in-garage",
+      callbacks: ["restart-race"],
     },
   },
   "cars-finished": {
     "start-race": {
       toState: "all-cars-in-garage",
-      callbacks: ["restart-race"],
+      callbacks: ["restart"],
     },
-    reset: {
+    "reset-race": {
       toState: "all-cars-in-garage",
       callbacks: ["reset"],
     },

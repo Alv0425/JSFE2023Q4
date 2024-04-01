@@ -6,7 +6,7 @@ const CAR_STATES = {
     },
     finish: {
       toState: "in-garage",
-      callbacks: [],
+      callbacks: ["reset"],
     },
     broke: {
       toState: "in-garage",
@@ -19,6 +19,10 @@ const CAR_STATES = {
     "move-car": {
       toState: "in-garage",
       callbacks: ["reset"],
+    },
+    "start-race": {
+      toState: "in-race",
+      callbacks: [],
     },
   },
   ready: {
@@ -33,6 +37,10 @@ const CAR_STATES = {
     "start-car": {
       toState: "ready",
       callbacks: ["prepare-car"],
+    },
+    "start-race": {
+      toState: "in-race",
+      callbacks: [],
     },
   },
   moving: {
@@ -60,6 +68,10 @@ const CAR_STATES = {
       toState: "in-garage",
       callbacks: ["reset"],
     },
+    "start-race": {
+      toState: "in-race",
+      callbacks: [],
+    },
   },
   broken: {
     reset: {
@@ -70,11 +82,9 @@ const CAR_STATES = {
       toState: "ready",
       callbacks: ["prepare-car"],
     },
-  },
-  paused: {
-    reset: {
-      toState: "in-garage",
-      callbacks: ["reset"],
+    "start-race": {
+      toState: "in-race",
+      callbacks: [],
     },
   },
   finished: {
@@ -85,6 +95,28 @@ const CAR_STATES = {
     reset: {
       toState: "in-garage",
       callbacks: ["reset"],
+    },
+    "start-race": {
+      toState: "in-race",
+      callbacks: [],
+    },
+  },
+  "in-race": {
+    reset: {
+      toState: "in-garage",
+      callbacks: ["reset"],
+    },
+    finish: {
+      toState: "in-garage",
+      callbacks: [],
+    },
+    "start-car": {
+      toState: "in-race",
+      callbacks: [],
+    },
+    "start-race": {
+      toState: "in-garage",
+      callbacks: [],
     },
   },
 };

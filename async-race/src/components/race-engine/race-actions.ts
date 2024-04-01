@@ -1,51 +1,63 @@
 import { getCarsOnPage } from "../../services/api/get-cars";
-import { ICarResponse, IEngineStatusResponse } from "../../services/api/response-interfaces";
+import { ICarResponse, IDriveStatusResponse, IEngineStatusResponse } from "../../services/api/response-interfaces";
 import { setEngineStatus, setEngineStatusToDrive } from "../../services/api/set-engine-status";
+import carCollection from "../cars-collection/cars-collection";
+import winnermodal from "./winner-modal/winner-modal";
+import Car from "../car/car";
+import { IRaceParticipants } from "./race-interfaces";
+import winnersCollection from "../winners-collection/winners-collection";
 
-export async function prepareCarsOnPage(n: number) {
-  const cars = await getCarsOnPage(n);
-  const carsEngines = cars.map(async (car) => {
-    const carEngine = await setEngineStatus(car.id, "started");
+export async function prepareCarsOnPage(n: number): Promise<IRaceParticipants[]> {
+  const cars: ICarResponse[] = await getCarsOnPage(n);
+  const carsComponents: Car[] = carCollection.getItemsOnPage(n - 1);
+  const carsEngines: Promise<IEngineStatusResponse>[] = cars.map(async (car, index) => {
+    if (carsComponents[index].engine.getCurrentState() !== "in-garage") await setEngineStatus(car.id, "stopped");
+    const carEngine: IEngineStatusResponse = await setEngineStatus(car.id, "started");
+    carsComponents[index].engine.emit("start-race");
     return carEngine;
   });
-  const engineParams = await Promise.all(carsEngines);
+  const engineParams: IEngineStatusResponse[] = await Promise.all(carsEngines);
   return cars.map((car, index) => ({
     carInfo: car,
-    carStatus: { success: false },
     raceParams: engineParams[index],
+    component: carsComponents[index],
   }));
 }
 
-export async function startRace(
-  cars: {
-    carInfo: ICarResponse;
-    raceParams: IEngineStatusResponse;
-  }[],
-  controller?: AbortController,
-) {
-  let timer = 0;
-  const interval = setInterval(() => {
-    timer += 1;
-  }, 100);
-  if (!cars) return;
-  const carsRace = cars.map(async (car) => {
-    const carResult = await setEngineStatusToDrive(car.carInfo.id, controller);
-    // animate car with id
-    console.log(carResult);
-    if (carResult.success) {
-      console.log(`Car is finished ${timer * 100}, ${car.raceParams.distance / car.raceParams.velocity}`);
-      return car;
-    }
-    if (!carResult.success) {
-      console.log(`Car is stopped ${timer}, ${car.raceParams.distance / car.raceParams.velocity}`);
-      // stop animation of the car with id
-    }
-    return Promise.reject(new Error(`Car is stopped ${timer}`));
+function createWinner(winner: IRaceParticipants): void {
+  winnersCollection.addWinner(winner);
+}
+
+async function getCarRaceResult(car: IRaceParticipants, controller: AbortController) {
+  if (!car.raceParams) return Promise.reject(new Error(`Car is not found`));
+  car.component.animateMove(car.raceParams.distance / car.raceParams.velocity);
+  car.component.controls.lockAllControls();
+  const carResult: IDriveStatusResponse = await setEngineStatusToDrive(car.carInfo.id, controller);
+  if (carResult.success) {
+    car.component.stopMoving();
+    return car;
+  }
+  if (!carResult.success) car.component.stopMoving();
+  return Promise.reject(new Error(`Car is stopped`));
+}
+
+export async function startRace(cars: IRaceParticipants[], controller: AbortController): Promise<void> {
+  const carsRace: Promise<IRaceParticipants>[] = cars.map(async (car) => getCarRaceResult(car, controller));
+  Promise.allSettled(carsRace).then(() => {
+    cars.forEach(async (car) => {
+      await setEngineStatus(car.component.getID(), "stopped");
+      car.component.controls.lockControlsOnMove();
+      car.component.engine.emit("finish");
+    });
+    console.log("Race ended");
   });
-  const winner = await Promise.any(carsRace);
-  // TODO open modal
-  // TODO handle winner table
-  console.log("winner", winner);
-  await Promise.allSettled(carsRace);
-  clearInterval(interval);
+  const winner: IRaceParticipants = await Promise.any(carsRace);
+  if (winner) createWinner(winner);
+  winnermodal.openWinModal(winner);
+}
+
+export function resetRace(cars: IRaceParticipants[]): void {
+  cars.forEach(async (car) => {
+    await car.component.resetMoving();
+  });
 }

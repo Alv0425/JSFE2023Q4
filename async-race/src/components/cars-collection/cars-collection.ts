@@ -1,18 +1,30 @@
-import Car from "../../../components/car/car";
-import deleteCarByID from "../../../services/api/delete-car";
-import { getAllCars } from "../../../services/api/get-cars";
-import eventEmitter from "../../../services/event-emitter";
-import Pagination from "../../../services/pagination-service/pagination";
+import Car from "../car/car";
+import deleteCarByID from "../../services/api/delete-car";
+import { getAllCars } from "../../services/api/get-cars";
+import eventEmitter from "../../utils/event-emitter";
+import Pagination from "../../services/pagination-service/pagination";
+import { create100Cars } from "../../services/api/create-car";
+import winnersCollection from "../winners-collection/winners-collection";
 
 class CarsCollection extends Pagination<Car> {
   constructor() {
     super([], 7);
+    eventEmitter.on("car-created", () => {
+      this.updateCarsCollection();
+      eventEmitter.emit("collection-changed");
+    });
+    eventEmitter.on("generate-random-cars", async () => {
+      await create100Cars();
+      this.updateCarsCollection();
+      eventEmitter.emit("collection-changed");
+    });
   }
 
   async removeCar(id: number) {
     const index = this.collection.findIndex((car) => car.getID() === id);
     this.collection[index].destroy();
     await deleteCarByID(id);
+    await winnersCollection.removeWinner(id);
     this.removeItem(index);
     eventEmitter.emit("car-removed");
   }
