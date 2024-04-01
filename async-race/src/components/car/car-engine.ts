@@ -11,6 +11,8 @@ interface ICarCallbacks {
   stopAnimation: () => void;
 
   moveCarToStart: () => void;
+
+  setCarStatus: (status: string) => void;
 }
 
 class CarEngine extends State {
@@ -31,15 +33,23 @@ class CarEngine extends State {
           this.abortController = new AbortController();
           if (this.carControls) this.carControls.onmoveControls();
           this.engineParams = await setEngineStatus(this.carId, "started");
+          this.carControls?.setCarStatus("ready");
           if (this.carControls)
             this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
           this.emit("move-car");
+          this.carControls?.setCarStatus("car is moving");
         },
         "move-car": async () => {
           if (!this.engineParams) return;
           const driveCar = await setEngineStatusToDrive(this.carId, this.abortController);
-          if (!driveCar.success) this.emit("broke");
-          if (driveCar.success) this.emit("finish");
+          if (!driveCar.success) {
+            this.emit("broke");
+            this.carControls?.setCarStatus("car is broken");
+          }
+          if (driveCar.success) {
+            this.emit("finish");
+            this.carControls?.setCarStatus("car is finished");
+          }
         },
         "stop-car-animation": async () => {
           if (this.carControls) this.carControls.stopAnimation();
@@ -49,6 +59,7 @@ class CarEngine extends State {
         },
         reset: async () => {
           this.engineParams = await setEngineStatus(this.carId, "stopped");
+          this.carControls?.setCarStatus(" ");
           if (this.carControls) this.carControls.stopAnimation();
           if (this.carControls) this.carControls.moveCarToStart();
           this.abortController.abort("Car stoped");

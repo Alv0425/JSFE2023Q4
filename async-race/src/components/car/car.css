@@ -33,6 +33,11 @@
   align-items: start;
   gap: 10px;
 }
+.car__state-label {
+  margin-left: auto;
+  margin-right: 30px;
+  color: var(--color-body-dark);
+}
 
 .car__track {
   position: relative;

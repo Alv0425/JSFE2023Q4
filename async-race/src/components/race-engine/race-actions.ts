@@ -16,6 +16,7 @@ export async function prepareCarsOnPage(n: number): Promise<IRaceParticipants[]>
     if (carsComponents[index].engine.getCurrentState() !== "in-garage") await setEngineStatus(car.id, "stopped");
     const carEngine: IEngineStatusResponse = await setEngineStatus(car.id, "started");
     carsComponents[index].engine.emit("start-race");
+    carsComponents[index].updateCarStateLabel("car in a race");
     return carEngine;
   });
   const engineParams: IEngineStatusResponse[] = await Promise.all(carsEngines);
@@ -37,9 +38,11 @@ async function getCarRaceResult(car: IRaceParticipants, controller: AbortControl
   const carResult: IDriveStatusResponse = await setEngineStatusToDrive(car.carInfo.id, controller);
   if (carResult.success) {
     car.component.stopMoving();
+    car.component.updateCarStateLabel("car is finished");
     return car;
   }
   if (!carResult.success) car.component.stopMoving();
+  car.component.updateCarStateLabel("car is broken");
   return Promise.reject(new Error(`Car is stopped`));
 }
 
