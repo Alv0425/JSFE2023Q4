@@ -1,3 +1,12 @@
+export interface IComponentCoordinates {
+  x: number;
+  y: number;
+  centerX: number;
+  centerY: number;
+  width: number;
+  height: number;
+}
+
 export type Props<T extends HTMLElement = HTMLElement> = Partial<
   Omit<T, "className" | "style" | "children" | "tagName" | "dataset" | "classList">
 >;
@@ -41,7 +50,7 @@ class Component<T extends HTMLElement = HTMLElement> {
     }
     if (attrs) {
       Object.keys(attrs).forEach((key) => {
-        const value = attrs[key];
+        const value: string | undefined = attrs[key];
         if (value) {
           this.node.setAttribute(key, value);
         }
@@ -140,8 +149,8 @@ class Component<T extends HTMLElement = HTMLElement> {
     };
   }
 
-  public getCoordinates() {
-    const clientRect = this.getComponent().getBoundingClientRect();
+  public getCoordinates(): IComponentCoordinates {
+    const clientRect: DOMRect = this.getComponent().getBoundingClientRect();
     return {
       x: clientRect.left,
       y: clientRect.top,

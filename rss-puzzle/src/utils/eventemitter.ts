@@ -16,7 +16,7 @@ class EventEmitter {
   }
 
   public once(event: string, handler: HandlerType) {
-    const remove = this.on(event, (...args) => {
+    const remove: () => void = this.on(event, (...args) => {
       remove();
       handler.apply(this, args);
     });
@@ -39,6 +39,6 @@ class EventEmitter {
   }
 }
 
-const eventEmitter = new EventEmitter();
+const eventEmitter: EventEmitter = new EventEmitter();
 
 export default eventEmitter;

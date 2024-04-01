@@ -5,6 +5,7 @@ import { button } from "../../../../../utils/elements";
 import datahandler from "../../../../services/datahandler";
 import eventEmitter from "../../../../../utils/eventemitter";
 import storage from "../../../../services/localstorage";
+import { IHintsOptions } from "../../../../../utils/types/interfaces";
 
 class AudioHint {
   private audioSource: string = "";
@@ -19,14 +20,17 @@ class AudioHint {
 
   public constructor() {
     this.hintButton = button(["playboard__hint-audio-button"], "", "button", "audio-button");
-    const iconBtn1 = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
-    const iconBtn2 = createSvg("./assets/icons/waves-2.svg#waves2", "playboard__audio-hint-icon-2");
+    const iconBtn1: SVGSVGElement = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
+    const iconBtn2: SVGSVGElement = createSvg("./assets/icons/waves-2.svg#waves2", "playboard__audio-hint-icon-2");
     this.hintButton.getComponent().append(iconBtn1, iconBtn2);
     this.hintButton.addListener("click", () => {
       if (this.audioSource) this.playAudio();
     });
     this.hintToggler = button(["playboard__hint-audio-toggler"], "", "button", "audio-toggler");
-    const iconTgl = createSvg("./assets/icons/headphones-simple-solid.svg#headphones", "playboard__hint-toggler-icon");
+    const iconTgl: SVGSVGElement = createSvg(
+      "./assets/icons/headphones-simple-solid.svg#headphones",
+      "playboard__hint-toggler-icon",
+    );
     this.hintToggler.getComponent().append(iconTgl);
     this.hintToggler.addListener("click", () => {
       if (this.on) {
@@ -47,12 +51,12 @@ class AudioHint {
       this.hideHint();
       if (this.on) this.showhint();
     });
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     this.on = hintOptions.audioHint;
     if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-audio-toggler_active");
   }
 
-  public setHint(hintText: string) {
+  public setHint(hintText: string): void {
     this.hideHint();
     setTimeout(() => {
       this.hintButton.setTextContent(hintText);
@@ -93,7 +97,7 @@ class AudioHint {
   }
 
   public saveOption() {
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     hintOptions.audioHint = this.on;
     storage.setHintOptions(hintOptions);
   }

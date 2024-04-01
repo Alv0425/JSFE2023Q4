@@ -18,21 +18,21 @@ class MainCont extends Component {
     eventEmitter.on("statistics-page-closed", () => this.drawPlayboard());
   }
 
-  public drawStartScreen() {
+  public drawStartScreen(): void {
     this.clear();
     document.body.classList.remove("login-screen");
     const startScr = new StartScreen();
     this.append(startScr);
   }
 
-  public drawLogin() {
+  public drawLogin(): void {
     this.clear();
     document.body.classList.add("login-screen");
     const loginScr = new LoginScreen();
     this.append(loginScr);
   }
 
-  public async drawMainScreen() {
+  public async drawMainScreen(): Promise<void> {
     this.getComponent().classList.add("fade-out");
     setTimeout(() => {
       this.clear();
@@ -42,12 +42,12 @@ class MainCont extends Component {
     }, 300);
   }
 
-  public drawPlayboard() {
+  public drawPlayboard(): void {
     statistics.getComponent().remove();
     this.append(playboard);
   }
 
-  public drawStatistics() {
+  public drawStatistics(): void {
     playboard.getComponent().remove();
     this.append(statistics);
   }

@@ -9,7 +9,7 @@ import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
 import loader from "../loaderscreen/loader";
 import imageInfo from "./imageinfo/imageinfo";
-import { ComponentType, IRoundResult } from "../../../utils/types/interfaces";
+import { ComponentType, ILevel, IRoundLevelInfo, IRoundResult } from "../../../utils/types/interfaces";
 import movesHandler from "../../services/cardsmoveshandler";
 import selectLevel from "./selectlevel/selectlevel";
 import playboardNav from "./playboardnav/playboardnav";
@@ -49,8 +49,8 @@ class Playboard extends Component {
     this.setListeners();
   }
 
-  private resize() {
-    const size = this.playboardField.getSize();
+  private resize(): void {
+    const size: { width: number; height: number } = this.playboardField.getSize();
     size.width -= 20;
     size.height = Math.floor(size.width * this.aspectRatio);
     this.playboardPuzzleContainer.setStyleAttribute("aspect-ratio", `1000 / ${Math.floor(this.aspectRatio * 1000)}`);
@@ -58,7 +58,7 @@ class Playboard extends Component {
     if (this.currentSentence) this.currentSentence.resizeContainers();
   }
 
-  private setListeners() {
+  private setListeners(): void {
     eventEmitter.on("cardsresized", () => {
       if (this.currentSentence) this.currentSentence.resizeContainers();
     });
@@ -73,7 +73,6 @@ class Playboard extends Component {
     });
     eventEmitter.on("open-select-modal", () => selectLevel.openMmodalSelectGame(this.openRound.bind(this)));
     eventEmitter.on("show-image-hint", () => {
-      console.log("image-hint-show");
       this.playboardField.getComponent().classList.add("playboard__field-show-image");
     });
     eventEmitter.on("hide-image-hint", () => {
@@ -91,7 +90,7 @@ class Playboard extends Component {
     eventEmitter.on("image-revealed", () => this.playboardPuzzleContainer.clear());
   }
 
-  public completedRoundHandler() {
+  public completedRoundHandler(): void {
     eventEmitter.emit("reveal-image");
     if (this.game) {
       this.playboardPuzzleContainer.setStyleAttribute(
@@ -110,7 +109,7 @@ class Playboard extends Component {
     }
   }
 
-  private async nextSentence() {
+  private async nextSentence(): Promise<void> {
     await this.clearSentenceBlocks();
     this.playboardSourceContainer.clear();
     if (this.game) {
@@ -124,12 +123,12 @@ class Playboard extends Component {
     }
   }
 
-  private checkSentence() {
+  private checkSentence(): void {
     if (this.game) this.game.checkSentence(this.cardWordplacesResult);
   }
 
-  private async loadNextRound(level: number, round: number) {
-    const dataLevel = await dataHandler.fetchLevelsData(level);
+  private async loadNextRound(level: number, round: number): Promise<void> {
+    const dataLevel: ILevel = await dataHandler.fetchLevelsData(level);
     if (dataLevel.roundsCount - 1 === round) {
       if (level === 6) {
         await this.openRound(1, 0);
@@ -141,16 +140,16 @@ class Playboard extends Component {
     await this.openRound(level, round + 1);
   }
 
-  private async openNextRound() {
+  private async openNextRound(): Promise<void> {
     if (!this.game) return;
-    const level = this.game.levelIndex;
-    const round = this.game.roundIndex;
+    const level: number = this.game.levelIndex;
+    const round: number = this.game.roundIndex;
     await this.loadNextRound(level, round);
   }
 
-  private async clearSentenceBlocks() {
+  private async clearSentenceBlocks(): Promise<void> {
     this.playboardSourceContainer.getComponent().classList.add("hide");
-    return new Promise((res) => {
+    await new Promise((res) => {
       setTimeout(() => {
         this.playboardSourceContainer.clear();
         this.cardWordplacesSource = [];
@@ -162,10 +161,10 @@ class Playboard extends Component {
     });
   }
 
-  public async clearPlayboard() {
+  public async clearPlayboard(): Promise<void> {
     this.playboardPuzzleContainer.getComponent().classList.add("hide");
     await this.clearSentenceBlocks();
-    return new Promise((res) => {
+    await new Promise((res) => {
       setTimeout(() => {
         this.playboardPuzzleContainer.clear();
         res(true);
@@ -175,7 +174,7 @@ class Playboard extends Component {
     });
   }
 
-  private updateCardsContainers() {
+  private updateCardsContainers(): void {
     if (this.currentSentenceContainer) {
       if (!this.currentSentenceContainer.children.length) return;
       this.cardWordplacesResult = Array.from(this.currentSentenceContainer.children) as HTMLElement[];
@@ -184,14 +183,14 @@ class Playboard extends Component {
     this.cardWordplacesSource = Array.from(this.playboardSourceContainer.getComponent().children) as HTMLElement[];
   }
 
-  public async openRound(level: number, round: number) {
+  public async openRound(level: number, round: number): Promise<void> {
     eventEmitter.emit("open-round");
     await this.clearPlayboard();
-    const dataLevel = await dataHandler.fetchLevelsData(level);
+    const dataLevel: ILevel = await dataHandler.fetchLevelsData(level);
     this.game = new Game(dataLevel.rounds[round]);
     this.loadSentence(0);
     loader.draw();
-    const image = new Image();
+    const image: HTMLImageElement = new Image();
     image.src = dataHandler.getImageUrl(this.game.info.levelData.imageSrc);
     image.onload = () => {
       loader.close();
@@ -204,11 +203,11 @@ class Playboard extends Component {
     imageInfo.close();
   }
 
-  public loadSentence(idx: number) {
+  public loadSentence(idx: number): void {
     if (!this.game) return;
     eventEmitter.emit("startsentence");
     this.currentCards = this.game.generateSources(idx);
-    const resultArea = this.game.generateResultArea(idx);
+    const resultArea: Component<HTMLElement> = this.game.generateResultArea(idx);
     this.currentSentence = this.game.wordSentences[idx];
     hintsContainer.hints.translationHint?.setHint(this.game.info.words[idx].textExampleTranslate);
     hintsContainer.hints.audioHint?.setAudio(this.game.info.words[idx].audioExample);
@@ -227,9 +226,9 @@ class Playboard extends Component {
     });
   }
 
-  private addListenersToCards() {
+  private addListenersToCards(): void {
     this.currentCards.forEach((card) => {
-      const draghandler = () => {
+      const draghandler: () => void = () => {
         if (!this.game) return;
         if (!this.currentSentence) return;
         if (card.draggable && card.curTarget instanceof HTMLElement)
@@ -256,12 +255,12 @@ class Playboard extends Component {
     });
   }
 
-  public async startFirstRound() {
-    const lastRound = storage.getLastCompletedRound();
+  public async startFirstRound(): Promise<void> {
+    const lastRound: IRoundLevelInfo | null = storage.getLastCompletedRound();
     if (lastRound) await this.loadNextRound(lastRound.level, lastRound.round);
   }
 }
 
-const playboard = new Playboard();
+const playboard: Playboard = new Playboard();
 
 export default playboard;

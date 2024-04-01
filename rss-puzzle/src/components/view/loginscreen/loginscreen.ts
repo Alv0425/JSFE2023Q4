@@ -4,6 +4,7 @@ import { button, div, h2, input, label } from "../../../utils/elements";
 import formhandler, { FormHandler } from "../../services/formhandler";
 import storage from "../../services/localstorage";
 import eventEmitter from "../../../utils/eventemitter";
+import { IStorage } from "../../../utils/types/interfaces";
 
 class LoginScreen extends Component {
   public loginFirstName: Component[] = [];
@@ -31,14 +32,14 @@ class LoginScreen extends Component {
     this.validator = formhandler();
   }
 
-  private setListener() {
+  private setListener(): void {
     this.addListener("submit", (e) => {
       e.preventDefault();
       if (this.surnameStatus.length === 0 && this.firstNameStatus.length === 0) {
-        const data = storage.getData();
-        const inputFirstName = this.loginFirstName[1].getComponent() as HTMLInputElement;
+        const data: IStorage = storage.getData();
+        const inputFirstName: HTMLInputElement = this.loginFirstName[1].getComponent() as HTMLInputElement;
         data.firstName = inputFirstName.value;
-        const inputSurname = this.loginSurname[1].getComponent() as HTMLInputElement;
+        const inputSurname: HTMLInputElement = this.loginSurname[1].getComponent() as HTMLInputElement;
         data.firstName = inputFirstName.value;
         data.surname = inputSurname.value;
         storage.saveLoginData(data);
@@ -47,19 +48,19 @@ class LoginScreen extends Component {
     });
   }
 
-  private setListeners() {
-    const inputFirstName = this.loginFirstName[1];
+  private setListeners(): void {
+    const inputFirstName: Component<HTMLElement> = this.loginFirstName[1];
     inputFirstName.addListener("keyup", () => {
-      const inputFirst = inputFirstName.getComponent();
+      const inputFirst: HTMLElement = inputFirstName.getComponent();
       this.firstNameStatus = this.validator.validateName(inputFirst, "first name");
       this.validator.emitHints(this.hintsContainer[0], this.firstNameStatus);
       if (this.firstNameStatus.length) this.submitButton.getComponent().disabled = true;
       if (this.surnameStatus.length === 0 && this.firstNameStatus.length === 0)
         this.submitButton.getComponent().disabled = false;
     });
-    const inputSurname = this.loginSurname[1];
+    const inputSurname: Component<HTMLElement> = this.loginSurname[1];
     inputSurname.addListener("keyup", () => {
-      const inputSur = inputSurname.getComponent();
+      const inputSur: HTMLElement = inputSurname.getComponent();
       this.surnameStatus = this.validator.validateName(inputSur, "surname");
       this.validator.emitHints(this.hintsContainer[1], this.surnameStatus);
       if (this.surnameStatus.length) this.submitButton.getComponent().disabled = true;
@@ -68,7 +69,7 @@ class LoginScreen extends Component {
     });
   }
 
-  private draw() {
+  private draw(): void {
     this.loginSurname = [
       label(["login-form__label"], "surname", "Surname"),
       input(["login-form__input"], {

@@ -19,7 +19,7 @@ class Footer extends Component {
     this.draw();
   }
 
-  public draw() {
+  public draw(): void {
     document.body.append(this.getComponent());
   }
 }

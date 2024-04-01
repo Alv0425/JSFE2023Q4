@@ -15,10 +15,10 @@ class Sentence {
 
   protected sentenceContainer: ComponentType = null;
 
-  public constructor(sentence: IWord, idx: number) {
+  constructor(sentence: IWord, idx: number) {
     this.words = sentence.textExample.split(" ");
     this.wordCards = this.words.map((word, index) => {
-      const newCard = new Card(word, idx, index);
+      const newCard: Card = new Card(word, idx, index);
       return newCard;
     });
     this.wordCards[0].getComponent().classList.add("card_start");
@@ -30,7 +30,7 @@ class Sentence {
       this.wordCards.forEach((card) => {
         card.getComponent().classList.add("fade-out-slow");
         setTimeout(() => {
-          const parent = card.getComponent().parentElement;
+          const parent: HTMLElement | null = card.getComponent().parentElement;
           card.destroy();
           if (parent) parent.remove();
         }, 2000);
@@ -38,15 +38,15 @@ class Sentence {
     });
   }
 
-  public setSentenceContainer(container: ComponentType) {
+  public setSentenceContainer(container: ComponentType): void {
     this.sentenceContainer = container;
   }
 
-  public getSentenceContainer() {
+  public getSentenceContainer(): HTMLElement {
     return this.sentenceContainer as HTMLElement;
   }
 
-  private calculateShifts() {
+  private calculateShifts(): number[] {
     return this.wordCards.reduce(
       (shifts, card) => {
         const shift = shifts[shifts.length - 1] + card.currentWidth;
@@ -56,26 +56,26 @@ class Sentence {
     );
   }
 
-  public async animateArrangingCards(container: HTMLElement) {
-    const baseCoords = container.getBoundingClientRect();
-    const shifts = this.calculateShifts();
+  public async animateArrangingCards(container: HTMLElement): Promise<void> {
+    const baseCoords: DOMRect = container.getBoundingClientRect();
+    const shifts: number[] = this.calculateShifts();
     this.wordCards.forEach((card, i) => card.moveTo(baseCoords.x + shifts[i], baseCoords.y));
   }
 
-  public resizeCards(containerSize: { width: number; height: number }) {
+  public resizeCards(containerSize: { width: number; height: number }): void {
     this.wordCards.forEach((card, idx) => {
       card.setWidth(containerSize, this.wordWeights[idx]);
       if (this.words.length > 9) {
         card.textCardLayer.setStyleAttribute("transform", "scale(0.8)");
       }
     });
-    const shifts = this.calculateShifts();
+    const shifts: number[] = this.calculateShifts();
     this.wordCards.forEach((card, idx) => {
       card.imageCardRect.setStyleAttribute(
         "background-position",
         `-${shifts[idx]}px -${Math.floor((containerSize.height * this.sentenceIdx) / 10)}px`,
       );
-      const fontSize = (containerSize.height * 0.38) / 10;
+      const fontSize: number = (containerSize.height * 0.38) / 10;
       card.imageCardCircle.setStyleAttribute(
         "background-position",
         `-${shifts[idx] + Math.floor(fontSize * 0.75)}px -${Math.floor((containerSize.height * this.sentenceIdx) / 10)}px`,
@@ -84,10 +84,14 @@ class Sentence {
     eventEmitter.emit("cardsresized");
   }
 
-  public resizeContainers() {
+  public resizeContainers(): void {
     this.wordCards.forEach((card) => {
-      const sourceContainer = document.getElementById(`source-${card.sentenceIdx}-${card.wordIndex}`);
-      const resultContainer = document.getElementById(`result-${card.sentenceIdx}-${card.wordIndex}`);
+      const sourceContainer: HTMLElement | null = document.getElementById(
+        `source-${card.sentenceIdx}-${card.wordIndex}`,
+      );
+      const resultContainer: HTMLElement | null = document.getElementById(
+        `result-${card.sentenceIdx}-${card.wordIndex}`,
+      );
       if (sourceContainer) sourceContainer.style.setProperty("width", `${card.currentWidth}px`);
       if (resultContainer) resultContainer.style.setProperty("width", `${card.currentWidth}px`);
       sourceContainer?.classList.remove("highlight");
@@ -95,7 +99,7 @@ class Sentence {
     });
   }
 
-  public arrangeContainers(cardWordplacesResult: ComponentType[]) {
+  public arrangeContainers(cardWordplacesResult: ComponentType[]): void {
     if (!this.sentenceContainer) return;
     cardWordplacesResult.sort((place1, place2) => {
       let id1: string | undefined;
@@ -116,7 +120,7 @@ class Sentence {
     });
   }
 
-  public async arrange(cardWordplacesResult: ComponentType[]) {
+  public async arrange(cardWordplacesResult: ComponentType[]): Promise<void> {
     if (!(this.sentenceContainer instanceof HTMLElement)) return;
     await this.animateArrangingCards(this.sentenceContainer);
     this.wordCards.forEach((card) => card.removeAllListeners());

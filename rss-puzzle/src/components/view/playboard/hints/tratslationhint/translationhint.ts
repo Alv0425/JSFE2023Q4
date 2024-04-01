@@ -4,6 +4,7 @@ import { button, div, p } from "../../../../../utils/elements";
 import createSvg from "../../../../../utils/helpers/createsvg";
 import eventEmitter from "../../../../../utils/eventemitter";
 import storage from "../../../../services/localstorage";
+import { IHintsOptions } from "../../../../../utils/types/interfaces";
 
 class TranslationHint {
   private hintText: Component;
@@ -19,7 +20,10 @@ class TranslationHint {
     this.hintText = p(["playboard__hint-label"], "");
     this.hintContainer.append(this.hintText);
     this.hintToggler = button(["playboard__hint-translation-toggler"], "", "button", "translation-toggler");
-    const icon = createSvg("./assets/icons/lightbulb-solid.svg#lightbulb", "playboard__hint-toggler-icon");
+    const icon: SVGSVGElement = createSvg(
+      "./assets/icons/lightbulb-solid.svg#lightbulb",
+      "playboard__hint-toggler-icon",
+    );
     this.hintToggler.getComponent().append(icon);
     this.hintToggler.addListener("click", () => {
       if (this.on) {
@@ -40,7 +44,7 @@ class TranslationHint {
       this.hideHint();
       if (this.on) this.showhint();
     });
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     this.on = hintOptions.translationHint;
     if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-translation-toggler_active");
   }
@@ -70,7 +74,7 @@ class TranslationHint {
   }
 
   public saveOption() {
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     hintOptions.translationHint = this.on;
     storage.setHintOptions(hintOptions);
   }

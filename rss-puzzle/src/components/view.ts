@@ -13,7 +13,7 @@ class AppView {
 
   public footer: Footer;
 
-  public constructor() {
+  constructor() {
     this.blobs = new Blobs();
     this.header = new Header();
     this.main = new MainCont();

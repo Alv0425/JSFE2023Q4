@@ -15,3 +15,9 @@ export function getElementOfType<T extends Node | Element | Component | Document
   assertsElementIs<T>(ancestor, element);
   return element;
 }
+
+export function isObject(object: unknown): boolean {
+  return (
+    typeof object === "object" && object !== null && !Array.isArray(object) && object.constructor.name === "Object"
+  );
+}

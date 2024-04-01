@@ -35,28 +35,32 @@ export interface IRoundResult {
 
 export type IStats = Record<string, IRoundResult>;
 
+export interface IHintsOptions {
+  imageHint: boolean;
+  translationHint: boolean;
+  audioHint: boolean;
+}
+
+export interface IRoundLevelInfo {
+  level: number;
+  round: number;
+}
+
+export interface ICurrentRoundStats {
+  roundInfo?: IRound;
+  currentStats?: IRoundResult;
+}
+
 export interface IStorage {
-  hintsOptions: {
-    imageHint: boolean;
-    translationHint: boolean;
-    audioHint: boolean;
-  };
+  hintsOptions: IHintsOptions;
+
   firstName?: string;
   surname?: string;
 
   stats?: IStats;
-  lastRound?: {
-    level: number;
-    round: number;
-  };
-  currentRound?: {
-    level: number;
-    round: number;
-  };
-  currentRoundStats?: {
-    roundInfo?: IRound;
-    currentStats?: IRoundResult;
-  };
+  lastRound?: IRoundLevelInfo;
+  currentRound?: IRoundLevelInfo;
+  currentRoundStats?: ICurrentRoundStats;
 }
 
 export interface ISelectLevel {

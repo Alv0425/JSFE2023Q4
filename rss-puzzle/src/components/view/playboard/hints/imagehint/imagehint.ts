@@ -2,6 +2,7 @@ import Component from "../../../../../utils/component";
 import { button } from "../../../../../utils/elements";
 import eventEmitter from "../../../../../utils/eventemitter";
 import createSvg from "../../../../../utils/helpers/createsvg";
+import { IHintsOptions } from "../../../../../utils/types/interfaces";
 import storage from "../../../../services/localstorage";
 import "./imagehint.css";
 
@@ -12,7 +13,7 @@ class ImageHint {
 
   public constructor() {
     this.hintToggler = button(["playboard__hint-image-toggler"], "", "button", "image-toggler");
-    const icon = createSvg("./assets/icons/image-solid.svg#image", "playboard__hint-toggler-icon");
+    const icon: SVGSVGElement = createSvg("./assets/icons/image-solid.svg#image", "playboard__hint-toggler-icon");
     this.hintToggler.getComponent().append(icon);
     this.hintToggler.addListener("click", () => {
       if (this.on) {
@@ -27,7 +28,7 @@ class ImageHint {
         this.saveOption();
       }
     });
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     this.on = hintOptions.imageHint;
     eventEmitter.on("open-round", () => {
       if (this.on) this.hintToggler.getComponent().classList.add("playboard__hint-image-toggler_active");
@@ -48,7 +49,7 @@ class ImageHint {
   }
 
   public saveOption() {
-    const hintOptions = storage.getHintOptions();
+    const hintOptions: IHintsOptions = storage.getHintOptions();
     hintOptions.imageHint = this.on;
     storage.setHintOptions(hintOptions);
   }

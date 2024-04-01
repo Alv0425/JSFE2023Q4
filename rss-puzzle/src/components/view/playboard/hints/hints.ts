@@ -18,7 +18,7 @@ class Hints extends Component {
   }
 
   private drawHints() {
-    const hintTogglersContainer = div(["playboard__hints-torrlers"]);
+    const hintTogglersContainer: Component<HTMLElement> = div(["playboard__hints-torrlers"]);
     playboardNav.append(hintTogglersContainer);
     this.hints.translationHint = new TranslationHint();
     this.hints.audioHint = new AudioHint();

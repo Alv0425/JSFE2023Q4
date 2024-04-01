@@ -4,10 +4,10 @@ import { ComponentType } from "../../utils/types/interfaces";
 import Card from "../game/card";
 
 class MovesHandler {
-  public swapPlaces(place1: HTMLElement, place2: HTMLElement, callback: () => void) {
+  public swapPlaces(place1: HTMLElement, place2: HTMLElement, callback: () => void): void {
     if (place1 === place2) return;
-    const elementLeftSibling = place2.previousSibling;
-    const elementRightSibling = place2.previousSibling;
+    const elementLeftSibling: ChildNode | null = place2.previousSibling;
+    const elementRightSibling: ChildNode | null = place2.previousSibling;
     place1.before(place2);
     if (elementLeftSibling) {
       elementLeftSibling.after(place1);
@@ -17,9 +17,13 @@ class MovesHandler {
     callback();
   }
 
-  public findPlace(card: Card, resultContainers: ComponentType[], sourceContainers: ComponentType[]) {
-    let i = 0;
-    let cardContainer = getElementOfType(HTMLElement, resultContainers[0]);
+  public findPlace(
+    card: Card,
+    resultContainers: ComponentType[],
+    sourceContainers: ComponentType[],
+  ): HTMLElement | null {
+    let i: number = 0;
+    let cardContainer: HTMLElement = getElementOfType(HTMLElement, resultContainers[0]);
     let target: HTMLElement | null = null;
     while (i < resultContainers.length) {
       cardContainer = getElementOfType(HTMLElement, resultContainers[i]);
@@ -33,9 +37,9 @@ class MovesHandler {
     return target;
   }
 
-  public insertCard(card: Card, dest: HTMLElement, target: HTMLElement, destType: string) {
+  public insertCard(card: Card, dest: HTMLElement, target: HTMLElement, destType: string): void {
     if (dest) {
-      const parent = card.getComponent().parentElement;
+      const parent: HTMLElement | null = card.getComponent().parentElement;
       if (!parent) return;
       parent.classList.remove("placed");
       dest.append(card.getComponent());
@@ -45,7 +49,7 @@ class MovesHandler {
         target.after(dest);
       }
       dest.classList.add("placed");
-      const cardComp = card;
+      const cardComp: Card = card;
       card.unsetCoordinates();
       cardComp.draggable = false;
       target?.classList.remove("highlight");
@@ -54,10 +58,10 @@ class MovesHandler {
   }
 
   public async placeCardOndrop(card: Card, target: HTMLElement | null, callback: () => void) {
-    let destType = "result";
-    const targetID = target?.getAttribute("id");
-    if (targetID) destType = targetID.split("-")[0];
-    const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
+    let destType: string = "result";
+    const targetID: string | null | undefined = target?.getAttribute("id");
+    if (targetID) [destType] = targetID.split("-");
+    const dest: HTMLElement | null = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     if (target?.classList.contains("placed")) {
       if (!dest) return;
@@ -76,14 +80,14 @@ class MovesHandler {
     dest: HTMLElement,
     isAnimate: boolean,
     callback: () => void,
-  ) {
-    let cardContainer = target;
+  ): Promise<void> {
+    let cardContainer: HTMLElement = target;
     if (dest) {
       this.swapPlaces(target, dest, callback);
       cardContainer = dest;
     }
     if (!(card instanceof Component)) return;
-    const parent = card.getComponent().parentElement;
+    const parent: HTMLElement | null = card.getComponent().parentElement;
     if (!parent) return;
     parent.classList.remove("placed");
     cardContainer.classList.add("placed");
@@ -92,10 +96,10 @@ class MovesHandler {
     cardContainer.append(card.getComponent());
   }
 
-  public async placeCard(card: Card, target: HTMLElement | null, callback: () => void) {
+  public async placeCard(card: Card, target: HTMLElement | null, callback: () => void): Promise<void> {
     card.unsetCoordinates();
     const destType = card.position === "result" ? "source" : "result";
-    const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
+    const dest: HTMLElement | null = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     if (dest) this.changePosition(card, target, dest, true, callback);
     card.unsetDraggable();
@@ -107,11 +111,11 @@ class MovesHandler {
     resultContainers: ComponentType[],
     sourceContainers: ComponentType[],
     callback: () => void,
-  ) {
+  ): Promise<void> {
     card.unsetCoordinates();
-    const target = this.findPlace(card, resultContainers, sourceContainers);
-    const destType = card.position === "result" ? "source" : "result";
-    const dest = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
+    const target: HTMLElement | null = this.findPlace(card, resultContainers, sourceContainers);
+    const destType: "source" | "result" = card.position === "result" ? "source" : "result";
+    const dest: HTMLElement | null = document.getElementById(`${destType}-${card.sentenceIdx}-${card.wordIndex}`);
     if (!target) return;
     if (dest) this.changePosition(card, target, dest, true, callback);
     card.unsetDraggable();

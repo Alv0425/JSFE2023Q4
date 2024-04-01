@@ -7,13 +7,13 @@ export class FormHandler {
     if (!(input instanceof HTMLInputElement)) return [""];
     if (!/^[a-zA-Z-]+$/.test(input.value))
       errors.push(`The ${type} must consist of letters from the English alphabet and the hyphen ('-') symbol.`);
-    const number = type === "first name" ? 3 : 4;
+    const number: 3 | 4 = type === "first name" ? 3 : 4;
     if (input.value.length < number) errors.push(`The ${type} must be a minimum of ${number} characters.`);
     if (!/^[A-Z]{1}[a-zA-Z-]{1,}$/.test(input.value)) errors.push(`The ${type} should start with a capital letter.`);
     return errors;
   }
 
-  public emitHints(container: Component, hints: string[]) {
+  public emitHints(container: Component, hints: string[]): void {
     container.clear();
     if (hints.length) {
       const hintComponents: Component[] = [];

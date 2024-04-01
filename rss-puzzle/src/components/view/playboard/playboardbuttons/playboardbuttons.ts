@@ -17,17 +17,17 @@ class PlayboardButtons extends Component {
   }
 
   public drawStatisticsButton() {
-    const statisticsButton = new StatisticsButton();
+    const statisticsButton: StatisticsButton = new StatisticsButton();
     this.append(statisticsButton);
   }
 
   public drawAutocompleteButton() {
-    const autocompleteButton = new AutocompleteButton();
+    const autocompleteButton: AutocompleteButton = new AutocompleteButton();
     this.append(autocompleteButton);
   }
 
   public drawContinueButton() {
-    const nextButton = new GameButton();
+    const nextButton: GameButton = new GameButton();
     this.append(nextButton);
   }
 
@@ -41,6 +41,6 @@ class PlayboardButtons extends Component {
   }
 }
 
-const playboardButtons = new PlayboardButtons();
+const playboardButtons: PlayboardButtons = new PlayboardButtons();
 
 export default playboardButtons;

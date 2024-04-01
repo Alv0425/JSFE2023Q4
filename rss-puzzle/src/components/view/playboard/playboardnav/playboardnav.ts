@@ -7,6 +7,6 @@ class PlayboardNav extends Component {
   }
 }
 
-const playboardNav = new PlayboardNav();
+const playboardNav: PlayboardNav = new PlayboardNav();
 
 export default playboardNav;

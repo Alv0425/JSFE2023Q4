@@ -29,7 +29,7 @@ class Header extends Component {
     this.draw();
   }
 
-  public draw() {
+  public draw(): void {
     this.clear();
     if (storage.getData().firstName) {
       this.append(this.headerCont);

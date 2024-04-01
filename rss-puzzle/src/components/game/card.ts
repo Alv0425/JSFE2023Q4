@@ -1,38 +1,36 @@
 import "./card.css";
-import Component from "../../utils/component";
+import Component, { IComponentCoordinates } from "../../utils/component";
 import { div, span } from "../../utils/elements";
 import dataHandler from "../services/datahandler";
 
 class Card extends Component<HTMLElement> {
-  public text: string;
-
-  public baseCardLayer: Component;
+  private baseCardLayer: Component;
 
   public textCardLayer: Component<HTMLElement>;
 
-  public baseImageLayer: Component<HTMLElement>;
-
-  public wordIndex: number;
-
-  public sentenceIdx: number;
+  private baseImageLayer: Component<HTMLElement>;
 
   public position: "source" | "result";
 
   public currentWidth: number = 0;
 
-  public baseCircle: Component<HTMLElement>;
+  private baseCircle: Component<HTMLElement>;
 
   public draggable: boolean;
 
   public curTarget: HTMLElement | Element | null = null;
 
-  public borderCircle: Component<HTMLElement>;
+  private borderCircle: Component<HTMLElement>;
 
   public imageCardRect: Component<HTMLElement>;
 
   public imageCardCircle: Component<HTMLElement>;
 
-  public constructor(text: string, sentenceIdx: number, wordIndex: number) {
+  constructor(
+    private text: string,
+    public sentenceIdx: number,
+    public wordIndex: number,
+  ) {
     super("div", ["card"]);
     this.text = text;
     this.baseCardLayer = div(["card__base"], div(["card__base-rect"]));
@@ -52,12 +50,12 @@ class Card extends Component<HTMLElement> {
     this.addListener("dragstart", (e) => e.preventDefault());
   }
 
-  public setWidth(containerSize: { width: number; height: number }, weight: number) {
+  public setWidth(containerSize: { width: number; height: number }, weight: number): void {
     this.currentWidth = Math.round(containerSize.width * weight);
     this.setStyleAttribute("width", `${this.currentWidth}px`);
     this.setStyleAttribute("height", `${Math.round(containerSize.height * 0.1)}px`);
     this.setStyleAttribute("font-size", `${Math.round((containerSize.height * 0.38) / 10)}px`);
-    const parent = this.getComponent().parentElement;
+    const parent: HTMLElement | null = this.getComponent().parentElement;
     if (parent) parent.style.setProperty("width", `${this.currentWidth}px`);
     this.baseCircle.setStyleAttribute(
       "mask",
@@ -74,26 +72,27 @@ class Card extends Component<HTMLElement> {
       this.textCardLayer.setStyleAttribute("transform", "scale(0.8)");
   }
 
-  public setBackground(url: string) {
-    const urlToImage = dataHandler.getImageUrl(url);
+  public setBackground(url: string): void {
+    const urlToImage: string = dataHandler.getImageUrl(url);
     this.imageCardCircle.setStyleAttribute("background-image", `url(${urlToImage})`);
     this.imageCardRect.setStyleAttribute("background-image", `url(${urlToImage})`);
   }
 
-  public async moveTo(x: number, y: number) {
+  public async moveTo(x: number, y: number): Promise<void> {
     const startCoords = this.getComponent().getBoundingClientRect();
     const shiftX = Math.round(x - startCoords.x);
     const shiftY = Math.round(y - startCoords.y);
     this.setStyleAttribute("transform", `translateX(${shiftX}px) translateY(${shiftY}px)`);
-    return new Promise((res) => {
+    const p = new Promise((res) => {
       setTimeout(() => {
         res(true);
         this.removeStyleAttribute("transform");
       }, 500);
     });
+    await p;
   }
 
-  public setCoordinates(x: number, y: number) {
+  public setCoordinates(x: number, y: number): void {
     this.setStyleAttribute("transition", "0s");
     this.setStyleAttribute("position", "relative");
     this.setStyleAttribute("left", `${x}px`);
@@ -101,19 +100,19 @@ class Card extends Component<HTMLElement> {
     this.setStyleAttribute("z-index", "10");
   }
 
-  public unsetCoordinates() {
+  public unsetCoordinates(): void {
     this.removeStyleAttribute("transition");
     this.setStyleAttribute("left", "0px");
     this.setStyleAttribute("top", "0px");
     this.removeStyleAttribute("z-index");
   }
 
-  public checkElementBelow(x: number, y: number) {
+  public checkElementBelow(x: number, y: number): void {
     this.hide();
-    const element = document.elementFromPoint(x, y);
+    const element: Element | null = document.elementFromPoint(x, y);
     this.show();
     if (!element) return;
-    const droppable = element.closest(".wordplace");
+    const droppable: Element | null = element.closest(".wordplace");
     if (this.curTarget !== droppable) {
       if (this.curTarget) {
         this.curTarget.classList.remove("highlight");
@@ -125,8 +124,8 @@ class Card extends Component<HTMLElement> {
     }
   }
 
-  public getTargetCoords(e: Event) {
-    const coord = { x: 0, y: 0 };
+  public getTargetCoords(e: Event): { x: number; y: number } {
+    const coord: { x: number; y: number } = { x: 0, y: 0 };
     if (e instanceof TouchEvent) {
       coord.x = e.touches[0].clientX;
       coord.y = e.touches[0].clientY;
@@ -137,20 +136,21 @@ class Card extends Component<HTMLElement> {
     return coord;
   }
 
-  public dragCard(event: Event, drophandler: () => void) {
-    const startCoords = this.getComponent().getBoundingClientRect();
-    const shiftX = this.getTargetCoords(event).x - this.getCoordinates().x;
-    const shiftY = this.getTargetCoords(event).y - this.getCoordinates().y;
-    const move = (e: Event) => {
-      document.body.classList.add("fixed");
-      if (shiftX > 5 || shiftY > 5) this.draggable = true;
+  public dragCard(event: Event, drophandler: () => void): void {
+    const startCoords: DOMRect = this.getComponent().getBoundingClientRect();
+    const isMouseEvent: boolean = event instanceof MouseEvent;
+    const shiftX: number = this.getTargetCoords(event).x - this.getCoordinates().x;
+    const shiftY: number = this.getTargetCoords(event).y - this.getCoordinates().y;
+    const move: (e: Event) => void = (e: Event) => {
+      if (!isMouseEvent) document.body.classList.add("fixed");
+      this.draggable = true;
       this.setCoordinates(
         this.getTargetCoords(e).x - startCoords.x - shiftX,
         this.getTargetCoords(e).y - startCoords.y - shiftY,
       );
       this.checkElementBelow(this.getCoordinates().centerX, this.getCoordinates().centerY);
     };
-    const isMouseEvent = event instanceof MouseEvent;
+
     const events: Record<string, keyof HTMLElementEventMap> = {
       move: isMouseEvent ? "mousemove" : "touchmove",
       end: isMouseEvent ? "mouseup" : "touchend",
@@ -167,18 +167,18 @@ class Card extends Component<HTMLElement> {
     });
   }
 
-  public unsetDraggable() {
+  public unsetDraggable(): void {
     this.draggable = false;
   }
 
-  public setPosition(position: "source" | "result") {
+  public setPosition(position: "source" | "result"): void {
     this.position = position;
   }
 
-  public isLeftSideTarget(target: HTMLElement) {
-    const cardCoords = this.getCoordinates();
-    const targetCoords = target.getBoundingClientRect();
-    const centerOfTarget = targetCoords.left + targetCoords.width / 2;
+  public isLeftSideTarget(target: HTMLElement): boolean {
+    const cardCoords: IComponentCoordinates = this.getCoordinates();
+    const targetCoords: DOMRect = target.getBoundingClientRect();
+    const centerOfTarget: number = targetCoords.left + targetCoords.width / 2;
     return cardCoords.centerX - centerOfTarget > 0;
   }
 }

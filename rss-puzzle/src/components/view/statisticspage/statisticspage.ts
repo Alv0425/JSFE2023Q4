@@ -3,7 +3,7 @@ import Component from "../../../utils/component";
 import { button, div, h2, h3, img, li, p, span, ul } from "../../../utils/elements";
 import eventEmitter from "../../../utils/eventemitter";
 import storage from "../../services/localstorage";
-import { IRound, IRoundResult } from "../../../utils/types/interfaces";
+import { ICurrentRoundStats, IRound, IRoundResult } from "../../../utils/types/interfaces";
 import dataHandler from "../../services/datahandler";
 import createSvg from "../../../utils/helpers/createsvg";
 
@@ -22,9 +22,19 @@ class StatisticsPage extends Component {
     );
     this.roundInfo = div(["statistics-page__results"]);
     this.buttonsContainer = div(["statistics-page__buttons"]);
-    const backButton = button(["statistics-page__button"], "Back To Game", "button", "back-button");
+    const backButton: Component<HTMLButtonElement> = button(
+      ["statistics-page__button"],
+      "Back To Game",
+      "button",
+      "back-button",
+    );
     this.appendContent([this.roundInfo, this.buttonsContainer]);
-    const continueButton = button(["statistics-page__button"], "Continue", "button", "results-continue-button");
+    const continueButton: Component<HTMLButtonElement> = button(
+      ["statistics-page__button"],
+      "Continue",
+      "button",
+      "results-continue-button",
+    );
     this.buttonsContainer.appendContent([backButton, continueButton]);
     backButton.addListener("click", () => this.closePage());
     continueButton.addListener("click", () => {
@@ -32,7 +42,6 @@ class StatisticsPage extends Component {
       eventEmitter.emit("continue-game");
     });
     eventEmitter.on("reveal-image", () => {
-      console.log("button is disabled");
       continueButton.getComponent().disabled = true;
       setTimeout(() => {
         continueButton.getComponent().disabled = false;
@@ -42,11 +51,16 @@ class StatisticsPage extends Component {
   }
 
   public createSoundButton(url: string) {
-    const srcUrl = dataHandler.getAudioUrl(url);
-    const audio = new Audio(srcUrl);
-    const audioButton = button(["playboard__hint-audio-button"], "", "button", "audio-button");
-    const iconBtn1 = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
-    const iconBtn2 = createSvg("./assets/icons/waves-2.svg#waves2", "playboard__audio-hint-icon-2");
+    const srcUrl: string = dataHandler.getAudioUrl(url);
+    const audio: HTMLAudioElement = new Audio(srcUrl);
+    const audioButton: Component<HTMLButtonElement> = button(
+      ["playboard__hint-audio-button"],
+      "",
+      "button",
+      "audio-button",
+    );
+    const iconBtn1: SVGSVGElement = createSvg("./assets/icons/waves-1.svg#waves1", "playboard__audio-hint-icon-1");
+    const iconBtn2: SVGSVGElement = createSvg("./assets/icons/waves-2.svg#waves2", "playboard__audio-hint-icon-2");
     audioButton.getComponent().append(iconBtn1, iconBtn2);
     audioButton.addListener("click", () => {
       if (srcUrl) {
@@ -65,7 +79,7 @@ class StatisticsPage extends Component {
     return audioButton;
   }
 
-  public createImage(roundData: IRound) {
+  public createImage(roundData: IRound): Component<HTMLElement> {
     return div(
       ["statistics-page__image-container"],
       img(["statistics-page__image"], dataHandler.getImageUrl(roundData.levelData.cutSrc), roundData.levelData.name),
@@ -74,7 +88,11 @@ class StatisticsPage extends Component {
     );
   }
 
-  public createWordsList(currentRoundStats: IRoundResult, roundData: IRound, type: "knownWords" | "unknownWords") {
+  public createWordsList(
+    currentRoundStats: IRoundResult,
+    roundData: IRound,
+    type: "knownWords" | "unknownWords",
+  ): Component<HTMLElement>[] {
     return currentRoundStats[type].reduce((acc: Component[], wordIdx) => {
       if (roundData) {
         acc.push(
@@ -90,14 +108,14 @@ class StatisticsPage extends Component {
     }, []);
   }
 
-  public updateResults() {
+  public updateResults(): void {
     this.roundInfo.clear();
-    const currentRound = storage.getCurrentRoundStats();
-    const knownWordsContainer = div(
+    const currentRound: ICurrentRoundStats | null = storage.getCurrentRoundStats();
+    const knownWordsContainer: Component<HTMLElement> = div(
       ["statistics-page__results-container"],
       h3(["statistics-page__subtitle", "statistics-page__subtitle_known"], "I know"),
     );
-    const unknownWordsContainer = div(
+    const unknownWordsContainer: Component<HTMLElement> = div(
       ["statistics-page__results-container"],
       h3(["statistics-page__subtitle", "statistics-page__subtitle_unknown"], "I don't know"),
     );
@@ -106,7 +124,7 @@ class StatisticsPage extends Component {
     if (currentRound.currentStats) {
       if (currentRound.currentStats.knownWords.length) {
         if (!currentRound.roundInfo) return;
-        const wodsList = ul(
+        const wodsList: Component<HTMLElement> = ul(
           ["statistics-page__results-list"],
           this.createWordsList(currentRound.currentStats, currentRound.roundInfo, "knownWords"),
         );
@@ -115,7 +133,7 @@ class StatisticsPage extends Component {
       }
       if (currentRound.currentStats.unknownWords.length) {
         if (!currentRound.roundInfo) return;
-        const wodsList = ul(
+        const wodsList: Component<HTMLElement> = ul(
           ["statistics-page__results-list"],
           this.createWordsList(currentRound.currentStats, currentRound.roundInfo, "unknownWords"),
         );
@@ -134,5 +152,5 @@ class StatisticsPage extends Component {
   }
 }
 
-const statistics = new StatisticsPage();
+const statistics: StatisticsPage = new StatisticsPage();
 export default statistics;
