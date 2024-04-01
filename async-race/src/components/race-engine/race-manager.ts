@@ -1,17 +1,11 @@
-import { ICarResponse, IEngineStatusResponse } from "../../services/api/response-interfaces";
 import State from "../../services/state-manager/state";
 import garageContent from "../../ui/garage/garage-pagination/garage-pages";
-import Car from "../car/car";
 import { prepareCarsOnPage, resetRace, startRace } from "./race-actions";
+import { IRaceParticipants } from "./race-interfaces";
 import RACE_STATES from "./race-states";
 
 class RaceManager extends State {
-  public currentParticipants: {
-    carInfo: ICarResponse;
-    raceParams: IEngineStatusResponse;
-  }[] = [];
-
-  public currentCars: Car[] | null = null;
+  public currentParticipants: IRaceParticipants[] = [];
 
   public currentPage: number = 1;
 
@@ -27,8 +21,8 @@ class RaceManager extends State {
           await this.prepareCars();
         },
         "on-engines": async () => {
-          const cars = this.getRaceParticipants();
-          if (cars && this.currentCars) await startRace(cars, this.currentCars, this.abortController);
+          const cars: IRaceParticipants[] = this.getRaceParticipants();
+          if (cars) await startRace(cars, this.abortController);
           this.emit("race-finish");
         },
         "stop-engines": () => {
@@ -37,45 +31,30 @@ class RaceManager extends State {
         "unlock-pagination-buttons": () => {},
         restart: () => this.restartRace(),
         reset: () => {
-          if (this.currentParticipants && this.currentCars) resetRace(this.currentParticipants, this.currentCars);
+          if (this.currentParticipants) resetRace(this.currentParticipants);
           this.abortController.abort("reset race");
         },
       },
     });
   }
 
-  private async prepareCars() {
+  private async prepareCars(): Promise<void> {
     this.abortController = new AbortController();
     await this.setParticipants();
-    this.currentCars?.forEach((car, idx) => {
-      const { raceParams } = this.currentParticipants[idx];
-      car.animateMove(raceParams.distance / raceParams.velocity);
-      car.controls.lockAllControls();
-    });
     this.emit("cars-prepared");
   }
 
-  public setRaceParticipants(
-    cars: {
-      carInfo: ICarResponse;
-      raceParams: IEngineStatusResponse;
-    }[],
-  ) {
-    this.currentParticipants = cars;
-  }
-
-  public async setParticipants() {
+  public async setParticipants(): Promise<void> {
     this.currentPage = garageContent.currentPageIndex;
-    this.currentCars = garageContent.currentCars;
-    const raceParticipants = await prepareCarsOnPage(this.currentPage + 1);
+    const raceParticipants: IRaceParticipants[] = await prepareCarsOnPage(this.currentPage + 1);
     this.currentParticipants = raceParticipants;
   }
 
-  public getRaceParticipants() {
+  public getRaceParticipants(): IRaceParticipants[] {
     return this.currentParticipants;
   }
 
-  private restartRace() {
+  private restartRace(): void {
     this.currentParticipants = [];
     this.abortController.abort();
     this.emit("start-race");

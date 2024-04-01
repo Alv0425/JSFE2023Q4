@@ -36,10 +36,6 @@ const RACE_STATES = {
       toState: "cars-finished",
       callbacks: ["stop-engines", "unlock-pagination-buttons"],
     },
-    // "drive-finish": {
-    //   toState: "cars-finished",
-    //   callbacks: ["stop-engines", "unlock-pagination-buttons"],
-    // },
     "start-race": {
       toState: "all-cars-in-garage",
       callbacks: ["restart-race"],
@@ -47,6 +43,10 @@ const RACE_STATES = {
     "reset-race": {
       toState: "all-cars-in-garage",
       callbacks: ["reset"],
+    },
+    "cars-prepared": {
+      toState: "all-cars-in-garage",
+      callbacks: ["restart-race"],
     },
   },
   "cars-finished": {
