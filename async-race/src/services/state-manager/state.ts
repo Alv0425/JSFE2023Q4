@@ -29,28 +29,22 @@ class State {
     this.states = params.states;
   }
 
-  public emit(event: string) {
+  public emit(event: string): void {
     try {
       const state = this.states[this.currentState];
       const transition = state[event];
-      if (!transition) throw new Error(`cannot find ${state[event]} ${event} ${this.currentState}`);
+      if (!transition) return;
       this.currentState = transition.toState;
       transition.callbacks.forEach(async (callbackName) => {
         try {
           await this.callbacks[callbackName].call(this);
         } catch (error) {
-          if (error === "DOMException: The user aborted a request.") {
-            console.log("car stoped!");
-          }
+          console.warn("User aborted all requests");
         }
       });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
-  }
-
-  public getCurrentState() {
-    return this.currentState;
   }
 }
 
