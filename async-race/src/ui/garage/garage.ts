@@ -18,10 +18,6 @@ class Garage extends Component {
       garageContent,
     );
   }
-
-  public render() {
-    document.body.append(this.getComponent());
-  }
 }
 
 const garage = new Garage();

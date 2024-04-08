@@ -7,12 +7,12 @@ class Loader extends Component {
     super("div", ["overlay", "overlay_loader"]);
   }
 
-  public draw() {
+  public draw(): void {
     this.append(div(["loader"]));
     document.body.append(this.getComponent());
   }
 
-  public close() {
+  public close(): void {
     this.getComponent().classList.add("fade-out");
     setTimeout(() => {
       this.getComponent().classList.remove("fade-out");

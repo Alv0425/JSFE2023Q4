@@ -1,7 +1,7 @@
 .winners__table {
   display: flex;
   flex-direction: column;
-  max-width: 500px;
+  max-width: 650px;
 }
 
 .winners__table-controls {
@@ -9,8 +9,6 @@
   padding: 10px 0;
   grid-template-columns: auto auto;
 }
-
-/* .winners__table-title{} */
 
 .winners__table-pagination {
   display: flex;
@@ -23,13 +21,10 @@
   height: 30px;
   flex-shrink: 0;
 }
-/* .winners__pagination-label{
-
-} */
 
 .winners__table-header {
   display: grid;
-  grid-template-columns: 30px 100px 200px 70px 70px;
+  grid-template-columns: minmax(20px, 50px) minmax(70px, 170px) minmax(100px, 250px) 70px 70px;
   background: var(--color-container);
 }
 
@@ -51,14 +46,23 @@
   align-items: center;
 }
 
-.winners__table-wins {
+.winners__table-wins,
+.winners__table-wins:hover {
   background-color: transparent;
   position: relative;
 }
 
-.winners__table-time {
+.winners__table-time,
+.winners__table-time:hover {
   background-color: transparent;
   position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .winners__table-time:hover,
+  .winners__table-wins:hover {
+    color: var(--color-text-light);
+  }
 }
 
 .winners__table-body {
@@ -88,4 +92,15 @@
 .desc::after {
   background-image: url(./../../assets/icons/sort-down-solid.svg);
   top: 7px;
+}
+
+@media (width <= 520px) {
+  .winners__table-time,
+  .winners__table-wins,
+  .winners__table {
+    font-size: 14px;
+  }
+  .winners__table-header {
+    padding-right: 5px;
+  }
 }

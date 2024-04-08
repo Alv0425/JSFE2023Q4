@@ -28,27 +28,27 @@ class TableHeader extends Component {
     eventEmitter.on("winners-sorted-asc-time", () => this.setAscTime());
   }
 
-  private resetSortAppearance() {
+  private resetSortAppearance(): void {
     this.time.getComponent().className = "winners__table-time";
     this.wins.getComponent().className = "winners__table-wins";
   }
 
-  setDescWins() {
+  setDescWins(): void {
     this.resetSortAppearance();
     this.wins.getComponent().classList.add("desc");
   }
 
-  setAscWins() {
+  setAscWins(): void {
     this.resetSortAppearance();
     this.wins.getComponent().classList.add("asc");
   }
 
-  setDescTime() {
+  setDescTime(): void {
     this.resetSortAppearance();
     this.time.getComponent().classList.add("desc");
   }
 
-  setAscTime() {
+  setAscTime(): void {
     this.resetSortAppearance();
     this.time.getComponent().classList.add("asc");
   }

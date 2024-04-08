@@ -14,17 +14,17 @@ class Header extends Component {
     this.append(new Component("nav", ["header__nav"], {}, {}, this.toGarage, this.toWinners));
   }
 
-  public winners() {
+  public winners(): void {
     this.toGarage.getComponent().classList.remove("header__link_active");
     this.toWinners.getComponent().classList.add("header__link_active");
   }
 
-  public garage() {
+  public garage(): void {
     this.toGarage.getComponent().classList.add("header__link_active");
     this.toWinners.getComponent().classList.remove("header__link_active");
   }
 
-  public render() {
+  public render(): void {
     document.body.append(this.getComponent());
   }
 }

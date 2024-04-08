@@ -25,11 +25,11 @@ class TableControls extends Component {
     this.nextPageButton.addListener("click", () => eventEmitter.emit("open-next-winners-page"));
   }
 
-  public setTotalCount(count: number) {
+  public setTotalCount(count: number): void {
     this.title.setTextContent(`TOTAL COUNT: ${count}`);
   }
 
-  public updatePaginationLabel(label: string) {
+  public updatePaginationLabel(label: string): void {
     this.paginationLabel.setTextContent(label);
   }
 }
