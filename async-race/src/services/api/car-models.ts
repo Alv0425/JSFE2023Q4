@@ -1,4 +1,9 @@
-const CARS = [
+export interface ICarBrand {
+  brand: string;
+  models: string[];
+}
+
+const CARS: ICarBrand[] = [
   {
     brand: "Renault",
     models: [
@@ -886,6 +891,6 @@ const CARS = [
       "X1/9",
     ],
   },
-];
+] as const;
 
 export default CARS;

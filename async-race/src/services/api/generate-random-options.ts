@@ -1,13 +1,13 @@
-import generateRandoColor from "../../utils/generate-random-color";
-import CARS from "./car-models";
+import generateRandomColor from "../../utils/generate-random-color";
+import CARS, { ICarBrand } from "./car-models";
 
-function generateRandomCarOptions() {
-  const randomCarMaker = CARS[Math.round(Math.random() * (CARS.length - 1))];
-  const randomCarBrandName = randomCarMaker.brand;
-  const randomCarModel = randomCarMaker.models[Math.round(Math.random() * (randomCarMaker.models.length - 1))];
+function generateRandomCarOptions(): { name: string; color: string } {
+  const randomCarMaker: ICarBrand = CARS[Math.round(Math.random() * (CARS.length - 1))];
+  const randomCarBrandName: string = randomCarMaker.brand;
+  const randomCarModel: string = randomCarMaker.models[Math.round(Math.random() * (randomCarMaker.models.length - 1))];
   return {
     name: `${randomCarBrandName} ${randomCarModel}`,
-    color: generateRandoColor(),
+    color: generateRandomColor(),
   };
 }
 

@@ -7,8 +7,7 @@ import {
   IWinnerResponse,
   IWinnersInfoResponse,
   winnerResponseTemplate,
-  winnersInfoTemplate,
-} from "./response-interfaces";
+} from "../../types/response-interfaces";
 
 export async function getWinnerByID(carID: number): Promise<IWinnerResponse> {
   try {
@@ -19,7 +18,7 @@ export async function getWinnerByID(carID: number): Promise<IWinnerResponse> {
     return car;
   } catch {
     console.log(`The winner with id = ${carID} not found among winners.`);
-    return {} as IWinnerResponse;
+    return { ...winnerResponseTemplate, error: true };
   }
 }
 
@@ -33,17 +32,17 @@ async function getWinners({
   try {
     const res = await fetch(`${ENDPOINTS.WINNERS}?_sort=${sort}&_order=${order}`);
     if (!res.ok) throw new Error(res.statusText);
-    if (res.status !== 200) throw new Error(res.statusText);
     const winnersResults: unknown = await res.json();
     if (!Array.isArray(winnersResults)) throw new Error("Response should be an Array");
-    assertsArrayOfObjectIsTypeOf(winnersResults, winnersInfoTemplate);
-    const cars: ICarResponse[] = await Promise.all(
+    assertsArrayOfObjectIsTypeOf(winnersResults, winnerResponseTemplate);
+    const carsRes: ICarResponse[] = await Promise.all(
       winnersResults.map(async (winner) => {
         const car = await getCarByID(winner.id);
         return car;
       }),
     );
-    return winnersResults.map((winner, index) => ({ ...winner, name: cars[index].name, color: cars[index].color }));
+    const cars = carsRes.filter((carRes) => !carRes.error);
+    return cars.map((car, index) => ({ ...winnersResults[index], name: car.name, color: car.color }));
   } catch {
     console.log("Failed to fetch. Please, launch the server.");
     return [];
