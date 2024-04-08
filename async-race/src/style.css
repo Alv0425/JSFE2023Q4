@@ -76,3 +76,10 @@ button:disabled {
   pointer-events: none;
   opacity: 0.5;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-body-dark);
+  }
+}
