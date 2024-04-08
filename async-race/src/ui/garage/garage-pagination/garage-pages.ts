@@ -21,48 +21,58 @@ class GaragePage extends Component {
       if (!isActual) this.restore();
     });
     eventEmitter.on("collection-changed", () => this.update());
+    eventEmitter.on("start-race", () => {
+      this.currentCars.forEach((car) => car.controls.lockAllControls());
+    });
+    eventEmitter.on("reset-race-clicked", () => {
+      this.currentCars.forEach((car) => {
+        if (car.engine.currentState !== "in-garage") car.resetRace();
+      });
+    });
   }
 
-  private updateContent() {
+  private updateContent(): void {
     loader.close();
     this.currentCars = carCollection.getItemsOnPage(this.currentPageIndex);
-    this.appendContent(this.currentCars);
+    this.appendContent(this.currentCars.map((car) => car.getVieW()));
     paginationControls.setTotalCount(carCollection.getItemCount());
     paginationControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${carCollection.getPageCount()}`);
   }
 
-  public update() {
+  public update(): void {
     loader.draw();
     carCollection.updateCarsCollection().then(() => this.updateContent());
   }
 
-  public restore() {
-    this.clearAll();
+  public restore(): void {
+    this.clearContainer();
     loader.draw();
     carCollection.reloadCarsCollection().then(() => this.updateContent());
   }
 
-  public nextPage() {
+  public nextPage(): void {
     if (this.currentPageIndex === carCollection.getPageCount() - 1) return;
     this.currentPageIndex += 1;
     this.redrawPageContent();
+    eventEmitter.emit("pagination-clicked");
   }
 
-  public prevPage() {
+  public prevPage(): void {
     if (this.currentPageIndex === 0) return;
     this.currentPageIndex -= 1;
     this.redrawPageContent();
+    eventEmitter.emit("pagination-clicked");
   }
 
-  private redrawPageContent() {
-    this.clearAll();
+  private redrawPageContent(): void {
+    this.clearContainer();
     this.currentCars = carCollection.getItemsOnPage(this.currentPageIndex);
     if (this.currentCars.length === 0) {
       paginationControls.setTotalCount(carCollection.getItemCount());
       this.prevPage();
       return;
     }
-    this.appendContent(this.currentCars);
+    this.appendContent(this.currentCars.map((car) => car.getVieW()));
     paginationControls.setTotalCount(carCollection.getItemCount());
     paginationControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${carCollection.getPageCount()}`);
   }
