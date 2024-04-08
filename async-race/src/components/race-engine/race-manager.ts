@@ -1,6 +1,9 @@
 import State from "../../services/state-manager/state";
 import garageContent from "../../ui/garage/garage-pagination/garage-pages";
-import { prepareCarsOnPage, resetRace, startRace } from "./race-actions";
+import eventEmitter from "../../utils/event-emitter";
+import prepareCarsOnPage from "./race-actions/prepare-cars-on-page";
+import resetRace from "./race-actions/reset-race";
+import startRace from "./race-actions/start-race";
 import { IRaceParticipants } from "./race-interfaces";
 import RACE_STATES from "./race-states";
 
@@ -16,25 +19,24 @@ class RaceManager extends State {
       currentState: "all-cars-in-garage",
       states: RACE_STATES,
       callbacks: {
-        "block-pagination-buttons": () => {},
         "prepare-cars": async () => {
           await this.prepareCars();
         },
         "on-engines": async () => {
           const cars: IRaceParticipants[] = this.getRaceParticipants();
           if (cars) await startRace(cars, this.abortController);
-          this.emit("race-finish");
         },
-        "stop-engines": () => {
-          setTimeout(() => console.log(this.getCurrentState()), 0);
-        },
-        "unlock-pagination-buttons": () => {},
         restart: () => this.restartRace(),
-        reset: () => {
-          if (this.currentParticipants) resetRace(this.currentParticipants);
-          this.abortController.abort("reset race");
+        reset: async () => {
+          await this.reset();
         },
+        "race-end": () => console.log("race ended"),
       },
+    });
+    eventEmitter.on("race-ended", () => this.emit("race-finish"));
+    eventEmitter.on("start-race", () => this.emit("start-race"));
+    eventEmitter.on("reset-race", () => {
+      this.currentParticipants = [];
     });
   }
 
@@ -58,6 +60,15 @@ class RaceManager extends State {
     this.currentParticipants = [];
     this.abortController.abort();
     this.emit("start-race");
+  }
+
+  private async reset() {
+    if (this.currentParticipants.length) {
+      this.abortController.abort("reset race");
+      await resetRace(this.currentParticipants);
+    } else {
+      eventEmitter.emit("reset-race-clicked");
+    }
   }
 }
 

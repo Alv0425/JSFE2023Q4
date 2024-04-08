@@ -1,4 +1,4 @@
-import { ICarResponse, IEngineStatusResponse } from "../../services/api/response-interfaces";
+import { ICarResponse, IEngineStatusResponse } from "../../types/response-interfaces";
 import Car from "../car/car";
 
 export interface IRaceParticipants {
