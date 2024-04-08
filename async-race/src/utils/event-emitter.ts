@@ -1,13 +1,13 @@
-type HandlerType = (...params: unknown[]) => void;
+type HandlerType<T extends unknown[]> = (...params: T) => void;
 
-class EventEmitter {
-  protected eventList: Record<string, HandlerType[]>;
+class EventEmitter<T extends unknown[]> {
+  protected eventList: Record<string, HandlerType<T>[]>;
 
   public constructor() {
     this.eventList = {};
   }
 
-  public on(event: string, handler: HandlerType) {
+  public on(event: string, handler: HandlerType<T>): () => void {
     if (!this.eventList[event]) {
       this.eventList[event] = [];
     }
@@ -15,14 +15,14 @@ class EventEmitter {
     return () => this.off(event, handler);
   }
 
-  public once(event: string, handler: HandlerType) {
-    const remove = this.on(event, (...args) => {
+  public once(event: string, handler: HandlerType<T>): void {
+    const remove = this.on(event, (...args: T) => {
       remove();
-      handler.apply(this, args);
+      handler(...args);
     });
   }
 
-  public off(event: string, handler?: HandlerType) {
+  public off(event: string, handler?: HandlerType<T>): void {
     if (handler) {
       this.eventList[event] = this.eventList[event].filter((cb) => handler !== cb);
     } else {
@@ -30,15 +30,14 @@ class EventEmitter {
     }
   }
 
-  public emit(event: string, ...params: unknown[]) {
+  public emit(event: string, ...params: T): void {
     if (this.eventList[event]) {
       this.eventList[event].forEach((cb) => {
-        cb.call(this, params);
+        cb(...params);
       });
     }
   }
 }
-
 const eventEmitter = new EventEmitter();
 
 export default eventEmitter;
