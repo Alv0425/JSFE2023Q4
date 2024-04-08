@@ -1,24 +1,12 @@
-import { IEngineStatusResponse } from "../../services/api/response-interfaces";
+import { IEngineStatusResponse } from "../../types/response-interfaces";
 import { setEngineStatus, setEngineStatusToDrive } from "../../services/api/set-engine-status";
 import State from "../../services/state-manager/state";
+import { ICarCallbacks } from "./car-interfaces";
+import LABELS from "./car-labels";
 import CAR_STATES from "./car-states";
-
-interface ICarCallbacks {
-  onmoveControls: () => void;
-  unlockAllControls: () => void;
-  lockStopButton: () => void;
-  startAnimation: (duration: number) => void;
-  stopAnimation: () => void;
-
-  moveCarToStart: () => void;
-
-  setCarStatus: (status: string) => void;
-}
 
 class CarEngine extends State {
   public abortController: AbortController = new AbortController();
-
-  public animationRun = new Promise(() => {});
 
   private engineParams: IEngineStatusResponse | null = null;
 
@@ -30,51 +18,56 @@ class CarEngine extends State {
       states: CAR_STATES,
       callbacks: {
         "prepare-car": async () => {
-          this.abortController = new AbortController();
-          if (this.carControls) this.carControls.onmoveControls();
-          this.engineParams = await setEngineStatus(this.carId, "started");
-          this.carControls?.setCarStatus("ready");
-          if (this.carControls)
-            this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
-          this.emit("move-car");
-          this.carControls?.setCarStatus("car is moving");
+          await this.prepare();
         },
         "move-car": async () => {
-          if (!this.engineParams) return;
-          const driveCar = await setEngineStatusToDrive(this.carId, this.abortController);
-          if (!driveCar.success) {
-            this.emit("broke");
-            this.carControls?.setCarStatus("car is broken");
-          }
-          if (driveCar.success) {
-            this.emit("finish");
-            this.carControls?.setCarStatus("car is finished");
-          }
+          await this.move();
         },
-        "stop-car-animation": async () => {
-          if (this.carControls) this.carControls.stopAnimation();
-        },
-        "abort-fetch": async () => {
-          this.abortController.abort("Car stoped");
-        },
+        "stop-car-animation": () => this.carControls?.stopAnimation(),
         reset: async () => {
-          this.engineParams = await setEngineStatus(this.carId, "stopped");
-          this.carControls?.setCarStatus(" ");
-          if (this.carControls) this.carControls.stopAnimation();
-          if (this.carControls) this.carControls.moveCarToStart();
-          this.abortController.abort("Car stoped");
-          if (this.carControls) this.carControls.lockStopButton();
+          await this.reset();
         },
+        "lock-control-buttons": () => {},
       },
     });
   }
 
-  public getEngineParams() {
-    return this.engineParams;
+  public abort() {
+    this.abortController.abort();
   }
 
   public on(callbacks: ICarCallbacks) {
     this.carControls = callbacks;
+  }
+
+  private async prepare() {
+    this.abortController = new AbortController();
+    if (this.carControls) this.carControls.onmoveControls();
+    this.engineParams = await setEngineStatus(this.carId, "started");
+    if (this.carControls) this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
+    this.emit("move-car");
+  }
+
+  private async move() {
+    if (!this.engineParams) return;
+    const driveCar = await setEngineStatusToDrive(this.carId, this.abortController);
+    if (!driveCar.success) {
+      this.emit("broke");
+      if (driveCar.status === 500) this.carControls?.setCarStatus(LABELS.broken);
+      if (driveCar.status === 404) this.carControls?.setCarStatus(LABELS.error);
+    }
+    if (driveCar.success) {
+      this.emit("finish");
+      this.carControls?.setCarStatus(LABELS.finished);
+    }
+  }
+
+  private async reset() {
+    this.engineParams = await setEngineStatus(this.carId, "stopped");
+    this.carControls?.stopAnimation();
+    this.abortController.abort("Car stoped");
+    this.carControls?.lockStopButton();
+    this.carControls?.moveCarToStart();
   }
 }
 

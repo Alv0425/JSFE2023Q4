@@ -101,3 +101,34 @@
     height: 40px;
   }
 }
+
+@media (width < 420px) {
+  .car__finish-place {
+    width: 60px;
+  }
+
+  .car__image {
+    width: 65px;
+    height: 25px;
+  }
+  .car__finish {
+    width: 20px;
+    height: 20px;
+  }
+
+  .car__track {
+    height: 25px;
+  }
+
+  .car__buttons,
+  .car__controls {
+    display: flex;
+    gap: 5px;
+  }
+  .car {
+    font-size: 14px;
+  }
+  .car__state-label {
+    margin-right: 10px;
+  }
+}
