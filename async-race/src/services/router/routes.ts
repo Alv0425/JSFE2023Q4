@@ -1,6 +1,6 @@
 import main from "../../ui/main/main";
 
-const ROUTES = new Map([
+const ROUTES: Map<string, () => void> = new Map([
   [
     "/",
     () => {
