@@ -1,6 +1,6 @@
 .garage {
   display: grid;
-  grid-template-columns: minmax(300px, 350px) auto;
+  grid-template-columns: minmax(200px, 350px) auto;
   grid-template-rows: auto auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
@@ -24,4 +24,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (width <= 400px) {
+  .garage__pagination {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .garage__pages {
+    grid-area: 4 / 1 / 5 / 2;
+  }
 }

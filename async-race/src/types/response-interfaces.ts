@@ -6,12 +6,6 @@ export interface IWinnersInfo {
   [key: string]: unknown;
 }
 
-export const winnersInfoTemplate: IWinnersInfo = {
-  id: 1,
-  wins: 1,
-  time: 1,
-};
-
 export interface ICarResponse {
   name: string;
   color: string;
@@ -22,7 +16,7 @@ export interface ICarResponse {
 export const carResponseTemplate: ICarResponse = {
   name: "",
   color: "",
-  id: 1,
+  id: 0,
 };
 
 export interface IDriveStatusResponse {
@@ -43,8 +37,8 @@ export interface IEngineStatusResponse {
   [key: string]: unknown;
 }
 
-export const engineStatusResponseTemplate = {
-  velocity: 64,
+export const engineStatusResponseTemplate: IEngineStatusResponse = {
+  velocity: 0,
   distance: 500000,
 };
 
@@ -56,9 +50,9 @@ export interface IWinnerResponse {
 }
 
 export const winnerResponseTemplate: IWinnerResponse = {
-  id: 1,
-  wins: 1,
-  time: 1,
+  id: 0,
+  wins: 0,
+  time: 0,
 };
 
 export interface ICarOptions {

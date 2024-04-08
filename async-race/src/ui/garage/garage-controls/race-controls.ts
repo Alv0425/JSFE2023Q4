@@ -1,5 +1,6 @@
 import race from "../../../components/race-engine/race-manager";
 import Component from "../../../utils/component";
+import debounce from "../../../utils/debounce";
 import { button } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
 
@@ -13,10 +14,9 @@ class RaceControls extends Component {
     this.startRaceButton = button(["garage__control-race-start"], "START RACE");
     this.stopRaceButton = button(["garage__control-race-stop"], "RESET RACE");
     this.appendContent([this.startRaceButton, this.stopRaceButton]);
-    this.startRaceButton.addListener("click", () => race.emit("start-race"));
-    this.stopRaceButton.addListener("click", () => race.emit("reset-race"));
+    this.startRaceButton.addListener("click", () => eventEmitter.emit("start-race"));
+    this.stopRaceButton.addListener("click", () => this.resetRaceHandler());
     eventEmitter.on("race-started", () => this.lockStartButton());
-    eventEmitter.on("reset-race", () => this.unlockStartButton());
   }
 
   private lockStartButton() {
@@ -25,6 +25,13 @@ class RaceControls extends Component {
 
   private unlockStartButton() {
     this.startRaceButton.getComponent().disabled = false;
+  }
+
+  resetRaceHandler() {
+    debounce(() => {
+      race.emit("reset-race");
+      this.unlockStartButton();
+    }, 1000)();
   }
 }
 

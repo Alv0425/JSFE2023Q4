@@ -1,5 +1,5 @@
 import "./winner.css";
-import { IWinnersInfoResponse } from "../../services/api/response-interfaces";
+import { IWinnersInfoResponse } from "../../types/response-interfaces";
 import Component from "../../utils/component";
 import { span, svgSprite } from "../../utils/elements";
 import { IRaceParticipants } from "../race-engine/race-interfaces";

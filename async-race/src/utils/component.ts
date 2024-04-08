@@ -169,6 +169,11 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.node.remove();
   }
 
+  public clearContainer() {
+    this.content = [];
+    this.clearAll();
+  }
+
   public clearAll() {
     while (this.node.firstChild) {
       this.node.removeChild(this.node.firstChild);

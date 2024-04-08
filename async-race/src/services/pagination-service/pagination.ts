@@ -1,6 +1,4 @@
-import Component from "../../utils/component";
-
-class Pagination<T extends Component> {
+class Pagination<T> {
   protected collection: T[];
 
   itemsPerPage: number;
@@ -10,15 +8,16 @@ class Pagination<T extends Component> {
     this.itemsPerPage = itemsPerPage;
   }
 
-  getItemCount() {
+  getItemCount(): number {
     return this.collection.length;
   }
 
-  getPageCount() {
+  getPageCount(): number {
+    if (this.collection.length === 0) return 1;
     return Math.ceil(this.collection.length / this.itemsPerPage);
   }
 
-  getItemCountOnPage(pageIndex: number) {
+  getItemCountOnPage(pageIndex: number): number {
     if (pageIndex >= this.getPageCount() || pageIndex < 0) return -1;
     if (this.getItemCount() % this.itemsPerPage) {
       if (pageIndex === this.getPageCount() - 1) return this.getItemCount() % this.itemsPerPage;
@@ -26,30 +25,21 @@ class Pagination<T extends Component> {
     return this.itemsPerPage;
   }
 
-  removeItem(itemIndex: number) {
+  removeItem(itemIndex: number): void {
     this.collection.splice(itemIndex, 1);
   }
 
-  addItem(item: T) {
-    this.collection.push(item);
-  }
-
-  updateCollection(collection: T[]) {
+  updateCollection(collection: T[]): void {
     this.collection = collection;
   }
 
-  getItemsOnPage(pageIndex: number) {
+  getItemsOnPage(pageIndex: number): T[] {
     const itemsCount = this.getItemCountOnPage(pageIndex);
     const baseItemsCount = this.getItemCountOnPage(0);
     if (itemsCount <= 0) return [];
     if (!this.collection.length) return [];
     const slice = this.collection.slice(pageIndex * baseItemsCount, pageIndex * baseItemsCount + itemsCount);
     return slice;
-  }
-
-  pageIndex(itemIndex: number) {
-    if (itemIndex >= this.getItemCount() || itemIndex < 0) return -1;
-    return Math.ceil((itemIndex + 1) / this.itemsPerPage) - 1;
   }
 }
 

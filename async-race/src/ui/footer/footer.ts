@@ -18,7 +18,7 @@ class Footer extends Component {
     );
   }
 
-  public render() {
+  public render(): void {
     document.body.append(this.getComponent());
   }
 }

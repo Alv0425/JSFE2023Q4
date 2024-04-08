@@ -1,0 +1,31 @@
+.modal {
+  background-color: var(--color-container);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  gap: 10px;
+}
+
+.modal__inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.modal__buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.modal__close-button,
+.modal__apply-button {
+  flex-grow: 1;
+}
+
+.modal__image {
+  width: 120px;
+  height: 70px;
+  stroke: black;
+}

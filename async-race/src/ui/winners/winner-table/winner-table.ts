@@ -15,41 +15,37 @@ class WinnersTable extends Component {
     super("div", ["winners__table"], {}, {});
     this.appendContent([tableControls, tableHeader, tableBody]);
     this.update();
-    eventEmitter.on("winners-collection-changed", () => this.contentChangedHandler());
+    eventEmitter.on("winners-collection-changed", () => this.update());
     eventEmitter.on("open-prev-winners-page", () => this.prevPage());
     eventEmitter.on("open-next-winners-page", () => this.nextPage());
   }
 
-  public update() {
+  public update(): void {
     winnersCollection.reloadWinnersCollection().then(() => this.updateContent());
   }
 
-  contentChangedHandler() {
-    tableBody.clearAll();
-    winnersCollection.reloadWinnersCollection().then(() => this.updateContent());
-  }
-
-  updateContent() {
+  updateContent(): void {
+    tableBody.clearContainer();
     this.currentWinners = winnersCollection.getItemsOnPage(this.currentPageIndex);
     tableBody.appendContent(this.currentWinners);
     tableControls.setTotalCount(winnersCollection.getItemCount());
     tableControls.updatePaginationLabel(`${this.currentPageIndex + 1} / ${winnersCollection.getPageCount()}`);
   }
 
-  public nextPage() {
+  public nextPage(): void {
     if (this.currentPageIndex === winnersCollection.getPageCount() - 1) return;
     this.currentPageIndex += 1;
     this.redrawPageContent();
   }
 
-  public prevPage() {
+  public prevPage(): void {
     if (this.currentPageIndex === 0) return;
     this.currentPageIndex -= 1;
     this.redrawPageContent();
   }
 
-  private redrawPageContent() {
-    tableBody.clearAll();
+  private redrawPageContent(): void {
+    tableBody.clearContainer();
     this.currentWinners = winnersCollection.getItemsOnPage(this.currentPageIndex);
     if (this.currentWinners.length === 0) {
       tableControls.setTotalCount(winnersCollection.getItemCount());

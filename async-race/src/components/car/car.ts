@@ -1,113 +1,95 @@
-import "./car.css";
-import Component from "../../utils/component";
-import { div, span, svgSprite } from "../../utils/elements";
 import CarEngine from "./car-engine";
 import CarControls from "./car-controls";
-import controlUpdate from "../../ui/garage/garage-controls/update-control";
+import CarView from "./car-view/car-view";
 import eventEmitter from "../../utils/event-emitter";
 import updateCar from "../../services/api/update-car";
 import { setEngineStatus } from "../../services/api/set-engine-status";
+import { LabelType } from "./car-labels";
+import { ICarResponse } from "../../types/response-interfaces";
+import deleteCarByID from "../../services/api/delete-car";
 
-class Car extends Component {
+class Car {
   public engine = new CarEngine(this.id);
 
-  carImage: SVGSVGElement;
+  private carView: CarView = new CarView(this.name, this.color);
 
-  carTrack: Component<HTMLElement>;
-
-  nameLabel: Component<HTMLElement>;
-
-  private animationID: number = 0;
-
-  controls: CarControls;
-
-  carStateLabel: Component<HTMLElement>;
+  controls: CarControls = this.carView.controls;
 
   constructor(
     private id: number,
     private name: string,
     private color: string,
   ) {
-    super("div", ["car"], {}, {});
-    this.controls = new CarControls();
-    this.carImage = svgSprite("./assets/car/sedan.svg#car0", "car__image");
-    this.carImage.style.setProperty("fill", this.color);
-    this.nameLabel = span(["car__name"], this.name);
-    this.carStateLabel = span(["car__state-label"], "");
-    this.carTrack = div(["car__track"], this.carImage, div(["car__finish"]));
-    this.appendContent([
-      div(
-        ["car__buttons"],
-        this.controls.carEditButton,
-        this.controls.carDeleteButton,
-        this.nameLabel,
-        this.carStateLabel,
-      ),
-      div(
-        ["car__body"],
-        div(["car__controls"], this.controls.carRunButton, this.controls.carStopButton),
-        this.carTrack,
-        div(["car__finish-place"]),
-      ),
-      div(["car__road"]),
-    ]);
+    this.setEngineControls();
+    this.controls.carRunButton.addListener("click", () => this.engine.emit("start-car"));
+    this.controls.carStopButton.addListener("click", () => this.engine.emit("reset"));
+    this.controls.carEditButton.addListener("click", () => {
+      eventEmitter.emit("open-edit-car-modal", { id: this.id, name: this.name, color: this.color });
+      eventEmitter.once("edit-car", (props) => {
+        const carProps = props as ICarResponse;
+        this.updateCar(carProps);
+      });
+    });
+  }
+
+  private async updateCar(carProps: ICarResponse) {
+    if (carProps.id !== this.id) return;
+    const updatedCar = await updateCar(carProps);
+    if (updatedCar.error) return;
+    this.name = carProps.name;
+    this.color = carProps.color;
+    this.carView.updateView(carProps);
+    eventEmitter.emit("car-edited");
+  }
+
+  public async prepareToRace() {
+    await setEngineStatus(this.id, "stopped");
+    this.carView.stopMoving();
+    this.carView.moveCarToStart();
+    this.controls.lockAllControls();
+    this.engine.abort();
+  }
+
+  public async resetRace() {
+    this.carView.stopMoving();
+    this.carView.moveCarToStart();
+    this.controls.lockStopButton();
+    this.engine.abort();
+    await setEngineStatus(this.id, "stopped");
+  }
+
+  private setEngineControls() {
     this.engine.on({
       onmoveControls: () => this.controls.lockControlsOnMove(),
       unlockAllControls: () => this.controls.unlockAllControls(),
+      lockControls: () => this.controls.lockAllControls(),
       lockStopButton: () => this.controls.lockStopButton(),
-      startAnimation: (duration: number) => this.animateMove(duration),
-      stopAnimation: () => this.stopMoving(),
-      moveCarToStart: () => this.moveCarToStart(),
-      setCarStatus: (status: string) => this.updateCarStateLabel(status),
+      startAnimation: (duration: number) => this.carView.animateMove(duration),
+      stopAnimation: () => this.carView.stopMoving(),
+      moveCarToStart: () => this.carView.moveCarToStart(),
+      setCarStatus: (status: LabelType[keyof LabelType]) => this.carView.updateCarStateLabel(status),
     });
-    this.controls.carRunButton.addListener("click", () => this.engine.emit("start-car"));
-    this.controls.carStopButton.addListener("click", () => this.engine.emit("reset"));
-    this.controls.carEditButton.addListener("click", () => this.editCar());
-  }
-
-  public editCar() {
-    controlUpdate.setProps(this.id, this.name, this.color);
-    eventEmitter.once("edit-car", async () => {
-      if (controlUpdate.getId() !== `${this.id}`) return;
-      this.name = controlUpdate.getName();
-      this.color = controlUpdate.getColor();
-      await updateCar({ name: this.name, color: this.color, id: this.id });
-      this.nameLabel.setTextContent(this.name);
-      this.carImage.style.setProperty("fill", this.color);
-      controlUpdate.resetInputs();
-    });
-  }
-
-  public updateCarStateLabel(label: string) {
-    this.carStateLabel.setTextContent(label);
   }
 
   public animateMove(duration: number) {
-    const start = performance.now();
-    const animate = (time: number) => {
-      let timeFr = (time - start) / duration;
-      if (timeFr > 1) timeFr = 1;
-      this.carImage.style.setProperty("left", `calc(${timeFr * 100}%)`);
-      if (timeFr < 1) this.animationID = requestAnimationFrame(animate);
-    };
-    this.animationID = requestAnimationFrame(animate);
+    this.carView.animateMove(duration);
   }
 
   public stopMoving() {
-    if (this.animationID) cancelAnimationFrame(this.animationID);
+    this.carView.stopMoving();
   }
 
-  public moveCarToStart() {
-    this.updateCarStateLabel(" ");
-    this.carImage.style.removeProperty("left");
+  async remove() {
+    await deleteCarByID(this.id);
+    this.carView.destroy();
   }
 
-  public async resetMoving() {
-    await setEngineStatus(this.id, "stopped");
-    this.stopMoving();
-    this.moveCarToStart();
-    this.controls.lockStopButton();
-    this.engine.emit("reset");
+  public updateCarStateLabel(label: LabelType[keyof LabelType]) {
+    this.carView.updateCarStateLabel(label);
+  }
+
+  public getVieW() {
+    return this.carView;
   }
 
   public getID() {

@@ -2,7 +2,7 @@ const RACE_STATES = {
   "all-cars-in-garage": {
     "start-race": {
       toState: "cars-ready",
-      callbacks: ["block-pagination-buttons", "prepare-cars"],
+      callbacks: ["prepare-cars"],
     },
     "reset-race": {
       toState: "all-cars-in-garage",
@@ -34,7 +34,7 @@ const RACE_STATES = {
   "cars-moving": {
     "race-finish": {
       toState: "cars-finished",
-      callbacks: ["stop-engines", "unlock-pagination-buttons"],
+      callbacks: ["race-end"],
     },
     "start-race": {
       toState: "all-cars-in-garage",

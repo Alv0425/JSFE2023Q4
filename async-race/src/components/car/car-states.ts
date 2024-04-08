@@ -6,7 +6,7 @@ const CAR_STATES = {
     },
     finish: {
       toState: "in-garage",
-      callbacks: ["reset"],
+      callbacks: [],
     },
     broke: {
       toState: "in-garage",
@@ -22,7 +22,7 @@ const CAR_STATES = {
     },
     "start-race": {
       toState: "in-race",
-      callbacks: [],
+      callbacks: ["lock-control-buttons"],
     },
   },
   ready: {
@@ -78,6 +78,10 @@ const CAR_STATES = {
       toState: "in-garage",
       callbacks: ["reset"],
     },
+    finish: {
+      toState: "finished",
+      callbacks: [],
+    },
     "start-car": {
       toState: "ready",
       callbacks: ["prepare-car"],
@@ -105,6 +109,10 @@ const CAR_STATES = {
     reset: {
       toState: "in-garage",
       callbacks: ["reset"],
+    },
+    broke: {
+      toState: "in-race",
+      callbacks: [],
     },
     finish: {
       toState: "in-garage",

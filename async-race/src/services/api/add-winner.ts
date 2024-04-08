@@ -1,21 +1,24 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
-import { IWinnerResponse, winnerResponseTemplate } from "./response-interfaces";
+import { IWinnerResponse, winnerResponseTemplate } from "../../types/response-interfaces";
 
-async function addWinner(options: IWinnerResponse) {
-  const response = await fetch(ENDPOINTS.WINNERS, {
-    method: "POST",
-    body: JSON.stringify(options),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`Cannot create winner with options ${options}`);
-  } else {
+async function addWinner(options: IWinnerResponse): Promise<IWinnerResponse> {
+  try {
+    const response: Response = await fetch(ENDPOINTS.WINNERS, {
+      method: "POST",
+      body: JSON.stringify(options),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Cannot create winner with options ${options}`);
+    }
     const winner: unknown = await response.json();
     assertsObjectIsTypeOf(winner, winnerResponseTemplate);
     return winner;
+  } catch {
+    return { ...winnerResponseTemplate, error: true };
   }
 }
 

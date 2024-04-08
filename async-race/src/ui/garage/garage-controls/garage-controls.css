@@ -7,10 +7,21 @@
 }
 
 .garage__control-create,
-.garage__control-update {
+.garage__control-update,
+.garage__control-create-inputs {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.garage__control-create-inputs {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.garage__control-create {
+  align-items: start;
+  flex-direction: column;
 }
 
 .garage__control-color {
@@ -49,10 +60,39 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  gap: 5px;
+  gap: 10px;
 }
 
 .garage__control-race-start,
 .garage__control-race-stop {
   flex-grow: 1;
+}
+
+.garage__control-create-preview {
+  width: 170px;
+  height: 65px;
+  stroke: #000000;
+}
+
+@media (width <= 550px) {
+  .garage__control-create-inputs {
+    flex-wrap: wrap;
+    gap: 10px;
+    .garage__control-input {
+      width: 100%;
+    }
+    button {
+      flex-grow: 1;
+    }
+  }
+}
+
+@media (width < 485px) {
+  .garage__control-race {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .garage__controls {
+    max-width: 100%;
+  }
 }

@@ -24,22 +24,23 @@ class PaginationControls extends Component {
     ]);
     eventEmitter.on("race-started", () => this.lockPagination());
     eventEmitter.on("race-ended", () => this.unlockPagination());
+    eventEmitter.on("reset-race-clicked", () => this.unlockPagination());
   }
 
-  public setTotalCount(count: number) {
+  public setTotalCount(count: number): void {
     this.totalCountLabel.setTextContent(`TOTAL COUNT: ${count}`);
   }
 
-  public updatePaginationLabel(label: string) {
+  public updatePaginationLabel(label: string): void {
     this.paginationLabel.setTextContent(label);
   }
 
-  public lockPagination() {
+  public lockPagination(): void {
     this.prevPageButton.getComponent().disabled = true;
     this.nextPageButton.getComponent().disabled = true;
   }
 
-  public unlockPagination() {
+  public unlockPagination(): void {
     this.prevPageButton.getComponent().disabled = false;
     this.nextPageButton.getComponent().disabled = false;
   }
