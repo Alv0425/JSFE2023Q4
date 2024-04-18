@@ -1,0 +1,85 @@
+* {
+  box-sizing: inherit;
+  font-family: inherit;
+}
+
+:root {
+  --color-body-dark: #14213d;
+  --color-container: #564787;
+  --color-highlight: #fca311;
+  --color-label-light: #9ad4d6;
+  --color-label-dark: #564787;
+  --color-text-light: #e1e2ef;
+  --color-text-red: #f22b29;
+  --color-container-grey: #e5e5e5;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-white);
+}
+
+body {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  font-family: Montserrat;
+  color: #ffffff;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-body-dark);
+  transition: 2s;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.fixed {
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+button {
+  background-color: var(--color-label-light);
+  color: var(--color-body-dark);
+  font-size: 16px;
+  border: none;
+  display: flex;
+  flex-grow: 0;
+  max-height: 40px;
+  padding: 7px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: fadein 0.3s ease-in;
+  user-select: none;
+}
+
+button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-body-dark);
+  }
+}
