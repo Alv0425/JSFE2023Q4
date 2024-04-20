@@ -1,0 +1,34 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  color: var(--color-body-dark);
+}
+
+.message_mine {
+  margin-left: auto;
+  background-color: var(--color-label-light);
+}
+
+.message__text {
+  font-size: 0.7rem;
+}
+
+.message__header,
+.message__footer {
+  font-size: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message__state {
+  margin-left: auto;
+}
+
+.message__author {
+  font-size: 0.6rem;
+  font-weight: 600;
+}

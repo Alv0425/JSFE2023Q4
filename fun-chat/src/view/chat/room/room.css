@@ -36,13 +36,23 @@
   border-radius: 50%;
 }
 
+.room_oneline .room__circle::after {
+  background-color: var(--color-highlight);
+}
+
 .room__login {
   font-size: 20px;
   color: var(--color-container);
 }
 
 .room__messages {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
   flex-grow: 1;
+  overflow: auto;
+  max-height: 300px;
 }
 
 .room__form {

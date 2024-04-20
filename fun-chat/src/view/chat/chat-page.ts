@@ -24,6 +24,10 @@ class ChatPage extends Component {
     chatMain.updateContactList(contacts);
   }
 
+  public clearChatContainer(): void {
+    chatMain.clearChatContainer();
+  }
+
   public openConversation(room: RoomView): void {
     chatMain.appendRoom(room);
   }
