@@ -55,6 +55,10 @@ class StateMachine {
       console.warn(error);
     }
   }
+
+  public getCurrentState(): string {
+    return this.currentState;
+  }
 }
 
 export default StateMachine;

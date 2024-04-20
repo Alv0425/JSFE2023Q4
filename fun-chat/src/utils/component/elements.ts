@@ -42,8 +42,8 @@ export const label = (classList: string[], idLabel: string, textContent = ""): C
     { for: idLabel },
   );
 
-export const form = (classList: string[], id?: string): Component => {
-  const formComponent = new Component<HTMLInputElement>("input", classList, {}, { id });
+export const form = (classList: string[]): Component => {
+  const formComponent = new Component<HTMLInputElement>("input", classList);
   formComponent.setAttribute("action", "");
   return formComponent;
 };
