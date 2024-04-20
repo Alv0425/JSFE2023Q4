@@ -1,0 +1,60 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: auto auto;
+  background-color: var(--color-container);
+}
+
+.chat__header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.chat__circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-text-light);
+  color: var(--color-body-dark);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.chat__title-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__title-name {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.chat__header-buttons {
+  display: flex;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.chat__header-button {
+  min-width: 70px;
+}
+/* super("header", ["chat__header"], {}, {});
+    this.circle = div(["chat__circle"]);
+    this.username = h2(["chat__title-name"], "Username");
+    this.infoButton = button(["chat__header-button"], "info");
+    this.infoButton.addListener("click", () => eventEmitter.emit(EventsMap.aboutOpen))
+    this.logoutButton = button(["chat__header-button"], "logout");
+    this.appendContent([
+      this.circle, 
+      div(["chat__title"], h1(["chat__title-name"], "FUN CHAT"), this.username), 
+      div(["chat__header-buttons"], this.infoButton, this.logoutButton)
+    ]); */

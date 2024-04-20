@@ -41,6 +41,14 @@ class LoginScreen extends Component {
     this.draw();
   }
 
+  public getName(): string {
+    return this.nameInput.getComponent().value;
+  }
+
+  public getPassword(): string {
+    return this.passwordInput.getComponent().value;
+  }
+
   private draw(): void {
     this.appendContent([
       label(["login-form__label"], "login-name", "Login"),
@@ -61,6 +69,13 @@ class LoginScreen extends Component {
   public fillHintsContainerPassword(hints: Component[]): void {
     this.hintsContainer.password.clear();
     this.hintsContainer.password.appendContent(hints);
+  }
+
+  public resetForm(): void {
+    this.hintsContainer.name.clear();
+    this.hintsContainer.password.clear();
+    this.passwordInput.getComponent().value = "";
+    this.nameInput.getComponent().value = "";
   }
 }
 

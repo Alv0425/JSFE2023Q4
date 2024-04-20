@@ -1,4 +1,5 @@
 import Component from "../../utils/component/component";
+import chatPage from "../chat/chat-page";
 import footer from "../footer/footer";
 import header from "../header/header";
 import main from "../main/main";
@@ -25,8 +26,8 @@ class PageWrapper extends Component {
   }
 
   public openMain(): void {
-    this.appendLayout();
-    main.openMain();
+    this.clearContainer();
+    this.append(chatPage);
   }
 
   public openLogin(): void {
