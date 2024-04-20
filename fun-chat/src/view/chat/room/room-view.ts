@@ -1,5 +1,6 @@
+import "./room.css";
 import generateColor from "../../../utils/color-generator";
-import { div, form, h2 } from "../../../utils/component/elements";
+import { button, div, form, h2 } from "../../../utils/component/elements";
 import Component from "../../../utils/component/component";
 
 class RoomView extends Component {
@@ -8,6 +9,10 @@ class RoomView extends Component {
   private container: Component<HTMLElement>;
 
   private form: Component<HTMLElement>;
+
+  private textField: Component<HTMLElement>;
+
+  private sendButton: Component<HTMLButtonElement>;
 
   constructor(
     private login: string,
@@ -20,7 +25,11 @@ class RoomView extends Component {
     this.header = div(["room__header"], circle, h2(["room__login"], login));
     this.container = div(["room__messages"]);
     this.form = form(["room__form"]);
+    this.textField = new Component("textarea", ["room__text-container"]);
+    this.sendButton = button(["room__send-button"], "Send");
+    this.form.appendContent([this.textField, this.sendButton]);
     this.updateStatus(status);
+    this.appendContent([this.header, this.container, this.form]);
   }
 
   public updateStatus(status: boolean): void {
