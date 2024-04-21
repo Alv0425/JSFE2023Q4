@@ -1,10 +1,11 @@
 import "./room.css";
-import generateColor from "../../../utils/color-generator";
-import { button, div, form, h2 } from "../../../utils/component/elements";
+import { button, div, form } from "../../../utils/component/elements";
 import Component from "../../../utils/component/component";
 import type MessageView from "../message/message-view";
 import eventEmitter from "../../../utils/event-emitter/event-emitter";
 import { EventsMap } from "../../../utils/event-emitter/events";
+import RoomHeader from "./room-header/room-header";
+import line from "./room-line/room-line";
 
 class RoomView extends Component {
   private header: Component<HTMLElement>;
@@ -15,18 +16,33 @@ class RoomView extends Component {
 
   private textField: Component<HTMLElement>;
 
+  private scrollTopValue = 0;
+
   private sendButton: Component<HTMLButtonElement>;
+
+  private line: Component<HTMLElement>;
+
+  private lineShown = false;
+
+  private isOpened = false;
 
   constructor(
     private login: string,
     private status: boolean,
   ) {
     super("div", ["room"], {}, {});
-    const circle = div(["room__circle"]);
-    circle.setTextContent(login[0]?.toUpperCase() || "");
-    circle.setStyleAttribute("background-color", generateColor(login));
-    this.header = div(["room__header"], circle, h2(["room__login"], login));
+    this.header = new RoomHeader(login);
     this.container = div(["room__messages"]);
+    this.container.addListener("scrollend", () => {
+      if (this.isOpened) {
+        eventEmitter.emit(EventsMap.scrollMessagesContainer);
+      }
+    });
+    this.container.addListener("click", () => {
+      if (this.isOpened) {
+        eventEmitter.emit(EventsMap.messageContainerClicked);
+      }
+    });
     this.form = form(["room__form"]);
     this.textField = new Component("textarea", ["room__text-container"]);
     this.sendButton = button(["room__send-button"], "Send");
@@ -43,11 +59,50 @@ class RoomView extends Component {
       }
     });
     this.sendButton.addListener("click", () => this.sendMessage());
+    this.line = line();
+  }
+
+  public showLine(): void {
+    if (!this.lineShown) {
+      this.container.append(this.line);
+      this.scrollTopValue = this.container.getComponent().scrollHeight;
+      this.lineShown = true;
+    }
+  }
+
+  public scrollIntoView(): void {
+    if (!this.isOpened && this.lineShown) {
+      this.line.getComponent().scrollIntoView({ block: "center", inline: "nearest" });
+    }
+    if (!this.isOpened && !this.lineShown) {
+      const container = this.container.getComponent();
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  public setOpened(): void {
+    this.scrollIntoView();
+    setTimeout(() => {
+      this.isOpened = true;
+    }, 1000);
+  }
+
+  public setClosed(): void {
+    this.isOpened = false;
+  }
+
+  public hideLine(): void {
+    if (this.lineShown) {
+      this.line.getComponent().remove();
+      this.lineShown = false;
+    }
   }
 
   public updateStatus(status: boolean): void {
     if (status) {
       this.getComponent().classList.add("room_oneline");
+    } else {
+      this.getComponent().classList.remove("room_oneline");
     }
   }
 
@@ -70,15 +125,17 @@ class RoomView extends Component {
 
   public scrollToBottom(): void {
     const container = this.container.getComponent();
-    container.scrollTop = container.scrollHeight;
+    container.scrollTo({ behavior: "smooth", top: container.scrollHeight });
   }
 
   public appendMessage(message: MessageView): void {
-    this.container.append(message);
     if (message.isMineMessage()) {
       const container = this.container.getComponent();
       container.scrollTo({ behavior: "smooth", top: container.scrollHeight });
+    } else if (!message.isReaded()) {
+      this.showLine();
     }
+    this.container.append(message);
   }
 }
 
