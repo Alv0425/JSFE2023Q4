@@ -1,3 +1,4 @@
+import MessageType from "../models/message-types";
 import type { IRequest } from "../models/request";
 
 class AuthController {
@@ -11,7 +12,7 @@ class AuthController {
   public static login(login: string, password: string): IRequest {
     const req: IRequest = {
       id: `LOGIN-${login}`,
-      type: "USER_LOGIN",
+      type: MessageType.login,
       payload: {
         user: {
           login,
@@ -38,7 +39,7 @@ class AuthController {
   public static logout(): IRequest {
     const req = {
       id: `LOGOUT-${this.currentUserData.login}`,
-      type: "USER_LOGOUT",
+      type: MessageType.logout,
       payload: {
         user: {
           login: this.currentUserData.login,
@@ -52,7 +53,7 @@ class AuthController {
   public static getInactive(): IRequest {
     const req = {
       id: `USERS-INACTIVE-${this.currentUserData.login}`,
-      type: "USER_INACTIVE",
+      type: MessageType.userInactive,
       payload: null,
     };
     return req;
@@ -61,7 +62,7 @@ class AuthController {
   public static getActive(): IRequest {
     const req = {
       id: `USERS-ACTIVE-${this.currentUserData.login}`,
-      type: "USER_ACTIVE",
+      type: MessageType.userActive,
       payload: null,
     };
     return req;
