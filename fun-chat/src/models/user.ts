@@ -26,13 +26,31 @@ export class User {
 
   private messageIds: string[] = [];
 
+  private unreadMsgs: Set<string> = new Set();
+
   constructor(params: IUserResponse, password?: string) {
     this.status = params.isLogined;
     this.login = params.login;
     this.password = password;
-    this.setNumOfUnread();
     this.view = new ContactView(this.login, this.numOfUnreadMessages, "", this.status || false);
+    this.setNumOfUnread(0);
     this.view.addListener("click", () => eventEmitter.emit(EventsMap.contactClicked, this.login));
+  }
+
+  public updateUser(user: User): void {
+    this.status = user.getStatus();
+    if (this.status) {
+      this.view.setActive();
+    }
+    if (!this.status) {
+      this.view.setInactive();
+    }
+  }
+
+  public addUnreadMsg(id: string): void {
+    this.unreadMsgs.add(id);
+    // this.setNumOfUnread();
+    console.log(this.unreadMsgs.size);
   }
 
   public setStatus(status: boolean): void {
@@ -63,8 +81,9 @@ export class User {
     return this.messages;
   }
 
-  public setNumOfUnread(): void {
-    this.numOfUnreadMessages = this.messages.filter((message) => message.getStatus()?.isReaded).length;
+  public setNumOfUnread(n: number): void {
+    this.numOfUnreadMessages = n;
+    this.view.setNumber(this.numOfUnreadMessages);
   }
 
   public getUserInfo(): {
