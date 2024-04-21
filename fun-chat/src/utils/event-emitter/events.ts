@@ -16,6 +16,9 @@ export enum EventsMap {
   contactClicked = "contact-clicked",
   sendMessageCkick = "send-message-clicked",
   messageSent = "message-sent",
+  messageDelivered = "message-delivered",
+  messageRead = "message-read",
+  messageEdit = "message-edited",
 }
 
 export type HandlerType<T extends unknown[]> = (...params: T) => void;
