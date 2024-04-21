@@ -43,13 +43,21 @@ export const label = (classList: string[], idLabel: string, textContent = ""): C
   );
 
 export const form = (classList: string[]): Component => {
-  const formComponent = new Component<HTMLInputElement>("input", classList);
+  const formComponent = new Component<HTMLInputElement>("form", classList);
   formComponent.setAttribute("action", "");
   return formComponent;
 };
 
 export const span = (classList: string[], textContent?: string): Component => {
   const spanComponent = new Component("span", classList);
+  if (textContent) {
+    spanComponent.getComponent().textContent = textContent;
+  }
+  return spanComponent;
+};
+
+export const pre = (classList: string[], textContent?: string): Component => {
+  const spanComponent = new Component("pre", classList);
   if (textContent) {
     spanComponent.getComponent().textContent = textContent;
   }

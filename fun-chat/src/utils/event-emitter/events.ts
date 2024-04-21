@@ -10,9 +10,12 @@ export enum EventsMap {
   contactsUpdated = "contacts-updated",
   externalLogin = "external-login",
   externalLogout = "external-logout",
-
   getHistory = "get-history",
   error = "error",
+  loginError = "login-error",
+  contactClicked = "contact-clicked",
+  sendMessageCkick = "send-message-clicked",
+  messageSent = "message-sent",
 }
 
 export type HandlerType<T extends unknown[]> = (...params: T) => void;
