@@ -10,7 +10,6 @@ import MessageController from "../controllers/message-controller";
 import type { User } from "../models/user";
 import MessagesPull from "./messages-pull";
 import { Message } from "../models/message";
-// import formhandler from "./form-handler";
 
 class WebSocketClient {
   private socket: WebSocket;
@@ -30,6 +29,7 @@ class WebSocketClient {
     eventEmitter.on(EventsMap.contactsUpdated, (data) => this.requestHistory(data as User[]));
     eventEmitter.on(EventsMap.getHistory, (data) => this.actualizeMessages(data as IResponse));
     eventEmitter.on(EventsMap.sendMessageCkick, (data) => this.sendMessageTo(data as { login: string; text: string }));
+    eventEmitter.on(EventsMap.markMessagesAsRead, (data) => this.sendRequestToSetReadStatus(data as string));
   }
 
   public init(): void {
@@ -50,8 +50,11 @@ class WebSocketClient {
   }
 
   private sendMessageTo(data: { login: string; text: string }): void {
-    // console.log(data, AuthController.currentUserData);
     this.send(MessageController.sendMessageTo(data.login, data.text) as IRequest);
+  }
+
+  public sendRequestToSetReadStatus(id: string): void {
+    this.send(MessageController.setReadMessageStatus(id));
   }
 
   private getContactsRequest(): void {
@@ -75,7 +78,6 @@ class WebSocketClient {
     if (responseMap.has(res.type)) {
       eventEmitter.emit(responseMap.get(res.type) as EventsMap, res);
     }
-    // console.log(event.data)
   }
 
   private handleError(response: IResponse): void {
