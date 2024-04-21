@@ -34,7 +34,7 @@ class Contacts {
   public clear(): void {
     this.active = [];
     this.inactive = [];
-    this.updateCollection();
+    this.collection = new Map();
   }
 
   private actualizeHistory(data: IResponse): void {
@@ -42,7 +42,6 @@ class Contacts {
     const messagesMap = data.payload.messages?.map((message) => message.id) ?? [];
     if (this.collection.has(login)) {
       this.collection.get(login)?.setHistoryIds(messagesMap);
-      // console.log(messagesMap);
     }
   }
 
@@ -51,7 +50,14 @@ class Contacts {
   }
 
   private updateCollection(): void {
-    this.collection = new Map([...this.active, ...this.inactive].map((user) => [user.getUserInfo().login, user]));
+    [...this.inactive, ...this.active].forEach((user) => {
+      if (this.collection.has(user.getUserInfo().login)) {
+        this.collection.get(user.getUserInfo().login)?.updateUser(user);
+      } else {
+        this.collection.set(user.getUserInfo().login, user);
+      }
+    });
+    // this.collection = new Map([...this.active, ...this.inactive].map((user) => [user.getUserInfo().login, user]));
     this.collection.delete(storage.getLogin());
     eventEmitter.emit(EventsMap.contactsUpdated, this.collection);
     MessagesPull.createRooms([...this.active, ...this.inactive]);
