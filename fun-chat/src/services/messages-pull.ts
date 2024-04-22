@@ -10,7 +10,15 @@ class MessagesPull {
 
   public static addMessage(message: Message): void {
     if (this.messages.has(message.getId())) {
-      this.messages.get(message.getId())?.updateMessage(message);
+      const messageToUpdate = this.messages.get(message.getId());
+      messageToUpdate?.updateMessage(message);
+      if (messageToUpdate) {
+        const key = this.findRoom(messageToUpdate);
+        const room = this.rooms.get(key);
+        if (room) {
+          this.updateLastMessageOnContact(room);
+        }
+      }
       return;
     }
     this.messages.set(message.getId(), message);
@@ -51,6 +59,8 @@ class MessagesPull {
   }
 
   public static clearDb(): void {
+    this.rooms.forEach((room) => room.remove());
+    this.messages.forEach((msg) => msg.remove());
     this.rooms = new Map();
     this.messages = new Map();
     AuthController.setUserData("", "");
@@ -72,8 +82,23 @@ class MessagesPull {
     const message = this.messages.get(id);
     if (message) {
       const roomKey = this.findRoom(message);
-      this.rooms.get(roomKey)?.removeMessage(message);
+      const room = this.rooms.get(roomKey);
+      room?.removeMessage(message);
+      if (room) {
+        this.updateLastMessageOnContact(room);
+      }
       this.messages.delete(id);
+    }
+  }
+
+  public static updateLastMessageOnContact(room: Room): void {
+    const lastMsgId = room?.getLastMessageId();
+    if (!lastMsgId) {
+      room?.updateLastMessageOnContact(" ");
+    }
+    if (lastMsgId) {
+      const msg = this.messages.get(lastMsgId);
+      room?.updateLastMessageOnContact(msg?.getContent() ?? "");
     }
   }
 

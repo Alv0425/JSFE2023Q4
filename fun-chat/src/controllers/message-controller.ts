@@ -43,6 +43,33 @@ class MessageController {
     };
     return req;
   }
+
+  public static deleteMessage(id: string): IRequest {
+    const req = {
+      id: `MSG_DELETE_${id}`,
+      type: "MSG_DELETE",
+      payload: {
+        message: {
+          id,
+        },
+      },
+    };
+    return req;
+  }
+
+  public static editMessage(text: string, id: string): IRequest {
+    const req = {
+      id: `MSG_EDIT_${id}`,
+      type: "MSG_EDIT",
+      payload: {
+        message: {
+          id,
+          text,
+        },
+      },
+    };
+    return req;
+  }
 }
 
 export default MessageController;

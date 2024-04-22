@@ -28,6 +28,8 @@ export class User {
 
   private unreadMsgs: Set<string> = new Set();
 
+  private textLastMessage = "";
+
   constructor(params: IUserResponse, password?: string) {
     this.status = params.isLogined;
     this.login = params.login;
@@ -35,6 +37,10 @@ export class User {
     this.view = new ContactView(this.login, this.numOfUnreadMessages, "", this.status || false);
     this.setNumOfUnread(0);
     this.view.addListener("click", () => eventEmitter.emit(EventsMap.contactClicked, this.login));
+  }
+
+  public remove(): void {
+    this.view.destroy();
   }
 
   public updateUser(user: User): void {
@@ -47,10 +53,9 @@ export class User {
     }
   }
 
-  public addUnreadMsg(id: string): void {
-    this.unreadMsgs.add(id);
-    // this.setNumOfUnread();
-    console.log(this.unreadMsgs.size);
+  public updateLastMessageText(text: string): void {
+    this.textLastMessage = text;
+    this.view.setMessage(this.textLastMessage);
   }
 
   public setStatus(status: boolean): void {
@@ -96,5 +101,13 @@ export class User {
       login: this.login,
       messages: this.numOfUnreadMessages,
     };
+  }
+
+  public show(): void {
+    this.view.show();
+  }
+
+  public hide(): void {
+    this.view.hide();
   }
 }

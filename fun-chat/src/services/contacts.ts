@@ -72,6 +72,23 @@ class Contacts {
     this.inactive = users;
     this.updateCollection();
   }
+
+  private showAll(): void {
+    this.collection.forEach((user) => user.show());
+  }
+
+  public filterByText(str: string): void {
+    const startsWith = str.trim().toLowerCase();
+    this.showAll();
+    if (startsWith === "") {
+      return;
+    }
+    this.collection.forEach((user) => {
+      if (!user.getUserInfo().login.toLowerCase().startsWith(startsWith)) {
+        user.hide();
+      }
+    });
+  }
 }
 
 const contacts = new Contacts();

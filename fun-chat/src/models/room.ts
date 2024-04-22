@@ -14,6 +14,8 @@ class Room {
 
   private isOpened = false;
 
+  private allMessages: Set<string> = new Set();
+
   private unreadMsgs: Set<string> = new Set();
 
   constructor(private user: User) {
@@ -29,9 +31,43 @@ class Room {
     this.user.setNumOfUnread(this.unreadMsgs.size);
   }
 
+  public getLogin(): string {
+    return this.user.getUserInfo().login;
+  }
+
+  public updateLastMessageOnContact(text: string): void {
+    this.user.updateLastMessageText(text);
+  }
+
+  public removeMessage(message: Message): void {
+    if (this.unreadMsgs.has(message.getId())) {
+      this.unreadMsgs.delete(message.getId());
+      this.user.setNumOfUnread(this.unreadMsgs.size);
+    }
+    message.remove();
+    this.allMessages.delete(message.getId());
+    this.view.closeEditMode();
+  }
+
+  public getLastMessageId(): string | undefined {
+    return [...this.allMessages.values()].pop();
+  }
+
   public resetUnread(): void {
     this.unreadMsgs = new Set();
     this.user.setNumOfUnread(0);
+  }
+
+  public remove(): void {
+    this.view.destroy();
+    this.user.remove();
+  }
+
+  public switchToEditMode(message: Message | undefined): void {
+    if (!message) {
+      return;
+    }
+    this.view.toEditMode(message.getContent(), message.getId());
   }
 
   public open(): void {
@@ -60,6 +96,8 @@ class Room {
 
   public addMessage(message: Message): void {
     this.view.appendMessage(message.getView());
+    this.updateLastMessageOnContact(message.getContent());
+    this.allMessages.add(message.getId());
     if (this.isOpened) {
       this.view.scrollToBottom();
     }

@@ -10,16 +10,20 @@ import MessageController from "../controllers/message-controller";
 import type { User } from "../models/user";
 import MessagesPull from "./messages-pull";
 import { Message } from "../models/message";
+import waitScreen from "../view/wait-screen/wait-screen";
 
 class WebSocketClient {
-  private socket: WebSocket;
+  private socket: WebSocket | null = null;
 
-  constructor(url: string) {
-    this.socket = new WebSocket(url);
-    this.socket.onopen = this.onOpen.bind(this);
-    this.socket.onmessage = this.onMessage.bind(this);
-    this.socket.onclose = this.onClose.bind(this);
-    this.socket.onerror = this.onError.bind(this);
+  private reconnectInterval = setInterval(() => {}, 1000);
+
+  private isConnected = false;
+
+  private isTimerRunning = false;
+
+  private isReconnect = false;
+
+  constructor(private url: string) {
     eventEmitter.on(EventsMap.submitLogin, (data) => this.login(data as IUserRequest));
     eventEmitter.on(EventsMap.loginOut, () => this.send(AuthController.logout()));
     eventEmitter.on(EventsMap.login, () => this.getContactsRequest());
@@ -34,8 +38,37 @@ class WebSocketClient {
     eventEmitter.on(EventsMap.removeMessageClicked, (data) => this.handleMessageRemove(data));
   }
 
-  public init(): void {
+  private addListeners(): void {
+    if (!this.socket) {
+      return;
+    }
     this.socket.onopen = this.onOpen.bind(this);
+    this.socket.onopen = this.onOpen.bind(this);
+    this.socket.onmessage = this.onMessage.bind(this);
+    this.socket.onclose = this.onClose.bind(this);
+    this.socket.onerror = this.onError.bind(this);
+  }
+
+  private clearPrewSocket(): void {
+    if (!this.socket) {
+      return;
+    }
+    this.socket.onopen = null;
+    this.socket.onopen = null;
+    this.socket.onmessage = null;
+    this.socket.onclose = null;
+    this.socket.onerror = null;
+  }
+
+  public init(): void {
+    this.clearPrewSocket();
+    this.socket = new WebSocket(this.url);
+    this.addListeners();
+  }
+
+  public connect(): void {
+    this.init();
+    eventEmitter.emit(EventsMap.reconnected);
   }
 
   private requestHistory(data: User[]): void {
@@ -78,8 +111,11 @@ class WebSocketClient {
     this.send(MessageController.getHistory(login) as IRequest);
   }
 
-  private onOpen(event: Event): void {
-    console.log(event);
+  private onOpen(): void {
+    this.isConnected = true;
+    this.isTimerRunning = false;
+    waitScreen.close();
+    clearInterval(this.reconnectInterval);
     if (storage.isLoggedIn()) {
       this.login(storage.getData().user);
     }
@@ -98,20 +134,45 @@ class WebSocketClient {
       eventEmitter.emit(EventsMap.loginError, payload.error);
       AuthController.setError(payload.error || "");
     }
-    console.log("error", id, payload.error, AuthController.checkLoginRequestID(id || ""));
   }
 
-  private onClose(event: CloseEvent): void {
-    console.log(event);
-    // Handle close event
+  private reconnect(): void {
+    if (!this.isTimerRunning && !this.isConnected && !this.isReconnect) {
+      this.tryToConnect();
+
+      console.log("reconnect");
+    }
   }
 
-  private onError(event: Event): void {
-    console.log(event);
-    // Handle error event
+  private tryToConnect(): void {
+    this.isConnected = false;
+    waitScreen.openWaitOverlay();
+    this.reconnectInterval = setInterval(() => {
+      this.isTimerRunning = true;
+      this.init();
+    }, 3000);
+  }
+
+  private onClose(): void {
+    if (this.isConnected) {
+      this.isReconnect = true;
+      eventEmitter.emit(EventsMap.closeConnection);
+      this.isConnected = false;
+      // console.log(event);
+      waitScreen.openWaitOverlay();
+      this.reconnectInterval = setInterval(() => this.connect(), 3000);
+    }
+  }
+
+  private onError(): void {
+    console.log("Please, make sure you started the server");
+    this.reconnect();
   }
 
   public send(data: IRequest): void {
+    if (!this.socket) {
+      return;
+    }
     if (this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(JSON.stringify(data));
     } else {
@@ -120,6 +181,9 @@ class WebSocketClient {
   }
 
   public close(): void {
+    if (!this.socket) {
+      return;
+    }
     this.socket.close();
   }
 }

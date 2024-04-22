@@ -45,7 +45,7 @@ class Router extends StateMachine {
 
   public navigate(): void {
     let path: string = window.location.pathname.toLowerCase() || "/";
-    console.log("navigate to", path);
+    // console.log("navigate to", path);
     if (!this.routes.has(path)) {
       path = "/not-found";
     }
