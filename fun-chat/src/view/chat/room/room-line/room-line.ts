@@ -1,5 +1,5 @@
-import type Component from "src/utils/component/component";
-import { div, span } from "src/utils/component/elements";
+import type Component from "../../../../utils/component/component";
+import { div, span } from "../../../../utils/component/elements";
 
 const line = (): Component =>
   div(

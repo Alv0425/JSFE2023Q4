@@ -1,7 +1,9 @@
 import Component from "../../../utils/component/component";
 import "./message.css";
-import { div, pre, span } from "../../../utils/component/elements";
+import { button, div, pre, span, svgSprite } from "../../../utils/component/elements";
 import type { IMessageStatus } from "../../../models/message";
+import eventEmitter from "../../../utils/event-emitter/event-emitter";
+import { EventsMap } from "../../../utils/event-emitter/events";
 
 class MessageView extends Component {
   private isMine: boolean;
@@ -14,7 +16,16 @@ class MessageView extends Component {
 
   private time: Component<HTMLElement>;
 
+  private buttons: Component<HTMLElement>;
+
+  private removeBtn: Component<HTMLButtonElement>;
+
+  private editBtn: Component<HTMLButtonElement>;
+
+  private edited: Component<HTMLElement>;
+
   constructor(
+    private id: string,
     textMessage: string,
     time: Date,
     author: string,
@@ -31,15 +42,34 @@ class MessageView extends Component {
     this.time = span(["message__time"], time.toLocaleTimeString("en-US"));
     this.text = pre(["message__text"], textMessage);
     this.state = span(["message__state"], this.currentStatus());
+    this.edited = span(["message__state-edited"], this.isEdited());
+    this.buttons = div(["message__buttons"]);
+    this.removeBtn = button(
+      ["message__remove"],
+      "",
+      svgSprite("./assets/icons/xmark-solid.svg#xmark", "message__icon"),
+    );
+    this.removeBtn.addListener("click", () => eventEmitter.emit(EventsMap.removeMessageClicked, this.id));
+    this.editBtn = button(["message__edit"], "", svgSprite("./assets/icons/pen-solid.svg#pen", "message__icon"));
+    this.editBtn.addListener("click", () => eventEmitter.emit(EventsMap.editMessageClicked, this.id));
+    this.buttons.appendContent([this.removeBtn, this.editBtn]);
     this.appendContent([
       div(["message__header"], this.authorLabel, this.time),
       this.text,
-      div(["message__footer"], this.state),
+      div(["message__footer"], this.edited, this.state),
+      this.buttons,
     ]);
   }
 
+  private isEdited(): string {
+    if (this.status?.isEdited ?? false) {
+      return "edited";
+    }
+    return " ";
+  }
+
   public currentStatus(): string {
-    let status = "";
+    let status = "sent";
     if (!this.status) {
       return status;
     }
@@ -49,15 +79,18 @@ class MessageView extends Component {
     if (this.status.isReaded) {
       status = "readed";
     }
-    if (this.status.isEdited) {
-      status = "edited";
-    }
     return status;
   }
 
   public updateMessage(text: string, status: IMessageStatus | undefined): void {
     this.status = status;
+    this.state.setTextContent(this.currentStatus());
+    this.edited.setTextContent(this.isEdited());
     this.text.setTextContent(text);
+  }
+
+  public isReaded(): boolean {
+    return this.status?.isReaded ?? false;
   }
 
   public isMineMessage(): boolean {
@@ -70,22 +103,6 @@ class MessageView extends Component {
 
   public setText(str: string): void {
     this.text.setTextContent(str);
-  }
-
-  public setEdited(): void {
-    this.getComponent().classList.add("message_edited");
-  }
-
-  public setSent(): void {
-    this.getComponent().classList.add("message_sent");
-  }
-
-  public setDelivered(): void {
-    this.getComponent().classList.add("message_delivered");
-  }
-
-  public setRead(): void {
-    this.getComponent().classList.add("message_read");
   }
 }
 

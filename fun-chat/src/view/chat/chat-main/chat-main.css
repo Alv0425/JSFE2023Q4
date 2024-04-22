@@ -10,6 +10,7 @@
 
 .chat__main-contacts {
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   gap: 5px;
   margin: 0;

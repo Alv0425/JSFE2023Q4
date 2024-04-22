@@ -1,5 +1,5 @@
 import "./room.css";
-import { button, div, form } from "../../../utils/component/elements";
+import { button, div, form, svgSprite } from "../../../utils/component/elements";
 import Component from "../../../utils/component/component";
 import type MessageView from "../message/message-view";
 import eventEmitter from "../../../utils/event-emitter/event-emitter";
@@ -18,6 +18,13 @@ class RoomView extends Component {
 
   private scrollTopValue = 0;
 
+  private isEditingMode = false;
+
+  private edditingMessage = {
+    text: "",
+    id: "",
+  };
+
   private sendButton: Component<HTMLButtonElement>;
 
   private line: Component<HTMLElement>;
@@ -25,6 +32,8 @@ class RoomView extends Component {
   private lineShown = false;
 
   private isOpened = false;
+
+  private ignoreNextScrollEvent = false;
 
   constructor(
     private login: string,
@@ -34,9 +43,10 @@ class RoomView extends Component {
     this.header = new RoomHeader(login);
     this.container = div(["room__messages"]);
     this.container.addListener("scrollend", () => {
-      if (this.isOpened) {
+      if (this.isOpened && !this.ignoreNextScrollEvent) {
         eventEmitter.emit(EventsMap.scrollMessagesContainer);
       }
+      this.ignoreNextScrollEvent = false;
     });
     this.container.addListener("click", () => {
       if (this.isOpened) {
@@ -45,7 +55,7 @@ class RoomView extends Component {
     });
     this.form = form(["room__form"]);
     this.textField = new Component("textarea", ["room__text-container"]);
-    this.sendButton = button(["room__send-button"], "Send");
+    this.sendButton = button(["room__send-button"], "", svgSprite("./assets/icons/send.svg#send", "room__button-icon"));
     this.sendButton.getComponent().disabled = true;
     this.form.appendContent([this.textField, this.sendButton]);
     this.updateStatus(status);
@@ -70,9 +80,15 @@ class RoomView extends Component {
     }
   }
 
+  private isLineVisible(): boolean {
+    const diff =
+      this.line.getCoordinates().y - this.container.getCoordinates().y - this.line.getCoordinates().height * 2;
+    return diff > 0;
+  }
+
   public scrollIntoView(): void {
     if (!this.isOpened && this.lineShown) {
-      this.line.getComponent().scrollIntoView({ block: "center", inline: "nearest" });
+      this.line.getComponent().scrollIntoView({ block: "start", inline: "nearest" });
     }
     if (!this.isOpened && !this.lineShown) {
       const container = this.container.getComponent();
@@ -119,23 +135,64 @@ class RoomView extends Component {
   }
 
   private sendMessage(): void {
-    eventEmitter.emit(EventsMap.sendMessageCkick, { login: this.login, text: this.getTextContent() });
+    if (this.isEditingMode) {
+      this.applyEdit();
+    } else {
+      eventEmitter.emit(EventsMap.sendMessageCkick, { login: this.login, text: this.getTextContent() });
+    }
+    this.isEditingMode = false;
     this.clearField();
+    this.sendButton.getComponent().disabled = true;
   }
 
   public scrollToBottom(): void {
-    const container = this.container.getComponent();
-    container.scrollTo({ behavior: "smooth", top: container.scrollHeight });
+    if (!this.isLineVisible()) {
+      return;
+    }
+    const mcontainer = this.container.getComponent();
+    mcontainer.scrollTop = mcontainer.scrollHeight;
+    if (!this.isLineVisible()) {
+      this.line.getComponent().scrollIntoView({ block: "start", inline: "nearest" });
+    }
   }
 
   public appendMessage(message: MessageView): void {
     if (message.isMineMessage()) {
       const container = this.container.getComponent();
+      this.container.append(message);
       container.scrollTo({ behavior: "smooth", top: container.scrollHeight });
     } else if (!message.isReaded()) {
+      this.ignoreNextScrollEvent = true;
       this.showLine();
+      this.container.append(message);
+    } else {
+      this.container.append(message);
     }
-    this.container.append(message);
+  }
+
+  public toEditMode(text: string, id: string): void {
+    (this.textField.getComponent() as HTMLTextAreaElement).value = text;
+    this.sendButton.getComponent().disabled = false;
+    this.edditingMessage = { id, text };
+    this.isEditingMode = true;
+  }
+
+  public closeEditMode(): void {
+    (this.textField.getComponent() as HTMLTextAreaElement).value = "";
+    this.sendButton.getComponent().disabled = true;
+    this.edditingMessage = { id: "", text: "" };
+    this.isEditingMode = false;
+  }
+
+  private applyEdit(): void {
+    if (!this.isEditingMode) {
+      return;
+    }
+    const { value } = this.textField.getComponent() as HTMLTextAreaElement;
+    if (this.edditingMessage.text === value) {
+      return;
+    }
+    eventEmitter.emit(EventsMap.applyEditMessage, { text: value, id: this.edditingMessage.id });
   }
 }
 

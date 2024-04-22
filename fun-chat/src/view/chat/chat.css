@@ -47,14 +47,3 @@
 .chat__header-button {
   min-width: 70px;
 }
-/* super("header", ["chat__header"], {}, {});
-    this.circle = div(["chat__circle"]);
-    this.username = h2(["chat__title-name"], "Username");
-    this.infoButton = button(["chat__header-button"], "info");
-    this.infoButton.addListener("click", () => eventEmitter.emit(EventsMap.aboutOpen))
-    this.logoutButton = button(["chat__header-button"], "logout");
-    this.appendContent([
-      this.circle, 
-      div(["chat__title"], h1(["chat__title-name"], "FUN CHAT"), this.username), 
-      div(["chat__header-buttons"], this.infoButton, this.logoutButton)
-    ]); */
