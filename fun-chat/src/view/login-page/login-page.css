@@ -1,0 +1,86 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  gap: 20px;
+  padding: 20px 40px 40px 40px;
+  border-radius: 30px;
+  background-color: var(--color-container);
+  animation: fadein 0.5s ease-in;
+  margin: auto auto;
+}
+
+.login-form__title {
+  margin: 0;
+  font-weight: 900;
+}
+
+.login-form__first-name,
+.login-form__last-name {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.login-form__input {
+  position: relative;
+  outline: none;
+  border: var(--color-label-dark) 1px solid;
+  padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.login-form__input:valid {
+  background-image: url(../../assets/icons/circle-check-solid.svg);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.login-form__button {
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .login-form__button:hover {
+    background-color: var(--color-highlight);
+    color: var(--color-body-dark);
+  }
+}
+
+.login-form__button:disabled {
+  pointer-events: none;
+}
+
+.login-form__hint {
+  color: var(--color-text-red);
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+}
+
+.login-form__hint::before {
+  content: "!";
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px var(--color-text-red) solid;
+}
+
+.login-form__label {
+  margin-right: auto;
+}

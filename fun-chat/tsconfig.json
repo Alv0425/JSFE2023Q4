@@ -16,10 +16,10 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     /* Path aliases */
-    "baseUrl": "",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "baseUrl": ""
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // }
   },
   "include": ["**/*.ts"]
 }

@@ -1,0 +1,98 @@
+.chat__contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px var(--color-label-light) solid;
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--color-body-dark);
+  cursor: pointer;
+  min-width: 200px;
+}
+
+.chat__contact:hover {
+  background-color: var(--color-label-light);
+}
+
+.chat__contact-circle {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-text-light);
+  color: var(--color-body-dark);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.chat__contact-circle::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #aab9cf;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+}
+
+.chat__contact-active .chat__contact-circle::after {
+  background-color: var(--color-highlight);
+}
+
+.chat__contact-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.chat__contact-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chat__contact-message {
+  font-size: 12px;
+  text-wrap: wrap;
+  word-wrap: break-word;
+  inline-size: 120px;
+  overflow-wrap: break-word;
+}
+
+.chat__contact-label {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-label-light);
+  margin-left: auto;
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+.chat__contact_show-unread .chat__contact-label {
+  opacity: 1;
+}
+
+.chat__contact-hidden {
+  display: none;
+}
+
+/* nstructor(login: string, unread: number, lastMessage: string, status: boolean) {
+  super("li", ["chat__contact"], {}, {});
+  this.circle = span(["chat__contact-cicle"], login[0]);
+  this.unreadMessagesLabel = span(["chat__contact-label"], `${unread}`);
+  this.lastMessage = span(["chat__contact-message"], "");
+  if (status) {this.setActive();}
+  this.appendContent([
+    this.circle, 
+    div(["chat__name-container"], span(["chat__name-container"], `${login}`), this.lastMessage),
+    this.unreadMessagesLabel
+  ]); */

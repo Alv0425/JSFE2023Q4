@@ -1,0 +1,88 @@
+.message {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  color: var(--color-body-dark);
+}
+
+.message_mine {
+  margin-left: auto;
+  border-radius: 5px;
+  background-color: var(--color-label-light);
+}
+
+.message__text {
+  font-size: 0.7rem;
+  margin: 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  background-color: var(--color-container-semitransparent);
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.message__header,
+.message__footer {
+  font-size: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message__state {
+  margin-left: auto;
+  user-select: none;
+  opacity: 0;
+}
+
+.message_mine .message__state {
+  opacity: 1;
+}
+
+.message__author {
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.message__buttons {
+  display: none;
+}
+
+.message_mine .message__buttons {
+  position: absolute;
+  right: calc(100%);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.message__edit,
+.message__remove {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  padding: 5px;
+  opacity: 0.3;
+  background-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .message__edit:hover,
+  .message__remove:hover {
+    opacity: 1;
+    background-color: transparent;
+  }
+}
+
+.message__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: var(--color-body-dark);
+}
