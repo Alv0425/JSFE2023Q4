@@ -47,3 +47,9 @@
 .chat__header-button {
   min-width: 70px;
 }
+
+@media (width <= 600px) {
+  .chat {
+    padding: 10px;
+  }
+}
