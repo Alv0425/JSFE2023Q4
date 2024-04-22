@@ -22,6 +22,10 @@ export enum EventsMap {
   markMessagesAsRead = "mark-messages-as-read",
   scrollMessagesContainer = "scroll-messages-container",
   messageContainerClicked = "message-container-clicked",
+  removeMessageClicked = "remove-message-clicked",
+  editMessageClicked = "edit-message-clicked",
+  applyEditMessage = "apply-edit-message",
+  messageDelete = "message-deleted",
 }
 
 export type HandlerType<T extends unknown[]> = (...params: T) => void;

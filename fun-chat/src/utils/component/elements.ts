@@ -84,9 +84,8 @@ export const ul = (classList: string[], items?: (Component | HTMLElement)[]): Co
   return listComponent;
 };
 
-export const svgSprite = (url: string, classname: string, viewbox = "0 0 200 70.72"): SVGSVGElement => {
+export const svgSprite = (url: string, classname: string): SVGSVGElement => {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewbox", viewbox);
   svg.classList.add(classname);
   const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
   use.setAttribute("href", url);
