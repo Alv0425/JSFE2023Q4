@@ -45,6 +45,14 @@
   color: var(--color-container);
 }
 
+.room__messages-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-height: 300px;
+  justify-content: end;
+}
+
 .room__messages {
   gap: 10px;
   display: flex;

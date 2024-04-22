@@ -1,8 +1,6 @@
 import "./login-page.css";
 import { button, div, h2, input, label } from "../../utils/component/elements";
 import Component from "../../utils/component/component";
-// import eventEmitter from "../../utils/event-emitter/event-emitter";
-// import { EventsMap } from "../../utils/event-emitter/events";
 
 class LoginScreen extends Component {
   public hintsContainer: {

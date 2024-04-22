@@ -27,6 +27,14 @@ class ContactView extends Component {
     ]);
   }
 
+  public show(): void {
+    this.getComponent().classList.remove("chat__contact-hidden");
+  }
+
+  public hide(): void {
+    this.getComponent().classList.add("chat__contact-hidden");
+  }
+
   public setActive(): void {
     this.getComponent().classList.add("chat__contact-active");
   }
@@ -36,7 +44,7 @@ class ContactView extends Component {
   }
 
   public setMessage(str: string): void {
-    const text = str.length < 50 ? str : `${str.slice(0, 50)}...`;
+    const text = str.length < 20 ? str : `${str.slice(0, 20)}...`;
     this.lastMessage.setTextContent(text);
   }
 

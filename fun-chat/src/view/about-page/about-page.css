@@ -1,10 +1,15 @@
 .about {
   background-color: var(--color-container);
-  max-width: 700px;
+  max-width: 600px;
   padding: 20px;
   border-radius: 10px;
   margin: auto auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.about__text {
+  text-align: center;
+  max-width: 450px;
 }

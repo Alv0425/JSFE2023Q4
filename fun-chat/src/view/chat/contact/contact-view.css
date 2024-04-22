@@ -7,7 +7,7 @@
   padding: 10px;
   color: var(--color-body-dark);
   cursor: pointer;
-  width: 200px;
+  min-width: 200px;
 }
 
 .chat__contact:hover {
@@ -15,6 +15,7 @@
 }
 
 .chat__contact-circle {
+  flex-shrink: 0;
   position: relative;
   display: flex;
   justify-content: center;
@@ -54,6 +55,10 @@
 
 .chat__contact-message {
   font-size: 12px;
+  text-wrap: wrap;
+  word-wrap: break-word;
+  inline-size: 120px;
+  overflow-wrap: break-word;
 }
 
 .chat__contact-label {
@@ -69,10 +74,15 @@
   background-color: var(--color-label-light);
   margin-left: auto;
   opacity: 0;
+  flex-shrink: 0;
 }
 
 .chat__contact_show-unread .chat__contact-label {
   opacity: 1;
+}
+
+.chat__contact-hidden {
+  display: none;
 }
 
 /* nstructor(login: string, unread: number, lastMessage: string, status: boolean) {

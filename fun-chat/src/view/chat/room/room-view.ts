@@ -35,6 +35,8 @@ class RoomView extends Component {
 
   private ignoreNextScrollEvent = false;
 
+  private containerWrapper: Component<HTMLElement>;
+
   constructor(
     private login: string,
     private status: boolean,
@@ -48,18 +50,19 @@ class RoomView extends Component {
       }
       this.ignoreNextScrollEvent = false;
     });
-    this.container.addListener("click", () => {
-      if (this.isOpened) {
-        eventEmitter.emit(EventsMap.messageContainerClicked);
-      }
-    });
     this.form = form(["room__form"]);
     this.textField = new Component("textarea", ["room__text-container"]);
     this.sendButton = button(["room__send-button"], "", svgSprite("./assets/icons/send.svg#send", "room__button-icon"));
     this.sendButton.getComponent().disabled = true;
     this.form.appendContent([this.textField, this.sendButton]);
     this.updateStatus(status);
-    this.appendContent([this.header, this.container, this.form]);
+    this.containerWrapper = div(["room__messages-wrapper"], this.container);
+    this.containerWrapper.addListener("click", () => {
+      if (this.isOpened) {
+        eventEmitter.emit(EventsMap.messageContainerClicked);
+      }
+    });
+    this.appendContent([this.header, this.containerWrapper, this.form]);
     this.textField.addListener("keyup", () => this.checkText());
     this.textField.addListener("keypress", (evt) => {
       const event = evt as KeyboardEvent;
