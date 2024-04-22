@@ -10,7 +10,9 @@
 
 .header__logo {
   font-weight: 900;
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   transform: translate(20px);
 }

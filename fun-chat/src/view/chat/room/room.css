@@ -136,3 +136,17 @@
   height: 20px;
   fill: var(--color-container);
 }
+
+.room__back {
+  display: none;
+}
+
+@media (width<=600px) {
+  .room__back {
+    display: flex;
+    background-color: transparent;
+  }
+  .room__back:hover {
+    background-color: transparent;
+  }
+}

@@ -64,3 +64,45 @@
   color: var(--color-container);
   margin: auto auto;
 }
+
+@media (width <= 600px) {
+  .chat__main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    overflow: hidden;
+    flex-basis: auto;
+    padding: 5px;
+  }
+
+  .chat__main-sidebar {
+    grid-area: 1 / 1 / 2 / 2;
+    height: 100%;
+    z-index: 5;
+    background-color: var(--color-text-light);
+    transform: translateX(-100%);
+    transition: 0.2s;
+  }
+  .chat__main-sidebar_opened {
+    transform: translateX(0%);
+    transition: 0.2s;
+  }
+
+  .chat__main-chat {
+    grid-area: 1 / 1 / 2 / 2;
+    height: 100%;
+  }
+
+  .chat__header-buttons {
+    flex-direction: column;
+  }
+
+  /* .chat__main-sidebar {
+    position: fixed;
+    background-color: var(--color-text-light);
+    width: 100%;
+    z-index: 3;
+  } */
+}

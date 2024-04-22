@@ -25,7 +25,6 @@ class AboutContainer extends Component {
     const backButton = button(["about__button"], "BACK");
     backButton.addListener("click", () => {
       eventEmitter.emit(EventsMap.initial);
-      console.log("back");
     });
     this.append(backButton);
   }

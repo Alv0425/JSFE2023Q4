@@ -16,12 +16,10 @@ class FormHandler {
     this.form.passwordInput.addListener("keyup", () => {
       this.form.fillHintsContainerPassword(this.emitHints(this.validate().errorsPassword));
     });
-    eventEmitter.on(EventsMap.submitLogin, () => console.log("submit"));
     eventEmitter.on(EventsMap.loginError, (error) => {
-      console.log(error);
       setTimeout(() => {
         this.form.fillHintsContainerPassword(this.emitHints([error as string]));
-      }, 1000);
+      }, 500);
     });
     eventEmitter.on(EventsMap.login, () => this.form.resetForm());
   }

@@ -41,7 +41,6 @@ class ChatController {
     });
     eventEmitter.on(EventsMap.closeConnection, () => {
       this.lastOpenedRoom = this.currentRoom?.getLogin() ?? "";
-      // console.log("last", this.lastOpenedRoom);
       MessagesPull.clearDb();
       this.chatView.clearChatContainer();
       contacts.clear();
@@ -78,6 +77,7 @@ class ChatController {
     this.currentRoom?.close();
     const room = MessagesPull.getRoom(login as string);
     room?.open();
+    eventEmitter.emit(EventsMap.roomOpened);
     this.currentRoom = room ?? null;
     this.lastOpenedRoom = "";
   }

@@ -29,6 +29,8 @@ export enum EventsMap {
   contactsFilter = "contacts-filter",
   reconnected = "reconnected",
   closeConnection = "closeConnection",
+  backRoomClicked = "back button clicked",
+  roomOpened = "roomOpened",
 }
 
 export type HandlerType<T extends unknown[]> = (...params: T) => void;

@@ -31,6 +31,13 @@ class ChatMain extends Component {
     this.placeholder = div(["chat__main-chat-placeholder"]);
     this.placeholder.setTextContent("Select user to start chat!");
     this.chatContainer.append(this.placeholder);
+    this.sideBar.getComponent().classList.add("chat__main-sidebar_opened");
+    eventEmitter.on(EventsMap.backRoomClicked, () =>
+      this.sideBar.getComponent().classList.add("chat__main-sidebar_opened"),
+    );
+    eventEmitter.on(EventsMap.roomOpened, () =>
+      this.sideBar.getComponent().classList.remove("chat__main-sidebar_opened"),
+    );
   }
 
   public updateContactList(contactViews: ContactView[]): void {
