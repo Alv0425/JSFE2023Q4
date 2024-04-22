@@ -11,8 +11,10 @@ const responseMap: Map<MessageType, EventsMap> = new Map([
   [MessageType.userInactive, EventsMap.getInactiveUsers],
   [MessageType.messageFrom, EventsMap.getHistory],
   [MessageType.messageSend, EventsMap.messageSent],
-  // [MessageType.messageDelivered, ""],
-  // [MessageType.messageRead, ""],
+  [MessageType.messageDelivered, EventsMap.messageDelivered],
+  [MessageType.messageEdit, EventsMap.messageEdit],
+  [MessageType.messageRead, EventsMap.messageRead],
+  [MessageType.messageDelete, EventsMap.messageDelete],
 ]);
 
 export default responseMap;

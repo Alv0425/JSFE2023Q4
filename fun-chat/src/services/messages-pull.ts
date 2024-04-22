@@ -17,13 +17,27 @@ class MessagesPull {
     this.linkToRoom(message);
   }
 
+  public static updateMessage(message: Message): void {
+    if (this.messages.has(message.getId())) {
+      this.messages.get(message.getId())?.updateMessage(message);
+    }
+  }
+
   private static linkToRoom(message: Message): void {
-    const key =
-      message.getSender() === AuthController.currentUserData.login ? message.getReciever() : message.getSender();
+    const key = this.findRoom(message);
     const room = this.rooms.get(key);
     if (room) {
       room.addMessage(message);
+      if (!message.getStatus()?.isReaded) {
+        if (message.getSender() === key) {
+          room.addUnread(message.getId());
+        }
+      }
     }
+  }
+
+  private static findRoom(message: Message): string {
+    return message.getSender() === AuthController.currentUserData.login ? message.getReciever() : message.getSender();
   }
 
   public static createRooms(users: User[]): void {
@@ -55,7 +69,12 @@ class MessagesPull {
   }
 
   public static deleteMessage(id: string): void {
-    this.messages.delete(id);
+    const message = this.messages.get(id);
+    if (message) {
+      const roomKey = this.findRoom(message);
+      this.rooms.get(roomKey)?.removeMessage(message);
+      this.messages.delete(id);
+    }
   }
 
   public static getMessagesByIds(ids: string[]): (Message | undefined)[] {

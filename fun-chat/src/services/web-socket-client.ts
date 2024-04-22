@@ -30,6 +30,8 @@ class WebSocketClient {
     eventEmitter.on(EventsMap.getHistory, (data) => this.actualizeMessages(data as IResponse));
     eventEmitter.on(EventsMap.sendMessageCkick, (data) => this.sendMessageTo(data as { login: string; text: string }));
     eventEmitter.on(EventsMap.markMessagesAsRead, (data) => this.sendRequestToSetReadStatus(data as string));
+    eventEmitter.on(EventsMap.applyEditMessage, (data) => this.applyEditMessage(data));
+    eventEmitter.on(EventsMap.removeMessageClicked, (data) => this.handleMessageRemove(data));
   }
 
   public init(): void {
@@ -42,6 +44,16 @@ class WebSocketClient {
 
   private actualizeMessages(data: IResponse): void {
     data.payload.messages?.forEach((message) => MessagesPull.addMessage(new Message(message)));
+  }
+
+  private handleMessageRemove(data: unknown): void {
+    const id = data as string;
+    this.send(MessageController.deleteMessage(id));
+  }
+
+  private applyEditMessage(data: unknown): void {
+    const { text, id } = data as { text: string; id: string };
+    this.send(MessageController.editMessage(text, id));
   }
 
   private login({ login, password }: IUserRequest): void {
