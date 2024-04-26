@@ -1,6 +1,6 @@
 import Room from "../models/room";
-import type { Message } from "../models/message";
-import type { User } from "../models/user";
+import type Message from "../models/message";
+import type User from "../models/user";
 import AuthController from "../controllers/auth-controller";
 
 class MessagesPull {
@@ -23,12 +23,6 @@ class MessagesPull {
     }
     this.messages.set(message.getId(), message);
     this.linkToRoom(message);
-  }
-
-  public static updateMessage(message: Message): void {
-    if (this.messages.has(message.getId())) {
-      this.messages.get(message.getId())?.updateMessage(message);
-    }
   }
 
   private static linkToRoom(message: Message): void {
@@ -66,10 +60,6 @@ class MessagesPull {
     AuthController.setUserData("", "");
   }
 
-  public static getRooms(): Map<string, Room> {
-    return this.rooms;
-  }
-
   public static getRoom(login: string): Room | undefined {
     return this.rooms.get(login);
   }
@@ -100,10 +90,6 @@ class MessagesPull {
       const msg = this.messages.get(lastMsgId);
       room?.updateLastMessageOnContact(msg?.getContent() ?? "");
     }
-  }
-
-  public static getMessagesByIds(ids: string[]): (Message | undefined)[] {
-    return ids.map((id) => this.getMessage(id)).filter((message) => message);
   }
 }
 
