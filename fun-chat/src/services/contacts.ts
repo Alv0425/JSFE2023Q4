@@ -1,4 +1,4 @@
-import { User } from "../models/user";
+import User from "../models/user";
 import type { IResponse } from "../models/response";
 import eventEmitter from "../utils/event-emitter/event-emitter";
 import { EventsMap } from "../utils/event-emitter/events";
@@ -13,36 +13,27 @@ class Contacts {
   private inactive: User[] = [];
 
   constructor() {
-    eventEmitter.on(EventsMap.getActiveUsers, (data) => {
-      const res = data as IResponse;
-      const users = res.payload.users?.map((user) => new User(user));
-      if (users) {
-        this.setActiveUsers(users);
-      }
-    });
-    eventEmitter.on(EventsMap.getInactiveUsers, (data) => {
-      const res = data as IResponse;
-      const users = res.payload.users?.map((user) => new User(user));
+    eventEmitter.on<IResponse>(EventsMap.getActiveUsers, (data) => this.handleActiveUsersResponse(data));
+    eventEmitter.on<IResponse>(EventsMap.getInactiveUsers, (data) => {
+      const users = data.payload.users?.map((user) => new User(user));
       if (users) {
         this.setInactiveUsers(users);
       }
     });
-    eventEmitter.on(EventsMap.getHistory, (data) => this.actualizeHistory(data as IResponse));
     eventEmitter.on(EventsMap.logout, () => this.clear());
+  }
+
+  private handleActiveUsersResponse(data: IResponse): void {
+    const users = data.payload.users?.map((user) => new User(user));
+    if (users) {
+      this.setActiveUsers(users);
+    }
   }
 
   public clear(): void {
     this.active = [];
     this.inactive = [];
     this.collection = new Map();
-  }
-
-  private actualizeHistory(data: IResponse): void {
-    const login = data.id?.replace(/^USER-HISTORY-/, "") || "";
-    const messagesMap = data.payload.messages?.map((message) => message.id) ?? [];
-    if (this.collection.has(login)) {
-      this.collection.get(login)?.setHistoryIds(messagesMap);
-    }
   }
 
   public getUsers(): Map<string, User> {
@@ -57,7 +48,6 @@ class Contacts {
         this.collection.set(user.getUserInfo().login, user);
       }
     });
-    // this.collection = new Map([...this.active, ...this.inactive].map((user) => [user.getUserInfo().login, user]));
     this.collection.delete(storage.getLogin());
     eventEmitter.emit(EventsMap.contactsUpdated, this.collection);
     MessagesPull.createRooms([...this.active, ...this.inactive]);
