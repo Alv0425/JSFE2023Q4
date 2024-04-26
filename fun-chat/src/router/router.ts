@@ -3,6 +3,8 @@ import StateMachine from "../utils/state-machine/state-machine";
 import VIEW_STATES from "./routes-states";
 import { EventsMap } from "../utils/event-emitter/events";
 import pageWrapper from "../view/page-wrapper/page-wrapper";
+import storage from "../services/storage";
+import waitScreen from "../view/wait-screen/wait-screen";
 
 class Router extends StateMachine {
   private routes: Map<string, () => void> = new Map();
@@ -27,6 +29,9 @@ class Router extends StateMachine {
     window.addEventListener("beforeunload", () => {
       isTabClosing = true;
     });
+    if (storage.isLoggedIn()) {
+      waitScreen.openWaitLogin();
+    }
     window.addEventListener("unload", () => {
       if (isTabClosing) {
         eventEmitter.emit(EventsMap.loginOut);
@@ -45,7 +50,6 @@ class Router extends StateMachine {
 
   public navigate(): void {
     let path: string = window.location.pathname.toLowerCase() || "/";
-    // console.log("navigate to", path);
     if (!this.routes.has(path)) {
       path = "/not-found";
     }
