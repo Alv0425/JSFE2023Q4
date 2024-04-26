@@ -1,7 +1,9 @@
 import "./contact-view.css";
 import { div, span } from "../../../utils/component/elements";
 import Component from "../../../utils/component/component";
-import generateColor from "../../../utils/color-generator";
+import generateColor from "../../../utils/helpers/color-generator";
+import eventEmitter from "../../../utils/event-emitter/event-emitter";
+import { EventsMap } from "../../../utils/event-emitter/events";
 
 class ContactView extends Component {
   private circle: Component<HTMLElement>;
@@ -16,7 +18,7 @@ class ContactView extends Component {
     this.circle.setStyleAttribute("background-color", generateColor(login));
     this.unreadMessagesLabel = span(["chat__contact-label"]);
     this.setNumber(unread);
-    this.lastMessage = span(["chat__contact-message"], "");
+    this.lastMessage = span(["chat__contact-message"], lastMessage ?? "");
     if (status) {
       this.setActive();
     }
@@ -25,6 +27,7 @@ class ContactView extends Component {
       div(["chat__contact-name-container"], span(["chat__contact-name"], `${login}`), this.lastMessage),
       this.unreadMessagesLabel,
     ]);
+    this.addListener("click", () => eventEmitter.emit(EventsMap.contactClicked, login));
   }
 
   public show(): void {

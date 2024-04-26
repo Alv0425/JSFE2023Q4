@@ -1,9 +1,9 @@
-import Component from "../../../utils/component/component";
 import "./message.css";
+import Component from "../../../utils/component/component";
 import { button, div, pre, span, svgSprite } from "../../../utils/component/elements";
-import type { IMessageStatus } from "../../../models/message";
 import eventEmitter from "../../../utils/event-emitter/event-emitter";
 import { EventsMap } from "../../../utils/event-emitter/events";
+import type { IMessageStatus } from "../../../types/interfaces";
 
 class MessageView extends Component {
   private isMine: boolean;
@@ -32,7 +32,7 @@ class MessageView extends Component {
     private status: IMessageStatus | undefined,
     isMine: boolean,
   ) {
-    super("div", ["message"], {}, {});
+    super("div", ["message"]);
     if (isMine) {
       this.setMine();
     }
@@ -99,10 +99,6 @@ class MessageView extends Component {
 
   public setMine(): void {
     this.getComponent().classList.add("message_mine");
-  }
-
-  public setText(str: string): void {
-    this.text.setTextContent(str);
   }
 }
 

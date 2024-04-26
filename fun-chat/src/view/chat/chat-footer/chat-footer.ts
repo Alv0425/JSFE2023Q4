@@ -10,9 +10,9 @@ class ChatFooter extends Component {
       {},
       div(
         ["footer__container"],
-        p(["footer__year"], "2024"),
+        a(["footer__rss"], "Rolling Scopes School", "https://rs.school/js/"),
         a(["footer__github"], "alv0425", "https://github.com/alv0425"),
-        a(["footer__rss"], "", "https://rs.school/js/"),
+        p(["footer__year"], "2024"),
       ),
     );
   }

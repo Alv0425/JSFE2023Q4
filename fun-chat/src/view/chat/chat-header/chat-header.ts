@@ -2,7 +2,7 @@ import eventEmitter from "../../../utils/event-emitter/event-emitter";
 import Component from "../../../utils/component/component";
 import { button, div, h1, h2 } from "../../../utils/component/elements";
 import { EventsMap } from "../../../utils/event-emitter/events";
-import generateColor from "../../../utils/color-generator";
+import generateColor from "../../../utils/helpers/color-generator";
 
 class ChatHeader extends Component {
   public circle: Component<HTMLElement>;

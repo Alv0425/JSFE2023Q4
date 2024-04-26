@@ -32,12 +32,8 @@ class ChatMain extends Component {
     this.placeholder.setTextContent("Select user to start chat!");
     this.chatContainer.append(this.placeholder);
     this.sideBar.getComponent().classList.add("chat__main-sidebar_opened");
-    eventEmitter.on(EventsMap.backRoomClicked, () =>
-      this.sideBar.getComponent().classList.add("chat__main-sidebar_opened"),
-    );
-    eventEmitter.on(EventsMap.roomOpened, () =>
-      this.sideBar.getComponent().classList.remove("chat__main-sidebar_opened"),
-    );
+    eventEmitter.on(EventsMap.backRoomClicked, () => this.showSidebar());
+    eventEmitter.on(EventsMap.roomOpened, () => this.hideSidebar());
   }
 
   public updateContactList(contactViews: ContactView[]): void {
@@ -45,8 +41,15 @@ class ChatMain extends Component {
     this.contactsContainer.appendContent(contactViews);
   }
 
+  public hideSidebar(): void {
+    this.sideBar.getComponent().classList.remove("chat__main-sidebar_opened");
+  }
+
+  public showSidebar(): void {
+    this.sideBar.getComponent().classList.add("chat__main-sidebar_opened");
+  }
+
   public clearChatContainer(): void {
-    // console.log("clear chat");
     this.chatContainer.clearContainer();
     this.chatContainer.append(this.placeholder);
   }

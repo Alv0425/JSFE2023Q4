@@ -75,6 +75,7 @@
     overflow: hidden;
     flex-basis: auto;
     padding: 5px;
+    min-height: 400px;
   }
 
   .chat__main-sidebar {
