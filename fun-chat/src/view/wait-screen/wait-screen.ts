@@ -20,6 +20,19 @@ class WaitScreen extends Component {
     document.body.append(this.getComponent());
   }
 
+  public openWaitLogin(): void {
+    this.clear();
+    this.append(
+      div(
+        ["wait-screen"],
+        div(["wait-screen__spinner"]),
+        p(["wait-screet__text"], "Please, wait"),
+        p(["wait-screet__text"], "Trying to login."),
+      ),
+    );
+    document.body.append(this.getComponent());
+  }
+
   public close(): void {
     this.clear();
     this.getComponent().remove();
