@@ -29,26 +29,28 @@ class SessionStorage {
     this.key = "alv0425-fun-chat";
     this.checkFirstLoad();
     eventEmitter.on(EventsMap.logout, () => this.resetData());
-    eventEmitter.on(EventsMap.login, () => {
-      const currentState = this.getData();
-      currentState.isLoggedIn = true;
-      currentState.user = AuthController.currentUserData;
-      this.saveLoginData(currentState);
-    });
+    eventEmitter.on(EventsMap.login, () => this.handleLogin());
     AuthController.setUserData(this.getData().user.login, this.getData().user.password);
   }
 
-  public checkFirstLoad(): void {
+  private handleLogin(): void {
+    const currentState = this.getData();
+    currentState.isLoggedIn = true;
+    currentState.user = AuthController.currentUserData;
+    this.saveLoginData(currentState);
+  }
+
+  private checkFirstLoad(): void {
     if (!Object.prototype.hasOwnProperty.call(sessionStorage, this.key)) {
       sessionStorage.setItem(this.key, JSON.stringify(this.templateData));
     }
   }
 
-  public resetData(): void {
+  private resetData(): void {
     sessionStorage.setItem(this.key, JSON.stringify(this.templateData));
   }
 
-  public saveLoginData(data: IStorage): void {
+  private saveLoginData(data: IStorage): void {
     sessionStorage.setItem(this.key, JSON.stringify(data));
   }
 
@@ -66,19 +68,9 @@ class SessionStorage {
     return `${data.user.login}`;
   }
 
-  public getPassword(): string {
-    const data: IStorage = this.getData();
-    return `${data.user.password}`;
-  }
-
   public isLoggedIn(): boolean {
     const data: IStorage = this.getData();
     return data.isLoggedIn;
-  }
-
-  public getPath(): string {
-    const data: IStorage = this.getData();
-    return `${data.lastVisitedPage}`;
   }
 }
 
