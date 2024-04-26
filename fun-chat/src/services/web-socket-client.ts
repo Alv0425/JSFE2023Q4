@@ -2,14 +2,13 @@ import { EventsMap } from "../utils/event-emitter/events";
 import type { IRequest, IUserRequest } from "../models/request";
 import eventEmitter from "../utils/event-emitter/event-emitter";
 import AuthController from "../controllers/auth-controller";
-// import MessageType from "../models/message-types";
 import type { IResponse } from "../models/response";
 import storage from "./storage";
 import responseMap from "./response-map";
 import MessageController from "../controllers/message-controller";
-import type { User } from "../models/user";
+import type User from "../models/user";
 import MessagesPull from "./messages-pull";
-import { Message } from "../models/message";
+import Message from "../models/message";
 import waitScreen from "../view/wait-screen/wait-screen";
 
 class WebSocketClient {
@@ -24,44 +23,42 @@ class WebSocketClient {
   private isReconnect = false;
 
   constructor(private url: string) {
-    eventEmitter.on(EventsMap.submitLogin, (data) => this.login(data as IUserRequest));
+    eventEmitter.on<IUserRequest>(EventsMap.submitLogin, (data) => this.login(data));
     eventEmitter.on(EventsMap.loginOut, () => this.send(AuthController.logout()));
     eventEmitter.on(EventsMap.login, () => this.getContactsRequest());
     eventEmitter.on(EventsMap.externalLogin, () => this.getContactsRequest());
     eventEmitter.on(EventsMap.externalLogout, () => this.getContactsRequest());
-    eventEmitter.on(EventsMap.error, (data) => this.handleError(data as IResponse));
-    eventEmitter.on(EventsMap.contactsUpdated, (data) => this.requestHistory(data as User[]));
-    eventEmitter.on(EventsMap.getHistory, (data) => this.actualizeMessages(data as IResponse));
-    eventEmitter.on(EventsMap.sendMessageCkick, (data) => this.sendMessageTo(data as { login: string; text: string }));
-    eventEmitter.on(EventsMap.markMessagesAsRead, (data) => this.sendRequestToSetReadStatus(data as string));
+    eventEmitter.on<IResponse>(EventsMap.error, (data) => this.handleError(data));
+    eventEmitter.on<User[]>(EventsMap.contactsUpdated, (data) => this.requestHistory(data));
+    eventEmitter.on<IResponse>(EventsMap.getHistory, (data) => this.actualizeMessages(data));
+    eventEmitter.on<{ login: string; text: string }>(EventsMap.sendMessageCkick, (data) => this.sendMessageTo(data));
+    eventEmitter.on<string>(EventsMap.markMessagesAsRead, (data) => this.sendRequestToSetReadStatus(data));
     eventEmitter.on(EventsMap.applyEditMessage, (data) => this.applyEditMessage(data));
-    eventEmitter.on(EventsMap.removeMessageClicked, (data) => this.handleMessageRemove(data));
+    eventEmitter.on<string>(EventsMap.removeMessageClicked, (data) => this.handleMessageRemove(data));
   }
 
   private addListeners(): void {
-    if (!this.socket) {
-      return;
+    if (this.socket) {
+      this.socket.onopen = this.onOpen.bind(this);
+      this.socket.onopen = this.onOpen.bind(this);
+      this.socket.onmessage = this.onMessage.bind(this);
+      this.socket.onclose = this.onClose.bind(this);
+      this.socket.onerror = this.onError.bind(this);
     }
-    this.socket.onopen = this.onOpen.bind(this);
-    this.socket.onopen = this.onOpen.bind(this);
-    this.socket.onmessage = this.onMessage.bind(this);
-    this.socket.onclose = this.onClose.bind(this);
-    this.socket.onerror = this.onError.bind(this);
   }
 
-  private clearPrewSocket(): void {
-    if (!this.socket) {
-      return;
+  private clearPrevSocket(): void {
+    if (this.socket) {
+      this.socket.onopen = null;
+      this.socket.onopen = null;
+      this.socket.onmessage = null;
+      this.socket.onclose = null;
+      this.socket.onerror = null;
     }
-    this.socket.onopen = null;
-    this.socket.onopen = null;
-    this.socket.onmessage = null;
-    this.socket.onclose = null;
-    this.socket.onerror = null;
   }
 
   public init(): void {
-    this.clearPrewSocket();
+    this.clearPrevSocket();
     this.socket = new WebSocket(this.url);
     this.addListeners();
   }
@@ -79,8 +76,7 @@ class WebSocketClient {
     data.payload.messages?.forEach((message) => MessagesPull.addMessage(new Message(message)));
   }
 
-  private handleMessageRemove(data: unknown): void {
-    const id = data as string;
+  private handleMessageRemove(id: string): void {
     this.send(MessageController.deleteMessage(id));
   }
 
@@ -131,16 +127,15 @@ class WebSocketClient {
   private handleError(response: IResponse): void {
     const { id, payload } = response;
     if (AuthController.checkLoginRequestID(id || "")) {
-      eventEmitter.emit(EventsMap.loginError, payload.error);
-      AuthController.setError(payload.error || "");
+      const errorText = payload.error && `${payload.error[0]?.toUpperCase()}${payload.error.slice(1)}`;
+      eventEmitter.emit(EventsMap.loginError, errorText);
+      AuthController.setError(errorText || "");
     }
   }
 
   private reconnect(): void {
     if (!this.isTimerRunning && !this.isConnected && !this.isReconnect) {
       this.tryToConnect();
-
-      console.log("reconnect");
     }
   }
 
@@ -158,7 +153,6 @@ class WebSocketClient {
       this.isReconnect = true;
       eventEmitter.emit(EventsMap.closeConnection);
       this.isConnected = false;
-      // console.log(event);
       waitScreen.openWaitOverlay();
       this.reconnectInterval = setInterval(() => this.connect(), 3000);
     }
@@ -170,21 +164,11 @@ class WebSocketClient {
   }
 
   public send(data: IRequest): void {
-    if (!this.socket) {
-      return;
+    if (this.socket) {
+      if (this.socket.readyState === WebSocket.OPEN) {
+        this.socket.send(JSON.stringify(data));
+      }
     }
-    if (this.socket.readyState === WebSocket.OPEN) {
-      this.socket.send(JSON.stringify(data));
-    } else {
-      // Handle error: WebSocket connection not open
-    }
-  }
-
-  public close(): void {
-    if (!this.socket) {
-      return;
-    }
-    this.socket.close();
   }
 }
 
