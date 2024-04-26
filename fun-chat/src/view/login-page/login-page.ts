@@ -23,7 +23,7 @@ class LoginScreen extends Component {
       id: "login-name",
       type: "text",
       required: true,
-      pattern: "^[a-zA-Z\\-]{3,}$",
+      pattern: "^[a-zA-Z\\-]{3,10}$",
     });
     this.passwordInput = input(["login-form__input"], {
       id: "login-password",
