@@ -2,7 +2,7 @@ import "./car.css";
 import { ICarResponse } from "../../../types/response-interfaces";
 import Component from "../../../utils/component";
 import { div, span, svgSprite } from "../../../utils/elements";
-import CarControls from "../car-controls";
+import CarControls from "./car-controls";
 import LABELS, { LabelType } from "../car-labels";
 
 class CarView extends Component {

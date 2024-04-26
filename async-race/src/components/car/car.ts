@@ -1,5 +1,5 @@
 import CarEngine from "./car-engine";
-import CarControls from "./car-controls";
+import CarControls from "./car-view/car-controls";
 import CarView from "./car-view/car-view";
 import eventEmitter from "../../utils/event-emitter";
 import updateCar from "../../services/api/update-car";

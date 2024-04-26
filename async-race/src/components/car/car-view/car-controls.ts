@@ -1,5 +1,5 @@
-import Component from "../../utils/component";
-import { button, svgSprite } from "../../utils/elements";
+import Component from "../../../utils/component";
+import { button, svgSprite } from "../../../utils/elements";
 
 class CarControls {
   carEditButton: Component<HTMLButtonElement>;
