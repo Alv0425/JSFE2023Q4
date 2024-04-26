@@ -1,11 +1,9 @@
-// import eventEmitter from "../utils/event-emitter/event-emitter";
 import eventEmitter from "../utils/event-emitter/event-emitter";
 import chatPage from "../view/chat/chat-page";
 import RoomView from "../view/chat/room/room-view";
-import type { Message } from "./message";
-import type { User } from "./user";
+import type Message from "./message";
+import type User from "./user";
 import { EventsMap } from "../utils/event-emitter/events";
-// import { EventsMap } from "../utils/event-emitter/events";
 
 class Room {
   private view: RoomView;
@@ -20,6 +18,10 @@ class Room {
 
   constructor(private user: User) {
     this.view = new RoomView(user.getUserInfo().login, user.getUserInfo().isLogined);
+  }
+
+  public addEmoji(emoji: string): void {
+    this.view.addEmoji(emoji);
   }
 
   public updateStatus(): void {
@@ -39,14 +41,26 @@ class Room {
     this.user.updateLastMessageText(text);
   }
 
+  public checkIfHistoryIsEmpty(): void {
+    if (this.allMessages.size === 0) {
+      this.view.showMessagePlaceholder();
+    } else {
+      this.view.hideMessagePlaceholder();
+    }
+  }
+
   public removeMessage(message: Message): void {
     if (this.unreadMsgs.has(message.getId())) {
       this.unreadMsgs.delete(message.getId());
       this.user.setNumOfUnread(this.unreadMsgs.size);
+      if (this.unreadMsgs.size === 0) {
+        this.view.hideLine();
+      }
     }
     message.remove();
     this.allMessages.delete(message.getId());
     this.view.closeEditMode();
+    this.checkIfHistoryIsEmpty();
   }
 
   public getLastMessageId(): string | undefined {
@@ -64,10 +78,9 @@ class Room {
   }
 
   public switchToEditMode(message: Message | undefined): void {
-    if (!message) {
-      return;
+    if (message) {
+      this.view.toEditMode(message.getContent(), message.getId());
     }
-    this.view.toEditMode(message.getContent(), message.getId());
   }
 
   public open(): void {
@@ -101,6 +114,7 @@ class Room {
     if (this.isOpened) {
       this.view.scrollToBottom();
     }
+    this.checkIfHistoryIsEmpty();
   }
 }
 
