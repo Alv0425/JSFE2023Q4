@@ -1,20 +1,4 @@
-interface IEvent {
-  toState: string;
-
-  callbacks: string[];
-}
-
-type IState = Record<string, IEvent>;
-
-type IStatesObject = Record<string, IState>;
-
-interface IStateParams {
-  currentState: string;
-
-  callbacks: Record<string, (...params: unknown[]) => void | Promise<unknown>>;
-
-  states: IStatesObject;
-}
+import type { IStateParams, IStatesObject } from "../../types/interfaces";
 
 class StateMachine {
   private currentState: string;
@@ -29,35 +13,30 @@ class StateMachine {
     this.states = params.states;
   }
 
-  public setCurrentState(state: string): void {
-    this.currentState = state;
+  public emit(event: string, ...params: unknown[]): void {
+    const state = this.states[this.currentState];
+    if (!state) {
+      console.warn("State is not defined");
+      return;
+    }
+    const transition = state[event];
+    if (!transition) {
+      console.warn(`Cannot find transition for state "${this.currentState}" at event "${event}"`);
+      return;
+    }
+    this.currentState = transition.toState;
+    transition.callbacks.forEach((callbackName) => this.runCallback(callbackName, params));
   }
 
-  public emit(event: string): void {
+  private runCallback(callbackName: string, params: unknown[]): void {
     try {
-      const state = this.states[this.currentState];
-      if (!state) {
-        return;
+      const callback = this.callbacks[callbackName];
+      if (callback) {
+        callback.call(this, ...params);
       }
-      const transition = state[event];
-      if (!transition) {
-        return;
-      }
-      this.currentState = transition.toState;
-      transition.callbacks.forEach(async (callbackName) => {
-        try {
-          await this.callbacks[callbackName]?.call(this);
-        } catch (error) {
-          console.warn("User aborted all requests");
-        }
-      });
     } catch (error) {
       console.warn(error);
     }
-  }
-
-  public getCurrentState(): string {
-    return this.currentState;
   }
 }
 
