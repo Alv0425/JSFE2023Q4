@@ -3,11 +3,13 @@ import type Component from "../utils/component/component";
 import loginForm from "../view/login-page/login-page";
 import eventEmitter from "../utils/event-emitter/event-emitter";
 import { EventsMap } from "../utils/event-emitter/events";
+import waitScreen from "../view/wait-screen/wait-screen";
 
 class FormHandler {
   constructor(private form = loginForm) {
     this.form.addListener("submit", (e) => {
       e.preventDefault();
+      waitScreen.openWaitLogin();
       eventEmitter.emit(EventsMap.submitLogin, { login: this.form.getName(), password: this.form.getPassword() });
     });
     this.form.nameInput.addListener("keyup", () => {
@@ -17,11 +19,15 @@ class FormHandler {
       this.form.fillHintsContainerPassword(this.emitHints(this.validate().errorsPassword));
     });
     eventEmitter.on(EventsMap.loginError, (error) => {
+      waitScreen.close();
       setTimeout(() => {
         this.form.fillHintsContainerPassword(this.emitHints([error as string]));
       }, 500);
     });
-    eventEmitter.on(EventsMap.login, () => this.form.resetForm());
+    eventEmitter.on(EventsMap.login, () => {
+      this.form.resetForm();
+      waitScreen.close();
+    });
   }
 
   public validateName(): string[] {
@@ -33,8 +39,8 @@ class FormHandler {
     if (!/^[a-zA-Z-]+$/.test(input.value)) {
       errors.push(`The name must consist of letters from the English alphabet and the hyphen ('-') symbol.`);
     }
-    if (input.value.length < 3) {
-      errors.push(`The name must be a minimum of 3 characters.`);
+    if (input.value.length < 3 || input.value.length > 10) {
+      errors.push(`The name must consist of 3 - 10 characters.`);
     }
     return errors;
   }
@@ -67,15 +73,10 @@ class FormHandler {
     return hintComponents;
   }
 
-  public addAuthError(error: string): void {
-    this.form.fillHintsContainerPassword(this.emitHints([error]));
-  }
-
   public validate(): { errorsName: string[]; errorsPassword: string[] } {
     const errorsName = this.validateName();
     const errorsPassword = this.validatePassword();
     this.form.submitButton.getComponent().disabled = true;
-
     if (!errorsName.length && !errorsPassword.length) {
       this.form.submitButton.getComponent().disabled = false;
     }
