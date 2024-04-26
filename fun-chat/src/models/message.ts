@@ -1,23 +1,9 @@
+import type { IMessageStatus } from "../types/interfaces";
 import AuthController from "../controllers/auth-controller";
 import MessageView from "../view/chat/message/message-view";
 import type { IMessageResponse } from "./response";
 
-export interface IMessage {
-  id: string;
-  sender?: string;
-  receiver?: string;
-  content?: string;
-  timestamp?: Date;
-}
-
-export interface IMessageStatus {
-  isDelivered?: boolean | undefined;
-  isReaded?: boolean | undefined;
-  isEdited?: boolean | undefined;
-  isDeleted?: boolean | undefined;
-}
-
-export class Message {
+class Message {
   private id: string;
 
   private sender: string | undefined;
@@ -44,7 +30,8 @@ export class Message {
   }
 
   public updateMessage(messageToCompare: Message): void {
-    this.content = messageToCompare.getContent();
+    const cont = messageToCompare.getContent();
+    this.content = cont === "" ? this.content : cont;
     const statusToCompare = messageToCompare.getStatus();
     const isReaded = statusToCompare?.isReaded;
     const isDelivered = statusToCompare?.isDelivered;
@@ -56,7 +43,7 @@ export class Message {
     newStatus.isEdited = isEdited ?? newStatus.isEdited;
     newStatus.isDeleted = isDeleted ?? newStatus.isDeleted;
     this.status = newStatus;
-    this.view.updateMessage(this.content, this.status);
+    this.view.updateMessage(this.content ?? "", this.status);
   }
 
   public remove(): void {
@@ -87,3 +74,5 @@ export class Message {
     return this.view;
   }
 }
+
+export default Message;
