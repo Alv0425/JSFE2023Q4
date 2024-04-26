@@ -4,7 +4,7 @@ import eventEmitter from "../../utils/event-emitter";
 import Pagination from "../../services/pagination-service/pagination";
 import { create100Cars } from "../../services/api/create-car";
 import winnersCollection from "../winners-collection/winners-collection";
-import { ICarResponse } from "../../types/response-interfaces";
+import type { ICarResponse } from "../../types/response-interfaces";
 
 class CarsCollection extends Pagination<Car> {
   constructor() {
@@ -20,7 +20,7 @@ class CarsCollection extends Pagination<Car> {
     });
   }
 
-  async removeCar(id: number): Promise<void> {
+  public async removeCar(id: number): Promise<void> {
     const index: number = this.collection.findIndex((car) => car.getID() === id);
     this.collection[index].remove();
     await winnersCollection.removeWinner(id);
@@ -28,14 +28,16 @@ class CarsCollection extends Pagination<Car> {
     eventEmitter.emit("car-removed");
   }
 
-  async checkCollection(): Promise<boolean> {
+  public async checkCollection(): Promise<boolean> {
     const collectionOnClient: number[] = this.collection.map((car) => car.getID());
     const carsOnServer: ICarResponse[] = await getAllCars();
-    if (carsOnServer.length !== this.collection.length) return false;
+    if (carsOnServer.length !== this.collection.length) {
+      return false;
+    }
     return carsOnServer.every((car, i) => car.id === collectionOnClient[i]);
   }
 
-  async reloadCarsCollection(): Promise<void> {
+  public async reloadCarsCollection(): Promise<void> {
     const cars: ICarResponse[] = await getAllCars();
     const carsComponents: Car[] = cars.map((car) => {
       const newCar: Car = new Car(car.id, car.name, car.color);
@@ -45,11 +47,13 @@ class CarsCollection extends Pagination<Car> {
     this.updateCollection(carsComponents);
   }
 
-  async updateCarsCollection(): Promise<void> {
+  public async updateCarsCollection(): Promise<void> {
     const cars: ICarResponse[] = await getAllCars();
     const carsComponents: Car[] = cars.map((car, i) => {
       if (i < this.collection.length) {
-        if (car.id === this.collection[i].getID()) return this.collection[i];
+        if (car.id === this.collection[i].getID()) {
+          return this.collection[i];
+        }
       }
       const newCar: Car = new Car(car.id, car.name, car.color);
       newCar.controls.carDeleteButton.addListener("click", () => this.removeCar(newCar.getID()));

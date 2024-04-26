@@ -4,13 +4,13 @@ import eventEmitter from "../../utils/event-emitter";
 import prepareCarsOnPage from "./race-actions/prepare-cars-on-page";
 import resetRace from "./race-actions/reset-race";
 import startRace from "./race-actions/start-race";
-import { IRaceParticipants } from "./race-interfaces";
+import type { IRaceParticipants } from "./race-interfaces";
 import RACE_STATES from "./race-states";
 
 class RaceManager extends State {
   public currentParticipants: IRaceParticipants[] = [];
 
-  public currentPage: number = 1;
+  public currentPage = 1;
 
   public abortController: AbortController = new AbortController();
 
@@ -24,7 +24,9 @@ class RaceManager extends State {
         },
         "on-engines": async () => {
           const cars: IRaceParticipants[] = this.getRaceParticipants();
-          if (cars) await startRace(cars, this.abortController);
+          if (cars) {
+            await startRace(cars, this.abortController);
+          }
         },
         restart: () => this.restartRace(),
         reset: async () => {
@@ -62,7 +64,7 @@ class RaceManager extends State {
     this.emit("start-race");
   }
 
-  private async reset() {
+  private async reset(): Promise<void> {
     if (this.currentParticipants.length) {
       this.abortController.abort("reset race");
       await resetRace(this.currentParticipants);

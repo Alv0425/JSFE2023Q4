@@ -1,12 +1,15 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
 import generateRandomCarOptions from "./generate-random-options";
-import { ICarOptions, ICarResponse, carResponseTemplate } from "../../types/response-interfaces";
+import type { ICarOptions, ICarResponse } from "../../types/response-interfaces";
+import { carResponseTemplate } from "../../types/response-interfaces";
 
 async function createCar(options?: ICarOptions): Promise<ICarResponse> {
   try {
     let carParams: ICarOptions | undefined = options;
-    if (!options) carParams = generateRandomCarOptions();
+    if (!options) {
+      carParams = generateRandomCarOptions();
+    }
     const response: Response = await fetch(ENDPOINTS.GARAGE, {
       method: "POST",
       body: JSON.stringify(carParams),

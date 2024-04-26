@@ -1,4 +1,4 @@
-import { LabelType } from "./car-labels";
+import type { LabelType } from "./car-labels";
 
 export interface ICarCallbacks {
   onmoveControls: () => void;
@@ -6,10 +6,7 @@ export interface ICarCallbacks {
   lockStopButton: () => void;
   startAnimation: (duration: number) => void;
   stopAnimation: () => void;
-
   moveCarToStart: () => void;
-
   setCarStatus: (status: LabelType[keyof LabelType]) => void;
-
   lockControls: () => void;
 }

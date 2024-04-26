@@ -1,14 +1,14 @@
-import Component from "../../../utils/component";
+import type Component from "../../../utils/component";
 import { button, svgSprite } from "../../../utils/elements";
 
 class CarControls {
-  carEditButton: Component<HTMLButtonElement>;
+  public carEditButton: Component<HTMLButtonElement>;
 
-  carStopButton: Component<HTMLButtonElement>;
+  public carStopButton: Component<HTMLButtonElement>;
 
-  carRunButton: Component<HTMLButtonElement>;
+  public carRunButton: Component<HTMLButtonElement>;
 
-  carDeleteButton: Component<HTMLButtonElement>;
+  public carDeleteButton: Component<HTMLButtonElement>;
 
   constructor() {
     this.carEditButton = button(
@@ -37,28 +37,28 @@ class CarControls {
     });
   }
 
-  public lockControlsOnMove() {
+  public lockControlsOnMove(): void {
     this.unlockAllControls();
     this.carRunButton.getComponent().disabled = true;
     this.carDeleteButton.getComponent().disabled = true;
     this.carEditButton.getComponent().disabled = true;
   }
 
-  public lockAllControls() {
+  public lockAllControls(): void {
     this.carRunButton.getComponent().disabled = true;
     this.carDeleteButton.getComponent().disabled = true;
     this.carEditButton.getComponent().disabled = true;
     this.carStopButton.getComponent().disabled = true;
   }
 
-  public unlockAllControls() {
+  public unlockAllControls(): void {
     this.carRunButton.getComponent().disabled = false;
     this.carDeleteButton.getComponent().disabled = false;
     this.carEditButton.getComponent().disabled = false;
     this.carStopButton.getComponent().disabled = false;
   }
 
-  public lockStopButton() {
+  public lockStopButton(): void {
     this.unlockAllControls();
     this.carStopButton.getComponent().disabled = true;
   }

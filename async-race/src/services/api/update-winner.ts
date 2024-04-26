@@ -1,6 +1,7 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
-import { IWinnerResponse, winnerResponseTemplate } from "../../types/response-interfaces";
+import type { IWinnerResponse } from "../../types/response-interfaces";
+import { winnerResponseTemplate } from "../../types/response-interfaces";
 
 async function updateWinner({ id, wins, time }: IWinnerResponse): Promise<IWinnerResponse> {
   const response: Response = await fetch(`${ENDPOINTS.WINNERS}/${id}`, {

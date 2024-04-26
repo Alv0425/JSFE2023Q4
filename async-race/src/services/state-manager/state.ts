@@ -17,11 +17,11 @@ interface IStateParams {
 }
 
 class State {
-  currentState: string;
+  public currentState: string;
 
-  callbacks: Record<string, (...params: unknown[]) => void | Promise<unknown>>;
+  private callbacks: Record<string, (...params: unknown[]) => void | Promise<unknown>>;
 
-  states: IStatesObject;
+  private states: IStatesObject;
 
   constructor(params: IStateParams) {
     this.currentState = params.currentState;
@@ -33,7 +33,9 @@ class State {
     try {
       const state = this.states[this.currentState];
       const transition = state[event];
-      if (!transition) return;
+      if (!transition) {
+        return;
+      }
       this.currentState = transition.toState;
       transition.callbacks.forEach(async (callbackName) => {
         try {

@@ -1,9 +1,10 @@
 import "./car.css";
-import { ICarResponse } from "../../../types/response-interfaces";
+import type { ICarResponse } from "../../../types/response-interfaces";
 import Component from "../../../utils/component";
 import { div, span, svgSprite } from "../../../utils/elements";
 import CarControls from "./car-controls";
-import LABELS, { LabelType } from "../car-labels";
+import type { LabelType } from "../car-labels";
+import LABELS from "../car-labels";
 
 class CarView extends Component {
   private carImage: SVGSVGElement;
@@ -12,9 +13,9 @@ class CarView extends Component {
 
   private nameLabel: Component<HTMLElement>;
 
-  controls: CarControls;
+  public controls: CarControls;
 
-  private animationID: number = 0;
+  private animationID = 0;
 
   private carStateLabel: Component<HTMLElement>;
 
@@ -45,34 +46,46 @@ class CarView extends Component {
     ]);
   }
 
-  public updateView(params: ICarResponse) {
+  public updateView(params: ICarResponse): void {
     this.carImage.style.setProperty("fill", params.color);
     this.nameLabel = span(["car__name"], params.name);
   }
 
-  public updateCarStateLabel(label: LabelType[keyof LabelType]) {
-    if (label === LABELS.finished && this.carStateLabel.getComponent().textContent === "winner") return;
+  public updateCarStateLabel(label: LabelType[keyof LabelType]): void {
+    if (label === LABELS.finished && this.carStateLabel.getComponent().textContent === "winner") {
+      return;
+    }
     this.carStateLabel.setTextContent(label);
   }
 
-  public animateMove(duration: number) {
-    if (duration) this.updateCarStateLabel(LABELS.move);
-    if (!duration) return;
+  public animateMove(duration: number): void {
+    if (duration) {
+      this.updateCarStateLabel(LABELS.move);
+    }
+    if (!duration) {
+      return;
+    }
     const start = performance.now();
-    const animate = (time: number) => {
+    const animate = (time: number): void => {
       let timeFr = (time - start) / duration;
-      if (timeFr > 1) timeFr = 1;
+      if (timeFr > 1) {
+        timeFr = 1;
+      }
       this.carImage.style.setProperty("left", `calc(${timeFr * 100}%)`);
-      if (timeFr < 1) this.animationID = requestAnimationFrame(animate);
+      if (timeFr < 1) {
+        this.animationID = requestAnimationFrame(animate);
+      }
     };
     this.animationID = requestAnimationFrame(animate);
   }
 
-  public stopMoving() {
-    if (this.animationID) cancelAnimationFrame(this.animationID);
+  public stopMoving(): void {
+    if (this.animationID) {
+      cancelAnimationFrame(this.animationID);
+    }
   }
 
-  public moveCarToStart() {
+  public moveCarToStart(): void {
     this.updateCarStateLabel(LABELS.garage);
     this.carImage.style.removeProperty("left");
   }

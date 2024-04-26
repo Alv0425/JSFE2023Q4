@@ -1,7 +1,7 @@
-import { IEngineStatusResponse } from "../../types/response-interfaces";
+import type { IEngineStatusResponse } from "../../types/response-interfaces";
 import { setEngineStatus, setEngineStatusToDrive } from "../../services/api/set-engine-status";
 import State from "../../services/state-manager/state";
-import { ICarCallbacks } from "./car-interfaces";
+import type { ICarCallbacks } from "./car-interfaces";
 import LABELS from "./car-labels";
 import CAR_STATES from "./car-states";
 
@@ -10,7 +10,7 @@ class CarEngine extends State {
 
   private engineParams: IEngineStatusResponse | null = null;
 
-  carControls: ICarCallbacks | null = null;
+  public carControls: ICarCallbacks | null = null;
 
   constructor(private carId: number) {
     super({
@@ -27,34 +27,43 @@ class CarEngine extends State {
         reset: async () => {
           await this.reset();
         },
-        "lock-control-buttons": () => {},
       },
     });
   }
 
-  public abort() {
+  public abort(): void {
     this.abortController.abort();
   }
 
-  public on(callbacks: ICarCallbacks) {
+  public on(callbacks: ICarCallbacks): void {
     this.carControls = callbacks;
   }
 
-  private async prepare() {
+  private async prepare(): Promise<void> {
     this.abortController = new AbortController();
-    if (this.carControls) this.carControls.onmoveControls();
+    if (this.carControls) {
+      this.carControls.onmoveControls();
+    }
     this.engineParams = await setEngineStatus(this.carId, "started");
-    if (this.carControls) this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
+    if (this.carControls) {
+      this.carControls.startAnimation(this.engineParams.distance / this.engineParams.velocity);
+    }
     this.emit("move-car");
   }
 
-  private async move() {
-    if (!this.engineParams) return;
+  private async move(): Promise<void> {
+    if (!this.engineParams) {
+      return;
+    }
     const driveCar = await setEngineStatusToDrive(this.carId, this.abortController);
     if (!driveCar.success) {
       this.emit("broke");
-      if (driveCar.status === 500) this.carControls?.setCarStatus(LABELS.broken);
-      if (driveCar.status === 404) this.carControls?.setCarStatus(LABELS.error);
+      if (driveCar.status === 500) {
+        this.carControls?.setCarStatus(LABELS.broken);
+      }
+      if (driveCar.status === 404) {
+        this.carControls?.setCarStatus(LABELS.error);
+      }
     }
     if (driveCar.success) {
       this.emit("finish");
@@ -62,7 +71,7 @@ class CarEngine extends State {
     }
   }
 
-  private async reset() {
+  private async reset(): Promise<void> {
     this.engineParams = await setEngineStatus(this.carId, "stopped");
     this.carControls?.stopAnimation();
     this.abortController.abort("Car stoped");

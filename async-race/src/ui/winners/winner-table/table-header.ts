@@ -3,9 +3,9 @@ import { button, span } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
 
 class TableHeader extends Component {
-  wins: Component<HTMLButtonElement>;
+  private wins: Component<HTMLButtonElement>;
 
-  time: Component<HTMLButtonElement>;
+  private time: Component<HTMLButtonElement>;
 
   constructor() {
     super(
@@ -33,22 +33,22 @@ class TableHeader extends Component {
     this.wins.getComponent().className = "winners__table-wins";
   }
 
-  setDescWins(): void {
+  private setDescWins(): void {
     this.resetSortAppearance();
     this.wins.getComponent().classList.add("desc");
   }
 
-  setAscWins(): void {
+  private setAscWins(): void {
     this.resetSortAppearance();
     this.wins.getComponent().classList.add("asc");
   }
 
-  setDescTime(): void {
+  private setDescTime(): void {
     this.resetSortAppearance();
     this.time.getComponent().classList.add("desc");
   }
 
-  setAscTime(): void {
+  private setAscTime(): void {
     this.resetSortAppearance();
     this.time.getComponent().classList.add("asc");
   }

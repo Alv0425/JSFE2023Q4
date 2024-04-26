@@ -1,10 +1,10 @@
 import "./winner-modal.css";
 import Component from "../../../utils/component";
 import { div, h3, p, svgSprite } from "../../../utils/elements";
-import { IRaceParticipants } from "../race-interfaces";
+import type { IRaceParticipants } from "../race-interfaces";
 
 class WinnerModal extends Component {
-  carImg: SVGSVGElement;
+  private carImg: SVGSVGElement;
 
   constructor() {
     super("div", ["overlay", "overlay_transparent"], {}, {});
@@ -12,7 +12,7 @@ class WinnerModal extends Component {
     this.carImg = svgSprite("./assets/car/sedan.svg#car0", "winner__image");
   }
 
-  public openWinModal(winner?: IRaceParticipants) {
+  public openWinModal(winner?: IRaceParticipants): void {
     const time = winner ? Math.round(winner.raceParams.distance / winner.raceParams.velocity) / 1000 : 0;
     const text = winner ? `${winner.carInfo.name}, finished in ${time.toFixed(2)}s` : "All cars were broken!";
     this.carImg.style.fill = winner ? winner.carInfo.color : "transparent";
@@ -22,7 +22,7 @@ class WinnerModal extends Component {
     document.body.append(this.getComponent());
   }
 
-  public closeWinModal() {
+  public closeWinModal(): void {
     this.destroy();
   }
 }

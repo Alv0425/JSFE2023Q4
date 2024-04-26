@@ -5,9 +5,9 @@ import { button } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
 
 class RaceControls extends Component {
-  stopRaceButton: Component<HTMLButtonElement>;
+  private stopRaceButton: Component<HTMLButtonElement>;
 
-  startRaceButton: Component<HTMLButtonElement>;
+  private startRaceButton: Component<HTMLButtonElement>;
 
   constructor() {
     super("div", ["garage__control-race"]);
@@ -19,15 +19,15 @@ class RaceControls extends Component {
     eventEmitter.on("race-started", () => this.lockStartButton());
   }
 
-  private lockStartButton() {
+  private lockStartButton(): void {
     this.startRaceButton.getComponent().disabled = true;
   }
 
-  private unlockStartButton() {
+  private unlockStartButton(): void {
     this.startRaceButton.getComponent().disabled = false;
   }
 
-  resetRaceHandler() {
+  private resetRaceHandler(): void {
     debounce(() => {
       race.emit("reset-race");
       this.unlockStartButton();

@@ -2,20 +2,20 @@ import "./edit-car-modal.css";
 import Component from "../../../utils/component";
 import { button, div, h3, input, svgSprite } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
-import { ICarResponse } from "../../../types/response-interfaces";
+import type { ICarResponse } from "../../../types/response-interfaces";
 
 class CarModal extends Component {
-  input: Component<HTMLInputElement>;
+  private input: Component<HTMLInputElement>;
 
-  color: Component<HTMLInputElement>;
+  private color: Component<HTMLInputElement>;
 
-  carImage: SVGSVGElement;
+  private carImage: SVGSVGElement;
 
-  applyButton: Component<HTMLButtonElement>;
+  private applyButton: Component<HTMLButtonElement>;
 
-  closeButton: Component<HTMLButtonElement>;
+  private closeButton: Component<HTMLButtonElement>;
 
-  id: number = -1;
+  private id = -1;
 
   public constructor() {
     super("div", ["overlay"]);
@@ -26,7 +26,9 @@ class CarModal extends Component {
     this.color.addListener("input", () => this.applyColor());
     this.closeButton = button(["modal__close-button"], "CLOSE");
     this.applyButton.addListener("click", async () => {
-      if (this.id === -1) return;
+      if (this.id === -1) {
+        return;
+      }
       eventEmitter.emit("edit-car", { id: this.id, name: this.getName(), color: this.getColor() });
       this.close();
     });
@@ -37,15 +39,15 @@ class CarModal extends Component {
     });
   }
 
-  getColor() {
+  public getColor(): string {
     return this.color.getComponent().value;
   }
 
-  getName() {
+  public getName(): string {
     return this.input.getComponent().value;
   }
 
-  public openEdit(id: number, name: string, color: string) {
+  public openEdit(id: number, name: string, color: string): void {
     this.append(
       div(
         ["modal"],
@@ -62,15 +64,11 @@ class CarModal extends Component {
     document.body.append(this.getComponent());
   }
 
-  public getId() {
-    return this.id;
-  }
-
-  public applyColor() {
+  public applyColor(): void {
     this.carImage.style.fill = this.color.getComponent().value;
   }
 
-  public close() {
+  public close(): void {
     this.getComponent().remove();
     this.clearContainer();
   }

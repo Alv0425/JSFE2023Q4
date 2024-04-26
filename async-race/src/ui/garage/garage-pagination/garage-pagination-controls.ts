@@ -4,13 +4,13 @@ import { button, div, h2, span } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
 
 class PaginationControls extends Component {
-  totalCountLabel: Component<HTMLElement>;
+  private totalCountLabel: Component<HTMLElement>;
 
-  prevPageButton: Component<HTMLButtonElement>;
+  public prevPageButton: Component<HTMLButtonElement>;
 
-  nextPageButton: Component<HTMLButtonElement>;
+  public nextPageButton: Component<HTMLButtonElement>;
 
-  paginationLabel: Component<HTMLElement>;
+  private paginationLabel: Component<HTMLElement>;
 
   constructor() {
     super("div", ["garage__pagination"]);

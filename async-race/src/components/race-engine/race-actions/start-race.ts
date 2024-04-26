@@ -1,7 +1,7 @@
 import { setEngineStatus } from "../../../services/api/set-engine-status";
 import eventEmitter from "../../../utils/event-emitter";
 import winnersCollection from "../../winners-collection/winners-collection";
-import { IRaceParticipants } from "../race-interfaces";
+import type { IRaceParticipants } from "../race-interfaces";
 import winnermodal from "../winner-modal/winner-modal";
 import getCarRaceResult from "./get-car-race-result";
 
@@ -24,7 +24,9 @@ async function startRace(cars: IRaceParticipants[], controller: AbortController)
     eventEmitter.emit("race-ended");
     if (
       res.every((result) => {
-        if (result.status === "rejected") return result.reason === 404;
+        if (result.status === "rejected") {
+          return result.reason === 404;
+        }
         return false;
       })
     ) {
@@ -32,7 +34,9 @@ async function startRace(cars: IRaceParticipants[], controller: AbortController)
     }
   });
   const winner: IRaceParticipants = await Promise.any(carsRace);
-  if (winner) createWinner(winner);
+  if (winner) {
+    createWinner(winner);
+  }
 }
 
 export default startRace;

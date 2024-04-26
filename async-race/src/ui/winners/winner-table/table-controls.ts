@@ -3,13 +3,13 @@ import { button, div, h3, span } from "../../../utils/elements";
 import eventEmitter from "../../../utils/event-emitter";
 
 class TableControls extends Component {
-  title: Component<HTMLElement>;
+  private title: Component<HTMLElement>;
 
-  prevPageButton: Component<HTMLButtonElement>;
+  private prevPageButton: Component<HTMLButtonElement>;
 
-  nextPageButton: Component<HTMLButtonElement>;
+  private nextPageButton: Component<HTMLButtonElement>;
 
-  paginationLabel: Component<HTMLElement>;
+  private paginationLabel: Component<HTMLElement>;
 
   constructor() {
     super("div", ["winners__table-controls"], {}, {});

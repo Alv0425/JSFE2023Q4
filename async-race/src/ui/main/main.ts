@@ -9,17 +9,17 @@ class MainView extends Component {
     super("main", ["main"], {}, {});
   }
 
-  public render() {
+  public render(): void {
     document.body.append(this.getComponent());
   }
 
-  public drawGarage() {
+  public drawGarage(): void {
     winners.getComponent().remove();
     header.garage();
     this.append(garage);
   }
 
-  public drawWinners() {
+  public drawWinners(): void {
     garage.getComponent().remove();
     header.winners();
     this.append(winners);

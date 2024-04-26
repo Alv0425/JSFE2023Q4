@@ -3,8 +3,8 @@ import Pagination from "../../services/pagination-service/pagination";
 import getWinners, { getWinnerByID } from "../../services/api/get-winners";
 import Winner from "../winner/winner";
 import deleteWinnerByID from "../../services/api/delete-winner";
-import { IRaceParticipants } from "../race-engine/race-interfaces";
-import { IWinnerResponse, IWinnersInfoResponse } from "../../types/response-interfaces";
+import type { IRaceParticipants } from "../race-engine/race-interfaces";
+import type { IWinnerResponse, IWinnersInfoResponse } from "../../types/response-interfaces";
 import addWinner from "../../services/api/add-winner";
 import updateWinner from "../../services/api/update-winner";
 
@@ -39,7 +39,7 @@ class WinnersCollection extends Pagination<Winner> {
     });
   }
 
-  async sortBy(order: "time" | "wins"): Promise<void> {
+  public async sortBy(order: "time" | "wins"): Promise<void> {
     if (this.sortOptions.sort === order) {
       this.sortOptions.order = this.sortOptions.order === "ASC" ? "DESC" : "ASC";
     } else {
@@ -55,22 +55,24 @@ class WinnersCollection extends Pagination<Winner> {
     }
   }
 
-  async removeWinner(id: number): Promise<void> {
+  public async removeWinner(id: number): Promise<void> {
     const index = this.collection.findIndex((winner) => winner.getID() === id);
-    if (index === -1) return;
+    if (index === -1) {
+      return;
+    }
     this.collection[index].destroy();
     await deleteWinnerByID(id);
     this.removeItem(index);
     eventEmitter.emit("winner-removed");
   }
 
-  async reloadWinnersCollection(): Promise<void> {
+  public async reloadWinnersCollection(): Promise<void> {
     const winners = await getWinners(this.sortOptions);
     const winnersComponents = winners.map((winner, index) => new Winner(winner, index + 1));
     this.collection = winnersComponents;
   }
 
-  async addWinner(winnerInfo: IRaceParticipants): Promise<void> {
+  public async addWinner(winnerInfo: IRaceParticipants): Promise<void> {
     const index: number = this.collection.findIndex((winner) => winner.getID() === winnerInfo.carInfo.id);
     const winnerAPI: IWinnerResponse = await getWinnerByID(winnerInfo.carInfo.id);
     const winnerResult: IWinnerResponse = {
@@ -85,16 +87,22 @@ class WinnersCollection extends Pagination<Winner> {
         name: winnerInfo.carInfo.name,
       };
       const addWinnerResponse: IWinnerResponse = await addWinner(winnerResult);
-      if (addWinnerResponse.error) return;
+      if (addWinnerResponse.error) {
+        return;
+      }
       const winner: Winner = new Winner(params, this.collection.length + 1);
       this.collection.push(winner);
       eventEmitter.emit("winner-created");
     } else {
       this.collection[index].updateWinnerResult(winnerInfo, index + 1);
-      if (winnerAPI.time > winnerResult.time) winnerAPI.time = winnerResult.time;
+      if (winnerAPI.time > winnerResult.time) {
+        winnerAPI.time = winnerResult.time;
+      }
       winnerAPI.wins += 1;
       const updateWinnerResponse = await updateWinner(winnerAPI);
-      if (!updateWinnerResponse.error) eventEmitter.emit("winner-created");
+      if (!updateWinnerResponse.error) {
+        eventEmitter.emit("winner-created");
+      }
     }
   }
 }

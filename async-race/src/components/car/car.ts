@@ -1,11 +1,11 @@
 import CarEngine from "./car-engine";
-import CarControls from "./car-view/car-controls";
+import type CarControls from "./car-view/car-controls";
 import CarView from "./car-view/car-view";
 import eventEmitter from "../../utils/event-emitter";
 import updateCar from "../../services/api/update-car";
 import { setEngineStatus } from "../../services/api/set-engine-status";
-import { LabelType } from "./car-labels";
-import { ICarResponse } from "../../types/response-interfaces";
+import type { LabelType } from "./car-labels";
+import type { ICarResponse } from "../../types/response-interfaces";
 import deleteCarByID from "../../services/api/delete-car";
 
 class Car {
@@ -13,7 +13,7 @@ class Car {
 
   private carView: CarView = new CarView(this.name, this.color);
 
-  controls: CarControls = this.carView.controls;
+  public controls: CarControls = this.carView.controls;
 
   constructor(
     private id: number,
@@ -32,17 +32,21 @@ class Car {
     });
   }
 
-  private async updateCar(carProps: ICarResponse) {
-    if (carProps.id !== this.id) return;
+  private async updateCar(carProps: ICarResponse): Promise<void> {
+    if (carProps.id !== this.id) {
+      return;
+    }
     const updatedCar = await updateCar(carProps);
-    if (updatedCar.error) return;
+    if (updatedCar.error) {
+      return;
+    }
     this.name = carProps.name;
     this.color = carProps.color;
     this.carView.updateView(carProps);
     eventEmitter.emit("car-edited");
   }
 
-  public async prepareToRace() {
+  public async prepareToRace(): Promise<void> {
     await setEngineStatus(this.id, "stopped");
     this.carView.stopMoving();
     this.carView.moveCarToStart();
@@ -50,7 +54,7 @@ class Car {
     this.engine.abort();
   }
 
-  public async resetRace() {
+  public async resetRace(): Promise<void> {
     this.carView.stopMoving();
     this.carView.moveCarToStart();
     this.controls.lockStopButton();
@@ -58,7 +62,7 @@ class Car {
     await setEngineStatus(this.id, "stopped");
   }
 
-  private setEngineControls() {
+  private setEngineControls(): void {
     this.engine.on({
       onmoveControls: () => this.controls.lockControlsOnMove(),
       unlockAllControls: () => this.controls.unlockAllControls(),
@@ -71,28 +75,28 @@ class Car {
     });
   }
 
-  public animateMove(duration: number) {
+  public animateMove(duration: number): void {
     this.carView.animateMove(duration);
   }
 
-  public stopMoving() {
+  public stopMoving(): void {
     this.carView.stopMoving();
   }
 
-  async remove() {
+  public async remove(): Promise<void> {
     await deleteCarByID(this.id);
     this.carView.destroy();
   }
 
-  public updateCarStateLabel(label: LabelType[keyof LabelType]) {
+  public updateCarStateLabel(label: LabelType[keyof LabelType]): void {
     this.carView.updateCarStateLabel(label);
   }
 
-  public getVieW() {
+  public getVieW(): CarView {
     return this.carView;
   }
 
-  public getID() {
+  public getID(): number {
     return this.id;
   }
 }

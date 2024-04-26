@@ -22,7 +22,7 @@ const CAR_STATES = {
     },
     "start-race": {
       toState: "in-race",
-      callbacks: ["lock-control-buttons"],
+      callbacks: [],
     },
   },
   ready: {

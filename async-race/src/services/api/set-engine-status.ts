@@ -1,16 +1,14 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
-import {
-  IDriveStatusResponse,
-  IEngineStatusResponse,
-  driveStatusResponseTemplate,
-  engineStatusResponseTemplate,
-} from "../../types/response-interfaces";
+import type { IDriveStatusResponse, IEngineStatusResponse } from "../../types/response-interfaces";
+import { driveStatusResponseTemplate, engineStatusResponseTemplate } from "../../types/response-interfaces";
 
 export async function setEngineStatus(id: number, status: "started" | "stopped"): Promise<IEngineStatusResponse> {
   try {
     const res: Response = await fetch(`${ENDPOINTS.ENGINE}?id=${id}&status=${status}`, { method: "PATCH" });
-    if (res.status === 404) console.log(`Car with such id was not found in the garage.`);
+    if (res.status === 404) {
+      console.log(`Car with such id was not found in the garage.`);
+    }
     const result: unknown = await res.json();
     assertsObjectIsTypeOf(result, engineStatusResponseTemplate);
     return result;
@@ -27,10 +25,15 @@ export async function setEngineStatusToDrive(id: number, controller?: AbortContr
       signal: controller?.signal,
     });
     if (res.status !== 200) {
-      if (res.status === 500) console.log(`Car has been stopped suddenly. It's engine was broken down.`);
-      if (res.status === 429)
+      if (res.status === 500) {
+        console.log(`Car has been stopped suddenly. It's engine was broken down.`);
+      }
+      if (res.status === 429) {
         console.log(`Drive already in progress. You can't run drive for the same car twice while it's not stopped.`);
-      if (res.status === 404) console.log(`Engine parameters for car with such id was not found in the garage.`);
+      }
+      if (res.status === 404) {
+        console.log(`Engine parameters for car with such id was not found in the garage.`);
+      }
       const result = { success: false, status: res.status } as IDriveStatusResponse;
       return result;
     }
@@ -38,7 +41,9 @@ export async function setEngineStatusToDrive(id: number, controller?: AbortContr
     assertsObjectIsTypeOf(result, driveStatusResponseTemplate);
     return result;
   } catch (e) {
-    if (e instanceof DOMException) console.log("user aborted request");
+    if (e instanceof DOMException) {
+      console.log("user aborted request");
+    }
     return {
       success: false,
     };

@@ -1,7 +1,8 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
-import { ICarResponse, carResponseTemplate } from "../../types/response-interfaces";
+import type { ICarResponse } from "../../types/response-interfaces";
+import { carResponseTemplate } from "../../types/response-interfaces";
 
 async function deleteCarByID(carID: number): Promise<ICarResponse> {
   try {

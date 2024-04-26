@@ -1,19 +1,19 @@
 import "./winner.css";
-import { IWinnersInfoResponse } from "../../types/response-interfaces";
+import type { IWinnersInfoResponse } from "../../types/response-interfaces";
 import Component from "../../utils/component";
 import { span, svgSprite } from "../../utils/elements";
-import { IRaceParticipants } from "../race-engine/race-interfaces";
+import type { IRaceParticipants } from "../race-engine/race-interfaces";
 
 class Winner extends Component {
-  winnerNumber: Component<HTMLElement>;
+  private winnerNumber: Component<HTMLElement>;
 
-  winnerImage: SVGSVGElement;
+  private winnerImage: SVGSVGElement;
 
-  winnerName: Component<HTMLElement>;
+  private winnerName: Component<HTMLElement>;
 
-  winnerWins: Component<HTMLElement>;
+  private winnerWins: Component<HTMLElement>;
 
-  winnerTime: Component<HTMLElement>;
+  private winnerTime: Component<HTMLElement>;
 
   constructor(
     private info: IWinnersInfoResponse,
@@ -29,16 +29,16 @@ class Winner extends Component {
     this.appendContent([this.winnerNumber, this.winnerImage, this.winnerName, this.winnerWins, this.winnerTime]);
   }
 
-  getID() {
+  public getID(): number {
     return this.info.id;
   }
 
-  increaseWinsCount() {
+  public increaseWinsCount(): void {
     this.info.wins += 1;
     this.winnerWins.setTextContent(`${this.info.wins}`);
   }
 
-  updateWinnerResult(result: IRaceParticipants, number: number) {
+  public updateWinnerResult(result: IRaceParticipants, number: number): void {
     this.increaseWinsCount();
     const time = Math.round(result.raceParams.distance / result.raceParams.velocity) / 1000;
     if (this.info.time > time) {

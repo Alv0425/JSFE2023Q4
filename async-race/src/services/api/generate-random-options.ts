@@ -1,5 +1,6 @@
 import generateRandomColor from "../../utils/generate-random-color";
-import CARS, { ICarBrand } from "./car-models";
+import type { ICarBrand } from "./car-models";
+import CARS from "./car-models";
 
 function generateRandomCarOptions(): { name: string; color: string } {
   const randomCarMaker: ICarBrand = CARS[Math.round(Math.random() * (CARS.length - 1))];

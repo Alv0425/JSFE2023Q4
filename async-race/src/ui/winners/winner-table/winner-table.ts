@@ -1,4 +1,4 @@
-import Winner from "../../../components/winner/winner";
+import type Winner from "../../../components/winner/winner";
 import winnersCollection from "../../../components/winners-collection/winners-collection";
 import Component from "../../../utils/component";
 import eventEmitter from "../../../utils/event-emitter";
@@ -7,9 +7,9 @@ import tableControls from "./table-controls";
 import tableHeader from "./table-header";
 
 class WinnersTable extends Component {
-  currentWinners: Winner[] = [];
+  public currentWinners: Winner[] = [];
 
-  currentPageIndex: number = 0;
+  public currentPageIndex = 0;
 
   constructor() {
     super("div", ["winners__table"], {}, {});
@@ -24,7 +24,7 @@ class WinnersTable extends Component {
     winnersCollection.reloadWinnersCollection().then(() => this.updateContent());
   }
 
-  updateContent(): void {
+  public updateContent(): void {
     tableBody.clearContainer();
     this.currentWinners = winnersCollection.getItemsOnPage(this.currentPageIndex);
     tableBody.appendContent(this.currentWinners);
@@ -33,13 +33,17 @@ class WinnersTable extends Component {
   }
 
   public nextPage(): void {
-    if (this.currentPageIndex === winnersCollection.getPageCount() - 1) return;
+    if (this.currentPageIndex === winnersCollection.getPageCount() - 1) {
+      return;
+    }
     this.currentPageIndex += 1;
     this.redrawPageContent();
   }
 
   public prevPage(): void {
-    if (this.currentPageIndex === 0) return;
+    if (this.currentPageIndex === 0) {
+      return;
+    }
     this.currentPageIndex -= 1;
     this.redrawPageContent();
   }

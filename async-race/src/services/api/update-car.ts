@@ -1,7 +1,8 @@
 import { assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
-import { ICarOptions, ICarResponse, carResponseTemplate } from "../../types/response-interfaces";
+import type { ICarOptions, ICarResponse } from "../../types/response-interfaces";
+import { carResponseTemplate } from "../../types/response-interfaces";
 
 async function updateCar({ name, color, id }: ICarOptions): Promise<ICarResponse> {
   try {
@@ -12,7 +13,9 @@ async function updateCar({ name, color, id }: ICarOptions): Promise<ICarResponse
         "Content-Type": "application/json",
       },
     });
-    if (response.status === 404) eventEmitter.emit("actualize-collection");
+    if (response.status === 404) {
+      eventEmitter.emit("actualize-collection");
+    }
     if (!response.ok) {
       throw new Error(`Cannot update car id=${id} with options ${name}, ${color}`);
     } else {

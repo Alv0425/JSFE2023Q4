@@ -71,7 +71,7 @@
 
 .car__finish {
   position: absolute;
-  background-image: url(./../../assets/car/finish.svg);
+  background-image: url(./../../../assets/car/finish.svg);
   background-repeat: no-repeat;
   width: 50px;
   height: 50px;

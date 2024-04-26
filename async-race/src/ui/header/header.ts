@@ -3,9 +3,9 @@ import Component from "../../utils/component";
 import { a, h1 } from "../../utils/elements";
 
 class Header extends Component {
-  toWinners: Component<HTMLElement>;
+  private toWinners: Component<HTMLElement>;
 
-  toGarage: Component<HTMLElement>;
+  private toGarage: Component<HTMLElement>;
 
   constructor() {
     super("header", ["header"], {}, {}, h1(["header__logo"], "ASYNC RACE"));

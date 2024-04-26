@@ -1,5 +1,5 @@
-import { ICarResponse, IEngineStatusResponse } from "../../types/response-interfaces";
-import Car from "../car/car";
+import type { ICarResponse, IEngineStatusResponse } from "../../types/response-interfaces";
+import type Car from "../car/car";
 
 export interface IRaceParticipants {
   carInfo: ICarResponse;

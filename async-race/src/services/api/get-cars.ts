@@ -1,7 +1,8 @@
 import { assertsArrayOfObjectIsTypeOf, assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import eventEmitter from "../../utils/event-emitter";
 import ENDPOINTS from "./endpoints";
-import { ICarResponse, carResponseTemplate } from "../../types/response-interfaces";
+import type { ICarResponse } from "../../types/response-interfaces";
+import { carResponseTemplate } from "../../types/response-interfaces";
 
 export async function getCarsOnPage(pageNum: number): Promise<ICarResponse[]> {
   try {
@@ -21,7 +22,9 @@ export async function getCarsOnPage(pageNum: number): Promise<ICarResponse[]> {
 export async function getCarByID(carID: number): Promise<ICarResponse> {
   try {
     const res = await fetch(`${ENDPOINTS.GARAGE}/${carID}`);
-    if (res.status === 404) eventEmitter.emit("actualize-collection");
+    if (res.status === 404) {
+      eventEmitter.emit("actualize-collection");
+    }
     const car: unknown = await res.json();
     assertsObjectIsTypeOf(car, carResponseTemplate);
     return car;

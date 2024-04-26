@@ -2,17 +2,15 @@ import eventEmitter from "../../utils/event-emitter";
 import { assertsArrayOfObjectIsTypeOf, assertsObjectIsTypeOf } from "../../utils/is-type-of-object";
 import ENDPOINTS from "./endpoints";
 import { getCarByID } from "./get-cars";
-import {
-  ICarResponse,
-  IWinnerResponse,
-  IWinnersInfoResponse,
-  winnerResponseTemplate,
-} from "../../types/response-interfaces";
+import type { ICarResponse, IWinnerResponse, IWinnersInfoResponse } from "../../types/response-interfaces";
+import { winnerResponseTemplate } from "../../types/response-interfaces";
 
 export async function getWinnerByID(carID: number): Promise<IWinnerResponse> {
   try {
     const res = await fetch(`${ENDPOINTS.WINNERS}/${carID}`);
-    if (res.status === 404) eventEmitter.emit("actualize-collection");
+    if (res.status === 404) {
+      eventEmitter.emit("actualize-collection");
+    }
     const car: unknown = await res.json();
     assertsObjectIsTypeOf(car, winnerResponseTemplate);
     return car;
@@ -31,9 +29,13 @@ async function getWinners({
 }): Promise<IWinnersInfoResponse[]> {
   try {
     const res = await fetch(`${ENDPOINTS.WINNERS}?_sort=${sort}&_order=${order}`);
-    if (!res.ok) throw new Error(res.statusText);
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    }
     const winnersResults: unknown = await res.json();
-    if (!Array.isArray(winnersResults)) throw new Error("Response should be an Array");
+    if (!Array.isArray(winnersResults)) {
+      throw new Error("Response should be an Array");
+    }
     assertsArrayOfObjectIsTypeOf(winnersResults, winnerResponseTemplate);
     const carsRes: ICarResponse[] = await Promise.all(
       winnersResults.map(async (winner) => {

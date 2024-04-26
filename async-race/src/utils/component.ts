@@ -10,6 +10,8 @@ export interface IEventListenerDescription {
   options?: boolean | EventListenerOptions;
 }
 
+export type ComponentType = Component | HTMLElement | null | SVGSVGElement;
+
 class Component<T extends HTMLElement = HTMLElement> {
   protected node: T;
 
@@ -52,20 +54,14 @@ class Component<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public getComponent() {
+  public getComponent(): T {
     return this.node;
   }
 
-  public getContent() {
-    return this.content;
-  }
-
-  public getChildComponents() {
-    return this.childComponents;
-  }
-
-  public append(child: Component | HTMLElement | null | SVGSVGElement) {
-    if (!child) return;
+  public append(child: ComponentType): void {
+    if (!child) {
+      return;
+    }
     if (child instanceof Component) {
       this.node.append(child.getComponent());
       this.content.push(child.getComponent());
@@ -75,84 +71,43 @@ class Component<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public appendContent(children: (Component | HTMLElement | null | SVGSVGElement)[]) {
+  public appendContent(children: (Component | HTMLElement | null | SVGSVGElement)[]): void {
     children.forEach((child) => {
-      if (child) this.append(child);
+      if (child) {
+        this.append(child);
+      }
     });
   }
 
-  public setAttribute(key: string, value: string) {
-    if (value !== undefined) this.node.setAttribute(key, value);
+  public setAttribute(key: string, value: string): void {
+    if (value !== undefined) {
+      this.node.setAttribute(key, value);
+    }
   }
 
-  public setTextContent(str: string) {
-    if (str) this.node.textContent = str;
+  public setTextContent(str: string): void {
+    if (str) {
+      this.node.textContent = str;
+    }
   }
 
   public addListener(
     eventType: keyof GlobalEventHandlersEventMap,
     evtHandler: EventListenerOrEventListenerObject,
     options?: boolean | EventListenerOptions,
-  ) {
+  ): void {
     this.node.addEventListener(eventType, evtHandler, options);
     const listenerObj: IEventListenerDescription = {
       eType: eventType,
       handler: evtHandler,
     };
-    if (options) listenerObj.options = options;
+    if (options) {
+      listenerObj.options = options;
+    }
     this.listeners.push(listenerObj);
   }
 
-  public removeListenerOfType(type: string) {
-    this.listeners.forEach((listener) => {
-      if (listener.eType === type) {
-        if (listener.options) {
-          this.node.removeEventListener(listener.eType, listener.handler, listener.options);
-        } else {
-          this.node.removeEventListener(listener.eType, listener.handler);
-        }
-      }
-    });
-  }
-
-  public removeAllListeners() {
-    this.listeners.forEach((listener) => {
-      if (listener.options) {
-        this.node.removeEventListener(listener.eType, listener.handler, listener.options);
-      } else {
-        this.node.removeEventListener(listener.eType, listener.handler);
-      }
-    });
-  }
-
-  public setStyleAttribute(key: string, value: string) {
-    this.node.style.setProperty(key, value);
-  }
-
-  public removeStyleAttribute(key: string) {
-    this.node.style.removeProperty(key);
-  }
-
-  public getSize() {
-    return {
-      width: this.node.clientWidth,
-      height: this.node.clientHeight,
-    };
-  }
-
-  public getCoordinates() {
-    const clientRect = this.getComponent().getBoundingClientRect();
-    return {
-      x: clientRect.left,
-      y: clientRect.top,
-      centerX: clientRect.left + clientRect.width / 2,
-      centerY: clientRect.top + clientRect.height / 2,
-      width: clientRect.width,
-      height: clientRect.height,
-    };
-  }
-
-  public clear() {
+  public clear(): void {
     this.content.forEach((child) => {
       if (child instanceof Component) {
         child.destroy();
@@ -164,17 +119,17 @@ class Component<T extends HTMLElement = HTMLElement> {
     this.clearAll();
   }
 
-  public destroy() {
+  public destroy(): void {
     this.clear();
     this.node.remove();
   }
 
-  public clearContainer() {
+  public clearContainer(): void {
     this.content = [];
     this.clearAll();
   }
 
-  public clearAll() {
+  public clearAll(): void {
     while (this.node.firstChild) {
       this.node.removeChild(this.node.firstChild);
     }

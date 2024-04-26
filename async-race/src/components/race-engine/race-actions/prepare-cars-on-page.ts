@@ -1,10 +1,10 @@
 import { getCarsOnPage } from "../../../services/api/get-cars";
-import { ICarResponse, IEngineStatusResponse } from "../../../types/response-interfaces";
+import type { ICarResponse, IEngineStatusResponse } from "../../../types/response-interfaces";
 import { setEngineStatus } from "../../../services/api/set-engine-status";
 import eventEmitter from "../../../utils/event-emitter";
-import Car from "../../car/car";
+import type Car from "../../car/car";
 import carCollection from "../../cars-collection/cars-collection";
-import { IRaceParticipants } from "../race-interfaces";
+import type { IRaceParticipants } from "../race-interfaces";
 
 async function prepareCarsOnPage(n: number): Promise<IRaceParticipants[]> {
   eventEmitter.emit("race-started");

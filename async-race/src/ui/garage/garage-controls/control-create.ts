@@ -4,13 +4,13 @@ import Component from "../../../utils/component";
 import { button, div, input, svgSprite } from "../../../utils/elements";
 
 class ControlCreate extends Component {
-  input: Component<HTMLInputElement>;
+  private input: Component<HTMLInputElement>;
 
-  color: Component<HTMLInputElement>;
+  private color: Component<HTMLInputElement>;
 
-  button: Component<HTMLButtonElement>;
+  private button: Component<HTMLButtonElement>;
 
-  carIMG: SVGSVGElement;
+  private carIMG: SVGSVGElement;
 
   constructor() {
     super("form", ["garage__control-create"], {}, { action: "" });
@@ -22,7 +22,9 @@ class ControlCreate extends Component {
     this.button = button(["garage__control-button"], "CREATE");
     this.appendContent([this.carIMG, div(["garage__control-create-inputs"], this.input, this.color, this.button)]);
     this.button.addListener("click", async () => {
-      if (this.input.getComponent().value === "") return;
+      if (this.input.getComponent().value === "") {
+        return;
+      }
       await createCar({
         name: this.input.getComponent().value,
         color: this.color.getComponent().value,
@@ -31,7 +33,7 @@ class ControlCreate extends Component {
     });
   }
 
-  public applyColor() {
+  public applyColor(): void {
     this.carIMG.style.fill = this.color.getComponent().value;
   }
 }
