@@ -46,6 +46,7 @@
 }
 
 .room__messages-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -147,6 +148,76 @@
     background-color: transparent;
   }
   .room__back:hover {
+    background-color: transparent;
+  }
+}
+
+.room__message-placeholder {
+  color: var(--color-container);
+  position: absolute;
+  inset: 0 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room__emoji-container {
+  position: relative;
+}
+
+.room__emoji-selector-wrapper {
+  display: none;
+}
+
+.room__emoji-container_show .room__emoji-selector-wrapper {
+  background-color: #fff;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  height: 100px;
+
+  bottom: 50px;
+  right: 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.room__emoji-container_show .room__emoji-selector {
+  /* background-color: #fff;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  height: 100px;
+  overflow-y: auto;
+  bottom:50px;
+  right:0;
+  padding: 5px;
+  border-radius: 5px; */
+  overflow-y: auto;
+}
+
+.room__emoji-category {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.emoji {
+  background-color: transparent;
+  padding: 3px;
+}
+
+.room__emoji-button {
+  padding: 3px;
+  background-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .room__emoji-button:hover {
+    background-color: transparent;
+  }
+  .emoji:hover {
     background-color: transparent;
   }
 }

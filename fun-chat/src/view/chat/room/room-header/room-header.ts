@@ -1,5 +1,5 @@
 import { EventsMap } from "../../../../utils/event-emitter/events";
-import generateColor from "../../../../utils/color-generator";
+import generateColor from "../../../../utils/helpers/color-generator";
 import Component from "../../../../utils/component/component";
 import { button, div, h2, svgSprite } from "../../../../utils/component/elements";
 import eventEmitter from "../../../../utils/event-emitter/event-emitter";
