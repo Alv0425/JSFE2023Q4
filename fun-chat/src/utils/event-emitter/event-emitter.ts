@@ -7,16 +7,24 @@ class EventEmitter<T extends unknown[]> {
     this.eventList = {} as Record<EventsMap, HandlerType<T>[]>;
   }
 
-  public on(event: EventsMap, handler: HandlerType<T>): () => void {
+  // public on(event: EventsMap, handler: HandlerType<T>): () => void {
+  //   if (!this.eventList[event]) {
+  //     this.eventList[event] = [];
+  //   }
+  //   this.eventList[event]?.push(handler);
+  //   return () => this.off(event, handler);
+  // }
+
+  public on<Type>(event: EventsMap, handler: HandlerType<Type[]>): () => void {
     if (!this.eventList[event]) {
       this.eventList[event] = [];
     }
-    this.eventList[event]?.push(handler);
-    return () => this.off(event, handler);
+    this.eventList[event]?.push(handler as HandlerType<unknown[]>);
+    return () => this.off(event, handler as HandlerType<unknown[]>);
   }
 
-  public once(event: EventsMap, handler: HandlerType<T>): void {
-    const remove = this.on(event, (...args: T) => {
+  public once<Type>(event: EventsMap, handler: HandlerType<Type[]>): void {
+    const remove = this.on(event, (...args: Type[]) => {
       remove();
       handler(...args);
     });
