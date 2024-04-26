@@ -1,4 +1,5 @@
 import type { IRequest, IRequestHistory, IRequestSend } from "../models/request";
+import MessageType from "../models/message-types";
 import AuthController from "./auth-controller";
 
 class MessageController {
@@ -7,7 +8,7 @@ class MessageController {
   public static getHistory(login: string): IRequestHistory {
     const req: IRequestHistory = {
       id: `USER-HISTORY-${login}`,
-      type: "MSG_FROM_USER",
+      type: MessageType.messageFrom,
       payload: {
         user: {
           login,
@@ -20,7 +21,7 @@ class MessageController {
   public static sendMessageTo(login: string, text: string): IRequestSend {
     const req = {
       id: `${this.currentUserData.login}_${login}_${crypto.randomUUID()}`,
-      type: "MSG_SEND",
+      type: MessageType.messageSend,
       payload: {
         message: {
           to: login,
@@ -34,7 +35,7 @@ class MessageController {
   public static setReadMessageStatus(id: string): IRequest {
     const req = {
       id: `MSG_READ_${id}`,
-      type: "MSG_READ",
+      type: MessageType.messageRead,
       payload: {
         message: {
           id,
@@ -47,7 +48,7 @@ class MessageController {
   public static deleteMessage(id: string): IRequest {
     const req = {
       id: `MSG_DELETE_${id}`,
-      type: "MSG_DELETE",
+      type: MessageType.messageDelete,
       payload: {
         message: {
           id,
@@ -60,7 +61,7 @@ class MessageController {
   public static editMessage(text: string, id: string): IRequest {
     const req = {
       id: `MSG_EDIT_${id}`,
-      type: "MSG_EDIT",
+      type: MessageType.messageEdit,
       payload: {
         message: {
           id,
