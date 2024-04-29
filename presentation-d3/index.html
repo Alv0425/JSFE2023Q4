@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>reveal.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.2.0/d3.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script type="module" crossorigin src="./assets/index-CChk1Uge.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DE8bt9xy.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h2>Data Visualization using D3.js</h2>
+          <h3>Capabilities and Challenges</h3>
+          <p>Elena Vileishikova</p>
+        </section>
+        <section>
+          <h2>Agenda</h2>
+          <ul>
+            <li>What is D3?</li>
+            <li>D3.js key features</li>
+            <li>How D3 works?</li>
+            <li>Challenges of using D3</li>
+          </ul>
+        </section>
+        <section>
+          <h3>What is D3?</h3>
+          <div><img src="./assets/d3com-a4wvY_M3.avif" alt="D3 webpage"></div>
+          <p>Mike Bostock, Jeff Heer and Vadim Ogievetsky</p>
+        </section>
+        <section>
+          <h3>D3 key features</h3>
+          <ul>
+            <li>Data-Driven DOM Manipulations</li>
+          <li>Declarative Syntax</li>
+          <li>SVG and Canvas Support</li>
+          <li>Layouts and Animations</li>
+          <li>Community and Ecosystem</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Community</h3>
+          <div id="rainbowcont"></div>
+          <a class="note">by Guillaume Calmettes</a>
+        </section>
+        <section>
+          <div class="two-columns">
+            <div><h3>D3.js API</h3>
+              <p>750+ methods</p>
+              <p>30 modules</p></div>
+            <svg id="api-chart"></svg>
+          </div>
+        </section>
+        <section>
+          <svg id="selectors-chart"></svg>
+        </section>
+        <section>
+          <div class="two-columns">
+            <div>
+              <h4>Select Elements</h4>
+              <p>select()</p>
+              <p>selectAll()</p>
+            </div>
+            <div data-markdown>
+              ```js [1-2|4-5]
+              // Select a single element
+              const svg = d3.select('#example');
+
+              // Select all 'div' elements
+              const divs = d3.selectAll('div');
+              ```
+            </div>
+          </div>
+        </section>
+        <section>
+          <h4>Append Elements using d3.append()</h4>
+          <div data-markdown>
+            ```js
+            // Append an svg element to the container
+            const svg = container.append("svg");
+            // Append a rectangle to the svg
+            svg.append("rect");
+            ```
+          </div>
+        </section>
+        <section>
+          <h4>Applying Transformations</h4>
+          <div class="two-columns">
+            <div>
+
+              <ul>
+                <li>.attr()</li>
+                <li>.slyle()</li>
+                <li>.text()</li>
+                <li>...</li>
+              </ul>
+            </div>
+            <div data-markdown>
+              ```js
+              // Set attributes and
+              // styles for circles
+              circles.attr('cx', (d, i) => i * 50)
+                    .attr('cy', 50)
+                    .attr('r', d => d)
+                    .style('fill', 'steelblue');
+
+              // Set text content for circles
+              newCircles.text(d => d);
+              ```
+            </div>
+          </div>
+        </section>
+        <section>
+          <h3>enter() and exit() methods</h3>
+          <div data-markdown>
+            ```js
+            const selectedElements = svg
+              .selectAll('rect') // We select the elements to do the join
+              .data(data);
+
+            selectedElements
+              .enter() // Remember here we do the join
+              .append('rect') // And append the missing elements
+              .merge(sd) // Merge to act on all of the elements
+              ...
+
+            selectedElements
+              .exit() // Now everything we will perform
+                      // will be on the excluded elements
+              ```
+
+          </div>
+          <div data-markdown>
+            ```js
+            ...
+            selectedElements
+              .exit()
+              .remove() // Removes the "excluded" elements.
+            ```
+          </div>
+        </section>
+        <section>
+          <h3> .data() and key function </h3>
+          <div data-markdown>
+            ```js
+            selection.data(data[, key])
+            ```
+            `key` - (function) specifies binding rule data to the elements.
+            ```js
+            ...
+            elements.enter()
+              .append("div")
+              .text(d => d.value); // Set the text
+            ```
+          </div>
+        </section>
+        <section>
+          <div class="two-columns">
+            <div>
+              <h3>Geo module</h3>
+              <div data-markdown>
+                ```js
+                d3.json('path to data')
+                  .then((jsonData) => {
+                    const geoJson = topojson
+                      .feature(jsonData, ...);
+                    const geoMercator = d3
+                      .geoMercator()
+                      ...
+                    const path = d3
+                      .geoPath(geoMercator);
+                    ...
+                })
+                ```
+              </div>
+              <p id="tooltip"></p>
+            </div>
+            <div id="mapcontainer"></div>
+          </div>
+        </section>
+        <section>
+          <div class="two-columns">
+            <div>
+              <h3>d3-force</h3>
+              <div id="cont-collision"></div>
+            </div>
+            <div style="width:600px;" data-markdown>
+              ```js [1-2|3-4|6-8|9-12|13-15]
+              let forceX = d3.forceX(width / 2)
+                .strength(0.015);
+              let forceY = d3.forceY(height / 2)
+                .strength(0.015);
+
+              const force = d3
+                // initialise force simulation
+                .forceSimulation()
+                .velocityDecay(0.2)
+                .force('x', forceX)
+                .force('y', forceY)
+                .force('collide',
+                  d3.forceCollide()
+                    .radius((d) => {...}))
+                    ... // sumulation options
+              ```
+              ```js
+              force.nodes(nodes)
+                .on('tick', ticked);
+              ```
+            </div>
+          </div>
+        </section>
+        <section>
+          <div>
+            <svg id="layouts"></svg>
+          </div>
+        </section>
+        <section>
+          <h3>Challenges</h3>
+          <ul>
+            <li>Conflicts with virtual DOM</li>
+            <li>Big Data Visualisation</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Using with Frameworks</h3>
+          <ul>
+            <li>Avoid direct DOM manipulation using D3.</li>
+            <li>Let framework handle the DOM updates.</li>
+          </ul>
+        </section>
+        <section>
+          <h3>D3 and Canvas</h3>
+          <ul>
+            <li>Bind data to custom DOM elements using D3</li>
+            <li>Use canvas to draw these elements</li>
+            <li>Add interactivity</li>
+          </ul>
+        </section>
+        <section>
+          <h3>D3 and Canvas</h3>
+          <div data-markdown>
+            ```js
+            let data = [/* Your data */];
+            // Create custom elements
+            let customElements = canvas.selectAll("custom")
+                .data(data)
+                .enter()
+                .append("custom");
+            ```
+            ```js
+            function drawCustomElement(d) {
+              // Example: Draw a rectangle
+              context.fillStyle = "blue";
+              context.fillRect(d.x, d.y, d.width, d.height);
+            }
+            ```
+            ```js
+            function drawAllCustomElements() {
+              customElements.each(drawCustomElement);
+            }
+            ```
+          </div>
+        </section>
+        <section>
+            <h2>Cons of D3</h2>
+            <ul>
+                <li>Steep Learning Curve</li>
+                <li>Low-Level Abstraction</li>
+                <li>Browser Compatibility</li>
+                <li>Heavyweight</li>
+            </ul>
+        </section>
+        <section>
+          <h3>Alternatives</h3>
+          <ul>
+            <li>C3, Chart.js, ...</li>
+            <li>WebGl</li>
+            <li>React, Vue, ...</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Pros</h2>
+          <ul>
+              <li>Flexible and Powerful</li>
+              <li>Community Support</li>
+              <li>Integration with Web Standards</li>
+              <li>Scalability</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Thanks for watching!</h2>
+        </section>
+      </div>
+    </div>
+
+  </body>
+</html>
