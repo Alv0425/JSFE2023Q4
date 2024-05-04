@@ -24,6 +24,7 @@
             <li>D3.js key features</li>
             <li>How D3 works?</li>
             <li>Challenges of using D3</li>
+            <li>Pros and Cons</li>
           </ul>
         </section>
         <section>
@@ -148,12 +149,11 @@
             ```js
             selection.data(data[, key])
             ```
-            `key` - (function) specifies binding rule data to the elements.
+            `key` - (function) specifies unique id for each data point.
             ```js
             ...
-            elements.enter()
-              .append("div")
-              .text(d => d.value); // Set the text
+            const circles = svg.selectAll('circle')
+              .data(data, d => d);
             ```
           </div>
         </section>
@@ -277,7 +277,6 @@
           <h3>Alternatives</h3>
           <ul>
             <li>C3, Chart.js, ...</li>
-            <li>WebGl</li>
             <li>React, Vue, ...</li>
           </ul>
         </section>
